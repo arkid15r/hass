@@ -1,0 +1,2 @@
+# hass
+Homeassistant related stuff.
