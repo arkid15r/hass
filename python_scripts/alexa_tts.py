@@ -30,13 +30,13 @@ LIVING_ROOM_TV = "sensor.living_room_tv_plug_power_on"
 
 OFFICE_1 = "office_1"
 OFFICE_1_LIGHT = "group.office_1_bulbs"
-OFFICE_1_ECHO = "media_player.office1_echo"
+OFFICE_1_ECHO = "media_player.office_1_echo"
 OFFICE_1_MOTION = "sensor.office_1_last_5m_motion"
 OFFICE_1_TV = "remote.office_1_tv_remote"
 
 OFFICE_2 = "office_2"
 OFFICE_2_LIGHT = "group.office_2_bulbs"
-OFFICE_2_ECHO = "media_player.office2_echo"
+OFFICE_2_ECHO = "media_player.office_2_echo"
 OFFICE_2_MOTION = "sensor.office_2_last_5m_motion"
 
 PRIMARY_BATHROOM = "primary_bathroom"
