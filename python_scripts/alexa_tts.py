@@ -1,10 +1,26 @@
 """
-Play a TTS message on Amazon Echo devices via Alexa notification service.
-Generates list of target devices based on time of day and recent motion activity.
+Plays a TTS message on Amazon Echo devices using Alexa notification service.
+A list of target devices is generated based on time, recent motion activity,
+and a set of default and last resort targets.
+
 """
 
 __author__ = "Ark (ark@cho.red)"
 
+BATHROOM_1 = "primary_bathroom"
+BATHROOM_1_LIGHT = "group.primary_bathroom_bulbs"
+BATHROOM_1_ECHO = "media_player.primary_bathroom_echo"
+BATHROOM_1_MOTION = "sensor.primary_bathroom_last_5m_motion"
+
+BATHROOM_2 = "secondary_bathroom"
+BATHROOM_2_LIGHT = "group.secondary_bathroom_bulbs"
+BATHROOM_2_ECHO = "media_player.secondary_bathroom_echo"
+BATHROOM_2_MOTION = "sensor.secondary_bathroom_last_5m_motion"
+
+BEDROOM_1 = "primary_bedroom"
+BEDROOM_1_LIGHT = "group.primary_bedroom_bulbs"
+BEDROOM_1_ECHO = "media_player.primary_bedroom_echo"
+BEDROOM_1_MOTION = "sensor.primary_bedroom_last_5m_motion"
 
 CORRIDOR = "corridor"
 CORRIDOR_ECHO = "media_player.corridor_echo"
@@ -39,124 +55,106 @@ OFFICE_2_LIGHT = "group.office_2_bulbs"
 OFFICE_2_ECHO = "media_player.office_2_echo"
 OFFICE_2_MOTION = "sensor.office_2_last_5m_motion"
 
-PRIMARY_BATHROOM = "primary_bathroom"
-PRIMARY_BATHROOM_LIGHT = "group.primary_bathroom_bulbs"
-PRIMARY_BATHROOM_ECHO = "media_player.primary_bathroom_echo"
-PRIMARY_BATHROOM_MOTION = "sensor.primary_bathroom_last_5m_motion"
-
-PRIMARY_BEDROOM = "primary_bedroom"
-PRIMARY_BEDROOM_LIGHT = "group.primary_bedroom_bulbs"
-PRIMARY_BEDROOM_ECHO = "media_player.primary_bedroom_echo"
-PRIMARY_BEDROOM_MOTION = "sensor.primary_bedroom_last_5m_motion"
-
 QUITE_TIME = "binary_sensor.is_quite_time"
-
-SECONDARY_BATHROOM = "secondary_bathroom"
-SECONDARY_BATHROOM_LIGHT = "group.secondary_bathroom_bulbs"
-SECONDARY_BATHROOM_ECHO = "media_player.secondary_bathroom_echo"
-SECONDARY_BATHROOM_MOTION = "sensor.secondary_bathroom_last_5m_motion"
 
 STATE_ON = "on"
 
+ENV = {
+    "NORMAL_TIME_DEFAULT_TARGETS": {},
+    "NORMAL_TIME_LAST_RESORT_TARGETS": {
+        CORRIDOR: CORRIDOR_ECHO
+    },
+    "QUITE_TIME_DEFAULT_TARGETS": {
+        BEDROOM_1: BEDROOM_1_ECHO
+    },
+}
 
-def make_announcement(hass, message=None, silent_in=None):
-    """
-    Check targets and generates message request.
+RULES = (
+    {
+        "target": BATHROOM_1_ECHO,
+        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION)
+    },
+    {
+        "target": BATHROOM_2_ECHO,
+        "conditions": (BATHROOM_2_LIGHT, BATHROOM_2_MOTION)
+    },
+    {
+        "target": BEDROOM_1_ECHO,
+        "conditions": (BEDROOM_1_LIGHT, BEDROOM_1_MOTION)
+    },
+    {
+        "target": GARAGE_ECHO,
+        "conditions": (GARAGE_LIGHT, GARAGE_MOTION)
+    },
+    {
+        "target":
+            LIVING_ROOM_ECHO,
+        "conditions": (
+            DINING_AREA_LIGHT,
+            HALLWAY_MOTION,
+            KITCHEN_LIGHT,
+            KITCHEN_MOTION,
+            LIVING_ROOM_LIGHT,
+            LIVING_ROOM_MOTION,
+            LIVING_ROOM_TV,
+        ),
+    },
+    {
+        "target": OFFICE_1_ECHO,
+        "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
+    },
+    {
+        "target": OFFICE_2_ECHO,
+        "conditions": (OFFICE_2_LIGHT, OFFICE_2_MOTION)
+    },
+)
+
+
+def play(hass, message=None, silent_in=None, env=None):
+  """
+    Check targets and generate text to speach request.
 
     Parameters:
-      message (str): A text to announce.
-      silent_in (list): A list of devices to exclude from targets.
+      hass: A HomeAssistant service from the global context.
+      message: A text to play.
+      silent_in: A list of areas to exclude.
+      env: An environment settings for normal/quite time.
 
     Returns:
-      list: A list of target devices the message to be announced on.
+      list: A list of target devices the message to be played on.
     """
 
-    def is_not_silenced_in(target):
-        """
-        Returns True if target is not in silenced list otherwise returns False.
-        """
+  def is_on(sensor):
+    """
+    	Returns True if sensor's state is "on" otherwise returns False.
+    """
 
-        return target not in silent_in
+    return hass.states.get(sensor).state == STATE_ON
 
-    def is_on(sensor):
-        """
-        Returns True if sensor's state is "on" otherwise returns False.
-        """
+  if not message:
+    raise ValueError("Message is required.")
 
-        return hass.states.get(sensor).state == STATE_ON
+  quite_hours = is_on(QUITE_TIME)
+  silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
 
-    if not message:
-        raise ValueError("Message is required.")
+  targets = set()
+  for rule in RULES:
+    # For some reason map() is restricted in HASS py_script environment.
+    if any((is_on(c) for c in rule["conditions"])):
+      targets.add(rule["target"])
 
-    if silent_in is None:
-        silent_in = ()
+  # Add default and last resort targets.
+  if quite_hours:
+    targets.update(set(env["QUITE_TIME_DEFAULT_TARGETS"].values()))
+  else:
+    if "NORMAL_TIME_DEFAULT_TARGETS" in env:
+      targets.update(set(env["NORMAL_TIME_DEFAULT_TARGETS"].values()))
+    if not targets and "NORMAL_TIME_LAST_RESORT_TARGETS" in env:
+      targets.update(set(env["NORMAL_TIME_LAST_RESORT_TARGETS"].values()))
 
-    quite_hours = is_on(QUITE_TIME)
-
-    play_in_garage = is_not_silenced_in(GARAGE) and (
-        is_on(GARAGE_LIGHT) or is_on(GARAGE_MOTION)
-    )
-
-    play_in_living_room = is_not_silenced_in(LIVING_ROOM) and (
-        is_on(DINING_AREA_LIGHT)
-        or is_on(HALLWAY_MOTION)
-        or is_on(KITCHEN_LIGHT)
-        or is_on(KITCHEN_MOTION)
-        or is_on(LIVING_ROOM_LIGHT)
-        or is_on(LIVING_ROOM_MOTION)
-        or is_on(LIVING_ROOM_TV)
-    )
-
-    play_in_office_1 = is_not_silenced_in(OFFICE_1) and (
-        is_on(OFFICE_1_LIGHT) or is_on(OFFICE_1_MOTION) or is_on(OFFICE_1_TV)
-    )
-
-    play_in_office_2 = is_not_silenced_in(OFFICE_2) and (
-        is_on(OFFICE_2_LIGHT) or is_on(OFFICE_2_MOTION)
-    )
-
-    play_in_primary_bathroom = is_not_silenced_in(PRIMARY_BATHROOM) and (
-        is_on(PRIMARY_BATHROOM_LIGHT) or is_on(PRIMARY_BATHROOM_MOTION)
-    )
-
-    play_in_primary_bedroom = is_not_silenced_in(PRIMARY_BEDROOM) and (
-        is_on(PRIMARY_BEDROOM_LIGHT)
-        or is_on(PRIMARY_BEDROOM_MOTION)
-        or quite_hours  # The default target for quite hours.
-    )
-
-    play_in_secondary_bathroom = is_not_silenced_in(SECONDARY_BATHROOM) and (
-        is_on(SECONDARY_BATHROOM_LIGHT) or is_on(SECONDARY_BATHROOM_MOTION)
-    )
-
-    targets = set()
-
-    if play_in_garage:
-        targets.add(GARAGE_ECHO)
-
-    if play_in_living_room:
-        targets.add(LIVING_ROOM_ECHO)
-
-    if play_in_office_1:
-        targets.add(OFFICE_1_ECHO)
-
-    if play_in_office_2:
-        targets.add(OFFICE_2_ECHO)
-
-    if play_in_primary_bathroom:
-        targets.add(PRIMARY_BATHROOM_ECHO)
-
-    if play_in_primary_bedroom:
-        targets.add(PRIMARY_BEDROOM_ECHO)
-
-    if play_in_secondary_bathroom:
-        targets.add(SECONDARY_BATHROOM_ECHO)
-
-    # The default target for regular hours.
-    if not targets and not quite_hours:
-        targets.add(CORRIDOR_ECHO)
-
-    targets = list(targets)
+  # Mute silenced targets.
+  targets = list(targets.difference(silenced_targets))
+  if targets:
     hass.services.call(
         "notify",
         "alexa_media",
@@ -169,7 +167,8 @@ def make_announcement(hass, message=None, silent_in=None):
         },
     )
 
-    return targets
+  return targets
 
 
-make_announcement(hass, data.get("message"), data.get("silent_in"))  # pylint: disable=undefined-variable
+# pylint: disable=undefined-variable
+play(hass, data.get("message"), data.get("silent_in"), env=ENV)

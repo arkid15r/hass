@@ -1,2 +1,102 @@
 # hass
-Homeassistant related stuff.
+
+[HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts, blueprints, automations, scenes, sensors, configs.
+
+## Description
+
+The repository contains Python scripts and YAML configs one might find useful for a HASS setup.
+
+## Pre-requisites
+
+* Python programming experience
+* understanding HomeAssistant [integrations](https://www.home-assistant.io/integrations/python_script/)
+* admin access to HASS instance
+
+## alexa_tts.py
+
+Usage:
+
+From /config/automations.yaml
+```yaml
+  action:
+  - service: python_script.alexa_tts
+    data:
+      message: Garage door opened.
+      silent_in:
+        - garage
+```
+
+The alexa_tts.py depends on the set of sensors. You can customaze them based on your needs and situation. Here are some examples:
+
+From /config/binary_sensors.yaml
+```yaml
+platform: template
+  sensors:
+    is_quite_time:
+      friendly_name: "Quite Time"
+      value_template: "{% if (now().strftime('%-H') | int < 7) or (now().strftime('%-H') | int >= 22) %}on{% else %}off{% endif %}"
+
+```
+
+From /config/sensors.yaml
+```yaml
+platform: template
+sensors:
+  garage_last_5m_motion:
+    friendly_name: "Motion in the Garage within Last 5 minutes"
+    value_template: "{% if (as_timestamp(now()) | int - as_timestamp(states.group.garage_motion_sensors.last_changed) | int) < 300 %}on{% else %}off{% endif %}"
+```
+
+from /config/groups.yaml
+```yaml
+garage_motion_sensors:
+  name: Garage Motion Sensors
+  entities:
+    - binary_sensor.garage_motion_sensor_1_motion
+    - binary_sensor.garage_motion_sensor_2_motion
+    - binary_sensor.garage_motion_sensor_3_motion
+```
+
+from /config/configuration.yaml
+```yaml
+binary_sensor: !include binary_sensors.yaml
+group: !include groups.yaml
+python_script:
+sensor: !include sensors.yaml
+```
+
+#### ENV
+
+The script behaviour heavily depends on the quite/normal time sensor state. You can also set default and last resor targets via ENV dictionary. The default targets will remain active as long as they are not specifically silenced during alexa_tts.py invocation using ```slinet_in``` parameter. The last resort targets will be used if resulting targets list is empty.
+
+```python
+ENV = {
+    "NORMAL_TIME_DEFAULT_TARGETS": {},
+    "NORMAL_TIME_LAST_RESORT_TARGETS": {
+        CORRIDOR: CORRIDOR_ECHO
+    },
+    "QUITE_TIME_DEFAULT_TARGETS": {
+        BEDROOM_1: BEDROOM_1_ECHO
+    },
+}
+```
+
+#### RULES
+Each area behaviour is configured in RULES.
+
+```python
+RULES = (
+    {
+        "target": BATHROOM_1_ECHO,
+        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION)
+    },
+    {
+        "target": GARAGE_ECHO,
+        "conditions": (GARAGE_LIGHT, GARAGE_MOTION)
+    },
+    {
+        "target": OFFICE_1_ECHO,
+        "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
+    },
+)
+```
