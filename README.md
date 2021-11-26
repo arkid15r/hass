@@ -2,17 +2,19 @@
 
 [HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts, blueprints, automations, scenes, sensors, configs.
 
-## Description
+### Description
 
 The repository contains Python scripts and YAML configs one might find useful for a HASS setup.
 
-## Pre-requisites
+### Pre-requisites
 
 * Python programming experience
 * understanding HomeAssistant [integrations](https://www.home-assistant.io/integrations/python_script/)
 * admin access to HASS instance
 
 ## alexa_tts.py
+
+Plays a TTS message on Amazon Echo devices using Alexa notification service. A list of target devices is generated based on time, recent motion activity, and a set of default and last resort targets.
 
 Usage:
 
@@ -98,5 +100,26 @@ RULES = (
         "target": OFFICE_1_ECHO,
         "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
     },
+)
+```
+
+## alexa_volume.py
+
+Sets the volume level on Amazon Echo devices.
+
+
+#### DEVICES
+A list of media player device IDs to control with alexa_volume.py
+
+```python
+DEVICES = (
+    "bathroom_1_echo",
+    "bathroom_2_echo"
+    "bedroom_1_echo"
+    "corridor_echo",
+    "garage_echo",
+    "living_room_echo",
+    "office_1_echo",
+    "office_2_echo",
 )
 ```
