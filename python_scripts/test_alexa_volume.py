@@ -25,7 +25,7 @@ class TestBase(unittest.TestCase):
         "volume_set",
         {
             "entity_id":
-                ', '.join(f"media_player.{target}" for target in targets),
+                ','.join(f"media_player.{target}" for target in targets),
             "volume_level":
                 volume_level,
         },
@@ -34,6 +34,18 @@ class TestBase(unittest.TestCase):
 
 class TestAlexaVolume(TestBase):
   """Alexa volume tests."""
+
+  def test_current_targets(self):
+    """Test set volume current targets."""
+
+    volume_level = 0.42
+
+    entity_id = alexa_volume.set_volume(self.hass, alexa_volume.DEVICES,
+                                        volume_level)
+    target_count = len(entity_id.split(','))
+
+    self.assertEqual(target_count, len(alexa_volume.DEVICES))
+    self.assertEqual(target_count, 8)
 
   def test_set_volume_hass_calls(self):
     """Test set volume generates HASS calls."""

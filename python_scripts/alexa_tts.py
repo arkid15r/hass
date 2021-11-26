@@ -7,20 +7,20 @@ and a set of default and last resort targets.
 
 __author__ = "Ark (ark@cho.red)"
 
-BATHROOM_1 = "primary_bathroom"
-BATHROOM_1_LIGHT = "group.primary_bathroom_bulbs"
-BATHROOM_1_ECHO = "media_player.primary_bathroom_echo"
-BATHROOM_1_MOTION = "sensor.primary_bathroom_last_5m_motion"
+BATHROOM_1 = "bathroom_1"
+BATHROOM_1_LIGHT = "group.bathroom_1_bulbs"
+BATHROOM_1_ECHO = "media_player.bathroom_1_echo"
+BATHROOM_1_MOTION = "sensor.bathroom_1_last_5m_motion"
 
-BATHROOM_2 = "secondary_bathroom"
-BATHROOM_2_LIGHT = "group.secondary_bathroom_bulbs"
-BATHROOM_2_ECHO = "media_player.secondary_bathroom_echo"
-BATHROOM_2_MOTION = "sensor.secondary_bathroom_last_5m_motion"
+BATHROOM_2 = "bathroom_2"
+BATHROOM_2_LIGHT = "group.bathroom_2_bulbs"
+BATHROOM_2_ECHO = "media_player.bathroom_2_echo"
+BATHROOM_2_MOTION = "sensor.bathroom_2_last_5m_motion"
 
-BEDROOM_1 = "primary_bedroom"
-BEDROOM_1_LIGHT = "group.primary_bedroom_bulbs"
-BEDROOM_1_ECHO = "media_player.primary_bedroom_echo"
-BEDROOM_1_MOTION = "sensor.primary_bedroom_last_5m_motion"
+BEDROOM_1 = "bedroom_1"
+BEDROOM_1_LIGHT = "group.bedroom_1_bulbs"
+BEDROOM_1_ECHO = "media_player.bedroom_1_echo"
+BEDROOM_1_MOTION = "sensor.bedroom_1_last_5m_motion"
 
 CORRIDOR = "corridor"
 CORRIDOR_ECHO = "media_player.corridor_echo"

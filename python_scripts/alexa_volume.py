@@ -4,8 +4,8 @@ __author__ = "Ark (ark@cho.red)"
 
 DEVICES = (
     "bathroom_1_echo",
-    "bathroom_2_echo"
-    "bedroom_1_echo"
+    "bathroom_2_echo",
+    "bedroom_1_echo",
     "corridor_echo",
     "garage_echo",
     "living_room_echo",
@@ -22,6 +22,8 @@ def set_volume(hass, targets, volume_level):
       targets: A list of device identifiers.
       volume_level: A volume level to set.
 
+    Returns:
+      string: a comma separated list of the targets for HASS API call.
     """
 
   error_message = "The volume level must be a number within the range [0..1]."
@@ -34,16 +36,17 @@ def set_volume(hass, targets, volume_level):
   if volume_level < 0 or volume_level > 1:
     raise ValueError(error_message)
 
+  entity_id = ','.join(f"media_player.{target}" for target in targets)
   hass.services.call(
       "media_player",
       "volume_set",
       {
-          "entity_id":
-              ', '.join(f"media_player.{target}" for target in targets),
-          "volume_level":
-              volume_level
+          "entity_id": entity_id,
+          "volume_level": volume_level
       },
   )
+
+  return entity_id
 
 
 # pylint: disable=undefined-variable
