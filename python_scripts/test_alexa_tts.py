@@ -228,7 +228,7 @@ class TestTarget(TestBase):
         self.assertNotIn(
             target,
             targets,
-            f"Should not play on the {area} {conditions[condition]}.",
+            f"Should not play in the {area} {conditions[condition]}.",
         )
         self._assert_hass_called_with(self.test_message, targets)
 
@@ -273,6 +273,29 @@ class TestTarget(TestBase):
           )
           self._assert_hass_not_called()
 
+  def _test_played_unless(self, area, target, conditions, unless):
+    """
+    Assert message was not played on the target due to unless rule conditions.
+    """
+
+    condition_dict = {}
+    for condition in tuple(conditions.keys()) + unless["conditions"]:
+      condition_dict[condition] = self.sensor_on
+
+    with mock.patch.dict(self.hass.states, condition_dict):
+      targets = alexa_tts.play(
+          self.hass,
+          message=self.test_message,
+          env=alexa_tts.ENV,
+      )
+
+      self.assertNotIn(
+          target,
+          targets,
+          f"Should not play in the {area} when {unless['description']}.",
+      )
+      self._assert_hass_called_with(self.test_message, targets)
+
   def _test_played_quite_time(self, area, target):
     """Assert message was  played on the target during quite time. """
     with mock.patch.dict(self.hass.states,
@@ -294,7 +317,7 @@ class TestTarget(TestBase):
 
 
 class TestBathroom1(TestTarget):
-  """Bathroom_1 tests."""
+  """Bathroom 1 tests."""
 
   conditions = {
       alexa_tts.BATHROOM_1_LIGHT: "the light is on",
@@ -319,9 +342,19 @@ class TestBathroom1(TestTarget):
     super()._test_played_quite_time(alexa_tts.BATHROOM_1,
                                     alexa_tts.BATHROOM_1_ECHO)
 
+  def test_played_unless(self):
+    unless = {
+        "conditions": (alexa_tts.BATHROOM_1_DOOR, alexa_tts.BEDROOM_1_LIGHT),
+        "description":
+            f"playing in {alexa_tts.BEDROOM_1} and {alexa_tts.BATHROOM_1} door is open"
+    }
+
+    super()._test_played_unless(alexa_tts.BATHROOM_1, alexa_tts.BATHROOM_1_ECHO,
+                                self.conditions, unless)
+
 
 class TestBathroom2(TestTarget):
-  """Bathroom_2 tests."""
+  """Bathroom 2 tests."""
 
   conditions = {
       alexa_tts.BATHROOM_2_LIGHT: "the light is on",
@@ -349,9 +382,19 @@ class TestBathroom2(TestTarget):
     super()._test_played_quite_time(alexa_tts.BATHROOM_2,
                                     alexa_tts.BATHROOM_2_ECHO)
 
+  def test_played_unless(self):
+    unless = {
+        "conditions": (alexa_tts.BATHROOM_2_DOOR, alexa_tts.LIVING_ROOM_LIGHT),
+        "description":
+            f"playing in {alexa_tts.LIVING_ROOM} and {alexa_tts.BATHROOM_2} door is open"
+    }
+
+    super()._test_played_unless(alexa_tts.BATHROOM_2, alexa_tts.BATHROOM_2_ECHO,
+                                self.conditions, unless)
+
 
 class TestBedroom1(TestTarget):
-  """Bedroom_1 tests."""
+  """Bedroom 1 tests."""
 
   conditions = {
       alexa_tts.BEDROOM_1_LIGHT: "the light is on",

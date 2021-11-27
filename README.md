@@ -85,20 +85,29 @@ ENV = {
 
 #### RULES
 Each area behaviour is configured in RULES.
+ - conditions: a set of conditions (sensor is on) to check for the targets activation
+ - target: the echo device
+ - unless: (don't play in the area if)
+   - conditions: any of these is ON (or empty)
+   - target: and this target (normaly from the nearest area) is playing
 
 ```python
 RULES = (
     {
+        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION),
         "target": BATHROOM_1_ECHO,
-        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION)
+        "unless": {
+            "conditions": (BATHROOM_1_DOOR,),
+            "target": BEDROOM_1_ECHO
+        }
     },
     {
-        "target": GARAGE_ECHO,
-        "conditions": (GARAGE_LIGHT, GARAGE_MOTION)
+        "conditions": (GARAGE_LIGHT, GARAGE_MOTION),
+        "target": GARAGE_ECHO
     },
     {
-        "target": OFFICE_1_ECHO,
         "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
+        "target": OFFICE_1_ECHO
     },
 )
 ```

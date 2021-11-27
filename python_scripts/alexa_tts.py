@@ -8,11 +8,13 @@ and a set of default and last resort targets.
 __author__ = "Ark (ark@cho.red)"
 
 BATHROOM_1 = "bathroom_1"
+BATHROOM_1_DOOR = "binary_sensor.bathroom_1_door"
 BATHROOM_1_LIGHT = "group.bathroom_1_bulbs"
 BATHROOM_1_ECHO = "media_player.bathroom_1_echo"
 BATHROOM_1_MOTION = "sensor.bathroom_1_last_5m_motion"
 
 BATHROOM_2 = "bathroom_2"
+BATHROOM_2_DOOR = "binary_sensor.bathroom_2_door"
 BATHROOM_2_LIGHT = "group.bathroom_2_bulbs"
 BATHROOM_2_ECHO = "media_player.bathroom_2_echo"
 BATHROOM_2_MOTION = "sensor.bathroom_2_last_5m_motion"
@@ -71,24 +73,30 @@ ENV = {
 
 RULES = (
     {
+        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION),
         "target": BATHROOM_1_ECHO,
-        "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION)
+        "unless": {
+            "conditions": (BATHROOM_1_DOOR,),
+            "target": BEDROOM_1_ECHO
+        }
     },
     {
+        "conditions": (BATHROOM_2_LIGHT, BATHROOM_2_MOTION),
         "target": BATHROOM_2_ECHO,
-        "conditions": (BATHROOM_2_LIGHT, BATHROOM_2_MOTION)
+        "unless": {
+            "conditions": (BATHROOM_2_DOOR,),
+            "target": LIVING_ROOM_ECHO
+        }
     },
     {
-        "target": BEDROOM_1_ECHO,
-        "conditions": (BEDROOM_1_LIGHT, BEDROOM_1_MOTION)
+        "conditions": (BEDROOM_1_LIGHT, BEDROOM_1_MOTION),
+        "target": BEDROOM_1_ECHO
     },
     {
-        "target": GARAGE_ECHO,
-        "conditions": (GARAGE_LIGHT, GARAGE_MOTION)
+        "conditions": (GARAGE_LIGHT, GARAGE_MOTION),
+        "target": GARAGE_ECHO
     },
     {
-        "target":
-            LIVING_ROOM_ECHO,
         "conditions": (
             DINING_AREA_LIGHT,
             HALLWAY_MOTION,
@@ -98,14 +106,19 @@ RULES = (
             LIVING_ROOM_MOTION,
             LIVING_ROOM_TV,
         ),
+        "target": LIVING_ROOM_ECHO
     },
     {
-        "target": OFFICE_1_ECHO,
         "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
+        "target": OFFICE_1_ECHO,
+        "unless": {
+            "conditions": (),  # No additional conditions.
+            "target": LIVING_ROOM_ECHO
+        }
     },
     {
-        "target": OFFICE_2_ECHO,
-        "conditions": (OFFICE_2_LIGHT, OFFICE_2_MOTION)
+        "conditions": (OFFICE_2_LIGHT, OFFICE_2_MOTION),
+        "target": OFFICE_2_ECHO
     },
 )
 
@@ -138,10 +151,24 @@ def play(hass, message=None, silent_in=None, env=None):
   silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
 
   targets = set()
+
+  # Add targets based on the rule conditions.
   for rule in RULES:
-    # For some reason map() is restricted in HASS py_script environment.
     if any((is_on(c) for c in rule["conditions"])):
       targets.add(rule["target"])
+
+  # Remove targets based on the unless condition.
+  for rule in RULES:
+    target = rule["target"]
+    if (target not in targets or "unless" not in rule
+        or rule["unless"]["target"] not in targets):
+      continue
+
+    conditions = rule["unless"]["conditions"]
+    if not conditions:
+      targets.remove(target)
+    elif any((is_on(c) for c in conditions)):
+      targets.remove(target)
 
   # Add default and last resort targets.
   if quite_hours:
