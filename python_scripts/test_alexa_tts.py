@@ -510,6 +510,16 @@ class TestOffice1(TestTarget):
   def test_played_quite_time(self):
     super()._test_played_quite_time(alexa_tts.OFFICE_1, alexa_tts.OFFICE_1_ECHO)
 
+  def test_played_unless(self):
+    unless = {
+        "conditions": (alexa_tts.DINING_AREA_LIGHT, alexa_tts.KITCHEN_LIGHT,
+                       alexa_tts.LIVING_ROOM_LIGHT, alexa_tts.LIVING_ROOM_TV),
+        "description": f"playing in {alexa_tts.LIVING_ROOM}"
+    }
+
+    super()._test_played_unless(alexa_tts.OFFICE_1, alexa_tts.OFFICE_1_ECHO,
+                                self.conditions, unless)
+
 
 class TestOffice2(TestTarget):
   """Office2 tests."""

@@ -112,7 +112,8 @@ RULES = (
         "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
         "target": OFFICE_1_ECHO,
         "unless": {
-            "conditions": (),  # No additional conditions.
+            "conditions": (DINING_AREA_LIGHT, KITCHEN_LIGHT, LIVING_ROOM_LIGHT,
+                           LIVING_ROOM_TV),
             "target": LIVING_ROOM_ECHO
         }
     },
