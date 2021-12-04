@@ -208,7 +208,7 @@ class TestLastResortTargetsNormalTime(TestDefaultTargets):
         default_targets, {"NORMAL_TIME_LAST_RESORT_TARGETS": default_targets})
 
     # Test current targets.
-    super()._test_not_played(alexa_tts.ENV["NORMAL_TIME_DEFAULT_TARGETS"],
+    super()._test_not_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
                              env=alexa_tts.ENV)
 
   def test_played(self):
@@ -224,12 +224,14 @@ class TestLastResortTargetsNormalTime(TestDefaultTargets):
     super()._test_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
                          env=alexa_tts.ENV)
 
-    super()._test_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
-                         silent_targets={
-                             alexa_tts.LIVING_ROOM: alexa_tts.LIVING_ROOM_ECHO,
-                             alexa_tts.OFFICE_1: alexa_tts.OFFICE_1_ECHO
-                         },
-                         env=alexa_tts.ENV)
+    with mock.patch.dict(self.hass.states,
+                         {alexa_tts.LIVING_ROOM_MOTION: self.sensor_on}):
+      super()._test_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
+                           silent_targets={
+                               alexa_tts.LIVING_ROOM:
+                                   alexa_tts.LIVING_ROOM_ECHO,
+                           },
+                           env=alexa_tts.ENV)
 
 
 class TestTarget(TestBase):

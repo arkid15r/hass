@@ -150,7 +150,6 @@ def play(hass, message=None, silent_in=None, env=None):
     raise ValueError("Message is required.")
 
   quite_hours = is_on(QUITE_TIME)
-  silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
 
   targets = set()
 
@@ -172,6 +171,10 @@ def play(hass, message=None, silent_in=None, env=None):
     elif any((is_on(c) for c in conditions)):
       targets.remove(target)
 
+  # Mute silenced targets.
+  silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
+  targets = targets.difference(silenced_targets)
+
   # Add default and last resort targets.
   if quite_hours:
     if "QUITE_TIME_DEFAULT_TARGETS" in env:
@@ -189,8 +192,7 @@ def play(hass, message=None, silent_in=None, env=None):
           set(env["NORMAL_TIME_LAST_RESORT_TARGETS"].values()).difference(
               silenced_targets))
 
-  # Mute silenced targets.
-  targets = list(targets.difference(silenced_targets))
+  targets = list(targets)
   if targets:
     hass.services.call(
         "notify",
