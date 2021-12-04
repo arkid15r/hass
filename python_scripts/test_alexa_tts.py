@@ -107,11 +107,16 @@ class TestDefaultTargets(TestBase):
       )
       self._assert_hass_not_called()
 
-  def _test_played(self, targets, env=None):
+  def _test_played(self, targets, silent_targets=None, env=None):
     """Assert message was played on the default target."""
+
+    silent_in = None
+    if silent_targets:
+      silent_in = silent_targets.keys()
 
     expected_targets = alexa_tts.play(self.hass,
                                       message=self.test_message,
+                                      silent_in=silent_in,
                                       env=env)
 
     for area in targets:
@@ -120,7 +125,15 @@ class TestDefaultTargets(TestBase):
           expected_targets,
           f"Should play on the default target in {area}.",
       )
-      self._assert_hass_called_with(self.test_message, expected_targets)
+
+    for area in silent_targets or ():
+      self.assertNotIn(
+          silent_targets[area],
+          expected_targets,
+          f"Should not play on the target in {area} if silenced.",
+      )
+
+    self._assert_hass_called_with(self.test_message, expected_targets)
 
 
 class TestDefaultTargetsNormalTime(TestDefaultTargets):
@@ -176,11 +189,11 @@ class TestDefaultTargetsQuiteTime(TestDefaultTargets):
     with mock.patch.dict(self.hass.states,
                          {alexa_tts.QUITE_TIME: self.sensor_on}):
       super()._test_played(default_targets,
-                           {"QUITE_TIME_DEFAULT_TARGETS": default_targets})
+                           env={"QUITE_TIME_DEFAULT_TARGETS": default_targets})
 
       # Test current targets.
       super()._test_played(alexa_tts.ENV["QUITE_TIME_DEFAULT_TARGETS"],
-                           alexa_tts.ENV)
+                           env=alexa_tts.ENV)
 
 
 class TestLastResortTargetsNormalTime(TestDefaultTargets):
@@ -203,11 +216,19 @@ class TestLastResortTargetsNormalTime(TestDefaultTargets):
         alexa_tts.OFFICE_1: alexa_tts.OFFICE_1_ECHO,
         alexa_tts.OFFICE_2: alexa_tts.OFFICE_2_ECHO,
     }
-    super()._test_played(default_targets,
-                         {"NORMAL_TIME_LAST_RESORT_TARGETS": default_targets})
+    super()._test_played(
+        default_targets,
+        env={"NORMAL_TIME_LAST_RESORT_TARGETS": default_targets})
 
     # Test current targets.
     super()._test_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
+                         env=alexa_tts.ENV)
+
+    super()._test_played(alexa_tts.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
+                         silent_targets={
+                             alexa_tts.LIVING_ROOM: alexa_tts.LIVING_ROOM_ECHO,
+                             alexa_tts.OFFICE_1: alexa_tts.OFFICE_1_ECHO
+                         },
                          env=alexa_tts.ENV)
 
 
@@ -269,7 +290,7 @@ class TestTarget(TestBase):
           self.assertNotIn(
               target,
               expected_targets,
-              f"Should not play in the {area} during quite time.",
+              f"Should not play in the {area} during quite time if silenced.",
           )
           self._assert_hass_not_called()
 

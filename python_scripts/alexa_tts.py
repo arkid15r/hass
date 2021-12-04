@@ -124,6 +124,7 @@ RULES = (
 )
 
 
+# pylint: disable=too-many-branches
 def play(hass, message=None, silent_in=None, env=None):
   """
     Check targets and generate text to speach request.
@@ -173,12 +174,20 @@ def play(hass, message=None, silent_in=None, env=None):
 
   # Add default and last resort targets.
   if quite_hours:
-    targets.update(set(env["QUITE_TIME_DEFAULT_TARGETS"].values()))
+    if "QUITE_TIME_DEFAULT_TARGETS" in env:
+      targets.update(
+          set(env["QUITE_TIME_DEFAULT_TARGETS"].values()).difference(
+              silenced_targets))
   else:
     if "NORMAL_TIME_DEFAULT_TARGETS" in env:
-      targets.update(set(env["NORMAL_TIME_DEFAULT_TARGETS"].values()))
+      targets.update(
+          set(env["NORMAL_TIME_DEFAULT_TARGETS"].values()).difference(
+              silenced_targets))
+
     if not targets and "NORMAL_TIME_LAST_RESORT_TARGETS" in env:
-      targets.update(set(env["NORMAL_TIME_LAST_RESORT_TARGETS"].values()))
+      targets.update(
+          set(env["NORMAL_TIME_LAST_RESORT_TARGETS"].values()).difference(
+              silenced_targets))
 
   # Mute silenced targets.
   targets = list(targets.difference(silenced_targets))
