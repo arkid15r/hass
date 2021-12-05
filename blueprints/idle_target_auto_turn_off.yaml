@@ -14,8 +14,8 @@ blueprint:
       - **Watcher**: (*optional*) an entity with 'on'/'off' state capability which tracks activity in the `Target` area. If no activity detected by the `Watcher` for at least `Wathcer Idle Time` the `Target` will be considered idle.
       - **Watcher Inactive Time** (*default*: 0, *unit*: seconds): an amount of time without any activity detected by the `Watcher` required to consider the `Target` idle.
       - **Scene**: a scene that turns the idle `Target` off.
-      - **Skip Unless** (*optional*): turn the `Target` off if the entity is in the required state (see the `Skip Unless State`) only.
-      - **Skip Unless State** (*default: off*): a state ('on'/'off') in which the `Skip Unless` entity must be in order to get the `Scene` activated. If no `Skip Unless` provided the `Skip Unless State` is ignored.
+      - **Run If Only** (*optional*): turn the `Target` off if the entity is in the required state (see the `Run If Only State`) only.
+      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be in order to get the `Scene` activated. If no `Run If Only` provided the `Run If Only State` is ignored.
 
   domain: automation
   input:
@@ -70,23 +70,23 @@ blueprint:
         entity:
           domain: scene
 
-    skip_unless:
-      name: Skip Unless (optional)
+    run_if:
+      name: Run If Only (optional)
       description: Howerver, don't activate the scene if the entity
       default:
       selector:
         entity: {}
 
-    skip_unless_state:
-      name: Skip Unless State (optional)
+    run_if_state:
+      name: Run If Only State (optional)
       description: Is in a state which differs from this
       default: false
       selector:
         boolean: {}
 
 variables:
-  skip_unless: !input skip_unless
-  skip_unless_state: !input skip_unless_state
+  run_if: !input run_if
+  run_if_state: !input run_if_state
   watcher: !input watcher
   watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
 
@@ -97,9 +97,9 @@ trigger:
 condition:
   - condition: or
     conditions:
-      - "{{ skip_unless == none }}"
-      - "{{ skip_unless_state and states[skip_unless].state == 'on' }}"
-      - "{{ not skip_unless_state and states[skip_unless].state == 'off' }}"
+      - "{{ run_if == none }}"
+      - "{{ run_if_state and states[run_if].state == 'on' }}"
+      - "{{ not run_if_state and states[run_if].state == 'off' }}"
 
   - condition: or
     conditions:

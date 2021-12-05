@@ -39,8 +39,8 @@ blueprint:
       - **Scene #5 Start Time** (*optional*): `Scene #5` time range start.
       - **Scene #5 End Time** (*optional*): `Scene #5` time range end.
 
-      - **Skip Unless** (*optional*): execute automation if the entity is in the required state (see the `Skip Unless State`) only.
-      - **Skip Unless State** (*default: off*): a state ('on'/'off') in which the `Skip Unless` entity must be in order to execute automation. If no `Skip Unless` entity provided the `Skip Unless State` is ignored.
+      - **Run If Only** (*optional*): execute automation if the entity is in the required state (see the `Run If Only State`) only.
+      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be in order to execute automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
 
   domain: automation
   input:
@@ -189,28 +189,28 @@ blueprint:
       selector:
         time:
 
-    skip_unless:
-      name: Skip Unless (optional)
-      description: Howerver, don't activate the scene if the entity
+    run_if:
+      name: Run If Only (optional)
+      description: Howerver, don't run the automation if the entity
       default:
       selector:
         entity: {}
 
-    skip_unless_state:
-      name: Skip Unless State (optional)
+    run_if_state:
+      name: Run If Only State (optional)
       description: Is in a state which differs from this
       default: false
       selector:
         boolean: {}
 
 variables:
+  run_if: !input run_if
+  run_if_state: !input run_if_state
   scene_1: !input scene_1
   scene_2: !input scene_2
   scene_3: !input scene_3
   scene_4: !input scene_4
   scene_5: !input scene_5
-  skip_unless: !input skip_unless
-  skip_unless_state: !input skip_unless_state
   watcher: !input watcher
   watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
 
@@ -229,9 +229,9 @@ trigger:
 condition:
   - condition: or
     conditions:
-      - "{{ skip_unless == none }}"
-      - "{{ skip_unless_state and states[skip_unless].state == 'on' }}"
-      - "{{ not skip_unless_state and states[skip_unless].state == 'off' }}"
+      - "{{ run_if == none }}"
+      - "{{ run_if_state and states[run_if].state == 'on' }}"
+      - "{{ not run_if_state and states[run_if].state == 'off' }}"
 
 action:
   - choose:
