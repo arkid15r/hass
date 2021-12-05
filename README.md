@@ -1,26 +1,29 @@
-# hass
+# Home Assistant Helpers
 
 [HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts, blueprints, automations, scenes, sensors, configs.
 
-### Description
+#### Description
 
 The repository contains Python scripts and YAML configs one might find useful for a HASS setup.
 
-### Pre-requisites
+#### Pre-requisites
 
-* Python programming experience
-* understanding HomeAssistant [integrations](https://www.home-assistant.io/integrations/python_script/)
-* admin access to HASS instance
+- Python programming experience
+- understanding HomeAssistant [integrations](https://www.home-assistant.io/integrations/python_script/)
+- admin access to HASS instance
 
-## alexa_tts.py
+## Python Scripts
+
+### alexa_tts.py
 
 Plays a TTS message on Amazon Echo devices using Alexa notification service. A list of target devices is generated based on time, recent motion activity, and a set of default and last resort targets.
 
 Usage:
 
 From /config/automations.yaml
+
 ```yaml
-  action:
+action:
   - service: python_script.alexa_tts
     data:
       message: Garage door opened.
@@ -31,6 +34,7 @@ From /config/automations.yaml
 The alexa_tts.py depends on the set of sensors. You can customaze them based on your needs and situation. Here are some examples:
 
 From /config/binary_sensors.yaml
+
 ```yaml
 platform: template
   sensors:
@@ -41,6 +45,7 @@ platform: template
 ```
 
 From /config/sensors.yaml
+
 ```yaml
 platform: template
 sensors:
@@ -50,6 +55,7 @@ sensors:
 ```
 
 from /config/groups.yaml
+
 ```yaml
 garage_motion_sensors:
   name: Garage Motion Sensors
@@ -60,6 +66,7 @@ garage_motion_sensors:
 ```
 
 from /config/configuration.yaml
+
 ```yaml
 binary_sensor: !include binary_sensors.yaml
 group: !include groups.yaml
@@ -69,7 +76,7 @@ sensor: !include sensors.yaml
 
 #### ENV
 
-The script behaviour heavily depends on the quite/normal time sensor state. You can also set default and last resor targets via ENV dictionary. The default targets will remain active as long as they are not specifically silenced during alexa_tts.py invocation using ```slinet_in``` parameter. The last resort targets will be used if resulting targets list is empty.
+The script behaviour heavily depends on the quite/normal time sensor state. You can also set default and last resor targets via ENV dictionary. The default targets will remain active as long as they are not specifically silenced during alexa_tts.py invocation using `slinet_in` parameter. The last resort targets will be used if resulting targets list is empty.
 
 ```python
 ENV = {
@@ -84,12 +91,14 @@ ENV = {
 ```
 
 #### RULES
+
 Each area behaviour is configured in RULES.
- - conditions: a set of conditions (sensor is on) to check for the targets activation
- - target: the echo device
- - unless: (don't play in the area if)
-   - conditions: any of these is ON (or empty)
-   - target: and this target (normaly from the nearest area) is playing
+
+- conditions: a set of conditions (sensor is on) to check for the targets activation
+- target: the echo device
+- unless: (don't play in the area if)
+  - conditions: any of these is ON (or empty)
+  - target: and this target (normaly from the nearest area) is playing
 
 ```python
 RULES = (
@@ -112,12 +121,12 @@ RULES = (
 )
 ```
 
-## alexa_volume.py
+### alexa_volume.py
 
 Sets the volume level on Amazon Echo devices.
 
-
 #### DEVICES
+
 A list of media player device IDs to control with alexa_volume.py
 
 ```python
@@ -132,3 +141,11 @@ DEVICES = (
     "office_2_echo",
 )
 ```
+
+## Blueprints
+
+### scene_automation.yaml
+
+Automates Scene Activation.
+
+The automation supports 2 default and up to 5 optional scenes which are activated by the `Watcher` state change events depending on the current time.

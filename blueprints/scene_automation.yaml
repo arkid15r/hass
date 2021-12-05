@@ -1,0 +1,292 @@
+# Scene Automation Blueprint.
+#
+# Author: Ark (ark@cho.red)
+
+blueprint:
+  name: Scene Automation
+  description: |
+    Automates Scene Activation.
+
+    The automation supports 2 default and up to 5 optional scenes which are activated by the `Watcher` state change events depending on the current time.
+
+    The `Default Scene On` is automatically activated if none of the `Scene #[1-5]` is selected for activation based on the current settings.
+    The `Default Scene Off` is automatically activated if the `Watcher` stays in 'off' state for at least `Watcher Inactive Time`.
+
+    Inputs:
+      - **Watcher**: an entity with 'on'/'off' state capability which triggers scene activation.
+      - **Watcher Inactive Time** (*default*: 60, *unit*: seconds): an amount of time `Watcher` required to stay in 'off' state in order to get the `Default Off Scene` activated.
+
+      - **Default On Scene**: a scene to activate after the `Watcher` switches to 'on' state.
+      - **Default Off Scene**: a scene to activate after the `Watcher` switches to 'off' state and stays in it for at least `Watcher Inactive Time`.
+
+      - **Scene #1** (*optional*): a scene that should be activated within `Scene #1 Start Time` - `Scene #1 End Time` time range.
+      - **Scene #1 Start Time** (*optional*): `Scene #1` time range start.
+      - **Scene #1 End Time** (*optional*): `Scene #1` time range end.
+
+      - **Scene #2** (*optional*): a scene that should be activated within `Scene #2 Start Time` - `Scene #2 End Time` time range.
+      - **Scene #2 Start Time** (*optional*): `Scene #2` time range start.
+      - **Scene #2 End Time** (*optional*): `Scene #2` time range end.
+
+      - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Start Time` - `Scene #3 End Time` time range.
+      - **Scene #3 Start Time** (*optional*): `Scene #3` time range start.
+      - **Scene #3 End Time** (*optional*): `Scene #3` time range end.
+
+      - **Scene #4** (*optional*): a scene that should be activated within `Scene #4 Start Time` - `Scene #4 End Time` time range.
+      - **Scene #4 Start Time** (*optional*): `Scene #4` time range start.
+      - **Scene #4 End Time** (*optional*): `Scene #4` time range end.
+
+      - **Scene #5** (*optional*): a scene that should be activated within `Scene #5 Start Time` - `Scene #5 End Time` time range.
+      - **Scene #5 Start Time** (*optional*): `Scene #5` time range start.
+      - **Scene #5 End Time** (*optional*): `Scene #5` time range end.
+
+      - **Skip Unless** (*optional*): execute automation if the entity is in the required state (see the `Skip Unless State`) only.
+      - **Skip Unless State** (*default: off*): a state ('on'/'off') in which the `Skip Unless` entity must be in order to execute automation. If no `Skip Unless` entity provided the `Skip Unless State` is ignored.
+
+  domain: automation
+  input:
+    watcher:
+      name: Watcher
+      description: An entity (or a group of entities) that triggers scene activation
+      default:
+      selector:
+        entity: {}
+
+    watcher_inactive_time_seconds:
+      name: Watcher Inactive Time
+      description: A time the activated scene remains active.
+      default: 60
+      selector:
+        number:
+          min: 0
+          max: 3600
+          step: 1
+          unit_of_measurement: "second(s)"
+          mode: slider
+
+    default_scene_on:
+      name: Default On Scene
+      description: A scene to activate in case none of the 5 optional scenes is activated
+      default:
+      selector:
+        entity:
+          domain: scene
+
+    default_scene_off:
+      name: Default Off Scene
+      description: A scene to activate after the `Watcher Inactive Time`
+      default:
+      selector:
+        entity:
+          domain: scene
+
+    scene_1:
+      name: "Scene #1 (optional)"
+      description: "A scene #1"
+      default: "scene.null"
+      selector:
+        entity:
+          domain: scene
+
+    scene_1_start_time:
+      name: "Scene #1 Start Time (optional)"
+      description: "A start time for the Scene #1"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_1_end_time:
+      name: "Scene #1 End Time (optional)"
+      description: "An end time for the Scene #1"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_2:
+      name: "Scene #2 (optional)"
+      description: "A scene #2"
+      default: "scene.null"
+      selector:
+        entity:
+          domain: scene
+
+    scene_2_start_time:
+      name: "Scene #2 Start Time (optional)"
+      description: "A start time for the Scene #2"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_2_end_time:
+      name: "Scene #2 End Time (optional)"
+      description: "An end time for the Scene #2"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_3:
+      name: "Scene #3 (optional)"
+      description: "A scene #3"
+      default: "scene.null"
+      selector:
+        entity:
+          domain: scene
+
+    scene_3_start_time:
+      name: "Scene #3 Start Time (optional)"
+      description: "A start time for the Scene #3"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_3_end_time:
+      name: "Scene #3 End Time (optional)"
+      description: "An end time for the Scene #3"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_4:
+      name: "Scene #4 (optional)"
+      description: "A scene #4"
+      default: "scene.null"
+      selector:
+        entity:
+          domain: scene
+
+    scene_4_start_time:
+      name: "Scene #4 Start Time (optional)"
+      description: "A start time for the Scene #4"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_4_end_time:
+      name: "Scene #4 End Time (optional)"
+      description: "An end time for the Scene #4"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_5:
+      name: "Scene #5 (optional)"
+      description: "A scene #5"
+      default: "scene.null"
+      selector:
+        entity:
+          domain: scene
+
+    scene_5_start_time:
+      name: "Scene #5 Start Time (optional)"
+      description: "A start time for the Scene #5"
+      default: "00:00:00"
+      selector:
+        time:
+
+    scene_5_end_time:
+      name: "Scene #5 End Time (optional)"
+      description: "An end time for the Scene #5"
+      default: "00:00:00"
+      selector:
+        time:
+
+    skip_unless:
+      name: Skip Unless (optional)
+      description: Howerver, don't activate the scene if the entity
+      default:
+      selector:
+        entity: {}
+
+    skip_unless_state:
+      name: Skip Unless State (optional)
+      description: Is in a state which differs from this
+      default: false
+      selector:
+        boolean: {}
+
+variables:
+  scene_1: !input scene_1
+  scene_2: !input scene_2
+  scene_3: !input scene_3
+  scene_4: !input scene_4
+  scene_5: !input scene_5
+  skip_unless: !input skip_unless
+  skip_unless_state: !input skip_unless_state
+  watcher: !input watcher
+  watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
+
+trigger:
+  - platform: state
+    entity_id: !input watcher
+    from: "off"
+    to: "on"
+
+  - platform: state
+    entity_id: !input watcher
+    from: "on"
+    to: "off"
+    for: !input watcher_inactive_time_seconds
+
+condition:
+  - condition: or
+    conditions:
+      - "{{ skip_unless == none }}"
+      - "{{ skip_unless_state and states[skip_unless].state == 'on' }}"
+      - "{{ not skip_unless_state and states[skip_unless].state == 'off' }}"
+
+action:
+  - choose:
+      # The `Watcher` goes 'off'.
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.to_state.state == 'off' }}"
+        sequence:
+          - scene: !input default_scene_off
+
+      # The `Watcher` goes 'on'.
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.to_state.state == 'on' }}"
+        sequence:
+          - choose:
+              - conditions:
+                  - "{{ scene_1 != 'scene.null' }}"
+                  - condition: time
+                    after: !input scene_1_start_time
+                    before: !input scene_1_end_time
+                sequence:
+                  - scene: !input scene_1
+
+              - conditions:
+                  - "{{ scene_2 != 'scene.null' }}"
+                  - condition: time
+                    after: !input scene_2_start_time
+                    before: !input scene_2_end_time
+                sequence:
+                  - scene: !input scene_2
+
+              - conditions:
+                  - "{{ scene_3 != 'scene.null' }}"
+                  - condition: time
+                    after: !input scene_3_start_time
+                    before: !input scene_3_end_time
+                sequence:
+                  - scene: !input scene_3
+
+              - conditions:
+                  - "{{ scene_4 != 'scene.null' }}"
+                  - condition: time
+                    after: !input scene_4_start_time
+                    before: !input scene_4_end_time
+                sequence:
+                  - scene: !input scene_4
+
+              - conditions:
+                  - "{{ scene_5 != 'scene.null' }}"
+                  - condition: time
+                    after: !input scene_5_start_time
+                    before: !input scene_5_end_time
+                sequence:
+                  - scene: !input scene_5
+
+            default:
+              - scene: !input default_scene_on
