@@ -26,7 +26,7 @@ blueprint:
       selector:
         text:
 
-    target_id:
+    target:
       name: Target
       description: If the entity (or a group of entities) is active
       selector:
@@ -41,10 +41,10 @@ blueprint:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: "second(s)"
+          unit_of_measurement: second(s)
           mode: slider
 
-    watcher_id:
+    watcher:
       name: Watcher (optional)
       description: And the entity (or a group of entities)
       default:
@@ -60,56 +60,56 @@ blueprint:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: "second(s)"
+          unit_of_measurement: second(s)
           mode: slider
 
-    scene_id:
+    scene:
       name: Scene
       description: Then activate the scene
       selector:
         entity:
           domain: scene
 
-    skip_unless_id:
-      name: "Skip Unless (optional)"
+    skip_unless:
+      name: Skip Unless (optional)
       description: Howerver, don't activate the scene if the entity
       default:
       selector:
         entity: {}
 
     skip_unless_state:
-      name: "Skip Unless State (optional)"
+      name: Skip Unless State (optional)
       description: Is in a state which differs from this
       default: false
       selector:
         boolean: {}
 
 variables:
-  skip_unless_id: !input "skip_unless_id"
-  skip_unless_state: !input "skip_unless_state"
-  watcher_id: !input "watcher_id"
-  watcher_inactive_time_seconds: !input "watcher_inactive_time_seconds"
+  skip_unless: !input skip_unless
+  skip_unless_state: !input skip_unless_state
+  watcher: !input watcher
+  watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
 
 trigger:
   - platform: time_pattern
-    minutes: !input "check_frequency_minutes"
+    minutes: !input check_frequency_minutes
 
 condition:
   - condition: or
     conditions:
-      - "{{ skip_unless_id == none }}"
-      - "{{ skip_unless_state and states[skip_unless_id].state == 'on' }}"
-      - "{{ not skip_unless_state and states[skip_unless_id].state == 'off' }}"
+      - "{{ skip_unless == none }}"
+      - "{{ skip_unless_state and states[skip_unless].state == 'on' }}"
+      - "{{ not skip_unless_state and states[skip_unless].state == 'off' }}"
 
   - condition: or
     conditions:
-      - "{{ watcher_id == none }}"
-      - "{{ as_timestamp(now()) - as_timestamp(states[watcher_id].last_changed)>= watcher_inactive_time_seconds|float }}"
+      - "{{ watcher == none }}"
+      - "{{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >= watcher_inactive_time_seconds|float }}"
 
   - condition: state
-    entity_id: !input "target_id"
+    entity_id: !input target
     state: "on"
-    for: !input "target_active_time_seconds"
+    for: !input target_active_time_seconds
 
 action:
-  - scene: !input "scene_id"
+  - scene: !input scene
