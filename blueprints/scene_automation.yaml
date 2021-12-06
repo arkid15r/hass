@@ -198,10 +198,10 @@ blueprint:
 
     run_if_state:
       name: Run If Only State (optional)
-      description: Is in a state which differs from this
-      default: false
+      description: Is not in this state
+      default: "off"
       selector:
-        boolean: {}
+        text:
 
 variables:
   run_if: !input run_if
@@ -230,8 +230,7 @@ condition:
   - condition: or
     conditions:
       - "{{ run_if == none }}"
-      - "{{ run_if_state and states[run_if].state == 'on' }}"
-      - "{{ not run_if_state and states[run_if].state == 'off' }}"
+      - "{{ states[run_if].state == run_if_state }}"
 
 action:
   - choose:

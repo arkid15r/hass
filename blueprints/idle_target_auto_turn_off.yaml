@@ -14,8 +14,8 @@ blueprint:
       - **Watcher**: (*optional*) an entity with 'on'/'off' state capability which tracks activity in the `Target` area. If no activity detected by the `Watcher` for at least `Wathcer Idle Time` the `Target` will be considered idle.
       - **Watcher Inactive Time** (*default*: 0, *unit*: seconds): an amount of time without any activity detected by the `Watcher` required to consider the `Target` idle.
       - **Scene**: a scene that turns the idle `Target` off.
-      - **Run If Only** (*optional*): turn the `Target` off if the entity is in the required state (see the `Run If Only State`) only.
-      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be in order to get the `Scene` activated. If no `Run If Only` provided the `Run If Only State` is ignored.
+      - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
+      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be to run the automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
 
   domain: automation
   input:
@@ -72,17 +72,17 @@ blueprint:
 
     run_if:
       name: Run If Only (optional)
-      description: Howerver, don't activate the scene if the entity
+      description: Howerver, don't run the automation if the entity
       default:
       selector:
         entity: {}
 
     run_if_state:
       name: Run If Only State (optional)
-      description: Is in a state which differs from this
-      default: false
+      description: Is not in this state
+      default: "off"
       selector:
-        boolean: {}
+        text:
 
 variables:
   run_if: !input run_if
@@ -98,8 +98,7 @@ condition:
   - condition: or
     conditions:
       - "{{ run_if == none }}"
-      - "{{ run_if_state and states[run_if].state == 'on' }}"
-      - "{{ not run_if_state and states[run_if].state == 'off' }}"
+      - "{{ states[run_if].state == run_if_state }}"
 
   - condition: or
     conditions:
