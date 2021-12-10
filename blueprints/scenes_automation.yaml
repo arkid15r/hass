@@ -172,7 +172,7 @@ trigger:
 condition:
   - condition: or
     conditions:
-      - "{{ run_if == none }}"
+      - "{{ not run_if or not run_if_state }}"
       - "{{ states[run_if].state == run_if_state }}"
 
 action:
