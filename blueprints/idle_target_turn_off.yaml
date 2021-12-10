@@ -7,6 +7,8 @@ blueprint:
   description: |
     Turns Off Idle Target.
 
+    The automation periodically checks for activity in the target area and loads a specific scene to turn off the target if no activity has been detected for a specified amount of time.
+
     Inputs:
       - **Check Frequency** (*default*: /1, *unit*: minutes): how often (in minutes) to check whether the `Target` is idle.
       - **Target**: an entity with 'on'/'off' state capability which needs to be turned off.

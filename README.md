@@ -14,7 +14,7 @@ The repository contains Python scripts and YAML configs one might find useful fo
 
 ## Python Scripts
 
-### alexa_tts.py
+### - alexa_tts.py
 
 Plays a TTS message on Amazon Echo devices using Alexa notification service. A list of target devices is generated based on time, recent motion activity, and a set of default and last resort targets.
 
@@ -121,7 +121,7 @@ RULES = (
 )
 ```
 
-### alexa_volume.py
+### - alexa_volume.py
 
 Sets the volume level on Amazon Echo devices.
 
@@ -144,8 +144,12 @@ DEVICES = (
 
 ## Blueprints
 
-### scene_automation.yaml
+### - idle_target_turn_off.yaml
 
-Automates Scene Activation.
+The automation periodically checks the target area and loads a specific scene to turn off the target if no activity has been detected for a specified amount of time.
 
-The automation supports 2 default and up to 5 optional scenes which are activated by the `Watcher` state change events depending on the current time.
+### - scenes_automation.yaml
+
+Automates Scenes Activation.
+
+The automation supports two default scenes for 'on'/'off' `Watcher` states and three optional scenes which are activated depending on the current time.
