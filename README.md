@@ -1,22 +1,27 @@
 # Home Assistant Helpers
 
-[HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts, blueprints, automations, scenes, sensors, configs.
+[HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts,
+blueprints, automations, scenes, sensors, configs.
 
 #### Description
 
-The repository contains Python scripts and YAML configs one might find useful for a HASS setup.
+The repository contains Python scripts and YAML configs one might find useful
+for a HASS setup.
 
 #### Pre-requisites
 
 - Python programming experience
-- understanding HomeAssistant [integrations](https://www.home-assistant.io/integrations/python_script/)
+- understanding HomeAssistant
+  [integrations](https://www.home-assistant.io/integrations/python_script/)
 - admin access to HASS instance
 
 ## Python Scripts
 
 ### - alexa_tts.py
 
-Plays a TTS message on Amazon Echo devices using Alexa notification service. A list of target devices is generated based on time, recent motion activity, and a set of default and last resort targets.
+Plays a TTS message on Amazon Echo devices using Alexa notification service. A
+list of target devices is generated based on time, recent motion activity, and a
+set of default and last resort targets.
 
 Usage:
 
@@ -31,7 +36,8 @@ action:
         - garage
 ```
 
-The alexa_tts.py depends on the set of sensors. You can customaze them based on your needs and situation. Here are some examples:
+The alexa_tts.py depends on the set of sensors. You can customaze them based on
+your needs and situation. Here are some examples:
 
 From /config/binary_sensors.yaml
 
@@ -51,7 +57,10 @@ platform: template
 sensors:
   garage_last_5m_motion:
     friendly_name: "Motion in the Garage within Last 5 minutes"
-    value_template: "{% if (as_timestamp(now()) | int - as_timestamp(states.group.garage_motion_sensors.last_changed) | int) < 300 %}on{% else %}off{% endif %}"
+    value_template:
+      "{% if (as_timestamp(now()) | int -
+      as_timestamp(states.group.garage_motion_sensors.last_changed) | int) < 300
+      %}on{% else %}off{% endif %}"
 ```
 
 from /config/groups.yaml
@@ -76,7 +85,11 @@ sensor: !include sensors.yaml
 
 #### ENV
 
-The script behaviour heavily depends on the quite/normal time sensor state. You can also set default and last resor targets via ENV dictionary. The default targets will remain active as long as they are not specifically silenced during alexa_tts.py invocation using `slinet_in` parameter. The last resort targets will be used if resulting targets list is empty.
+The script behaviour heavily depends on the quite/normal time sensor state. You
+can also set default and last resor targets via ENV dictionary. The default
+targets will remain active as long as they are not specifically silenced during
+alexa_tts.py invocation using `slinet_in` parameter. The last resort targets
+will be used if resulting targets list is empty.
 
 ```python
 ENV = {
@@ -94,7 +107,8 @@ ENV = {
 
 Each area behaviour is configured in RULES.
 
-- conditions: a set of conditions (sensor is on) to check for the targets activation
+- conditions: a set of conditions (sensor is on) to check for the targets
+  activation
 - target: the echo device
 - unless: (don't play in the area if)
   - conditions: any of these is ON (or empty)
@@ -146,10 +160,21 @@ DEVICES = (
 
 ### - idle_target_turn_off.yaml
 
-The automation periodically checks the target area and loads a specific scene to turn off the target if no activity has been detected for a specified amount of time.
+The automation periodically checks the target area and loads a specific scene to
+turn off the target if no activity has been detected for a specified amount of
+time.
 
 ### - scenes_automation.yaml
 
 Automates Scenes Activation.
 
-The automation supports two default scenes for 'on'/'off' `Watcher` states and three optional scenes which are activated depending on the current time.
+The automation supports two default scenes for 'on'/'off' `Watcher` states and
+three optional scenes which are activated depending on the current time.
+
+### - tts_state.yaml
+
+Plays TTS message upon entity state change event.
+
+The automation uses
+[alexa_tts.py](https://github.com/arkid15r/hass/blob/main/python_scripts/alexa_tts.py)
+to play the TTS message.

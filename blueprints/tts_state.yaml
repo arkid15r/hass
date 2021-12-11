@@ -1,0 +1,132 @@
+# Text To Speach Automation Blueprint.
+#
+# Author: Ark (ark@cho.red)
+
+blueprint:
+  name: "[TTS State]: "
+  description: |
+    Plays TTS message upon entity state change event.
+
+    Use input boolean `play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section).
+    Both `Run If/Run If State` and `Run After/Run Before` are optional. Buth if provided then just one of `Run If/Run If State` **OR** `Run After/Run Before` conditions must be true in order to run the automation. `Run After/Run Before` only works when both after/before time inputs are set.
+
+    Inputs:
+      - **State Change Entity** (*optional*): an entity with 'on'/'off' state capability which state's change triggers TTS message play.
+      - **State Change From** (*default*: off): A `State Change` entity before state.
+      - **State Change To** (*default*: on): a `State Change` entity after state.
+      - **State Change For** (*default*: 0, unit: *seconds*): an amout of time the `State Change` entity must stay in the `State Change To` state.
+      - **Message**: A message to play.
+      - **Silent In** (*optional*): a list of areas where the message should not be played (see `alexa_tts.py` for more information).
+      - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
+      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be to run the automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
+
+  domain: automation
+  input:
+    state_change_entity:
+      name: State Change Entity
+      description: An entity (or a group of entities) that triggers automation
+      default:
+      selector:
+        entity: {}
+
+    state_change_from:
+      name: State Change From
+      description: When the state changes from this state
+      default: "*"
+      selector:
+        object:
+
+    state_change_to:
+      name: State Change To
+      description: To this state
+      default: "*"
+      selector:
+        object:
+
+    state_change_for_time_seconds:
+      name: State Change For
+      description: For at least this amount of time
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3600
+          step: 1
+          unit_of_measurement: second(s)
+          mode: slider
+
+    message:
+      name: Message
+      description: A message to play
+      selector:
+        text:
+          multiline: true
+
+    silent_in:
+      name: Silent In (optional)
+      description: A list of areas where not to play the message
+      default: []
+      selector:
+        object:
+
+    run_if:
+      name: Run If Only (optional)
+      description: Howerver, don't run the automation if the entity
+      default:
+      selector:
+        entity: {}
+
+    run_if_state:
+      name: Run If Only State (optional)
+      description: Is not it this state
+      default:
+      selector:
+        text:
+
+    run_after_time:
+      name: Run After (optinal)
+      description: Don't run the automation before this time
+      default: "00:00:00"
+      selector:
+        entity:
+          domain: input_datetime
+
+    run_before_time:
+      name: Run Before (optinal)
+      description: Don't run the automation after this time
+      default: "00:00:00"
+      selector:
+        entity:
+          domain: input_datetime
+
+variables:
+  run_if: !input run_if
+  run_if_state: !input run_if_state
+  run_after_time: !input run_after_time
+  run_before_time: !input run_before_time
+
+trigger:
+  - platform: state
+    entity_id: !input state_change_entity
+    from: !input state_change_from
+    to: !input state_change_to
+    for: !input state_change_for_time_seconds
+
+condition:
+  - "{{ states['input_boolean.play_tts_messages'].state == 'on' }}"
+  - condition: or
+    conditions:
+      - "{{ not run_if and run_after_time == run_before_time }}"
+      - "{{ run_if and run_if_state and states[run_if].state == run_if_state }}"
+      - condition: and
+        conditions:
+          - "{{ run_after_time != run_before_time }}"
+          - condition: time
+            after: !input run_after_time
+            before: !input run_before_time
+
+action:
+  - service: python_script.alexa_tts
+    data:
+      message: !input message
+      silent_in: !input silent_in
