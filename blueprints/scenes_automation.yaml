@@ -9,24 +9,19 @@ blueprint:
 
     The automation supports two default scenes for 'on'/'off' `Watcher` states and three optional scenes which are activated depending on the current time.
 
-    The `Default Scene On` is automatically activated if none of the `Scene #[1-3]` is selected for activation.
-    The `Default Scene Off` (optinal) is automatically activated if the `Watcher` stays in 'off' state for at least `Watcher Inactive Time`.
+    The `Default Scene On` is automatically activated if none of the `Scene #[1-3]` is selected for activation. The `Default Scene Off` (optinal) is automatically activated if the `Watcher` stays in 'off' state for at least `Watcher Inactive Time`.
 
     Inputs:
       - **Watcher**: an entity with 'on'/'off' state capability which triggers scene activation.
       - **Watcher Inactive Time** (*default*: 60, *unit*: seconds): an amount of time `Watcher` required to stay in 'off' state in order to get the `Default Off Scene` activated.
-
       - **Default On Scene**: a scene to activate after the `Watcher` switches to 'on' state.
       - **Default Off Scene** (*optional*): an optional scene to activate after the `Watcher` switches to 'off' state and stays in it for at least `Watcher Inactive Time`.
-
       - **Scene #1** (*optional*): a scene that should be activated within `Scene #1 Start Time` - `Scene #1 End Time` time range.
       - **Scene #1 Start Time** (*optional*): `Scene #1` time range start.
       - **Scene #1 End Time** (*optional*): `Scene #1` time range end.
-
       - **Scene #2** (*optional*): a scene that should be activated within `Scene #2 Start Time` - `Scene #2 End Time` time range.
       - **Scene #2 Start Time** (*optional*): `Scene #2` time range start.
       - **Scene #2 End Time** (*optional*): `Scene #2` time range end.
-
       - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Start Time` - `Scene #3 End Time` time range.
       - **Scene #3 Start Time** (*optional*): `Scene #3` time range start.
       - **Scene #3 End Time** (*optional*): `Scene #3` time range end.
@@ -180,7 +175,9 @@ action:
       # The `Watcher` goes 'off'.
       - conditions:
           - condition: template
-            value_template: "{{ trigger.to_state.state == 'off' and default_scene_off != 'scene.null' }}"
+            value_template:
+              "{{ trigger.to_state.state == 'off' and default_scene_off !=
+              'scene.null' }}"
         sequence:
           - scene: !input default_scene_off
 

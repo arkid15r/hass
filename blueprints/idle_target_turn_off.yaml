@@ -3,7 +3,7 @@
 # Author: Ark (ark@cho.red)
 
 blueprint:
-  name: Idle Target Turn Off Automation
+  name: "[Turn Off Idle]: Target"
   description: |
     Turns Off Idle Target.
 
@@ -82,7 +82,7 @@ blueprint:
     run_if_state:
       name: Run If Only State (optional)
       description: Is not in this state
-      default: "off"
+      default:
       selector:
         text:
 
@@ -105,7 +105,10 @@ condition:
   - condition: or
     conditions:
       - "{{ watcher == none }}"
-      - "{{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >= watcher_inactive_time_seconds|float }}"
+      - >
+        {{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >=
+             watcher_inactive_time_seconds|float
+        }}
 
   - condition: state
     entity_id: !input target

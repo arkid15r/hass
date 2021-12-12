@@ -7,8 +7,9 @@ blueprint:
   description: |
     Plays TTS message upon entity state change event.
 
-    Use input boolean `play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section).
-    Both `Run If/Run If State` and `Run After/Run Before` are optional. Buth if provided then just one of `Run If/Run If State` **OR** `Run After/Run Before` conditions must be true in order to run the automation. `Run After/Run Before` only works when both after/before time inputs are set.
+    The automation uses [alexa_tts.py](https://github.com/arkid15r/hass/blob/main/python_scripts/alexa_tts.py) to play the TTS message.
+
+    Use input boolean `play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section). Both `Run If/Run If State` and `Run After/Run Before` are optional. But if provided then just one of the `Run If/Run If State` **OR** `Run After/Run Before` conditions must be true in order to run the automation. `Run After/Run Before` only works when both after/before time inputs are set.
 
     Inputs:
       - **State Change Entity** (*optional*): an entity with 'on'/'off' state capability which state's change triggers TTS message play.
@@ -24,7 +25,7 @@ blueprint:
   input:
     state_change_entity:
       name: State Change Entity
-      description: An entity (or a group of entities) that triggers automation
+      description: An entity that triggers automation
       default:
       selector:
         entity: {}
@@ -71,7 +72,7 @@ blueprint:
 
     run_if:
       name: Run If Only (optional)
-      description: Howerver, don't run the automation if the entity
+      description: Don't run the automation if the entity
       default:
       selector:
         entity: {}
