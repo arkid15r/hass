@@ -251,7 +251,7 @@ class TestTarget(TestBase):
         self.assertNotIn(
             target,
             targets,
-            f"Should not play in the {area} {conditions[condition]}.",
+            f"Should not play in the {area} if {conditions[condition]}.",
         )
         self._assert_hass_called_with(self.test_message, targets)
 
@@ -269,7 +269,7 @@ class TestTarget(TestBase):
         self.assertEqual(
             targets,
             expected_targets,
-            f"Should play in the {area} {conditions[condition]}.",
+            f"Should play in the {area} if {conditions[condition]}.",
         )
         self._assert_hass_called_with(self.test_message, expected_targets)
 
