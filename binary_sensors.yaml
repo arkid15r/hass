@@ -1,0 +1,302 @@
+- platform: template
+  sensors:
+    alarm_armed:
+      friendly_name: Alarm Armed
+      value_template: >
+        {{ states('alarm_control_panel.home_alarm') in
+               ('armed_away', 'armed_home')
+        }}
+
+    bedroom_1_blinds_open:
+      friendly_name: Bedroom 1 Blinds Open
+      value_template: >
+        {{ states('group.light_bedroom_1') == 'off' and
+           states('sensor.bedroom_1_illuminance_sensor_illuminance')|int > 2
+        }}
+
+    front_door_closed:
+      friendly_name: Front Door Closed
+      value_template: >
+        {{ states('binary_sensor.front_door') == 'off' }}
+
+    garge_gate_closed:
+      friendly_name: Garage Gate Closed
+      value_template: >
+        {{ states('binary_sensor.garage_gate') == 'off' }}
+
+    hvac_cooling:
+      friendly_name: HVAC Cooling
+      value_template: >
+        {{ states('climate.thermostat') != 'off' and
+           state_attr('climate.thermostat', 'hvac_action') in ('cooling',) and
+           'compCool1' in state_attr('climate.thermostat', 'equipment_running')
+        }}
+
+    hvac_heating:
+      friendly_name: HVAC Heating
+      value_template: >
+        {{ states('climate.thermostat') != 'off' and
+           state_attr('climate.thermostat', 'hvac_action') in ('heating',) and
+          'auxHeat1' in state_attr('climate.thermostat', 'equipment_running')
+        }}
+
+    hvac_running:
+      friendly_name: HVAC Running
+      value_template: >
+        {{ states('binary_sensor.hvac_cooling') == 'on' or
+           states('binary_sensor.hvac_heating') == 'on'
+        }}
+
+    indoor_garden:
+      friendly_name: Indoor Garden State
+      value_template: >
+        {{ states('sensor.indoor_garden_input')|round|int > 1 }}
+
+    is_am:
+      friendly_name: After Meridiem
+      icon_template: mdi:clock
+      value_template: >
+        {{ now().strftime('%p')|lower == 'am' }}
+
+    is_pm:
+      friendly_name: Post Meridiem
+      icon_template: mdi:clock
+      value_template: >
+        {{ now().strftime('%p')|lower == 'pm' }}
+
+    is_quite_time:
+      friendly_name: Quite Time
+      value_template: >
+        {{ now().strftime('%-H')|int < 7 or now().strftime('%-H')|int > 21 }}
+
+    living_room_door_closed:
+      friendly_name: Living Room Door Closed
+      value_template: >
+        {{ states('binary_sensor.living_room_door') == 'off' }}
+
+    living_room_tv:
+      friendly_name: Living Room TV State
+      value_template: >
+        {{ states('sensor.living_room_tv_input')|round|int > 1 }}
+
+    motion_bathroom_1_15m:
+      friendly_name: Bathroom 1 Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bathroom_1.last_changed) < 900
+        }}
+
+    motion_bathroom_1_5m:
+      friendly_name: Bathroom 1 Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bathroom_1.last_changed) < 300
+        }}
+
+    motion_bathroom_2_15m:
+      friendly_name: Bathroom 2 Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bathroom_2.last_changed) < 900
+        }}
+
+    motion_bathroom_2_5m:
+      friendly_name: Bathroom 2 Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bathroom_2.last_changed) < 300
+        }}
+
+    motion_bedroom_1_15m:
+      friendly_name: Bedroom 1 Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bedroom_1.last_changed) < 900
+        }}
+
+    motion_bedroom_1_5m:
+      friendly_name: Bedroom 1 Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_bedroom_1.last_changed) < 300
+        }}
+
+    motion_corridor_15m:
+      friendly_name: Corridor Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_corridor.last_changed) < 900
+        }}
+
+    motion_corridor_5m:
+      friendly_name: Corridor Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_corridor.last_changed) < 300
+        }}
+
+    motion_garage_15m:
+      friendly_name: Garage Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_garage.last_changed) < 900
+        }}
+
+    motion_garage_5m:
+      friendly_name: Garage Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_garage.last_changed) < 300
+        }}
+
+    motion_hallway_15m:
+      friendly_name: Hallway Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_hallway.last_changed) < 900
+        }}
+
+    motion_hallway_5m:
+      friendly_name: Hallway Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_hallway.last_changed) < 300
+        }}
+
+    motion_kitchen_15m:
+      friendly_name: Kitchen Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_kitchen.last_changed) < 900
+        }}
+
+    motion_kitchen_5m:
+      friendly_name: Kitchen Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_kitchen.last_changed) < 300
+        }}
+
+    motion_laundry_room_15m:
+      friendly_name: Laundry Room Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_laundry_room.last_changed) < 900
+        }}
+
+    motion_laundry_room_5m:
+      friendly_name: Laundry Room Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_laundry_room.last_changed) < 300
+        }}
+
+    motion_living_room_15m:
+      friendly_name: Living Room Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_living_room.last_changed) < 900
+        }}
+
+    motion_living_room_5m:
+      friendly_name: Living Room Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_living_room.last_changed) < 300
+        }}
+
+    motion_office_1_15m:
+      friendly_name: Office 1 Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_office_1.last_changed) < 900
+        }}
+
+    motion_office_1_5m:
+      friendly_name: Office 1 Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_office_1.last_changed) < 300
+        }}
+
+    motion_office_2_15m:
+      friendly_name: Office 2 Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_office_2.last_changed) < 900
+        }}
+
+    motion_office_2_5m:
+      friendly_name: Office 2 Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_office_2.last_changed) < 300
+        }}
+
+    motion_storage_room_15m:
+      friendly_name: Storage Room Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_storage_room.last_changed) < 900
+        }}
+
+    motion_storage_room_5m:
+      friendly_name: Storage Room Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_storage_room.last_changed) < 300
+        }}
+
+    motion_wardrobe_15m:
+      friendly_name: Wardrobe Motion Last 15 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_wardrobe.last_changed) < 900
+        }}
+
+    motion_wardrobe_5m:
+      friendly_name: Wardrobe Motion Last 5 Minutes
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(
+               states.group.motion_wardrobe.last_changed) < 300
+        }}
+
+    office_2_pc:
+      friendly_name: Office 2 PC State
+      value_template: >
+        {{ states('sensor.office_2_pc_input')|round|int > 5 }}
+
+    outdoor_temperature_lower:
+      friendly_name: Outdoor Temperature Lower
+      value_template: >
+        {{ states('sensor.temperature_high')|float <
+               states('sensor.indoor_temperature_high')|float
+        }}
+
+    outdoor_temperature_2deg_lower:
+      friendly_name: Outdoor Temperature 2 Degree Lower
+      value_template: >
+        {{ states('sensor.temperature_high')|float + 2 <
+               states('sensor.indoor_temperature_high')|float
+        }}
+
+    outdoor_temperature_3deg_lower:
+      friendly_name: Outdoor Temperature 3 Degree Lower
+      value_template: >
+        {{ states('sensor.temperature_high')|float + 3 <
+               states('sensor.indoor_temperature_high')|float
+        }}
+
+    outdoor_temperature_4deg_lower:
+      friendly_name: Outdoor Temperature 4 Degree Lower
+      value_template: >
+        {{ states('sensor.temperature_high')|float + 4 <
+               states('sensor.indoor_temperature_high')|float
+        }}
+
+- platform: workday
+  country: US
+  add_holidays:
+    - 2021-04-02
+    - 2022-04-15
+    - 2023-04-07
