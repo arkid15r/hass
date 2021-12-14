@@ -5,7 +5,7 @@ and a set of default and last resort targets.
 
 """
 
-__author__ = "Ark (ark@cho.red)"
+#__author__ = "Ark (ark@cho.red)"
 
 BATHROOM_1 = "bathroom_1"
 BATHROOM_1_DOOR = "binary_sensor.bathroom_1_door"
@@ -59,6 +59,7 @@ OFFICE_2_MOTION = "binary_sensor.motion_office_2_5m"
 
 QUITE_TIME = "binary_sensor.is_quite_time"
 
+STATE_OFF = "off"
 STATE_ON = "on"
 
 ENV = {
@@ -122,6 +123,10 @@ RULES = (
         "target": OFFICE_2_ECHO
     },
 )
+
+TTS_DURATION_DEFAULT_SECONDS = 3
+TTS_DURATION_TIMEOUT_SECONDS = 30
+TTS_FLAG_IN_PROGRESS = 'input_boolean.tts_in_progress'
 
 
 # pylint: disable=too-many-branches
@@ -210,4 +215,40 @@ def play(hass, message=None, silent_in=None, env=None):
 
 
 # pylint: disable=undefined-variable
-play(hass, data.get("message"), data.get("silent_in"), env=ENV)
+def run(duration):
+  """Acquire resource for `duration` time, run the function, and release the
+     resource after completion.
+  """
+
+  def set_flag(flag, state):
+    """Set flag state."""
+
+    hass.services.call(
+        "input_boolean",
+        f"turn_{state}",
+        {
+            "entity_id": flag,
+        },
+    )
+
+  # Acquire.
+  set_flag(TTS_FLAG_IN_PROGRESS, state=STATE_ON)
+  play(hass, data.get("message"), data.get("silent_in"), env=ENV)
+  time.sleep(duration)
+
+  # Release.
+  set_flag(TTS_FLAG_IN_PROGRESS, state=STATE_OFF)
+
+
+def wait(timeout):
+  """Wait for another processes (if any) comtpletion."""
+
+  wait_seconds = 0
+  while (hass.states.get(TTS_FLAG_IN_PROGRESS) == STATE_ON
+         and waited_seconds < timeout):
+    time.sleep(1)
+    wait_seconds += 1
+
+
+wait(TTS_DURATION_TIMEOUT_SECONDS)
+run(data.get("duration") or TTS_DURATION_DEFAULT_SECONDS)
