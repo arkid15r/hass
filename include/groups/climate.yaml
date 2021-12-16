@@ -9,11 +9,11 @@ aeration_hot:
 indoor_temperature:
   name: Indoor Temperature
   entities:
-    - sensor.bedroom_1_temperature'
-    - sensor.corridor_temperature'
-    - sensor.dining_area_temperature'
-    - sensor.office_1_temperature'
-    - sensor.office_2_temperature'
+    - sensor.bedroom_1_temperature
+    - sensor.corridor_temperature
+    - sensor.dining_area_temperature
+    - sensor.office_1_temperature
+    - sensor.office_2_temperature
 
 perimeter_thermal:
   name: Thermal Perimeter
