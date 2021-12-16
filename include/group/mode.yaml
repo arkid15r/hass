@@ -1,0 +1,49 @@
+mode_backyard_lights_all_on_motion:
+  name: Backyard Lights Max On Motion
+  all: true
+  entities:
+    - binary_sensor.living_room_door_closed
+    - group.light_backyard
+
+mode_front_yard_lights_all_on_motion:
+  name: Front Yard Lights Max On Motion
+  all: true
+  entities:
+    - binary_sensor.front_door_closed
+    - binary_sensor.garge_gate_closed
+    - group.light_front_yard
+
+mode_freeze_bathroom_1:
+  name: Bathroom 1 Mode Freeze
+  entities:
+    - input_boolean.mode_bath
+    - input_boolean.mode_belle
+    - input_boolean.mode_spa
+
+mode_freeze_bedroom_1:
+  name: Bedroom 1 Mode Freeze
+  entities:
+    - input_boolean.mode_afternoon_nap
+    - input_boolean.mode_red
+    - input_boolean.mode_wake_up_lighting
+
+mode_freeze_garage:
+  name: Garage Mode Freeze
+  entities:
+    - input_boolean.mode_gym_session
+
+mode_freeze_hallway:
+  name: Hallway Mode Freeze
+  entities:
+    - group.mode_freeze_kitchen
+
+mode_freeze_kitchen:
+  name: Kitchen Mode Freeze
+  entities:
+    - input_boolean.mode_bar
+    - input_boolean.mode_kitchen_tv
+
+mode_freeze_office_1:
+  name: Office 1 Mode Freeze
+  entities:
+    - input_boolean.mode_office_1_tv

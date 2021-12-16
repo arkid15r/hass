@@ -1,0 +1,4 @@
+tvs:
+  name: TVs
+  entities:
+    - binary_sensor.living_room_tv
