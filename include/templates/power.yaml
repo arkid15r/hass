@@ -1,15 +1,15 @@
-binary_sensor:
-  - unique_id: indoor_garden
-    name: Indoor Garden
-    state: >
-      {{ states('sensor.indoor_garden_input')|int > 1 }}
+- binary_sensor:
+    - unique_id: indoor_garden
+      name: Indoor Garden
+      state: >
+        {{ states('sensor.indoor_garden_input')|int > 1 }}
 
-  - unique_id: living_room_tv
-    name: Living Room TV
-    state: >
-      {{ states('sensor.living_room_tv_input')|int > 1 }}
+    - unique_id: living_room_tv
+      name: Living Room TV
+      state: >
+        {{ states('sensor.living_room_tv_input')|int > 1 }}
 
-  - unique_id: office_2_pc
-    friendly_name: Office 2 PC
-    state: >
-      {{ states('sensor.office_2_pc_input')|int > 5 }}
+    - unique_id: office_2_pc
+      name: Office 2 PC
+      state: >
+        {{ states('sensor.office_2_pc_input')|int > 5 }}
