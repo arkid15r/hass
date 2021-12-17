@@ -2,13 +2,13 @@
     - unique_id: corridor_temperature
       name: Corridor Temperature
       state: >
-        {{ state_attr('climate.thermostat', 'current_temperature')|round|int }}
+        {{ state_attr('climate.thermostat', 'current_temperature')|round }}
 
     - unique_id: hvac_cooling
       name: HVAC Cooling
       icon: mdi:thermometer-minus
       state: >
-        {{ is_state('climate.thermostat', 'off') and
+        {{ not is_state('climate.thermostat', 'off') and
            state_attr('climate.thermostat', 'hvac_action') in ('cooling',) and
            'compCool1' in state_attr('climate.thermostat', 'equipment_running')
         }}
@@ -17,7 +17,7 @@
       name: HVAC Heating
       icon: mdi:thermometer-plus
       state: >
-        {{ is_state('climate.thermostat', 'off') and
+        {{ not is_state('climate.thermostat', 'off') and
            state_attr('climate.thermostat', 'hvac_action') in ('heating',) and
            'auxHeat1' in state_attr('climate.thermostat', 'equipment_running')
         }}
@@ -44,27 +44,6 @@
              states('sensor.indoor_temperature')|int
         }}
 
-    - unique_id: indoor_temperature_3_degree_higher
-      name: Indoor Temperature 3 Degree Higher
-      state: >
-        {{ states('sensor.temperature')|int + 3 >
-             states('sensor.indoor_temperature')|int
-        }}
-
-    - unique_id: indoor_temperature_4_degree_higher
-      name: Indoor Temperature 4 Degree Higher
-      state: >
-        {{ states('sensor.temperature')|int + 4 >
-             states('sensor.indoor_temperature')|int
-        }}
-
-    - unique_id: indoor_temperature_5_degree_higher
-      name: Indoor Temperature 5 Degree Higher
-      state: >
-        {{ states('sensor.temperature')|int + 5 >
-             states('sensor.indoor_temperature')|int
-        }}
-
   sensor:
     - unique_id: indoor_temperature
       name: Indoor Temperature
@@ -73,4 +52,27 @@
         {{ expand('group.indoor_temperature')|
              rejectattr('state', 'in', ('unavailable',))|
              map(attribute='state')|
-             map('float')|average|round|int }}
+             map('float')|average|round
+        }}
+
+    - unique_id: perimeter_thermal_impacted_areas
+      name: Perimeter Thermal Impacted Areas
+      icon: mdi:door
+      state: >
+        {% set impacted = namespace(areas=[]) %}
+        {% for entity_id in expand('group.perimeter_thermal')|
+             map(attribute='entity_id')
+        %}
+          {% set area = area_name(entity_id) %}
+          {% if is_state(entity_id, 'on') and area not in impacted.areas %}
+            {% set impacted.areas = impacted.areas + [area] %}
+          {% endif %}
+        {% endfor %}
+        {%- for area in impacted.areas -%}
+          {%- if loop.last -%}
+            {%- if impacted.areas|count > 1 -%}and {% else %} {%- endif -%}
+          {%- endif -%}
+          {{- area -}}
+          {% if impacted.areas|count == 2 %} {% endif %}
+          {%- if not loop.last and impacted.areas|count > 2 -%}, {% endif %}
+        {%- endfor -%}
