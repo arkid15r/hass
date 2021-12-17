@@ -1,0 +1,86 @@
+binary_sensor.am:
+  friendly_name: Before Noon
+
+binary_sensor.pm:
+  friendly_name: After Noon
+
+binary_sensor.motion_bathroom_1_15m:
+  friendly_name: Bathroom 1 Motion Last 15 Minutes
+
+binary_sensor.motion_bathroom_1_5m:
+  friendly_name: Bathroom 1 Motion Last 5 Minutes
+
+binary_sensor.motion_bathroom_2_15m:
+  friendly_name: Bathroom 2 Motion Last 15 Minutes
+
+binary_sensor.motion_bathroom_2_5m:
+  friendly_name: Bathroom 2 Motion Last 5 Minutes
+
+binary_sensor.motion_corridor_15m:
+  friendly_name: Corridor Motion Last 15 Minutes
+
+binary_sensor.motion_corridor_5m:
+  friendly_name: Corridor Motion Last 5 Minutes
+
+binary_sensor.motion_garage_15m:
+  friendly_name: Garage Motion Last 15 Minutes
+
+binary_sensor.motion_garage_5m:
+  friendly_name: Garage Motion Last 5 Minutes
+
+binary_sensor.motion_hallway_15m:
+  friendly_name: Hallway Motion Last 15 Minutes
+
+binary_sensor.motion_hallway_5m:
+  friendly_name: Hallway Motion Last 5 Minutes
+
+binary_sensor.motion_kitchen_15m:
+  friendly_name: Kitchen Motion Last 15 Minutes
+
+binary_sensor.motion_kitchen_5m:
+  friendly_name: Kitchen Motion Last 5 Minutes
+
+binary_sensor.motion_laundry_room_15m:
+  friendly_name: Laundry Room Motion Last 15 Minutes
+
+binary_sensor.motion_laundry_room_5m:
+  friendly_name: Laundry Room Motion Last 5 Minutes
+
+binary_sensor.motion_living_room_15m:
+  friendly_name: Living Room Motion Last 15 Minutes
+
+binary_sensor.motion_living_room_5m:
+  friendly_name: Living Room Motion Last 5 Minutes
+
+binary_sensor.motion_office_1_15m:
+  friendly_name: Office 1 Motion Last 15 Minutes
+
+binary_sensor.motion_office_1_5m:
+  friendly_name: Office 1 Motion Last 5 Minutes
+
+binary_sensor.motion_office_2_15m:
+  friendly_name: Office 2 Motion Last 15 Minutes
+
+binary_sensor.motion_office_2_5m:
+  friendly_name: Office 2 Motion Last 5 Minutes
+
+binary_sensor.motion_storage_room_15m:
+  friendly_name: Storage Room Motion Last 15 Minutes
+
+binary_sensor.motion_storage_room_5m:
+  friendly_name: Storage Room Motion Last 5 Minutes
+
+binary_sensor.motion_wardrobe_15m:
+  friendly_name: Wardrobe Motion Last 15 Minutes
+
+binary_sensor.motion_wardrobe_5m:
+  friendly_name: Wardrobe Motion Last 5 Minutes
+
+sensor.wind_speed_forecast:
+  friendly_name: Forecasted Wind Speed
+
+sensor.temperature_low_forecast:
+  friendly_name: Forecasted Temperature Low
+
+sensor.temperature_forecast:
+  friendly_name: Forecasted Temperature
