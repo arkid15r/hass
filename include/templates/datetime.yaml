@@ -1,0 +1,18 @@
+- binary_sensor:
+    - unique_id: am
+      name: AM
+      icon: mdi:clock-time-twelve-outline
+      state: >
+        {{ now().strftime('%p')|lower == 'am' }}
+
+    - unique_id: pm
+      name: PM
+      icon: mdi:clock-time-twelve
+      state: >
+        {{ now().strftime('%p')|lower == 'pm' }}
+
+    - unique_id: quite_time
+      name: Quite Time
+      icon: mdi:sleep
+      state: >
+        {{ now().strftime('%-H')|int < 7 or now().strftime('%-H')|int > 21 }}

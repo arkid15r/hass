@@ -1,0 +1,34 @@
+- binary_sensor:
+    - unique_id: front_door_closed
+      name: Front Door Closed
+      icon: mdi:door
+      state: >
+        {{ is_state('binary_sensor.front_door', 'off') }}
+
+    - unique_id: garage_gate_closed
+      name: Garage Gate Closed
+      icon: mdi:garage-variant
+      state: >
+        {{ is_state('binary_sensor.garage_gate', 'off') }}
+
+    - unique_id: living_room_door_closed
+      name: Living Room Door Closed
+      icon: mdi:door
+      state: >
+        {{ is_state('binary_sensor.living_room_door', 'off') }}
+
+    - unique_id: perimeter_security_tampered
+      name: Perimeter Security Tampered
+      icon: mdi:door
+      state: >
+        {% set sensors = expand('group.perimeter_security')|
+             map(attribute='entity_id')|
+             map('regex_replace', '$', '_tamper')|list
+        %}
+        {% set tampered = namespace(state=false) %}
+        {% for sensor in sensors %}
+          {% if is_state(sensor, 'on') and not tampered.state %}
+            {% set tampered.state = True %}
+          {% endif %}
+        {% endfor %}
+        {{ tampered.state }}

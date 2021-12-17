@@ -1,0 +1,76 @@
+- binary_sensor:
+    - unique_id: corridor_temperature
+      name: Corridor Temperature
+      state: >
+        {{ state_attr('climate.thermostat', 'current_temperature')|round|int }}
+
+    - unique_id: hvac_cooling
+      name: HVAC Cooling
+      icon: mdi:thermometer-minus
+      state: >
+        {{ is_state('climate.thermostat', 'off') and
+           state_attr('climate.thermostat', 'hvac_action') in ('cooling',) and
+           'compCool1' in state_attr('climate.thermostat', 'equipment_running')
+        }}
+
+    - unique_id: hvac_heating
+      name: HVAC Heating
+      icon: mdi:thermometer-plus
+      state: >
+        {{ is_state('climate.thermostat', 'off') and
+           state_attr('climate.thermostat', 'hvac_action') in ('heating',) and
+           'auxHeat1' in state_attr('climate.thermostat', 'equipment_running')
+        }}
+
+    - unique_id: hvac_running
+      name: HVAC Running
+      icon: mdi:thermometer-lines
+      state: >
+        {{ is_state('binary_sensor.hvac_cooling',' on') or
+           is_state('binary_sensor.hvac_heating', 'on')
+        }}
+
+    - unique_id: indoor_temperature_higher
+      name: Indoor Temperature Higher
+      state: >
+        {{ states('sensor.temperature')|int >
+             states('sensor.indoor_temperature')|int
+        }}
+
+    - unique_id: indoor_temperature_2_degree_higher
+      name: Indoor Temperature 2 Degree Higher
+      state: >
+        {{ states('sensor.temperature')|int + 2 >
+             states('sensor.indoor_temperature')|int
+        }}
+
+    - unique_id: indoor_temperature_3_degree_higher
+      name: Indoor Temperature 3 Degree Higher
+      state: >
+        {{ states('sensor.temperature')|int + 3 >
+             states('sensor.indoor_temperature')|int
+        }}
+
+    - unique_id: indoor_temperature_4_degree_higher
+      name: Indoor Temperature 4 Degree Higher
+      state: >
+        {{ states('sensor.temperature')|int + 4 >
+             states('sensor.indoor_temperature')|int
+        }}
+
+    - unique_id: indoor_temperature_5_degree_higher
+      name: Indoor Temperature 5 Degree Higher
+      state: >
+        {{ states('sensor.temperature')|int + 5 >
+             states('sensor.indoor_temperature')|int
+        }}
+
+  sensor:
+    - unique_id: indoor_temperature
+      name: Indoor Temperature
+      icon: mdi:thermometer
+      state: >
+        {{ expand('group.indoor_temperature')|
+             rejectattr('state', 'in', ('unavailable',))|
+             map(attribute='state')|
+             map('float')|average|round|int }}

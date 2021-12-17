@@ -1,0 +1,56 @@
+- sensor:
+    - unique_id: temperature
+      name: Temperature
+      state: >
+        {{ expand('group.weather_service')|
+             map(attribute='attributes.temperature')|
+             map('float')|list|average|round
+        }}
+
+    - unique_id: temperature_forecast
+      name: Temperature Forecast
+      state: >
+        {{ expand('group.weather_service')|
+             map(attribute='attributes.forecast.0.temperature')|
+             map('float')|list|average|round
+        }}
+
+    - unique_id: temperature_low_forecast
+      name: Temperature Low Forecast
+      state: >
+        {{ expand('group.weather_service')|
+             map(attribute='attributes.forecast.0.templow')|
+             map('float')|list|average|round
+        }}
+
+    - unique_id: weather_forecast_summary
+      name: Weather Forecast Summary
+      state: >
+        {% if states('sensor.temperature_low_forecast')|int < 35 or
+              states('sensor.wind_speed_forecast')|int >= 25 %}
+          extremely concerning
+        {% elif states('sensor.temperature_low_forecast')|int < 45 or
+                states('sensor.wind_speed_forecast')|int >= 15 %}
+          very concerning
+        {% elif states('sensor.temperature_low_forecast')|int < 55 or
+                states('sensor.wind_speed_forecast')|int >= 5 %}
+          a bit concerning
+        {% else %}
+          fine
+        {% endif %}
+
+    - unique_id: wind_speed
+      name: Wind Speed
+      state: >
+        {{ expand('group.weather_service')|
+             map(attribute='attributes.wind_speed')|
+             map('float')|list|average|round
+        }}
+
+    - unique_id: wind_speed_forecast
+      name: Wind Speed Forecast
+      state: >
+        {{ expand('group.weather_service')|
+             map(attribute='attributes.forecast.0.wind_speed')|
+             map('float')|list|average|round
+        }}
