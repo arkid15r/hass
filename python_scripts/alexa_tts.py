@@ -57,7 +57,7 @@ OFFICE_2_LIGHT = "group.light_office_2"
 OFFICE_2_ECHO = "media_player.office_2_echo"
 OFFICE_2_MOTION = "binary_sensor.motion_office_2_5m"
 
-QUITE_TIME = "binary_sensor.is_quite_time"
+QUITE_TIME = "binary_sensor.quite_time"
 
 STATE_OFF = "off"
 STATE_ON = "on"
@@ -132,7 +132,7 @@ TTS_FLAG_IN_PROGRESS = 'input_boolean.tts_in_progress'
 # pylint: disable=too-many-branches
 def play(hass, message=None, silent_in=None, env=None):
   """
-    Check targets and generate text to speach request.
+    Check targets and generate text to speech request.
 
     Parameters:
       hass: A HomeAssistant service from the global context.
