@@ -8,7 +8,7 @@ blueprint:
     Automates Scenes Activation.
 
     The automation supports two default scenes for 'on'/'off' `Watcher` states and three optional scenes which are activated depending on the current time.
-    The `Default Scene On` is automatically activated if none of the `Scene #[1-3]` is selected for activation. The `Default Scene Off` (optinal) is automatically activated if the `Watcher` stays in 'off' state for at least `Watcher Inactive Time`.
+    The `Default Scene On` is automatically activated if none of the `Scene #[1-3]` is selected for activation. The `Default Scene Off` (optional) is automatically activated if the `Watcher` stays in 'off' state for at least `Watcher Inactive Time`.
 
     Inputs:
       - **Watcher**: an entity with 'on'/'off' state capability which triggers scene activation.
