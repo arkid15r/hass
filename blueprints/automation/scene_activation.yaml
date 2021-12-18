@@ -1,0 +1,68 @@
+# Scene On Automation Blueprint.
+#
+# Author: Ark (ark@cho.red)
+
+blueprint:
+  name: "[Turn On/Off]: Device(s)"
+  description: |
+    Activates a scene upon an entity state change event.
+
+    Inputs:
+      - **State Change Entity** (*optional*): an entity with 'on'/'off' state capability which state's change triggers TTS message play.
+      - **State Change From** (*default*: off): A `State Change` entity before state.
+      - **State Change To** (*default*: on): a `State Change` entity after state.
+      - **State Change For** (*default*: 0, unit: *seconds*): an amount of time the `State Change` entity must remain in the `State Change To` state.
+      - **Scene**: A scene to activate.
+
+  domain: automation
+  input:
+    state_change_entity:
+      name: State Change Entity
+      description: An entity that triggers the automation
+      default:
+      selector:
+        entity: {}
+
+    state_change_from:
+      name: State Change From
+      description: When the state changes from this state
+      default: "*"
+      selector:
+        text:
+
+    state_change_to:
+      name: State Change To
+      description: To this state
+      default: "*"
+      selector:
+        text:
+
+    state_change_for_time_seconds:
+      name: State Change For
+      description: For at least this amount of time
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3600
+          step: 1
+          unit_of_measurement: second(s)
+          mode: slider
+
+    scene:
+      name: Scene
+      description: Activate the scene
+      default:
+      selector:
+        entity:
+          domain: scene
+
+trigger:
+  - platform: state
+    entity_id: !input state_change_entity
+    from: !input state_change_from
+    to: !input state_change_to
+    for: !input state_change_for_time_seconds
+
+action:
+  - scene: !input scene
