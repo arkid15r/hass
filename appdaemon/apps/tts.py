@@ -8,6 +8,7 @@ and a set of default and last resort targets.
 __author__ = "Ark (ark@cho.red)"
 
 import sys
+import time
 from queue import Queue
 from threading import Thread
 
@@ -134,6 +135,8 @@ class AlexaTTS(hass.Hass):
       },
   )
 
+  TTS_DURATION_DEFAULT_SECONDS = 5
+
   def initialize(self):
     """Initialize event listener."""
 
@@ -239,6 +242,7 @@ class AlexaTTS(hass.Hass):
       try:
         data = self.messages.get()
         self.tts(text=data["text"], silent_in=data["silent_in"], env=self.ENV)
+        time.sleep(self.TTS_DURATION_DEFAULT_SECONDS)
       except Exception:  # pylint: disable=broad-except
         self.log(sys.exc_info())
 
