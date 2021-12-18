@@ -17,18 +17,55 @@
       state: >
         {{ is_state('binary_sensor.living_room_door', 'off') }}
 
-    - unique_id: perimeter_security_tampered
-      name: Perimeter Security Tampered
-      icon: mdi:door
+- sensor:
+    - unique_id: security_perimeter_breached
+      name: Security Perimeter Breached
+      icon: mdi:home-alert-outline
       state: >
-        {% set sensors = expand('group.perimeter_security')|
+        {{ 'on' if expand('group.perimeter_security')|
+             selectattr('state', 'eq', 'on')|list|count > 0 else 'off'
+        }}
+      attributes:
+        template: boundary
+        entities: >
+          {{ expand('group.perimeter_security')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|sort
+          }}
+        entities_summary: >
+          {% set entities = expand('group.perimeter_security')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='name')|unique|sort
+          %}
+          {%- for entity in entities -%}
+            {% if loop.last -%}
+              {% if loop.length > 1 %}and {% else %} {% endif %}
+            {%- endif -%}
+            {{ entity -}}
+            {% if loop.first and loop.length == 2 %} {% endif %}
+            {%- if not loop.last and loop.length > 2 %}, {% endif %}
+          {%- endfor %}
+
+    - unique_id: security_perimeter_tampered
+      name: Security Perimeter Tampered
+      icon: mdi:home-alert-outline
+      state: >
+        {% set entities = expand('group.perimeter_security')|
              map(attribute='entity_id')|
-             map('regex_replace', '$', '_tamper')|list
+             map('regex_replace', '$', '_tamper')
         %}
-        {% set tampered = namespace(state=false) %}
-        {% for sensor in sensors %}
-          {% if is_state(sensor, 'on') and not tampered.state %}
-            {% set tampered.state = True %}
-          {% endif %}
-        {% endfor %}
-        {{ tampered.state }}
+        {% set tampered = expand(entities)|selectattr('state', 'eq', 'on') %}
+        {{ 'on' if tampered|list|count > 0 else 'off' }}
+      attributes:
+        template: boundary
+        entities: >
+          {% set entities = expand('group.perimeter_security')|
+               map(attribute='entity_id')|
+               map('regex_replace', '$', '_tamper')
+          %}
+          {% set entities = expand(entities)|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|
+               map('regex_replace', '_tamper$', '')
+          %}
+          {{ entities }}

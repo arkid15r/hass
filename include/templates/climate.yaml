@@ -55,24 +55,50 @@
              map('float')|average|round
         }}
 
-    - unique_id: perimeter_thermal_impacted_areas
-      name: Perimeter Thermal Impacted Areas
+    - unique_id: thermal_perimeter_breached
+      name: Thermal Perimeter Breached
       icon: mdi:door
       state: >
-        {% set impacted = namespace(areas=[]) %}
-        {% for entity_id in expand('group.perimeter_thermal')|
-             map(attribute='entity_id')
-        %}
-          {% set area = area_name(entity_id) %}
-          {% if is_state(entity_id, 'on') and area not in impacted.areas %}
-            {% set impacted.areas = impacted.areas + [area] %}
-          {% endif %}
-        {% endfor %}
-        {%- for area in impacted.areas -%}
-          {%- if loop.last -%}
-            {%- if impacted.areas|count > 1 -%}and {% else %} {%- endif -%}
-          {%- endif -%}
-          {{- area -}}
-          {% if impacted.areas|count == 2 %} {% endif %}
-          {%- if not loop.last and impacted.areas|count > 2 -%}, {% endif %}
-        {%- endfor -%}
+        {{  expand('group.perimeter_thermal')|
+              selectattr('state', 'eq', 'on')|list|count > 0
+        }}
+      attributes:
+        template: climate
+        areas: >
+          {{ expand('group.perimeter_thermal')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|
+               map('area_name')|unique|sort
+          }}
+        area_summary: >
+          {% set entities = expand('group.perimeter_thermal')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|
+               map('area_name')|unique|sort
+          %}
+          {%- for entity in entities -%}
+            {% if loop.last -%}
+              {% if loop.length > 1 %}and {% else %} {% endif %}
+            {%- endif -%}
+            {{ entity -}}
+            {% if loop.first and loop.length == 2 %} {% endif %}
+            {%- if not loop.last and loop.length > 2 %}, {% endif %}
+          {%- endfor %}
+        entities: >
+          {{ expand('group.perimeter_thermal')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|sort
+          }}
+        entities_summary: >
+          {% set entities = expand('group.perimeter_thermal')|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='name')|unique|sort
+          %}
+          {%- for entity in entities -%}
+            {% if loop.last -%}
+              {% if loop.length > 1 %}and {% else %} {% endif %}
+            {%- endif -%}
+            {{ entity -}}
+            {% if loop.first and loop.length == 2 %} {% endif %}
+            {%- if not loop.last and loop.length > 2 %}, {% endif %}
+          {%- endfor %}
