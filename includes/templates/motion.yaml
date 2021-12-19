@@ -1,7 +1,6 @@
 - binary_sensor:
     - unique_id: motion_bathroom_1_15m
       name: Motion Bathroom 1 15m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bathroom_1.last_changed) < 900
@@ -9,7 +8,6 @@
 
     - unique_id: motion_bathroom_1_5m
       name: Motion Bathroom 1 5m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bathroom_1.last_changed) < 300
@@ -17,7 +15,6 @@
 
     - unique_id: motion_bathroom_2_15m
       name: Motion Bathroom 2 15m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bathroom_2.last_changed) < 900
@@ -25,7 +22,6 @@
 
     - unique_id: motion_bathroom_2_5m
       name: Motion Bathroom 2 5m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bathroom_2.last_changed) < 300
@@ -33,7 +29,6 @@
 
     - unique_id: motion_bedroom_1_15m
       name: Motion Bedroom 1 15m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bedroom_1.last_changed) < 900
@@ -41,7 +36,6 @@
 
     - unique_id: motion_bedroom_1_5m
       name: Motion Bedroom 1 5m
-      icon: mdi:motion-sensor
       state: >
         {{ as_timestamp(now()) - as_timestamp(
              states.group.motion_bedroom_1.last_changed) < 300
