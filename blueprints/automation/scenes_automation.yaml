@@ -57,7 +57,7 @@ blueprint:
     default_scene_off:
       name: Default Off Scene (optional)
       description: A scene to activate after the `Watcher Inactive Time`
-      default: scene.null
+      default: scene.none
       selector:
         entity:
           domain: scene
@@ -65,7 +65,7 @@ blueprint:
     scene_1:
       name: "Scene #1 (optional)"
       description: "A scene #1"
-      default: scene.null
+      default: scene.none
       selector:
         entity:
           domain: scene
@@ -87,7 +87,7 @@ blueprint:
     scene_2:
       name: "Scene #2 (optional)"
       description: "A scene #2"
-      default: scene.null
+      default: scene.none
       selector:
         entity:
           domain: scene
@@ -109,7 +109,7 @@ blueprint:
     scene_3:
       name: "Scene #3 (optional)"
       description: "A scene #3"
-      default: scene.null
+      default: scene.none
       selector:
         entity:
           domain: scene
@@ -176,7 +176,7 @@ action:
           - condition: template
             value_template: >
               {{ trigger.to_state.state == 'off' and
-                 default_scene_off != 'scene.null'
+                 default_scene_off != 'scene.none'
               }}
         sequence:
           - scene: !input default_scene_off
@@ -188,7 +188,7 @@ action:
         sequence:
           - choose:
               - conditions:
-                  - "{{ scene_1 != 'scene.null' }}"
+                  - "{{ scene_1 != 'scene.none' }}"
                   - condition: time
                     after: !input scene_1_start_time
                     before: !input scene_1_end_time
@@ -196,7 +196,7 @@ action:
                   - scene: !input scene_1
 
               - conditions:
-                  - "{{ scene_2 != 'scene.null' }}"
+                  - "{{ scene_2 != 'scene.none' }}"
                   - condition: time
                     after: !input scene_2_start_time
                     before: !input scene_2_end_time
@@ -204,7 +204,7 @@ action:
                   - scene: !input scene_2
 
               - conditions:
-                  - "{{ scene_3 != 'scene.null' }}"
+                  - "{{ scene_3 != 'scene.none' }}"
                   - condition: time
                     after: !input scene_3_start_time
                     before: !input scene_3_end_time
