@@ -68,13 +68,15 @@
           {{ expand('group.perimeter_thermal')|
                selectattr('state', 'eq', 'on')|
                map(attribute='entity_id')|
-               map('area_name')|unique|sort
+               map('area_name')|
+               reject('eq', none)|unique|sort
           }}
         area_summary: >
           {% set entities = expand('group.perimeter_thermal')|
                selectattr('state', 'eq', 'on')|
                map(attribute='entity_id')|
-               map('area_name')|unique|sort
+               map('area_name')|
+               reject('eq', none)|unique|sort
           %}
           {%- for entity in entities -%}
             {% if loop.last -%}
