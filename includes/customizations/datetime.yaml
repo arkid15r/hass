@@ -1,0 +1,5 @@
+binary_sensor.am:
+  friendly_name: Before Noon
+
+binary_sensor.pm:
+  friendly_name: After Noon

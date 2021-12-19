@@ -1,9 +1,3 @@
-binary_sensor.am:
-  friendly_name: Before Noon
-
-binary_sensor.pm:
-  friendly_name: After Noon
-
 binary_sensor.motion_bathroom_1_15m:
   friendly_name: Bathroom 1 Motion Last 15 Minutes
 
@@ -15,6 +9,12 @@ binary_sensor.motion_bathroom_2_15m:
 
 binary_sensor.motion_bathroom_2_5m:
   friendly_name: Bathroom 2 Motion Last 5 Minutes
+
+binary_sensor.motion_bedroom_1_15m:
+  friendly_name: Bedroom 1 Motion Last 15 Minutes
+
+binary_sensor.motion_bedroom_1_5m:
+  friendly_name: Bedroom 1 Motion Last 5 Minutes
 
 binary_sensor.motion_corridor_15m:
   friendly_name: Corridor Motion Last 15 Minutes
