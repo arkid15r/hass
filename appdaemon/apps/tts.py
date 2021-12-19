@@ -15,7 +15,7 @@ from threading import Thread
 from appdaemon.plugins.hass import hassapi as hass
 
 
-class AlexaTTS(hass.Hass):
+class Alexa(hass.Hass):
   """Alexa TTS App Daemon class."""
 
   BATHROOM_1 = "bathroom_1"
@@ -181,7 +181,7 @@ class AlexaTTS(hass.Hass):
       return self.get_state(sensor) == self.STATE_ON
 
     if not text:
-      raise ValueError("Message is required.")
+      raise ValueError("Text is required.")
 
     quite_hours = is_on(self.QUITE_TIME)
 

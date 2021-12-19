@@ -1,4 +1,4 @@
 ---
 tts:
   module: tts
-  class: AlexaTTS
+  class: Alexa
