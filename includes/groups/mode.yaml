@@ -13,6 +13,14 @@ mode_front_yard_lights_all_on_motion:
     - binary_sensor.garge_gate_closed
     - group.light_front_yard
 
+mode_living_room_lights_new_year_on_motion:
+  name: Living Room New Year Lights On Motion Mode
+  entities:
+    - group.motion_corridor
+    - group.motion_hallway
+    - group.motion_kitchen
+    - group.motion_living_room
+
 mode_freeze_bathroom_1:
   name: Bathroom 1 Mode Freeze
   entities:
