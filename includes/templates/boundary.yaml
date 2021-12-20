@@ -37,14 +37,9 @@
                selectattr('state', 'eq', 'on')|
                map(attribute='name')|unique|sort
           %}
-          {%- for entity in entities -%}
-            {% if loop.last -%}
-              {% if loop.length > 1 %}and {% else %} {% endif %}
-            {%- endif -%}
-            {{ entity -}}
-            {% if loop.first and loop.length == 2 %} {% endif %}
-            {%- if not loop.last and loop.length > 2 %}, {% endif %}
-          {%- endfor %}
+          {{- entities[0] if entities|count == 1 else
+                (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+          }}
 
     - unique_id: security_perimeter_tampered
       name: Security Perimeter Tampered
@@ -83,11 +78,6 @@
                map(attribute='name')|
                reject('eq', none)|unique|sort
           %}
-          {%- for entity in entities -%}
-            {% if loop.last -%}
-              {% if loop.length > 1 %}and {% else %} {% endif %}
-            {%- endif -%}
-            {{ entity -}}
-            {% if loop.first and loop.length == 2 %} {% endif %}
-            {%- if not loop.last and loop.length > 2 %}, {% endif %}
-          {%- endfor %}
+          {{- entities[0] if entities|count == 1 else
+                (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+          }}
