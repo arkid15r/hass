@@ -68,4 +68,26 @@
                map(attribute='entity_id')|
                map('regex_replace', '_tamper$', '')
           %}
-          {{ entities }}
+          {{ entities|sort }}
+        entities_summary: >
+          {% set entities = expand('group.perimeter_security')|
+               map(attribute='entity_id')|
+               map('regex_replace', '$', '_tamper')
+          %}
+          {% set entities = expand(entities)|
+               selectattr('state', 'eq', 'on')|
+               map(attribute='entity_id')|
+               map('regex_replace', '_tamper$', '')
+          %}
+          {% set entities = expand(entities)|
+               map(attribute='name')|
+               reject('eq', none)|unique|sort
+          %}
+          {%- for entity in entities -%}
+            {% if loop.last -%}
+              {% if loop.length > 1 %}and {% else %} {% endif %}
+            {%- endif -%}
+            {{ entity -}}
+            {% if loop.first and loop.length == 2 %} {% endif %}
+            {%- if not loop.last and loop.length > 2 %}, {% endif %}
+          {%- endfor %}
