@@ -10,12 +10,14 @@ mode_front_yard_lights_all_on_motion:
   all: true
   entities:
     - binary_sensor.front_door_closed
-    - binary_sensor.garge_gate_closed
+    - binary_sensor.garage_gate_closed
     - group.light_front_yard
 
 mode_living_room_lights_new_year_on_motion:
   name: Living Room New Year Lights On Motion Mode
   entities:
+    - binary_sensor.living_room_tv
+    - group.light_dining_area
     - group.motion_corridor
     - group.motion_hallway
     - group.motion_kitchen
