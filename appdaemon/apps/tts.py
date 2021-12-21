@@ -12,128 +12,15 @@ import time
 from queue import Queue
 from threading import Thread
 
+# pylint: disable=import-error
 from appdaemon.plugins.hass import hassapi as hass
 
 
 class Alexa(hass.Hass):
   """Alexa TTS App Daemon class."""
 
-  BATHROOM_1 = "bathroom_1"
-  BATHROOM_1_DOOR = "binary_sensor.bathroom_1_door"
-  BATHROOM_1_LIGHT = "group.light_bathroom_1"
-  BATHROOM_1_ECHO = "media_player.bathroom_1_echo"
-  BATHROOM_1_MOTION = "binary_sensor.motion_bathroom_1_5m"
-
-  BATHROOM_2 = "bathroom_2"
-  BATHROOM_2_DOOR = "binary_sensor.bathroom_2_door"
-  BATHROOM_2_LIGHT = "group.light_bathroom_2"
-  BATHROOM_2_ECHO = "media_player.bathroom_2_echo"
-  BATHROOM_2_MOTION = "binary_sensor.motion_bathroom_2_5m"
-
-  BEDROOM_1 = "bedroom_1"
-  BEDROOM_1_LIGHT = "group.light_bedroom_1"
-  BEDROOM_1_ECHO = "media_player.bedroom_1_echo"
-  BEDROOM_1_MOTION = "binary_sensor.motion_bedroom_1_5m"
-
-  CORRIDOR = "corridor"
-  CORRIDOR_ECHO = "media_player.corridor_echo"
-
-  DINING_AREA_LIGHT = "group.light_dining_area"
-
-  GARAGE = "garage"
-  GARAGE_LIGHT = "group.light_garage"
-  GARAGE_ECHO = "media_player.garage_echo"
-  GARAGE_MOTION = "binary_sensor.motion_garage_5m"
-
-  HALLWAY_MOTION = "group.hallway_motion_sensors"
-
-  KITCHEN_LIGHT = "group.light_kitchen"
-  KITCHEN_MOTION = "binary_sensor.motion_kitchen_5m"
-  KITCHEN_TV = "media_player.kitchen_tv"
-
-  LIVING_ROOM = "living_room"
-  LIVING_ROOM_LIGHT = "group.light_living_room"
-  LIVING_ROOM_ECHO = "media_player.living_room_echo"
-  LIVING_ROOM_MOTION = "binary_sensor.motion_living_room_5m"
-  LIVING_ROOM_TV = "binary_sensor.living_room_tv_powered_on"
-
-  OFFICE_1 = "office_1"
-  OFFICE_1_LIGHT = "group.light_office_1"
-  OFFICE_1_ECHO = "media_player.office_1_echo"
-  OFFICE_1_MOTION = "binary_sensor.motion_office_1_5m"
-  OFFICE_1_TV = "remote.office_1_tv_remote"
-
-  OFFICE_2 = "office_2"
-  OFFICE_2_LIGHT = "group.light_office_2"
-  OFFICE_2_ECHO = "media_player.office_2_echo"
-  OFFICE_2_MOTION = "binary_sensor.motion_office_2_5m"
-
-  QUITE_TIME = "binary_sensor.quite_time"
-
   STATE_OFF = "off"
   STATE_ON = "on"
-
-  ENV = {
-      "NORMAL_TIME_DEFAULT_TARGETS": {},
-      "NORMAL_TIME_LAST_RESORT_TARGETS": {
-          CORRIDOR: CORRIDOR_ECHO
-      },
-      "QUITE_TIME_DEFAULT_TARGETS": {
-          BEDROOM_1: BEDROOM_1_ECHO
-      },
-  }
-
-  RULES = (
-      {
-          "conditions": (BATHROOM_1_LIGHT, BATHROOM_1_MOTION),
-          "target": BATHROOM_1_ECHO,
-          "unless": {
-              "conditions": (BATHROOM_1_DOOR,),
-              "target": BEDROOM_1_ECHO
-          }
-      },
-      {
-          "conditions": (BATHROOM_2_LIGHT, BATHROOM_2_MOTION),
-          "target": BATHROOM_2_ECHO,
-          "unless": {
-              "conditions": (BATHROOM_2_DOOR,),
-              "target": LIVING_ROOM_ECHO
-          }
-      },
-      {
-          "conditions": (BEDROOM_1_LIGHT, BEDROOM_1_MOTION),
-          "target": BEDROOM_1_ECHO
-      },
-      {
-          "conditions": (GARAGE_LIGHT, GARAGE_MOTION),
-          "target": GARAGE_ECHO
-      },
-      {
-          "conditions": (
-              DINING_AREA_LIGHT,
-              HALLWAY_MOTION,
-              KITCHEN_LIGHT,
-              KITCHEN_MOTION,
-              LIVING_ROOM_LIGHT,
-              LIVING_ROOM_MOTION,
-              LIVING_ROOM_TV,
-          ),
-          "target": LIVING_ROOM_ECHO
-      },
-      {
-          "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
-          "target": OFFICE_1_ECHO,
-          "unless": {
-              "conditions": (DINING_AREA_LIGHT, KITCHEN_LIGHT, KITCHEN_TV,
-                             LIVING_ROOM_LIGHT, LIVING_ROOM_TV),
-              "target": LIVING_ROOM_ECHO
-          }
-      },
-      {
-          "conditions": (OFFICE_2_LIGHT, OFFICE_2_MOTION),
-          "target": OFFICE_2_ECHO
-      },
-  )
 
   TTS_DURATION_DEFAULT_SECONDS = 5
 
@@ -142,6 +29,10 @@ class Alexa(hass.Hass):
 
     # pylint: disable=attribute-defined-outside-init
     self.messages = Queue(maxsize=5)
+
+    self.env = self.args["env"]
+    self.rules = self.args["rules"]
+    self.quite_time = self.args["quite_time"]
 
     thread = Thread(target=self.worker)
     thread.daemon = True
@@ -159,15 +50,13 @@ class Alexa(hass.Hass):
     })
 
   # pylint: disable=too-many-branches
-  def tts(self, text=None, silent_in=None, env=None):
+  def tts(self, text=None, silent_in=None):
     """
       Check targets and generate text to speech API request.
 
       Parameters:
-        hass: A HomeAssistant service from the global context.
         text: A text to play.
         silent_in: A list of areas to exclude.
-        env: An environment settings for normal/quite time.
 
       Returns:
         list: A list of target devices the message to be played on.
@@ -183,52 +72,71 @@ class Alexa(hass.Hass):
     if not text:
       raise ValueError("Text is required.")
 
-    quite_hours = is_on(self.QUITE_TIME)
+    quite_time = is_on(self.quite_time)
 
     targets = set()
 
     # Add targets based on the rule conditions.
-    for rule in self.RULES:
+    for area in self.rules:
+      rule = self.rules[area]
+
       if any((is_on(c) for c in rule["conditions"])):
         targets.add(rule["target"])
 
-    # Remove targets based on the unless condition.
-    for rule in self.RULES:
+    # Remove targets based on the if_not condition.
+    for area in self.rules:
+      rule = self.rules[area]
       target = rule["target"]
-      if (target not in targets or "unless" not in rule
-          or rule["unless"]["target"] not in targets):
+
+      if (target not in targets or "if_not" not in rule
+          or rule["if_not"]["target"] not in targets):
         continue
 
-      conditions = rule["unless"]["conditions"]
-      if not conditions:
-        targets.remove(target)
-      elif any((is_on(c) for c in conditions)):
+      conditions = rule["if_not"].get("conditions", ())
+      if not conditions or any((is_on(c) for c in conditions)):
         targets.remove(target)
 
     # Mute silenced targets.
     silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
     targets = targets.difference(silenced_targets)
 
-    # Add default and last resort targets.
-    if quite_hours:
-      if "QUITE_TIME_DEFAULT_TARGETS" in env:
-        targets.update(
-            set(env["QUITE_TIME_DEFAULT_TARGETS"].values()).difference(
-                silenced_targets))
-    else:
-      if "NORMAL_TIME_DEFAULT_TARGETS" in env:
-        targets.update(
-            set(env["NORMAL_TIME_DEFAULT_TARGETS"].values()).difference(
-                silenced_targets))
+    # Add always and default play area targets.
+    always_play_targets = None
+    default_play_targets = None
+    if quite_time:
+      if "quite_time" in self.env.get("play_always", ()):
+        always_play_targets = [
+            f"media_player.{area}_echo"
+            for area in self.env["play_always"].get("quite_time", ())
+        ]
 
-      if not targets and "NORMAL_TIME_LAST_RESORT_TARGETS" in env:
-        targets.update(
-            set(env["NORMAL_TIME_LAST_RESORT_TARGETS"].values()).difference(
-                silenced_targets))
+      if "quite_time" in self.env.get("play_default", ()):
+        default_play_targets = [
+            f"media_player.{area}_echo"
+            for area in self.env["play_default"].get("quite_time", ())
+        ]
+
+    else:
+      if "normal_time" in self.env.get("play_always", ()):
+        always_play_targets = [
+            f"media_player.{area}_echo"
+            for area in self.env["play_always"].get("normal_time", ())
+        ]
+
+      if "normal_time" in self.env.get("play_default", ()):
+        default_play_targets = [
+            f"media_player.{area}_echo"
+            for area in self.env["play_default"].get("normal_time", ())
+        ]
+
+    if always_play_targets is not None:
+      targets.update(set(always_play_targets).difference(silenced_targets))
+
+    if not targets and default_play_targets is not None:
+      targets.update(set(default_play_targets).difference(silenced_targets))
 
     targets = list(targets)
     if targets:
-      self.log(targets)
       self.call_service("notify/alexa_media",
                         target=targets,
                         message=text,
@@ -241,7 +149,7 @@ class Alexa(hass.Hass):
     while True:
       try:
         data = self.messages.get()
-        self.tts(text=data["text"], silent_in=data["silent_in"], env=self.ENV)
+        self.tts(text=data["text"], silent_in=data["silent_in"])
         time.sleep(self.TTS_DURATION_DEFAULT_SECONDS)
       except Exception:  # pylint: disable=broad-except
         self.log(sys.exc_info())

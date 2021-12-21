@@ -13,8 +13,8 @@ for a HASS setup.
 ### - tts.py
 
 Plays a TTS message on Amazon Echo devices using Alexa notification service. A
-list of target devices is generated based on time, recent motion activity, and a
-set of default and last resort targets.
+list of target devices can be configured based on time, recent motion activity,
+and other binary sensors or templates with 'on'/'off' state capabilities.
 
 Usage:
 
@@ -31,7 +31,7 @@ From /config/automations.yaml
 The alexa_tts.py depends on the set of sensors. You can customaze them based on
 your needs and situation. Here are some examples:
 
-From /config/binary_sensors.yaml
+From /config/includes/binary_sensors.yaml
 
 ```yaml
 - binary_sensor:
@@ -82,7 +82,7 @@ motion_garage:
 from /config/configuration.yaml
 
 ```yaml
-binary_sensor: !include binary_sensors.yaml
+binary_sensor: !include includes/binary_sensors.yaml
 group: !include_dir_merge_named includes/groups
 template: !include_dir_merge_list includes/templates
 ```
@@ -90,66 +90,60 @@ template: !include_dir_merge_list includes/templates
 #### ENV
 
 The script behavior heavily depends on the quite/normal time sensor state. You
-can also set default and last resort targets via ENV dictionary. The default
-targets will remain active as long as they are not specifically silenced during
-tts.py invocation using `silent_in` parameter. The last resort targets
-will be used if resulting targets list is empty.
+can set `play_always` and `play_default` targets. The play_always
+targets will remain active as long as they are not explicitly silenced with
+`silent_in` parameter during tts() function invocation. The play_default targets
+will be used as a last resort when resulting target list is empty.
 
-```python
-ENV = {
-    "NORMAL_TIME_DEFAULT_TARGETS": {},
-    "NORMAL_TIME_LAST_RESORT_TARGETS": {
-        CORRIDOR: CORRIDOR_ECHO
-    },
-    "QUITE_TIME_DEFAULT_TARGETS": {
-        BEDROOM_1: BEDROOM_1_ECHO
-    },
-}
+```yaml
+env:
+  play_always:
+    normal_time: []
+    quite_time:
+      - bedroom_1
+  play_default:
+    normal_time:
+      - corridor
+    quite_time: []
 ```
 
 #### RULES
 
-Each area behavior is configured in RULES.
+Each area behavior is configured in AppDaemon apps.yaml.
 
-- conditions: a set of conditions (sensor is on) to check for the targets
-  activation
-- target: the echo device
-- unless: (don't play in the area if)
+- conditions: a set of conditions to check for the targets activation
+- target: the echo device identifier
+- if_not: (don't play in the area if)
   - conditions: any of these is ON (or empty)
   - target: and this target (normally from the nearest area) is playing
 
-```python
-RULES = (
-    {
-        "conditions": (BEDROOM_1_LIGHT, BEDROOM_1_MOTION),
-        "target": BEDROOM_1_ECHO
-    },
-    {
-        "conditions": (GARAGE_LIGHT, GARAGE_MOTION),
-        "target": GARAGE_ECHO
-    },
-    {
-        "conditions": (
-            DINING_AREA_LIGHT,
-            HALLWAY_MOTION,
-            KITCHEN_LIGHT,
-            KITCHEN_MOTION,
-            LIVING_ROOM_LIGHT,
-            LIVING_ROOM_MOTION,
-            LIVING_ROOM_TV,
-        ),
-        "target": LIVING_ROOM_ECHO
-    },
-    {
-        "conditions": (OFFICE_1_LIGHT, OFFICE_1_MOTION, OFFICE_1_TV),
-        "target": OFFICE_1_ECHO,
-        "unless": {
-            "conditions": (DINING_AREA_LIGHT, KITCHEN_LIGHT, KITCHEN_TV,
-                            LIVING_ROOM_LIGHT, LIVING_ROOM_TV),
-            "target": LIVING_ROOM_ECHO
-        }
-    },
-)
+```yaml
+env:
+  quite_time: binary_sensor.quite_time
+  rules:
+    bathroom_1:
+      conditions:
+        - binary_sensor.motion_bathroom_1_5m
+        - group.light_bathroom_1
+      target: media_player.bathroom_1_echo
+      if_not:
+        conditions:
+          - binary_sensor.bathroom_1_door
+        target: media_player.bedroom_1_echo
+    bathroom_2:
+      conditions:
+        - binary_sensor.motion_bathroom_2_5m
+        - group.light_bathroom_2
+      target: media_player.bathroom_2_echo
+      if_not:
+        conditions:
+          - binary_sensor.bathroom_2_door
+        target: media_player.living_room_echo
+    garage:
+      conditions:
+        - binary_sensor.motion_garage_5m
+        - group.light_garage
+      target: media_player.bedroom_1_echo
 ```
 
 ### - alexa_volume.py

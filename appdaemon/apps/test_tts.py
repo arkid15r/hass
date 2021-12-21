@@ -8,21 +8,91 @@ __author__ = "Ark (ark@cho.red)"
 import unittest
 from unittest import mock
 
+import yaml  # pylint: disable=import-error
+
 import tts
 
 
 class TestBase(unittest.TestCase):
   """A base class for tests."""
 
+  BATHROOM_1 = "bathroom_1"
+  BATHROOM_1_DOOR = "binary_sensor.bathroom_1_door"
+  BATHROOM_1_LIGHT = "group.light_bathroom_1"
+  BATHROOM_1_ECHO = "media_player.bathroom_1_echo"
+  BATHROOM_1_MOTION = "binary_sensor.motion_bathroom_1_5m"
+
+  BATHROOM_2 = "bathroom_2"
+  BATHROOM_2_DOOR = "binary_sensor.bathroom_2_door"
+  BATHROOM_2_LIGHT = "group.light_bathroom_2"
+  BATHROOM_2_ECHO = "media_player.bathroom_2_echo"
+  BATHROOM_2_MOTION = "binary_sensor.motion_bathroom_2_5m"
+
+  BEDROOM_1 = "bedroom_1"
+  BEDROOM_1_LIGHT = "group.light_bedroom_1"
+  BEDROOM_1_ECHO = "media_player.bedroom_1_echo"
+  BEDROOM_1_MOTION = "binary_sensor.motion_bedroom_1_5m"
+
+  CORRIDOR = "corridor"
+  CORRIDOR_ECHO = "media_player.corridor_echo"
+
+  DINING_AREA_LIGHT = "group.light_dining_area"
+
+  GARAGE = "garage"
+  GARAGE_LIGHT = "group.light_garage"
+  GARAGE_ECHO = "media_player.garage_echo"
+  GARAGE_MOTION = "binary_sensor.motion_garage_5m"
+
+  HALLWAY_MOTION = "group.hallway_motion_sensors"
+
+  KITCHEN_LIGHT = "group.light_kitchen"
+  KITCHEN_MOTION = "binary_sensor.motion_kitchen_5m"
+  KITCHEN_TV = "media_player.kitchen_tv"
+
+  LIVING_ROOM = "living_room"
+  LIVING_ROOM_LIGHT = "group.light_living_room"
+  LIVING_ROOM_ECHO = "media_player.living_room_echo"
+  LIVING_ROOM_MOTION = "binary_sensor.motion_living_room_5m"
+  LIVING_ROOM_TV = "binary_sensor.living_room_tv_powered_on"
+
+  OFFICE_1 = "office_1"
+  OFFICE_1_LIGHT = "group.light_office_1"
+  OFFICE_1_ECHO = "media_player.office_1_echo"
+  OFFICE_1_MOTION = "binary_sensor.motion_office_1_5m"
+  OFFICE_1_TV = "remote.office_1_tv_remote"
+
+  OFFICE_2 = "office_2"
+  OFFICE_2_LIGHT = "group.light_office_2"
+  OFFICE_2_ECHO = "media_player.office_2_echo"
+  OFFICE_2_MOTION = "binary_sensor.motion_office_2_5m"
+
+  env = {}
+  rules = {}
+  quite_time = {}
+
   states = {}
 
+  @classmethod
+  def setUpClass(cls):
+    with open("apps.yaml", 'r', encoding='utf-8') as config_file:
+      config = yaml.safe_load(config_file)["tts"]
+
+    cls.env = config["env"]
+    cls.rules = config["rules"]
+    cls.quite_time = config["quite_time"]
+
   def setUp(self):
-    self.default_targets = [tts.Alexa.CORRIDOR_ECHO]
+    self.default_targets = [self.CORRIDOR_ECHO]
     self.text = "Test text."
 
-    self.alexa = tts.Alexa(mock.Mock(), mock.Mock(), mock.MagicMock(),
-                           mock.MagicMock(), mock.Mock(), mock.Mock(),
-                           mock.Mock())
+    args = {
+        "env": self.env,
+        "quite_time": self.quite_time,
+        "rules": self.rules,
+    }
+    self.alexa = tts.Alexa(mock.Mock(), mock.Mock(), mock.MagicMock(), args,
+                           mock.Mock(), mock.Mock(), mock.Mock())
+    self.alexa.initialize()
 
     tts.Alexa.call_service = mock.Mock()
     tts.Alexa.get_state = mock.Mock()
@@ -38,6 +108,10 @@ class TestBase(unittest.TestCase):
 
   def _assert_hass_not_called(self):
     self.alexa.call_service.assert_not_called()
+
+  @staticmethod
+  def _target_for(area):
+    return f"media_player.{area}_echo"
 
 
 class TestArgs(TestBase):
@@ -57,44 +131,38 @@ class TestArgs(TestBase):
       self.assertIn("text is required", str(ctx.exception))
 
 
-class TestDefaultTargets(TestBase):
+class TestTargets(TestBase):
   """Default targets tests."""
 
-  def _test_not_played(self, targets, env=None):
+  def _test_not_played(self, targets):
     """Assert text was not played on the default targets."""
 
-    expected_targets = self.alexa.tts(text=self.text,
-                                      silent_in=targets.keys(),
-                                      env=env)
-    for area in targets:
+    expected_targets = self.alexa.tts(text=self.text, silent_in=targets)
+    for target in targets:
       self.assertNotIn(
-          targets[area],
+          target,
           expected_targets,
-          f"Should not play on the default target in {area} if silenced.",
+          f"Should not play on the default target ({target}) if silenced.",
       )
       self._assert_hass_not_called()
 
-  def _test_played(self, targets, silent_targets=None, env=None):
+  def _test_played(self, areas, silent_in=None):
     """Assert text was played on the default target."""
 
-    silent_in = None
-    if silent_targets:
-      silent_in = silent_targets.keys()
+    expected_targets = self.alexa.tts(text=self.text, silent_in=silent_in)
 
-    expected_targets = self.alexa.tts(text=self.text,
-                                      silent_in=silent_in,
-                                      env=env)
-
-    for area in targets:
+    for area in areas:
+      target = self._target_for(area)
       self.assertIn(
-          targets[area],
+          target,
           expected_targets,
           f"Should play on the default target in {area}.",
       )
 
-    for area in silent_targets or ():
+    for area in silent_in or ():
+      target = self._target_for(area)
       self.assertNotIn(
-          silent_targets[area],
+          target,
           expected_targets,
           f"Should not play on the target in {area} if silenced.",
       )
@@ -102,447 +170,401 @@ class TestDefaultTargets(TestBase):
     self._assert_hass_called_with(self.text, expected_targets)
 
 
-class TestDefaultTargetsNormalTime(TestDefaultTargets):
+class TestPlayDefaultTargetsNormalTime(TestTargets):
   """Default targets normal time tests."""
 
   def test_not_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
-    super()._test_not_played(
-        default_targets, env={"NORMAL_TIME_DEFAULT_TARGETS": default_targets})
+    play_default = [TestBase.OFFICE_1, TestBase.OFFICE_2]
+    with mock.patch.dict(self.alexa.env,
+                         {"play_default": {
+                             "normal_time": play_default
+                         }}):
+      super()._test_not_played(play_default)
 
     # Test current targets.
-    super()._test_not_played(tts.Alexa.ENV["NORMAL_TIME_DEFAULT_TARGETS"],
-                             env=tts.Alexa.ENV)
+    super()._test_not_played(self.env["play_default"]["normal_time"])
 
   def test_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
-    super()._test_played(default_targets,
-                         env={"NORMAL_TIME_DEFAULT_TARGETS": default_targets})
+    play_default = (TestBase.OFFICE_1, TestBase.OFFICE_2)
+    with mock.patch.dict(self.alexa.env,
+                         {"play_default": {
+                             "normal_time": play_default
+                         }}):
+      super()._test_played(play_default)
 
     # Test current targets.
-    super()._test_played(tts.Alexa.ENV["NORMAL_TIME_DEFAULT_TARGETS"],
-                         env=tts.Alexa.ENV)
+    super()._test_played(self.env["play_default"]["normal_time"])
 
 
-class TestDefaultTargetsQuiteTime(TestDefaultTargets):
+class TestPlayDefaultTargetsQuiteTime(TestTargets):
   """Default targets quite time tests."""
 
+  play_default = (TestBase.OFFICE_1, TestBase.OFFICE_2)
+  env_patch = {
+      "play_always": {
+          "quite_time": []
+      },
+      "play_default": {
+          "quite_time": play_default
+      }
+  }
+
   def test_not_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
     self.alexa.get_state.side_effect = lambda sensor: {
-        tts.Alexa.QUITE_TIME: tts.Alexa.STATE_ON
+        self.alexa.quite_time: tts.Alexa.STATE_ON
     }.get(sensor, tts.Alexa.STATE_OFF)
-    super()._test_not_played(default_targets,
-                             {"QUITE_TIME_DEFAULT_TARGETS": default_targets})
+    with mock.patch.dict(self.alexa.env, self.env_patch):
+      super()._test_not_played(self.play_default)
 
     # Test current targets.
-    super()._test_not_played(tts.Alexa.ENV["QUITE_TIME_DEFAULT_TARGETS"],
-                             env=tts.Alexa.ENV)
+    super()._test_not_played(self.env["play_default"]["quite_time"])
 
   def test_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
     self.alexa.get_state.side_effect = lambda sensor: {
-        tts.Alexa.QUITE_TIME: tts.Alexa.STATE_ON
+        self.quite_time: tts.Alexa.STATE_ON
     }.get(sensor, tts.Alexa.STATE_OFF)
-    super()._test_played(default_targets,
-                         env={"QUITE_TIME_DEFAULT_TARGETS": default_targets})
+    with mock.patch.dict(self.alexa.env, self.env_patch):
+      super()._test_played(self.play_default)
 
     # Test current targets.
-    super()._test_played(tts.Alexa.ENV["QUITE_TIME_DEFAULT_TARGETS"],
-                         env=tts.Alexa.ENV)
+    super()._test_played(self.env["play_default"]["quite_time"])
 
 
-class TestLastResortTargetsNormalTime(TestDefaultTargets):
+class TestPlayAlwaysTargetsNormalTime(TestTargets):
   """Last resort targets normal time tests."""
 
+  play_always = [TestBase.OFFICE_1, TestBase.OFFICE_2]
+  env_patch = {
+      "play_always": {
+          "normal_time": play_always
+      },
+      "play_default": {
+          "normal_time": []
+      }
+  }
+
   def test_not_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
-    super()._test_not_played(
-        default_targets, {"NORMAL_TIME_LAST_RESORT_TARGETS": default_targets})
+    with mock.patch.dict(self.alexa.env, self.env_patch):
+      super()._test_not_played(self.play_always)
 
     # Test current targets.
-    super()._test_not_played(tts.Alexa.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
-                             env=tts.Alexa.ENV)
+    super()._test_not_played(self.env["play_always"]["normal_time"])
 
   def test_played(self):
-    default_targets = {
-        tts.Alexa.OFFICE_1: tts.Alexa.OFFICE_1_ECHO,
-        tts.Alexa.OFFICE_2: tts.Alexa.OFFICE_2_ECHO,
-    }
-    super()._test_played(
-        default_targets,
-        env={"NORMAL_TIME_LAST_RESORT_TARGETS": default_targets})
-
-    # Test current targets.
-    super()._test_played(tts.Alexa.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
-                         env=tts.Alexa.ENV)
+    with mock.patch.dict(self.alexa.env, self.env_patch):
+      super()._test_played(self.play_always)
 
     self.alexa.get_state.side_effect = lambda sensor: {
-        tts.Alexa.LIVING_ROOM_MOTION: tts.Alexa.STATE_ON
+        TestBase.LIVING_ROOM_MOTION: tts.Alexa.STATE_ON
     }.get(sensor, tts.Alexa.STATE_OFF)
-    super()._test_played(tts.Alexa.ENV["NORMAL_TIME_LAST_RESORT_TARGETS"],
-                         silent_targets={
-                             tts.Alexa.LIVING_ROOM: tts.Alexa.LIVING_ROOM_ECHO,
-                         },
-                         env=tts.Alexa.ENV)
+    super()._test_played(self.env["play_always"]["normal_time"],
+                         silent_in=[TestBase.LIVING_ROOM])
+
+    # Test current targets.
+    super()._test_played(self.env["play_always"]["normal_time"])
 
 
 class TestTarget(TestBase):
   """A base class for specific target behavior tests."""
 
-  def _test_not_played_normal_time(self, area, target, conditions):
+  def _test_not_played_normal_time(self, area, conditions):
     """Assert text was not played on the target during normal time. """
 
-    for condition in conditions:
-      self.alexa.get_state.side_effect = lambda sensor: {
-          condition: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
+    with mock.patch.dict(self.alexa.rules, self.rules):
+      for condition in conditions:
+        self.alexa.get_state.side_effect = lambda sensor: {
+            condition: tts.Alexa.STATE_ON
+        }.get(sensor, tts.Alexa.STATE_OFF)
 
-      targets = self.alexa.tts(
-          text=self.text,
-          silent_in=[area],
-          env=tts.Alexa.ENV,
-      )
-      self.assertNotIn(
-          target,
-          targets,
-          f"Should not play in the {area} if silenced and "
-          f"{conditions[condition]}.",
-      )
-      self._assert_hass_called_with(self.text, targets)
+        target = self._target_for(area)
+        targets = self.alexa.tts(text=self.text, silent_in=[area])
+        self.assertNotIn(
+            target,
+            targets,
+            f"Should not play in the {area} if silenced and "
+            f"{conditions[condition]}.",
+        )
+        self._assert_hass_called_with(self.text, targets)
 
-  def _test_played_normal_time(self, area, target, conditions):
+  def _test_played_normal_time(self, area, conditions):
     """Assert text was played on the target during normal time."""
 
+    target = self._target_for(area)
     expected_targets = [target]
 
-    for condition in conditions:
-      self.alexa.get_state.side_effect = lambda sensor: {
-          condition: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
-      targets = self.alexa.tts(text=self.text, env=tts.Alexa.ENV)
+    with mock.patch.dict(self.alexa.rules,
+                         {area: {
+                             "conditions": conditions,
+                             "target": target
+                         }}):
+      for condition in conditions:
+        self.alexa.get_state.side_effect = lambda sensor: {
+            condition: tts.Alexa.STATE_ON
+        }.get(sensor, tts.Alexa.STATE_OFF)
 
-      self.assertEqual(
-          targets,
-          expected_targets,
-          f"Should play in the {area} if {conditions[condition]}.",
-      )
-      self._assert_hass_called_with(self.text, expected_targets)
+        targets = self.alexa.tts(text=self.text)
 
-  def _test_not_played_quite_time(self, area, target, conditions):
+        self.assertEqual(
+            targets,
+            expected_targets,
+            f"Should play in the {area} if {conditions[condition]}.",
+        )
+        self._assert_hass_called_with(self.text, expected_targets)
+
+  def _test_not_played_quite_time(self, area, conditions):
     """Assert text was not played on the target during quite time."""
 
-    for condition in conditions:
-      self.alexa.get_state.side_effect = lambda sensor: {
-          condition: tts.Alexa.STATE_ON,
-          tts.Alexa.QUITE_TIME: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
+    with mock.patch.dict(self.alexa.env,
+                         {"play_always": {
+                             "quite_time": [area]
+                         }}):
 
-      expected_targets = self.alexa.tts(
-          text=self.text,
-          silent_in=[area],
-          env={"QUITE_TIME_DEFAULT_TARGETS": {
-              area: target
-          }},
-      )
+      for condition in conditions:
+        self.alexa.get_state.side_effect = lambda sensor: {
+            condition: tts.Alexa.STATE_ON,
+            self.quite_time: tts.Alexa.STATE_ON
+        }.get(sensor, tts.Alexa.STATE_OFF)
 
-      self.assertNotIn(
-          target,
-          expected_targets,
-          f"Should not play in the {area} during quite time if silenced.",
-      )
-      self._assert_hass_not_called()
+        expected_targets = self.alexa.tts(text=self.text, silent_in=[area])
 
-  def _test_played_unless(self, area, target, conditions, unless):
+        self.assertNotIn(
+            self._target_for(area),
+            expected_targets,
+            f"Should not play in the {area} during quite time if silenced.",
+        )
+        self._assert_hass_not_called()
+
+  def _test_played_if_not(self, area, conditions, if_not):
     """
     Assert text was not played on the target due to unless rule conditions.
     """
 
     condition_dict = {}
-    for condition in tuple(conditions.keys()) + unless["conditions"]:
+    for condition in tuple(conditions.keys()) + if_not["conditions"]:
       condition_dict[condition] = tts.Alexa.STATE_ON
 
     self.alexa.get_state.side_effect = lambda sensor: condition_dict.get(
         sensor, tts.Alexa.STATE_OFF)
 
-    targets = self.alexa.tts(
-        text=self.text,
-        env=tts.Alexa.ENV,
-    )
+    target = self._target_for(area)
+    targets = self.alexa.tts(text=self.text)
 
     self.assertNotIn(
         target,
         targets,
-        f"Should not play in the {area} when {unless['description']}.",
+        f"Should not play in the {area} when {if_not['description']}.",
     )
     self._assert_hass_called_with(self.text, targets)
 
-  def _test_played_quite_time(self, area, target):
-    """Assert text was  played on the target during quite time. """
+  def _test_played_quite_time(self, area):
+    """Assert text was played on the target during quite time. """
 
     self.alexa.get_state.side_effect = lambda sensor: {
-        tts.Alexa.QUITE_TIME: tts.Alexa.STATE_ON
+        self.alexa.quite_time: tts.Alexa.STATE_ON
     }.get(sensor, tts.Alexa.STATE_OFF)
 
-    expected_targets = self.alexa.tts(
-        text=self.text,
-        env={"QUITE_TIME_DEFAULT_TARGETS": {
-            area: target
-        }},
-    )
+    with mock.patch.dict(self.alexa.env,
+                         {"play_always": {
+                             "quite_time": [area]
+                         }}):
+      expected_targets = self.alexa.tts(text=self.text)
 
-    self.assertIn(
-        target,
-        expected_targets,
-        f"Should play in the {area} during quite time.",
-    )
-    self._assert_hass_called_with(self.text, expected_targets)
+      self.assertIn(
+          self._target_for(area),
+          expected_targets,
+          f"Should play in the {area} during quite time.",
+      )
+      self._assert_hass_called_with(self.text, expected_targets)
 
 
 class TestBathroom1(TestTarget):
   """Bathroom 1 tests."""
 
   conditions = {
-      tts.Alexa.BATHROOM_1_LIGHT: "the light is on",
-      tts.Alexa.BATHROOM_1_MOTION: "there was a recent motion",
+      TestBase.BATHROOM_1_LIGHT: "the light is on",
+      TestBase.BATHROOM_1_MOTION: "there was a recent motion",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.BATHROOM_1,
-                                         tts.Alexa.BATHROOM_2_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.BATHROOM_1, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.BATHROOM_1,
-                                        tts.Alexa.BATHROOM_1_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.BATHROOM_1, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.BATHROOM_1,
-                                     tts.Alexa.BATHROOM_1_ECHO, self.conditions)
+    super()._test_played_normal_time(TestBase.BATHROOM_1, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.BATHROOM_1,
-                                    tts.Alexa.BATHROOM_1_ECHO)
+    super()._test_played_quite_time(TestBase.BATHROOM_1)
 
-  def test_played_unless(self):
-    unless = {
-        "conditions": (tts.Alexa.BATHROOM_1_DOOR, tts.Alexa.BEDROOM_1_LIGHT),
+  def test_played_if_not(self):
+    if_not = {
+        "conditions": (TestBase.BATHROOM_1_DOOR, TestBase.BEDROOM_1_LIGHT),
         "description":
-            f"playing in {tts.Alexa.BEDROOM_1} and {tts.Alexa.BATHROOM_1} door is open"
+            f"playing in {TestBase.BEDROOM_1} and {TestBase.BATHROOM_1} door is open"
     }
 
-    super()._test_played_unless(tts.Alexa.BATHROOM_1, tts.Alexa.BATHROOM_1_ECHO,
-                                self.conditions, unless)
+    super()._test_played_if_not(TestBase.BATHROOM_1, self.conditions, if_not)
 
 
 class TestBathroom2(TestTarget):
   """Bathroom 2 tests."""
 
   conditions = {
-      tts.Alexa.BATHROOM_2_LIGHT: "the light is on",
-      tts.Alexa.BATHROOM_2_MOTION: "there was a recent motion",
+      TestBase.BATHROOM_2_LIGHT: "the light is on",
+      TestBase.BATHROOM_2_MOTION: "there was a recent motion",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.BATHROOM_2,
-                                         tts.Alexa.BATHROOM_2_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.BATHROOM_2, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.BATHROOM_2,
-                                        tts.Alexa.BATHROOM_2_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.BATHROOM_2, self.conditions)
 
   def test_played_normal_time(self):
     super()._test_played_normal_time(
-        tts.Alexa.BATHROOM_2,
-        tts.Alexa.BATHROOM_2_ECHO,
+        TestBase.BATHROOM_2,
         self.conditions,
     )
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.BATHROOM_2,
-                                    tts.Alexa.BATHROOM_2_ECHO)
+    super()._test_played_quite_time(TestBase.BATHROOM_2)
 
-  def test_played_unless(self):
-    unless = {
-        "conditions": (tts.Alexa.BATHROOM_2_DOOR, tts.Alexa.LIVING_ROOM_LIGHT),
+  def test_played_if_not(self):
+    if_not = {
+        "conditions": (TestBase.BATHROOM_2_DOOR, TestBase.LIVING_ROOM_LIGHT),
         "description":
-            f"playing in {tts.Alexa.LIVING_ROOM} and {tts.Alexa.BATHROOM_2} door is open"
+            f"playing in {TestBase.LIVING_ROOM} and {TestBase.BATHROOM_2} door is open"
     }
 
-    super()._test_played_unless(tts.Alexa.BATHROOM_2, tts.Alexa.BATHROOM_2_ECHO,
-                                self.conditions, unless)
+    super()._test_played_if_not(TestBase.BATHROOM_2, self.conditions, if_not)
 
 
 class TestBedroom1(TestTarget):
   """Bedroom 1 tests."""
 
   conditions = {
-      tts.Alexa.BEDROOM_1_LIGHT: "the light is on",
-      tts.Alexa.BEDROOM_1_MOTION: "there was a recent motion",
+      TestBase.BEDROOM_1_LIGHT: "the light is on",
+      TestBase.BEDROOM_1_MOTION: "there was a recent motion",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.BEDROOM_1,
-                                         tts.Alexa.BEDROOM_1_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.BEDROOM_1, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.BEDROOM_1,
-                                        tts.Alexa.BEDROOM_1_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.BEDROOM_1, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.BEDROOM_1,
-                                     tts.Alexa.BEDROOM_1_ECHO, self.conditions)
+    super()._test_played_normal_time(TestBase.BEDROOM_1, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.BEDROOM_1,
-                                    tts.Alexa.BEDROOM_1_ECHO)
+    super()._test_played_quite_time(TestBase.BEDROOM_1)
 
 
 class TestGarage(TestTarget):
   """Garage tests."""
 
   conditions = {
-      tts.Alexa.GARAGE_LIGHT: "the light is on",
-      tts.Alexa.GARAGE_MOTION: "there was a recent motion",
+      TestBase.GARAGE_LIGHT: "the light is on",
+      TestBase.GARAGE_MOTION: "there was a recent motion",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.GARAGE,
-                                         tts.Alexa.GARAGE_ECHO, self.conditions)
+    super()._test_not_played_normal_time(TestBase.GARAGE, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.GARAGE, tts.Alexa.GARAGE_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.GARAGE, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.GARAGE, tts.Alexa.GARAGE_ECHO,
-                                     self.conditions)
+    super()._test_played_normal_time(TestBase.GARAGE, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.GARAGE, tts.Alexa.GARAGE_ECHO)
+    super()._test_played_quite_time(TestBase.GARAGE)
 
 
 class TestLivingRoom(TestTarget):
   """Living room tests."""
 
   conditions = {
-      tts.Alexa.DINING_AREA_LIGHT:
+      TestBase.DINING_AREA_LIGHT:
           "the dining area light is on",
-      tts.Alexa.HALLWAY_MOTION:
+      TestBase.HALLWAY_MOTION:
           "there was a recent motion in the hallway",
-      tts.Alexa.KITCHEN_LIGHT:
+      TestBase.KITCHEN_LIGHT:
           "the kitchen light is on",
-      tts.Alexa.KITCHEN_MOTION:
+      TestBase.KITCHEN_MOTION:
           "there was a recent motion in the kitchen",
-      tts.Alexa.LIVING_ROOM_LIGHT:
+      TestBase.LIVING_ROOM_LIGHT:
           "the living room light is on",
-      tts.Alexa.LIVING_ROOM_MOTION:
+      TestBase.LIVING_ROOM_MOTION:
           "there was a recent motion in the living room",
-      tts.Alexa.LIVING_ROOM_TV:
+      TestBase.LIVING_ROOM_TV:
           "the living room TV is on",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.LIVING_ROOM,
-                                         tts.Alexa.LIVING_ROOM_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.LIVING_ROOM, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.LIVING_ROOM,
-                                        tts.Alexa.LIVING_ROOM_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.LIVING_ROOM, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.LIVING_ROOM,
-                                     tts.Alexa.LIVING_ROOM_ECHO,
-                                     self.conditions)
+    super()._test_played_normal_time(TestBase.LIVING_ROOM, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.LIVING_ROOM,
-                                    tts.Alexa.LIVING_ROOM_ECHO)
+    super()._test_played_quite_time(TestBase.LIVING_ROOM)
 
 
 class TestOffice1(TestTarget):
   """Office1 tests."""
 
   conditions = {
-      tts.Alexa.OFFICE_1_LIGHT: "the light is on",
-      tts.Alexa.OFFICE_1_MOTION: "there was a recent motion",
-      tts.Alexa.OFFICE_1_TV: "the TV is on",
+      TestBase.OFFICE_1_LIGHT: "the light is on",
+      TestBase.OFFICE_1_MOTION: "there was a recent motion",
+      TestBase.OFFICE_1_TV: "the TV is on",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.OFFICE_1,
-                                         tts.Alexa.OFFICE_1_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.OFFICE_1, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.OFFICE_1,
-                                        tts.Alexa.OFFICE_1_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.OFFICE_1, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.OFFICE_1,
-                                     tts.Alexa.OFFICE_1_ECHO, self.conditions)
+    super()._test_played_normal_time(TestBase.OFFICE_1, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.OFFICE_1, tts.Alexa.OFFICE_1_ECHO)
+    super()._test_played_quite_time(TestBase.OFFICE_1)
 
-  def test_played_unless(self):
-    unless = {
-        "conditions": (tts.Alexa.DINING_AREA_LIGHT, tts.Alexa.KITCHEN_LIGHT,
-                       tts.Alexa.LIVING_ROOM_LIGHT, tts.Alexa.LIVING_ROOM_TV),
-        "description": f"playing in {tts.Alexa.LIVING_ROOM}"
+  def test_played_if_not(self):
+    if_not = {
+        "conditions": (TestBase.DINING_AREA_LIGHT, TestBase.KITCHEN_LIGHT,
+                       TestBase.LIVING_ROOM_LIGHT, TestBase.LIVING_ROOM_TV),
+        "description": f"playing in {TestBase.LIVING_ROOM}"
     }
 
-    super()._test_played_unless(tts.Alexa.OFFICE_1, tts.Alexa.OFFICE_1_ECHO,
-                                self.conditions, unless)
+    super()._test_played_if_not(TestBase.OFFICE_1, self.conditions, if_not)
 
 
 class TestOffice2(TestTarget):
   """Office2 tests."""
 
   conditions = {
-      tts.Alexa.OFFICE_2_LIGHT: "the light is on",
-      tts.Alexa.OFFICE_2_MOTION: "there was a recent motion",
+      TestBase.OFFICE_2_LIGHT: "the light is on",
+      TestBase.OFFICE_2_MOTION: "there was a recent motion",
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(tts.Alexa.OFFICE_2,
-                                         tts.Alexa.OFFICE_2_ECHO,
-                                         self.conditions)
+    super()._test_not_played_normal_time(TestBase.OFFICE_2, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(tts.Alexa.OFFICE_2,
-                                        tts.Alexa.OFFICE_2_ECHO,
-                                        self.conditions)
+    super()._test_not_played_quite_time(TestBase.OFFICE_2, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(tts.Alexa.OFFICE_2,
-                                     tts.Alexa.OFFICE_2_ECHO, self.conditions)
+    super()._test_played_normal_time(TestBase.OFFICE_2, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(tts.Alexa.OFFICE_2, tts.Alexa.OFFICE_2_ECHO)
+    super()._test_played_quite_time(TestBase.OFFICE_2)
 
 
 if __name__ == "__main__":
