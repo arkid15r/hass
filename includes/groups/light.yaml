@@ -70,7 +70,14 @@ light_kitchen:
 light_living_room:
   name: Living Room Lights
   entities:
-    - light.living_room_tower_lamp
+    - light.living_room_lamp
+
+light_living_room_new_year:
+  name: Living Room New Year Lights
+  entities:
+    - light.living_room_lamp
+    - switch.living_room_1
+    - switch.living_room_2
 
 light_office_1:
   name: Office 1 Lights

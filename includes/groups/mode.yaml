@@ -22,6 +22,7 @@ mode_living_room_lights_new_year_on_motion:
     - group.motion_hallway
     - group.motion_kitchen
     - group.motion_living_room
+    - media_player.kitchen_tv
 
 mode_freeze_bathroom_1:
   name: Bathroom 1 Mode Freeze

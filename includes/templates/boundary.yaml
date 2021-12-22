@@ -37,7 +37,7 @@
                selectattr('state', 'eq', 'on')|
                map(attribute='name')|unique|sort
           %}
-          {{- entities[0] if entities|count == 1 else
+          {{- entities[0] if entities|count <= 1 else
                 (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}
 
@@ -78,6 +78,6 @@
                map(attribute='name')|
                reject('eq', none)|unique|sort
           %}
-          {{- entities[0] if entities|count == 1 else
+          {{- entities[0] if entities|count <= 1 else
                 (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}

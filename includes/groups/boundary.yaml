@@ -11,9 +11,3 @@ perimeter_security:
     - binary_sensor.office_1_window_2
     - binary_sensor.office_2_window
     - binary_sensor.storage_room_window
-
-office_1_windows:
-  name: Office 1 Windows
-  entities:
-    - binary_sensor.office_1_window_1
-    - binary_sensor.office_1_window_2
