@@ -17,7 +17,7 @@ blueprint:
       - **State Change To** (*default*: on): a `State Change` entity after state.
       - **State Change For** (*default*: 0, unit: *seconds*): an amount of time the `State Change` entity must stay in the `State Change To` state.
       - **Text**: A text to play.
-      - **Silent In** (*optional*): a list of areas where the message should not be played (see `alexa_tts.py` for more information).
+      - **Areas Off** (*optional*): a list of areas where the message should not be played (see `tts.py` for more information).
       - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
       - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be to run the automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
 
@@ -53,7 +53,7 @@ blueprint:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: second(s)
+          unit_of_measurement: seconds
           mode: slider
 
     text:
@@ -63,8 +63,8 @@ blueprint:
         text:
           multiline: true
 
-    silent_in:
-      name: Silent In (optional)
+    areas_off:
+      name: Areas Off (optional)
       description: A list of areas where not to play the message
       default: []
       selector:
@@ -129,5 +129,5 @@ condition:
 action:
   - event: tts
     event_data:
+      areas_off: !input areas_off
       text: !input text
-      silent_in: !input silent_in

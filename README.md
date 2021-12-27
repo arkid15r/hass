@@ -24,11 +24,11 @@ From /config/automations.yaml
 - event: tts
     event_data:
       text: Garage gate opened.
-      silent_in:
+      areas_off:
         - garage
 ```
 
-The alexa_tts.py depends on the set of sensors. You can customaze them based on
+The tts.py depends on the set of sensors. You can customize them based on
 your needs and situation. Here are some examples:
 
 From /config/includes/binary_sensors.yaml
@@ -92,8 +92,11 @@ template: !include_dir_merge_list includes/templates
 The script behavior heavily depends on the quite/normal time sensor state. You
 can set `play_always` and `play_default` targets. The play_always
 targets will remain active as long as they are not explicitly silenced with
-`silent_in` parameter during tts() function invocation. The play_default targets
-will be used as a last resort when resulting target list is empty.
+`areas_off` parameter during tts() function invocation. The play_default targets
+will be used as a last resort when resulting target list is empty. Additional
+targets can be added using areas_on parameter. Both areas_off/areas_on support
+wildcard target value "\*" which expands to all targets found in apps.yaml
+configuration file.
 
 ```yaml
 env:
@@ -143,7 +146,7 @@ env:
       conditions:
         - binary_sensor.motion_garage_5m
         - group.light_garage
-      target: media_player.bedroom_1_echo
+      target: media_player.garage_echo
 ```
 
 ### - alexa_volume.py

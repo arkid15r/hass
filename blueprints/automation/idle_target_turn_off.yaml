@@ -13,7 +13,7 @@ blueprint:
       - **Check Frequency** (*default*: /1, *unit*: minutes): how often (in minutes) to check whether the `Target` is idle.
       - **Target**: an entity with 'on'/'off' state capability which needs to be turned off.
       - **Target Active Time** (*default*: 0, *unit*: seconds): a minimum amount of time the `Target` is required to be in 'on' state at the moment of the check.
-      - **Watcher**: (*optional*) an entity with 'on'/'off' state capability which tracks activity in the `Target` area. If no activity detected by the `Watcher` for at least `Wathcer Idle Time` the `Target` will be considered idle.
+      - **Watcher**: (*optional*) an entity with 'on'/'off' state capability which tracks activity in the `Target` area. If no activity detected by the `Watcher` for at least `Watcher Idle Time` the `Target` will be considered idle.
       - **Watcher Inactive Time** (*default*: 0, *unit*: seconds): an amount of time without any activity detected by the `Watcher` required to consider the `Target` idle.
       - **Scene**: a scene that turns the idle `Target` off.
       - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
@@ -30,25 +30,25 @@ blueprint:
 
     target:
       name: Target
-      description: If the entity (or a group of entities) is active
+      description: If the entity is active
       selector:
         entity:
 
     target_active_time_seconds:
       name: Target Active Time (optional)
       description: For at least
-      default: 0
+      default: 300
       selector:
         number:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: second(s)
+          unit_of_measurement: seconds
           mode: slider
 
     watcher:
       name: Watcher (optional)
-      description: And the entity (or a group of entities)
+      description: And the entity
       default:
       selector:
         entity: {}
@@ -62,7 +62,7 @@ blueprint:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: second(s)
+          unit_of_measurement: seconds
           mode: slider
 
     scene:
@@ -74,7 +74,7 @@ blueprint:
 
     run_if:
       name: Run If Only (optional)
-      description: Howerver, don't run the automation if the entity
+      description: Don't run the automation if the entity
       default:
       selector:
         entity: {}

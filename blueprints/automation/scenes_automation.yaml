@@ -43,7 +43,7 @@ blueprint:
           min: 0
           max: 3600
           step: 1
-          unit_of_measurement: second(s)
+          unit_of_measurement: seconds
           mode: slider
 
     default_scene_on:
