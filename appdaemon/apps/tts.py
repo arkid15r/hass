@@ -28,11 +28,11 @@ class Alexa(hass.Hass):
     """Initialize event listener."""
 
     # pylint: disable=attribute-defined-outside-init
-    self.messages = Queue(maxsize=5)
-
     self.env = self.args["env"]
     self.rules = self.args["rules"]
     self.quite_time = self.args["quite_time"]
+
+    self.messages = Queue(maxsize=5)
 
     thread = Thread(target=self.worker)
     thread.daemon = True
@@ -45,37 +45,98 @@ class Alexa(hass.Hass):
     """Put new message to the queue."""
 
     self.messages.put({
-        "silent_in": data.get("silent_in"),
+        "areas_off": data.get("areas_off"),
+        "areas_on": data.get("areas_on"),
         "text": data.get("text"),
     })
 
+  @staticmethod
+  def get_target(area):
+    """Return media player target ID for an area."""
+
+    return f"media_player.{area}_echo"
+
   # pylint: disable=too-many-branches
-  def tts(self, text=None, silent_in=None):
+  def tts(self, text=None, areas_off=None, areas_on=None):
     """
       Check targets and generate text to speech API request.
 
       Parameters:
         text: A text to play.
-        silent_in: A list of areas to exclude.
+        areas_off: A list of explicitely excluded areas.
+        areas_on: A list of explicitely included areas.
 
       Returns:
         list: A list of target devices the message to be played on.
       """
 
     def is_on(sensor):
-      """
-        Return True if sensor's state is "on" otherwise returns False.
-      """
-
+      """Return True if sensor's state is "on" otherwise returns False."""
       return self.get_state(sensor) == self.STATE_ON
 
-    if not text:
+    # tts()
+    if text is None:
       raise ValueError("Text is required.")
 
-    quite_time = is_on(self.quite_time)
+    if not text:
+      raise ValueError("Text mustn't be empty.")
+
+    if areas_off and areas_off == "*" and areas_on and areas_on == "*":
+      raise ValueError(
+          "You can't use wildcard targets for both areas_off and areas_on at "
+          "the same time.")
+
+    # Add play always and play default area targets.
+    try:
+      play_always_normal_time = [
+          self.get_target(area)
+          for area in self.env["play_always"]["normal_time"]
+      ]
+    except KeyError:
+      play_always_normal_time = []
+
+    try:
+      play_always_quite_time = [
+          self.get_target(area)
+          for area in self.env["play_always"]["quite_time"]
+      ]
+    except KeyError:
+      play_always_quite_time = []
+
+    try:
+      play_default_normal_time = [
+          self.get_target(area)
+          for area in self.env["play_default"]["normal_time"]
+      ]
+    except KeyError:
+      play_default_normal_time = []
+
+    try:
+      play_default_quite_time = [
+          self.get_target(area)
+          for area in self.env["play_default"]["quite_time"]
+      ]
+    except KeyError:
+      play_default_quite_time = []
+
+    targets_all = [self.rules[rule]["target"] for rule in self.rules]
+
+    for targets in (play_always_normal_time, play_always_quite_time,
+                    play_default_normal_time, play_default_quite_time):
+      if targets:
+        targets_all.extend(targets)
+
+    if areas_off == "*":
+      targets_off = set(targets_all)
+    else:
+      targets_off = {self.get_target(area) for area in areas_off or ()}
+
+    if areas_on == "*":
+      targets_on = set(targets_all)
+    else:
+      targets_on = {self.get_target(area) for area in areas_on or ()}
 
     targets = set()
-
     # Add targets based on the rule conditions.
     for area in self.rules:
       rule = self.rules[area]
@@ -96,47 +157,28 @@ class Alexa(hass.Hass):
       if not conditions or any((is_on(c) for c in conditions)):
         targets.remove(target)
 
-    # Mute silenced targets.
-    silenced_targets = {f"media_player.{area}_echo" for area in silent_in or ()}
-    targets = targets.difference(silenced_targets)
+    # Update targets based on areas_off/areas_on values.
+    targets.update(targets_on)
+    targets = targets.difference(targets_off)
 
-    # Add always and default play area targets.
-    always_play_targets = None
-    default_play_targets = None
-    if quite_time:
-      if "quite_time" in self.env.get("play_always", ()):
-        always_play_targets = [
-            f"media_player.{area}_echo"
-            for area in self.env["play_always"].get("quite_time", ())
-        ]
-
-      if "quite_time" in self.env.get("play_default", ()):
-        default_play_targets = [
-            f"media_player.{area}_echo"
-            for area in self.env["play_default"].get("quite_time", ())
-        ]
-
+    targets_play_always = None
+    targets_play_default = None
+    if is_on(self.quite_time):
+      targets_play_always = play_always_quite_time
+      targets_play_default = play_default_quite_time
     else:
-      if "normal_time" in self.env.get("play_always", ()):
-        always_play_targets = [
-            f"media_player.{area}_echo"
-            for area in self.env["play_always"].get("normal_time", ())
-        ]
+      targets_play_always = play_always_normal_time
+      targets_play_default = play_default_normal_time
 
-      if "normal_time" in self.env.get("play_default", ()):
-        default_play_targets = [
-            f"media_player.{area}_echo"
-            for area in self.env["play_default"].get("normal_time", ())
-        ]
+    if targets_play_always:
+      targets.update(set(targets_play_always).difference(targets_off))
 
-    if always_play_targets is not None:
-      targets.update(set(always_play_targets).difference(silenced_targets))
+    if not targets and targets_play_default:
+      targets.update(set(targets_play_default).difference(targets_off))
 
-    if not targets and default_play_targets is not None:
-      targets.update(set(default_play_targets).difference(silenced_targets))
-
-    targets = list(targets)
+    targets = sorted(targets)
     if targets:
+      self.log(f"Playing '{text}' on {targets}")
       self.call_service("notify/alexa_media",
                         target=targets,
                         message=text,
@@ -149,8 +191,10 @@ class Alexa(hass.Hass):
     while True:
       try:
         data = self.messages.get()
-        self.tts(text=data["text"], silent_in=data["silent_in"])
-        time.sleep(self.TTS_DURATION_DEFAULT_SECONDS)
+        self.tts(text=data["text"],
+                 areas_off=data["areas_off"],
+                 areas_on=data["areas_on"])
+        time.sleep(data.get("duration", self.TTS_DURATION_DEFAULT_SECONDS))
       except Exception:  # pylint: disable=broad-except
         self.log(sys.exc_info())
 
