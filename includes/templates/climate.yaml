@@ -1,9 +1,4 @@
 - binary_sensor:
-    - unique_id: corridor_temperature
-      name: Corridor Temperature
-      state: >
-        {{ state_attr('climate.thermostat', 'current_temperature')|round }}
-
     - unique_id: hvac_cooling
       name: HVAC Cooling
       icon: mdi:thermometer-minus
@@ -26,28 +21,40 @@
       name: HVAC Running
       icon: mdi:thermometer-lines
       state: >
-        {{ is_state('binary_sensor.hvac_cooling',' on') or
+        {{ is_state('binary_sensor.hvac_cooling', 'on') or
            is_state('binary_sensor.hvac_heating', 'on')
         }}
 
     - unique_id: indoor_temperature_higher
       name: Indoor Temperature Higher
       state: >
-        {{ states('sensor.temperature')|int >
+        {{ states('sensor.outdoor_temperature')|int >
              states('sensor.indoor_temperature')|int
         }}
 
     - unique_id: indoor_temperature_2_degree_higher
       name: Indoor Temperature 2 Degree Higher
       state: >
-        {{ states('sensor.temperature')|int + 2 >
+        {{ states('sensor.outdoor_temperature')|int + 2 >
              states('sensor.indoor_temperature')|int
         }}
 
   sensor:
+    - unique_id: corridor_temperature
+      name: Corridor Temperature
+      unit_of_measurement: °F
+      state: >
+        {{ state_attr('climate.thermostat', 'current_temperature')|round }}
+
+    - unique_id: hvac_preset_mode
+      name: HVAC Preset Mode
+      state: >
+        {{ state_attr('climate.thermostat', 'preset_mode') }}
+
     - unique_id: indoor_temperature
       name: Indoor Temperature
       icon: mdi:thermometer
+      unit_of_measurement: °F
       state: >
         {{ expand('group.indoor_temperature')|
              rejectattr('state', 'in', ('unavailable',))|

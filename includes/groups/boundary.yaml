@@ -1,3 +1,9 @@
+office_1_windows:
+  name: Office 1 Windows
+  entities:
+    - binary_sensor.office_1_window_1
+    - binary_sensor.office_1_window_2
+
 perimeter_security:
   name: Security Perimeter
   entities:

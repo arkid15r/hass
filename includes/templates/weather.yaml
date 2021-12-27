@@ -1,6 +1,7 @@
 - sensor:
-    - unique_id: temperature
-      name: Temperature
+    - unique_id: outdoor_temperature
+      name: Outdoor Temperature
+      unit_of_measurement: °F
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.temperature')|
@@ -9,6 +10,7 @@
 
     - unique_id: temperature_forecast
       name: Temperature Forecast
+      unit_of_measurement: °F
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.forecast.0.temperature')|
@@ -17,6 +19,7 @@
 
     - unique_id: temperature_low_forecast
       name: Temperature Low Forecast
+      unit_of_measurement: °F
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.forecast.0.templow')|
@@ -41,6 +44,7 @@
 
     - unique_id: wind_speed
       name: Wind Speed
+      unit_of_measurement: mph
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.wind_speed')|
@@ -49,6 +53,7 @@
 
     - unique_id: wind_speed_forecast
       name: Wind Speed Forecast
+      unit_of_measurement: mph
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.forecast.0.wind_speed')|

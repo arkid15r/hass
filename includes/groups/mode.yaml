@@ -48,6 +48,12 @@ mode_freeze_hallway:
   entities:
     - group.mode_freeze_kitchen
 
+mode_freeze_hvac:
+  name: HVAC Mode Freeze
+  entities:
+    - input_boolean.mode_bar
+    - input_boolean.mode_red
+
 mode_freeze_kitchen:
   name: Kitchen Mode Freeze
   entities:
