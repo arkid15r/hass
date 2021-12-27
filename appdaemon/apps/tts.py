@@ -15,6 +15,9 @@ from threading import Thread
 # pylint: disable=import-error
 from appdaemon.plugins.hass import hassapi as hass
 
+# pylint: disable=attribute-defined-outside-init
+# pylint: disable=too-many-instance-attributes
+
 
 class Alexa(hass.Hass):
   """Alexa TTS App Daemon class."""
@@ -27,12 +30,16 @@ class Alexa(hass.Hass):
   def initialize(self):
     """Initialize event listener."""
 
-    # pylint: disable=attribute-defined-outside-init
     self.env = self.args["env"]
     self.rules = self.args["rules"]
     self.quite_time = self.args["quite_time"]
 
     self.messages = Queue(maxsize=5)
+
+    self.play_always_normal_time = []
+    self.play_always_quite_time = []
+    self.play_default_normal_time = []
+    self.play_default_quite_time = []
 
     thread = Thread(target=self.worker)
     thread.daemon = True
@@ -55,6 +62,41 @@ class Alexa(hass.Hass):
     """Return media player target ID for an area."""
 
     return f"media_player.{area}_echo"
+
+  def set_environment(self):
+    """Add play always and play default area targets."""
+
+    try:
+      self.play_always_normal_time = [
+          self.get_target(area)
+          for area in self.env["play_always"]["normal_time"]
+      ]
+    except KeyError:
+      pass
+
+    try:
+      self.play_always_quite_time = [
+          self.get_target(area)
+          for area in self.env["play_always"]["quite_time"]
+      ]
+    except KeyError:
+      pass
+
+    try:
+      self.play_default_normal_time = [
+          self.get_target(area)
+          for area in self.env["play_default"]["normal_time"]
+      ]
+    except KeyError:
+      pass
+
+    try:
+      self.play_default_quite_time = [
+          self.get_target(area)
+          for area in self.env["play_default"]["quite_time"]
+      ]
+    except KeyError:
+      pass
 
   # pylint: disable=too-many-branches
   def tts(self, text=None, areas_off=None, areas_on=None):
@@ -86,43 +128,12 @@ class Alexa(hass.Hass):
           "You can't use wildcard targets for both areas_off and areas_on at "
           "the same time.")
 
-    # Add play always and play default area targets.
-    try:
-      play_always_normal_time = [
-          self.get_target(area)
-          for area in self.env["play_always"]["normal_time"]
-      ]
-    except KeyError:
-      play_always_normal_time = []
-
-    try:
-      play_always_quite_time = [
-          self.get_target(area)
-          for area in self.env["play_always"]["quite_time"]
-      ]
-    except KeyError:
-      play_always_quite_time = []
-
-    try:
-      play_default_normal_time = [
-          self.get_target(area)
-          for area in self.env["play_default"]["normal_time"]
-      ]
-    except KeyError:
-      play_default_normal_time = []
-
-    try:
-      play_default_quite_time = [
-          self.get_target(area)
-          for area in self.env["play_default"]["quite_time"]
-      ]
-    except KeyError:
-      play_default_quite_time = []
-
     targets_all = [self.rules[rule]["target"] for rule in self.rules]
 
-    for targets in (play_always_normal_time, play_always_quite_time,
-                    play_default_normal_time, play_default_quite_time):
+    self.set_environment()
+    for targets in (self.play_always_normal_time, self.play_always_quite_time,
+                    self.play_default_normal_time,
+                    self.play_default_quite_time):
       if targets:
         targets_all.extend(targets)
 
@@ -164,11 +175,11 @@ class Alexa(hass.Hass):
     targets_play_always = None
     targets_play_default = None
     if is_on(self.quite_time):
-      targets_play_always = play_always_quite_time
-      targets_play_default = play_default_quite_time
+      targets_play_always = self.play_always_quite_time
+      targets_play_default = self.play_default_quite_time
     else:
-      targets_play_always = play_always_normal_time
-      targets_play_default = play_default_normal_time
+      targets_play_always = self.play_always_normal_time
+      targets_play_default = self.play_default_normal_time
 
     if targets_play_always:
       targets.update(set(targets_play_always).difference(targets_off))
