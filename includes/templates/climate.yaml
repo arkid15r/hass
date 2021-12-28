@@ -28,15 +28,15 @@
     - unique_id: indoor_temperature_higher
       name: Indoor Temperature Higher
       state: >
-        {{ states('sensor.outdoor_temperature')|int >
-             states('sensor.indoor_temperature')|int
+        {{ states('sensor.indoor_temperature')|int >
+             states('sensor.outdoor_temperature')|int
         }}
 
     - unique_id: indoor_temperature_2_degree_higher
       name: Indoor Temperature 2 Degree Higher
       state: >
-        {{ states('sensor.outdoor_temperature')|int + 2 >
-             states('sensor.indoor_temperature')|int
+        {{ states('sensor.indoor_temperature')|int >
+             states('sensor.outdoor_temperature')|int + 2
         }}
 
   sensor:
