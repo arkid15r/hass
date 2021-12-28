@@ -16,7 +16,6 @@ from threading import Thread
 from appdaemon.plugins.hass import hassapi as hass
 
 # pylint: disable=attribute-defined-outside-init
-# pylint: disable=too-many-instance-attributes
 
 
 class Alexa(hass.Hass):
@@ -24,8 +23,7 @@ class Alexa(hass.Hass):
 
   STATE_OFF = "off"
   STATE_ON = "on"
-
-  TTS_DURATION_DEFAULT_SECONDS = 5
+  TTS_DURATION_DEFAULT_SECONDS = 7
 
   def initialize(self):
     """Initialize event listener."""
@@ -54,6 +52,7 @@ class Alexa(hass.Hass):
     self.messages.put({
         "areas_off": data.get("areas_off"),
         "areas_on": data.get("areas_on"),
+        "duration": data.get("duration", self.TTS_DURATION_DEFAULT_SECONDS),
         "text": data.get("text"),
     })
 
@@ -189,7 +188,6 @@ class Alexa(hass.Hass):
 
     targets = sorted(targets)
     if targets:
-      self.log(f"Playing '{text}' on {targets}")
       self.call_service("notify/alexa_media",
                         target=targets,
                         message=text,
@@ -202,10 +200,14 @@ class Alexa(hass.Hass):
     while True:
       try:
         data = self.messages.get()
-        self.tts(text=data["text"],
-                 areas_off=data["areas_off"],
-                 areas_on=data["areas_on"])
-        time.sleep(data.get("duration", self.TTS_DURATION_DEFAULT_SECONDS))
+        targets = self.tts(
+            areas_off=data["areas_off"],
+            areas_on=data["areas_on"],
+            text=data["text"],
+        )
+        self.log(
+            f"{data['text']} on {', '.join(targets)} ({data['duration']}s)")
+        time.sleep(data["duration"])
       except Exception:  # pylint: disable=broad-except
         self.log(sys.exc_info())
 
