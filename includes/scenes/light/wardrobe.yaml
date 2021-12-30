@@ -1,0 +1,15 @@
+- name: Wardrobe Lights
+  entities:
+    light.wardrobe_1:
+      brightness: 190
+      state: 'on'
+
+- name: Wardrobe Night Lights
+  entities:
+    light.wardrobe_1:
+      brightness: 1
+      state: 'on'
+
+- name: Wardrobe No Lights
+  entities:
+    light.wardrobe_1: 'off'

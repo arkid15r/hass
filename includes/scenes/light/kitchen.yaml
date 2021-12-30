@@ -1,0 +1,86 @@
+- name: Kitchen Faded Lights
+  entities:
+    light.kitchen_1:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_2:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_3:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_4:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Kitchen Max Lights
+  entities:
+    light.kitchen_1:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_2:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_3:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_4:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Kitchen Night Lights
+  entities:
+    light.kitchen_1: 'off'
+    light.kitchen_2:
+      brightness: 15
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_3:
+      brightness: 15
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_4: 'off'
+
+- name: Kitchen No Lights
+  entities:
+    light.kitchen_1: 'off'
+    light.kitchen_2: 'off'
+    light.kitchen_3: 'off'
+    light.kitchen_4: 'off'
+
+- name: Kitchen TV Mode Lights
+  entities:
+    light.kitchen_1:
+      brightness: 40
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_2:
+      brightness: 40
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.kitchen_3: 'off'
+    light.kitchen_4: 'off'
+    light.hallway_4:
+      brightness: 40
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_5:
+      brightness: 40
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'

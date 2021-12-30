@@ -1,0 +1,15 @@
+- name: Corridor Faded Lights
+  entities:
+    light.corridor_2:
+      brightness: 5
+      state: 'on'
+
+- name: Corridor Night Lights
+  entities:
+    light.corridor_2:
+      brightness: 1
+      state: 'on'
+
+- name: Corridor No Lights
+  entities:
+    light.corridor_2: 'off'

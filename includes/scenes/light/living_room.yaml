@@ -1,0 +1,31 @@
+- name: Living Room New Year Day Lights
+  entities:
+    light.living_room_lamp: 'off'
+    switch.living_room_1: 'on'
+    switch.living_room_2: 'on'
+
+- name: Living Room New Year Night Lights
+  entities:
+    light.living_room_lamp:
+      brightness: 190
+      rgb_color: [255, 0, 65]
+      state: 'on'
+    switch.living_room_1: 'on'
+    switch.living_room_2: 'on'
+
+- name: Living Room New Year No Lights
+  entities:
+    light.living_room_lamp: 'off'
+    switch.living_room_1: 'off'
+    switch.living_room_2: 'off'
+
+- name: Living Room No Lights
+  entities:
+    light.living_room_lamp: 'off'
+
+- name: Living Room Movie Night Lights
+  entities:
+    light.living_room_lamp:
+      brightness: 190
+      rgb_color: [145, 145, 255]
+      state: 'on'

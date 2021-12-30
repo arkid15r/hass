@@ -1,0 +1,79 @@
+- name: Hallway Faded Lights
+  entities:
+    light.hallway_1: 'off'
+    light.hallway_2:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_3: 'off'
+    light.hallway_4: 'off'
+    light.hallway_5:
+      brightness: 40
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Hallway Lights
+  entities:
+    light.hallway_1: 'off'
+    light.hallway_2:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_3: 'off'
+    light.hallway_4: 'off'
+    light.hallway_5:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Hallway Max Lights
+  entities:
+    light.hallway_1:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_2:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_3:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_4:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_5:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Hallway Night Lights
+  entities:
+    light.hallway_1: 'off'
+    light.hallway_2:
+      brightness: 15
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.hallway_3: 'off'
+    light.hallway_4: 'off'
+    light.hallway_5:
+      brightness: 15
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Hallway No Lights
+  entities:
+    light.hallway_1: 'off'
+    light.hallway_2: 'off'
+    light.hallway_3: 'off'
+    light.hallway_4: 'off'
+    light.hallway_5: 'off'

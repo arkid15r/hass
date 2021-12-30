@@ -1,0 +1,7 @@
+- name: Office 2 Humidifier Off
+  entities:
+    switch.office_2_humidifier: 'off'
+
+- name: Office 2 Humidifier On
+  entities:
+    switch.office_2_humidifier: 'on'

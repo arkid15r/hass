@@ -1,0 +1,75 @@
+- name: Office 1 Max Lights
+  entities:
+    light.office_1_1:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.office_1_2:
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Office 1 Class Room Lights
+  entities:
+    light.office_1_1:
+      brightness: 200
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.office_1_2:
+      brightness: 200
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Office 1 Faded Lights
+  entities:
+    light.office_1_1:
+      brightness: 25
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.office_1_2:
+      brightness: 25
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Office 1 No Lights
+  entities:
+    light.office_1_1: 'off'
+    light.office_1_2: 'off'
+
+- name: Office 1 Humidifier Off
+  entities:
+    switch.office_1_humidifier: 'off'
+
+- name: Office 1 Humidifier On
+  entities:
+    switch.office_1_humidifier: 'on'
+
+- name: Office 1 Lights
+  entities:
+    light.office_1_1:
+      brightness: 128
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.office_1_2:
+      brightness: 128
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Office 1 Movie Night Lights
+  entities:
+    light.office_1_1:
+      brightness: 65
+      rgb_color: [145, 145, 255]
+      state: 'on'
+    light.office_1_2:
+      brightness: 65
+      rgb_color: [145, 145, 255]
+      state: 'on'

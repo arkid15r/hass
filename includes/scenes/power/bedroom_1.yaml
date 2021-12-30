@@ -1,0 +1,7 @@
+- name: Bedroom 1 Humidifier Off
+  entities:
+    switch.bedroom_1_humidifier: 'off'
+
+- name: Bedroom 1 Humidifier On
+  entities:
+    switch.bedroom_1_humidifier: 'on'

@@ -1,0 +1,13 @@
+- name: Storage Room Max Lights
+  entities:
+    light.storage_room_1:
+      brightness: 254
+      state: 'on'
+    light.storage_room_2:
+      brightness: 254
+      state: 'on'
+
+- name: Storage Room No Lights
+  entities:
+    light.storage_room_1: 'off'
+    light.storage_room_2: 'off'

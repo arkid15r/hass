@@ -1,0 +1,65 @@
+- name: Bar Lights Saint Patrick Day
+  entities:
+    light.kitchen_1:
+      brightness: 75
+      rgb_color: [0, 255, 65]
+      state: 'on'
+    light.kitchen_2:
+      brightness: 75
+      rgb_color: [0, 255, 65]
+      state: 'on'
+    light.kitchen_3:
+      brightness: 76
+      rgb_color: [255, 0, 190]
+      state: 'on'
+    light.kitchen_4: 'off'
+    light.hallway_4:
+      brightness: 128
+      rgb_color: [0, 255, 0]
+      state: 'on'
+    light.hallway_5:
+      brightness: 65
+      rgb_color: [0, 255, 0]
+      state: 'on'
+    light.living_room_lamp:
+      brightness: 128
+      rgb_color: [0, 255, 0]
+      state: 'on'
+
+- name: Bar Lights
+  entities:
+    light.kitchen_1:
+      brightness: 65
+      rgb_color: [255, 125, 0]
+      state: 'on'
+    light.kitchen_2:
+      brightness: 65
+      rgb_color: [0, 65, 255]
+      state: 'on'
+    light.kitchen_3:
+      brightness: 40
+      rgb_color: [255, 0, 190]
+      state: 'on'
+    light.kitchen_4: 'off'
+    light.hallway_4:
+      brightness: 65
+      rgb_color: [0, 65, 255]
+      state: 'on'
+    light.hallway_5:
+      brightness: 65
+      rgb_color: [255, 125, 0]
+      state: 'on'
+    light.living_room_lamp:
+      brightness: 254
+      rgb_color: [255, 0, 190]
+      state: 'on'
+
+- name: Bar No Lights
+  entities:
+    light.hallway_4: 'off'
+    light.hallway_5: 'off'
+    light.kitchen_1: 'off'
+    light.kitchen_2: 'off'
+    light.kitchen_3: 'off'
+    light.kitchen_4: 'off'
+    light.living_room_lamp: 'off'

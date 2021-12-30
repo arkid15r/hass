@@ -1,0 +1,13 @@
+- name: Garage Max Lights
+  entities:
+    light.garage_1:
+      brightness: 254
+      state: 'on'
+    light.garage_2:
+      brightness: 254
+      state: 'on'
+
+- name: Garage No Lights
+  entities:
+    light.garage_1: 'off'
+    light.garage_2: 'off'

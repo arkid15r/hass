@@ -1,0 +1,15 @@
+- name: Backyard Max Lights
+  entities:
+    light.backyard_1:
+      brightness: 254
+      state: 'on'
+
+- name: Backyard Night Lights
+  entities:
+    light.backyard_1:
+      brightness: 1
+      state: 'on'
+
+- name: Backyard No Lights
+  entities:
+    light.backyard_1: 'off'

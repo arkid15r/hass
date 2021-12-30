@@ -1,0 +1,29 @@
+- name: Front Yard Max Lights
+  entities:
+    light.front_yard_1:
+      brightness: 254
+      state: 'on'
+    light.front_yard_2:
+      brightness: 254
+      state: 'on'
+    light.front_yard_3:
+      brightness: 254
+      state: 'on'
+
+- name: Front Yard Night Lights
+  entities:
+    light.front_yard_1:
+      brightness: 1
+      state: 'on'
+    light.front_yard_2:
+      brightness: 1
+      state: 'on'
+    light.front_yard_3:
+      brightness: 1
+      state: 'on'
+
+- name: Front Yard No Lights
+  entities:
+    light.front_yard_1: 'off'
+    light.front_yard_2: 'off'
+    light.front_yard_3: 'off'

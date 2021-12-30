@@ -1,0 +1,7 @@
+- name: Bathroom 1 Vent Off
+  entities:
+    switch.bathroom_1_vent: 'off'
+
+- name: Bathroom 1 Vent On
+  entities:
+    switch.bathroom_1_vent: 'on'
