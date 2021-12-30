@@ -1,4 +1,4 @@
-- name: Bar Lights Saint Patrick Day
+- name: Bar Lights Saint Patrick's Day
   entities:
     light.kitchen_1:
       brightness: 75

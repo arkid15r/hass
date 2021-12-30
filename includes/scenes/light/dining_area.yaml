@@ -16,14 +16,6 @@
       brightness: 65
       state: 'on'
 
-- name: Dining Area No Lights
-  entities:
-    light.dining_area_1: 'off'
-    light.dining_area_2: 'off'
-    light.dining_area_3: 'off'
-    light.dining_area_4: 'off'
-    light.dining_area_5: 'off'
-
 - name: Dining Area Faded Lights
   entities:
     light.dining_area_1:
@@ -59,3 +51,11 @@
     light.dining_area_5:
       brightness: 254
       state: 'on'
+
+- name: Dining Area No Lights
+  entities:
+    light.dining_area_1: 'off'
+    light.dining_area_2: 'off'
+    light.dining_area_3: 'off'
+    light.dining_area_4: 'off'
+    light.dining_area_5: 'off'

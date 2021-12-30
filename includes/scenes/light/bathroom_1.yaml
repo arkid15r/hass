@@ -47,8 +47,8 @@
 - name: Bathroom 1 Night Lights
   entities:
     light.bathroom_1_1:
-      brightness: 3
-      rgb_color: [255, 145, 35]
+      brightness: 1
+      rgb_color: [255, 145, 40]
       state: 'on'
     light.bathroom_1_2: 'off'
     light.bathroom_1_3: 'off'

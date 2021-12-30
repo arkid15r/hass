@@ -1,3 +1,10 @@
+- name: Living Room Movie Night Lights
+  entities:
+    light.living_room_lamp:
+      brightness: 190
+      rgb_color: [145, 145, 255]
+      state: 'on'
+
 - name: Living Room New Year Day Lights
   entities:
     light.living_room_lamp: 'off'
@@ -22,10 +29,3 @@
 - name: Living Room No Lights
   entities:
     light.living_room_lamp: 'off'
-
-- name: Living Room Movie Night Lights
-  entities:
-    light.living_room_lamp:
-      brightness: 190
-      rgb_color: [145, 145, 255]
-      state: 'on'

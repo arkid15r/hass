@@ -10,6 +10,16 @@
       brightness: 254
       state: 'on'
 
+- name: Bathroom 2 Night Lights
+  entities:
+    light.bathroom_2_1:
+      brightness: 1
+      state: 'on'
+
+- name: Bathroom 2 No Lights
+  entities:
+    light.bathroom_2_1: 'off'
+
 - name: Bathroom 2 Occupied
   entities:
     light.corridor_1:
@@ -20,13 +30,3 @@
 - name: Bathroom 2 Unoccupied
   entities:
     light.corridor_1: 'off'
-
-- name: Bathroom 2 Night Lights
-  entities:
-    light.bathroom_2_1:
-      brightness: 1
-      state: 'on'
-
-- name: Bathroom 2 No Lights
-  entities:
-    light.bathroom_2_1: 'off'
