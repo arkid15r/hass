@@ -104,8 +104,8 @@ class Alexa(hass.Hass):
 
       Parameters:
         text: A text to play.
-        areas_off: A list of explicitely excluded areas.
-        areas_on: A list of explicitely included areas.
+        areas_off: A list of explicitly excluded areas.
+        areas_on: A list of explicitly included areas.
 
       Returns:
         list: A list of target devices the message to be played on.
@@ -200,14 +200,19 @@ class Alexa(hass.Hass):
     while True:
       try:
         data = self.messages.get()
+
+        areas_off = data["areas_off"]
+        areas_on = data["areas_on"]
+        duration = data["duration"]
+        text = data["text"]
+
         targets = self.tts(
-            areas_off=data["areas_off"],
-            areas_on=data["areas_on"],
-            text=data["text"],
+            areas_off=areas_off,
+            areas_on=areas_on,
+            text=text,
         )
-        self.log(
-            f"{data['text']} on {', '.join(targets)} ({data['duration']}s)")
-        time.sleep(data["duration"])
+        self.log(f"{text} on {', '.join(targets)} ({duration}s)")
+        time.sleep(duration)
       except Exception:  # pylint: disable=broad-except
         self.log(sys.exc_info())
 
