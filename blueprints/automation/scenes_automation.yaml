@@ -3,7 +3,7 @@
 # Author: Ark (ark@cho.red)
 
 blueprint:
-  name: "[Automate]: "
+  name: '[Automate]: '
   description: |
     Automates Scenes Activation.
 
@@ -63,68 +63,68 @@ blueprint:
           domain: scene
 
     scene_1:
-      name: "Scene #1 (optional)"
-      description: "A scene #1"
+      name: 'Scene #1 (optional)'
+      description: 'A scene #1'
       default: scene.none
       selector:
         entity:
           domain: scene
 
     scene_1_start_time:
-      name: "Scene #1 Start Time (optional)"
-      description: "A start time for the Scene #1"
-      default: "00:00:00"
+      name: 'Scene #1 Start Time (optional)'
+      description: 'A start time for the Scene #1'
+      default: '00:00:00'
       selector:
         time:
 
     scene_1_end_time:
-      name: "Scene #1 End Time (optional)"
-      description: "An end time for the Scene #1"
-      default: "00:00:00"
+      name: 'Scene #1 End Time (optional)'
+      description: 'An end time for the Scene #1'
+      default: '00:00:00'
       selector:
         time:
 
     scene_2:
-      name: "Scene #2 (optional)"
-      description: "A scene #2"
+      name: 'Scene #2 (optional)'
+      description: 'A scene #2'
       default: scene.none
       selector:
         entity:
           domain: scene
 
     scene_2_start_time:
-      name: "Scene #2 Start Time (optional)"
-      description: "A start time for the Scene #2"
-      default: "00:00:00"
+      name: 'Scene #2 Start Time (optional)'
+      description: 'A start time for the Scene #2'
+      default: '00:00:00'
       selector:
         time:
 
     scene_2_end_time:
-      name: "Scene #2 End Time (optional)"
-      description: "An end time for the Scene #2"
-      default: "00:00:00"
+      name: 'Scene #2 End Time (optional)'
+      description: 'An end time for the Scene #2'
+      default: '00:00:00'
       selector:
         time:
 
     scene_3:
-      name: "Scene #3 (optional)"
-      description: "A scene #3"
+      name: 'Scene #3 (optional)'
+      description: 'A scene #3'
       default: scene.none
       selector:
         entity:
           domain: scene
 
     scene_3_start_time:
-      name: "Scene #3 Start Time (optional)"
-      description: "A start time for the Scene #3"
-      default: "00:00:00"
+      name: 'Scene #3 Start Time (optional)'
+      description: 'A start time for the Scene #3'
+      default: '00:00:00'
       selector:
         time:
 
     scene_3_end_time:
-      name: "Scene #3 End Time (optional)"
-      description: "An end time for the Scene #3"
-      default: "00:00:00"
+      name: 'Scene #3 End Time (optional)'
+      description: 'An end time for the Scene #3'
+      default: '00:00:00'
       selector:
         time:
 
@@ -154,20 +154,20 @@ variables:
 trigger:
   - platform: state
     entity_id: !input watcher
-    from: "off"
-    to: "on"
+    from: 'off'
+    to: 'on'
 
   - platform: state
     entity_id: !input watcher
-    from: "on"
-    to: "off"
+    from: 'on'
+    to: 'off'
     for: !input watcher_inactive_time_seconds
 
 condition:
   - condition: or
     conditions:
-      - "{{ not run_if or not run_if_state }}"
-      - "{{ states[run_if].state == run_if_state }}"
+      - '{{ not run_if or not run_if_state }}'
+      - '{{ states[run_if].state == run_if_state }}'
 
 action:
   - choose:
@@ -179,7 +179,9 @@ action:
                  default_scene_off != 'scene.none'
               }}
         sequence:
-          - scene: !input default_scene_off
+          - service: scene.turn_on
+            target:
+              entity_id: !input default_scene_off
 
       # The `Watcher` goes 'on'.
       - conditions:
@@ -193,7 +195,9 @@ action:
                     after: !input scene_1_start_time
                     before: !input scene_1_end_time
                 sequence:
-                  - scene: !input scene_1
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_1
 
               - conditions:
                   - "{{ scene_2 != 'scene.none' }}"
@@ -201,7 +205,9 @@ action:
                     after: !input scene_2_start_time
                     before: !input scene_2_end_time
                 sequence:
-                  - scene: !input scene_2
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_2
 
               - conditions:
                   - "{{ scene_3 != 'scene.none' }}"
@@ -209,7 +215,11 @@ action:
                     after: !input scene_3_start_time
                     before: !input scene_3_end_time
                 sequence:
-                  - scene: !input scene_3
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_3
 
             default:
-              - scene: !input default_scene_on
+              - service: scene.turn_on
+                target:
+                  entity_id: !input default_scene_on

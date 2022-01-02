@@ -7,7 +7,7 @@ blueprint:
   description: |
     Plays TTS message upon entity state change event.
 
-    The automation uses [tts.py](https://github.com/arkid15r/hass-config/blob/main/appdaemon/apps/tts.py) to play the TTS message.
+    The automation uses [tts.py](https://github.com/arkid15r/home-assistant-config/blob/main/appdaemon/apps/tts.py) to play the TTS message.
 
     Use input boolean `play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section). Both `Run If/Run If State` and `Run After/Run Before` are optional. But if provided then just one of the `Run If/Run If State` **OR** `Run After/Run Before` conditions must be true in order to run the automation. `Run After/Run Before` only works when both after/before time inputs are set.
 

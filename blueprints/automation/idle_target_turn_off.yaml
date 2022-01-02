@@ -3,7 +3,7 @@
 # Author: Ark (ark@cho.red)
 
 blueprint:
-  name: "[Turn Off Idle]: Target"
+  name: '[Turn Off Idle]: Target'
   description: |
     Turns Off Idle Target.
 
@@ -99,21 +99,23 @@ trigger:
 condition:
   - condition: or
     conditions:
-      - "{{ run_if == none }}"
-      - "{{ states[run_if].state == run_if_state }}"
+      - '{{ run_if == none }}'
+      - '{{ states[run_if].state == run_if_state }}'
 
   - condition: or
     conditions:
-      - "{{ watcher == none }}"
+      - '{{ watcher == none }}'
       - >
         {{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >=
-               watcher_inactive_time_seconds|float
+             watcher_inactive_time_seconds|float
         }}
 
   - condition: state
     entity_id: !input target
-    state: "on"
+    state: 'on'
     for: !input target_active_time_seconds
 
 action:
-  - scene: !input scene
+  - service: scene.turn_on
+    target:
+      entity_id: !input scene
