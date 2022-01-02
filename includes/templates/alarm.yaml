@@ -3,8 +3,8 @@
       name: Alarm Armed
       icon: mdi:shield-lock
       state: >
-        {{ states('alarm_control_panel.home_alarm') in
-                ('armed_away', 'armed_home')
+        {{ states('alarm_control_panel.home_alarm') in (
+             'armed_away', 'armed_home')
         }}
 
 - sensor:
@@ -18,4 +18,4 @@
       name: Alarm Kitchen Keypad Status
       icon: mdi:information-outline
       state: >
-        {{ state_attr('sensor.kitchen_keypad_info', 'acStatus')}}
+        {{ state_attr('sensor.kitchen_keypad_info', 'acStatus') }}
