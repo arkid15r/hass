@@ -48,6 +48,7 @@ mode_freeze_hallway:
   entities:
     - group.light_kitchen
     - group.mode_freeze_kitchen
+    - input_boolean.mode_hallway_photo
 
 mode_freeze_hvac:
   name: HVAC Mode Freeze
