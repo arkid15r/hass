@@ -3,12 +3,14 @@
     light.hallway_1: 'off'
     light.hallway_2:
       brightness: 40
+      color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
     light.hallway_3: 'off'
     light.hallway_4: 'off'
     light.hallway_5:
       brightness: 40
+      color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
 
