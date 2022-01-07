@@ -18,7 +18,6 @@ class AmazonEcho(hass.Hass):
       "office_1",
       "office_2",
   )
-
   EVENT_NAME = 'mp_volume'
 
   def initialize(self):

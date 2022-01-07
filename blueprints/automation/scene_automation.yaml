@@ -1,4 +1,4 @@
-# Scenes Automation Blueprint.
+# Scene Automation Blueprint.
 #
 # Author: Ark (ark@cho.red)
 
@@ -156,7 +156,6 @@ trigger:
     entity_id: !input watcher
     from: 'off'
     to: 'on'
-
   - platform: state
     entity_id: !input watcher
     from: 'on'
