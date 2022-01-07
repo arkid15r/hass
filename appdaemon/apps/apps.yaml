@@ -1,4 +1,8 @@
 ---
+mp_volume:
+  module: mp_volume
+  class: AmazonEcho
+
 tts:
   module: tts
   class: Alexa
