@@ -1,25 +1,25 @@
 - name: Front Yard Max Lights
   entities:
     light.front_yard_1:
-      brightness: 254
+      brightness: &fyml_brightness 254
       state: 'on'
     light.front_yard_2:
-      brightness: 254
+      brightness: *fyml_brightness
       state: 'on'
     light.front_yard_3:
-      brightness: 254
+      brightness: *fyml_brightness
       state: 'on'
 
 - name: Front Yard Night Lights
   entities:
     light.front_yard_1:
-      brightness: 1
+      brightness: &fynl_brightness 1
       state: 'on'
     light.front_yard_2:
-      brightness: 1
+      brightness: *fynl_brightness
       state: 'on'
     light.front_yard_3:
-      brightness: 1
+      brightness: *fynl_brightness
       state: 'on'
 
 - name: Front Yard No Lights

@@ -1,55 +1,55 @@
 - name: Dining Area Lights
   entities:
     light.dining_area_1:
-      brightness: 65
+      brightness: &dal_brightness 65
       state: 'on'
     light.dining_area_2:
-      brightness: 65
+      brightness: *dal_brightness
       state: 'on'
     light.dining_area_3:
-      brightness: 65
+      brightness: *dal_brightness
       state: 'on'
     light.dining_area_4:
-      brightness: 65
+      brightness: *dal_brightness
       state: 'on'
     light.dining_area_5:
-      brightness: 65
+      brightness: *dal_brightness
       state: 'on'
 
 - name: Dining Area Faded Lights
   entities:
     light.dining_area_1:
-      brightness: 25
+      brightness: &dafl_brightness 25
       state: 'on'
     light.dining_area_2:
-      brightness: 25
+      brightness: *dafl_brightness
       state: 'on'
     light.dining_area_3:
-      brightness: 25
+      brightness: *dafl_brightness
       state: 'on'
     light.dining_area_4:
-      brightness: 25
+      brightness: *dafl_brightness
       state: 'on'
     light.dining_area_5:
-      brightness: 25
+      brightness: *dafl_brightness
       state: 'on'
 
 - name: Dining Area Max Lights
   entities:
     light.dining_area_1:
-      brightness: 254
+      brightness: &daml_brightness 254
       state: 'on'
     light.dining_area_2:
-      brightness: 254
+      brightness: *daml_brightness
       state: 'on'
     light.dining_area_3:
-      brightness: 254
+      brightness: *daml_brightness
       state: 'on'
     light.dining_area_4:
-      brightness: 254
+      brightness: *daml_brightness
       state: 'on'
     light.dining_area_5:
-      brightness: 254
+      brightness: *daml_brightness
       state: 'on'
 
 - name: Dining Area No Lights

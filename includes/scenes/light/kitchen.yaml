@@ -1,60 +1,33 @@
 - name: Kitchen Faded Lights
   entities:
-    light.kitchen_1:
+    light.kitchen_1: &kfl_state
       brightness: 40
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.kitchen_2:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.kitchen_3:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.kitchen_4:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.kitchen_2: *kfl_state
+    light.kitchen_3: *kfl_state
+    light.kitchen_4: *kfl_state
 
 - name: Kitchen Max Lights
   entities:
-    light.kitchen_1:
+    light.kitchen_1: &kml_state
       brightness: 254
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.kitchen_2:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.kitchen_3:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.kitchen_4:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.kitchen_2: *kml_state
+    light.kitchen_3: *kml_state
+    light.kitchen_4: *kml_state
 
 - name: Kitchen Night Lights
   entities:
     light.kitchen_1: 'off'
-    light.kitchen_2:
+    light.kitchen_2: &knl_state
       brightness: 15
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.kitchen_3:
-      brightness: 15
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.kitchen_3: *knl_state
     light.kitchen_4: 'off'
 
 - name: Kitchen No Lights
@@ -66,28 +39,16 @@
 
 - name: Kitchen TV Mode Lights
   entities:
-    light.kitchen_1:
+    light.kitchen_1: &ktml_state
       brightness: 40
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.kitchen_2:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.kitchen_2: *ktml_state
     light.kitchen_3: 'off'
     light.kitchen_4: 'off'
     light.hallway_1: 'off'
     light.hallway_2: 'off'
     light.hallway_3: 'off'
-    light.hallway_4:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.hallway_5:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.hallway_4: *ktml_state
+    light.hallway_5: *ktml_state

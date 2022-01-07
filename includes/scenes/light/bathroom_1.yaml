@@ -1,48 +1,24 @@
 - name: Bathroom 1 Lights
   entities:
-    light.bathroom_1_1:
+    light.bathroom_1_1: &b1l_state
       brightness: 254
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.bathroom_1_2:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.bathroom_1_3:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.bathroom_1_4:
-      brightness: 254
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.bathroom_1_2: *b1l_state
+    light.bathroom_1_3: *b1l_state
+    light.bathroom_1_4: *b1l_state
 
 - name: Bathroom 1 Faded Lights
   entities:
-    light.bathroom_1_1:
+    light.bathroom_1_1: &b1fl_state
       brightness: 40
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
-    light.bathroom_1_2:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.bathroom_1_3:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
-    light.bathroom_1_4:
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
-      state: 'on'
+    light.bathroom_1_2: *b1fl_state
+    light.bathroom_1_3: *b1fl_state
+    light.bathroom_1_4: *b1fl_state
 
 - name: Bathroom 1 Night Lights
   entities:
@@ -64,18 +40,18 @@
 - name: Bathroom 1 Tropical Spa
   entities:
     light.bathroom_1_1:
-      brightness: 25
+      brightness: &b1ts_brightness 25
       rgb_color: [190, 255, 0]
       state: 'on'
     light.bathroom_1_2:
-      brightness: 25
+      brightness: *b1ts_brightness
       rgb_color: [255, 165, 70]
       state: 'on'
     light.bathroom_1_3:
-      brightness: 25
+      brightness: *b1ts_brightness
       rgb_color: [255, 125, 0]
       state: 'on'
     light.bathroom_1_4:
-      brightness: 25
+      brightness: *b1ts_brightness
       rgb_color: [255, 255, 0]
       state: 'on'
