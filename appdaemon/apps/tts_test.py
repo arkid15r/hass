@@ -93,25 +93,26 @@ class TestBase(unittest.TestCase):
         "quite_time": self.quite_time,
         "rules": self.rules,
     }
-    self.alexa = tts.Alexa(mock.Mock(), mock.Mock(), mock.MagicMock(), args,
-                           mock.Mock(), mock.Mock(), mock.Mock())
-    self.alexa.initialize()
+    self.amazon_echo = tts.AmazonEcho(mock.Mock(), mock.Mock(),
+                                      mock.MagicMock(), args, mock.Mock(),
+                                      mock.Mock(), mock.Mock())
+    self.amazon_echo.initialize()
 
-    tts.Alexa.call_service = mock.Mock()
-    tts.Alexa.get_state = mock.Mock()
+    tts.AmazonEcho.call_service = mock.Mock()
+    tts.AmazonEcho.get_state = mock.Mock()
 
   def _assert_hass_called_with(self, text, targets):
-    self.alexa.call_service.assert_called_with("notify/alexa_media",
-                                               target=targets,
-                                               message=text,
-                                               data={"type": "tts"})
+    self.amazon_echo.call_service.assert_called_with("notify/alexa_media",
+                                                     target=targets,
+                                                     message=text,
+                                                     data={"type": "tts"})
 
   def _assert_hass_called_with_defaults(self):
     return self._assert_hass_called_with(
         self.text, self.env["play_default"]["normal_time"])
 
   def _assert_hass_not_called(self):
-    self.alexa.call_service.assert_not_called()
+    self.amazon_echo.call_service.assert_not_called()
 
 
 class TestArgs(TestBase):
@@ -121,16 +122,16 @@ class TestArgs(TestBase):
     """Test no text handler."""
 
     with self.assertRaises(ValueError) as ctx:
-      self.alexa.tts()
+      self.amazon_echo.tts()
     self.assertIn("Text is required", str(ctx.exception))
 
     with self.assertRaises(ValueError) as ctx:
-      self.alexa.tts(text="")
+      self.amazon_echo.tts(text="")
     self.assertIn("Text mustn't be empty", str(ctx.exception))
 
   def test_areas_off_areas_on_wildcard_conflict(self):
     with self.assertRaises(ValueError) as ctx:
-      self.alexa.tts(text=self.text, areas_off="*", areas_on="*")
+      self.amazon_echo.tts(text=self.text, areas_off="*", areas_on="*")
     self.assertIn(
         "You can't use wildcard targets for both areas_off and areas_on at "
         "the same time", str(ctx.exception))
@@ -138,15 +139,15 @@ class TestArgs(TestBase):
   def test_area_off_wildcard_play_always(self):
     env_patch = {"play_always": {"normal_time": [TestBase.CORRIDOR]}}
 
-    with mock.patch.dict(self.alexa.env, env_patch):
-      expected_targets = self.alexa.tts(text=self.text, areas_off="*")
+    with mock.patch.dict(self.amazon_echo.env, env_patch):
+      expected_targets = self.amazon_echo.tts(text=self.text, areas_off="*")
       self.assertListEqual(expected_targets, [])
 
   def test_area_off_wildcard_play_default(self):
     env_patch = {"play_default": {"normal_time": [TestBase.LIVING_ROOM]}}
 
-    with mock.patch.dict(self.alexa.env, env_patch):
-      expected_targets = self.alexa.tts(text=self.text, areas_off="*")
+    with mock.patch.dict(self.amazon_echo.env, env_patch):
+      expected_targets = self.amazon_echo.tts(text=self.text, areas_off="*")
       self.assertListEqual(expected_targets, [])
 
 
@@ -156,11 +157,11 @@ class TestTargetAreaBase(TestBase):
   def _test_not_played(self, expected_areas, areas_off=None, areas_on=None):
     """Assert was not played on the targets."""
 
-    expected_targets = self.alexa.tts(text=self.text,
-                                      areas_off=areas_off,
-                                      areas_on=areas_on)
+    expected_targets = self.amazon_echo.tts(text=self.text,
+                                            areas_off=areas_off,
+                                            areas_on=areas_on)
     for area in areas_off or ():
-      target = self.alexa.get_target(area)
+      target = self.amazon_echo.get_target(area)
       self.assertNotIn(
           target,
           expected_targets,
@@ -168,7 +169,7 @@ class TestTargetAreaBase(TestBase):
       )
 
     for area in expected_areas:
-      target = self.alexa.get_target(area)
+      target = self.amazon_echo.get_target(area)
       self.assertIn(
           target,
           expected_targets,
@@ -178,12 +179,12 @@ class TestTargetAreaBase(TestBase):
   def _test_played(self, expected_areas, areas_off=None, areas_on=None):
     """Assert played on the target."""
 
-    expected_targets = self.alexa.tts(text=self.text,
-                                      areas_off=areas_off,
-                                      areas_on=areas_on)
+    expected_targets = self.amazon_echo.tts(text=self.text,
+                                            areas_off=areas_off,
+                                            areas_on=areas_on)
 
     for area in expected_areas:
-      target = self.alexa.get_target(area)
+      target = self.amazon_echo.get_target(area)
       self.assertIn(
           target,
           expected_targets,
@@ -210,13 +211,13 @@ class TestConflictingAreasTargets(TestTargetAreaBase):
   }
 
   def test_not_played(self):
-    with mock.patch.dict(self.alexa.env, self.env_patch):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch):
       super()._test_not_played(set(self.areas_on).difference(self.areas_off),
                                areas_off=self.areas_off,
                                areas_on=self.areas_on)
 
   def test_played(self):
-    with mock.patch.dict(self.alexa.env, self.env_patch):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch):
       super()._test_played(set(self.areas_on).difference(self.areas_off),
                            areas_off=self.areas_off,
                            areas_on=self.areas_on)
@@ -252,13 +253,13 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
 
   def test_not_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_not_played((), areas_off=self.play_always)
       super()._test_not_played((), areas_off=self.play_default)
 
-      self.alexa.get_state.side_effect = lambda sensor: {
-          TestBase.LIVING_ROOM_MOTION: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
+      self.amazon_echo.get_state.side_effect = lambda sensor: {
+          TestBase.LIVING_ROOM_MOTION: tts.AmazonEcho.STATE_ON
+      }.get(sensor, tts.AmazonEcho.STATE_OFF)
       super()._test_not_played(
           set(self.play_always).union((TestBase.LIVING_ROOM,)))
       super()._test_not_played((TestBase.LIVING_ROOM,),
@@ -266,18 +267,18 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
       super()._test_not_played((TestBase.LIVING_ROOM,))
 
     # Quite time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
-      self.alexa.get_state.side_effect = lambda sensor: {
-          self.alexa.quite_time: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
+      self.amazon_echo.get_state.side_effect = lambda sensor: {
+          self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON
+      }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
       super()._test_not_played((), areas_off=self.play_always)
       super()._test_not_played((), areas_off=self.play_default)
 
-      self.alexa.get_state.side_effect = lambda sensor: {
-          self.alexa.quite_time: tts.Alexa.STATE_ON,
-          TestBase.LIVING_ROOM_MOTION: tts.Alexa.STATE_ON
-      }.get(sensor, tts.Alexa.STATE_OFF)
+      self.amazon_echo.get_state.side_effect = lambda sensor: {
+          self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON,
+          TestBase.LIVING_ROOM_MOTION: tts.AmazonEcho.STATE_ON
+      }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
       super()._test_not_played(
           set(self.play_always).union((TestBase.LIVING_ROOM,)))
@@ -287,14 +288,14 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
 
   def test_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_played(self.play_always)
 
     # Quite time.
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
       super()._test_played(self.play_always)
 
 
@@ -325,26 +326,26 @@ class TestPlayAlwaysTargets(TestTargetAreaBase):
 
   def test_not_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_not_played((), areas_off=self.areas)
 
     # Quite time.
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.alexa.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
       super()._test_not_played((), areas_off=self.areas)
 
   def test_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_played(self.areas)
 
     # Quite time.
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
       super()._test_played(self.areas)
 
 
@@ -375,26 +376,26 @@ class TestPlayDefaultTargets(TestTargetAreaBase):
 
   def test_not_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_not_played((), areas_off=self.areas)
 
     # Quite time.
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.alexa.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
       super()._test_not_played((), areas_off=self.areas)
 
   def test_played(self):
     # Normal time.
-    with mock.patch.dict(self.alexa.env, self.env_patch_normal_time):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_normal_time):
       super()._test_played(self.areas)
 
     # Quite time.
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
-    with mock.patch.dict(self.alexa.env, self.env_patch_quite_time):
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
       super()._test_played(self.areas)
 
 
@@ -410,15 +411,15 @@ class TestTargetConditionBase(TestBase):
 
   def _test_not_played_normal_time(self, area, conditions):
     """Assert text was not played on the target during normal time. """
-    with mock.patch.dict(self.alexa.env, self.env_patch):
-      with mock.patch.dict(self.alexa.rules, self.rules):
+    with mock.patch.dict(self.amazon_echo.env, self.env_patch):
+      with mock.patch.dict(self.amazon_echo.rules, self.rules):
         for condition in conditions:
-          self.alexa.get_state.side_effect = lambda sensor: {
-              condition: tts.Alexa.STATE_ON
-          }.get(sensor, tts.Alexa.STATE_OFF)
+          self.amazon_echo.get_state.side_effect = lambda sensor: {
+              condition: tts.AmazonEcho.STATE_ON
+          }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
-          target = self.alexa.get_target(area)
-          targets = self.alexa.tts(text=self.text, areas_off=[area])
+          target = self.amazon_echo.get_target(area)
+          targets = self.amazon_echo.tts(text=self.text, areas_off=[area])
           self.assertNotIn(
               target,
               targets,
@@ -430,20 +431,20 @@ class TestTargetConditionBase(TestBase):
   def _test_played_normal_time(self, area, conditions):
     """Assert text was played on the target during normal time."""
 
-    target = self.alexa.get_target(area)
+    target = self.amazon_echo.get_target(area)
     expected_targets = [target]
 
-    with mock.patch.dict(self.alexa.rules,
+    with mock.patch.dict(self.amazon_echo.rules,
                          {area: {
                              "conditions": conditions,
                              "target": target
                          }}):
       for condition in conditions:
-        self.alexa.get_state.side_effect = lambda sensor: {
-            condition: tts.Alexa.STATE_ON
-        }.get(sensor, tts.Alexa.STATE_OFF)
+        self.amazon_echo.get_state.side_effect = lambda sensor: {
+            condition: tts.AmazonEcho.STATE_ON
+        }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
-        targets = self.alexa.tts(text=self.text)
+        targets = self.amazon_echo.tts(text=self.text)
 
         self.assertEqual(
             targets,
@@ -455,21 +456,22 @@ class TestTargetConditionBase(TestBase):
   def _test_not_played_quite_time(self, area, conditions):
     """Assert text was not played on the target during quite time."""
 
-    with mock.patch.dict(self.alexa.env,
+    with mock.patch.dict(self.amazon_echo.env,
                          {"play_always": {
                              "quite_time": [area]
                          }}):
 
       for condition in conditions:
-        self.alexa.get_state.side_effect = lambda sensor: {
-            condition: tts.Alexa.STATE_ON,
-            self.quite_time: tts.Alexa.STATE_ON
-        }.get(sensor, tts.Alexa.STATE_OFF)
+        self.amazon_echo.get_state.side_effect = lambda sensor: {
+            condition: tts.AmazonEcho.STATE_ON,
+            self.quite_time: tts.AmazonEcho.STATE_ON
+        }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
-        expected_targets = self.alexa.tts(text=self.text, areas_off=[area])
+        expected_targets = self.amazon_echo.tts(text=self.text,
+                                                areas_off=[area])
 
         self.assertNotIn(
-            self.alexa.get_target(area),
+            self.amazon_echo.get_target(area),
             expected_targets,
             f"Should not play in the {area} during quite time if silenced.",
         )
@@ -482,13 +484,13 @@ class TestTargetConditionBase(TestBase):
 
     condition_dict = {}
     for condition in tuple(conditions.keys()) + if_not["conditions"]:
-      condition_dict[condition] = tts.Alexa.STATE_ON
+      condition_dict[condition] = tts.AmazonEcho.STATE_ON
 
-    self.alexa.get_state.side_effect = lambda sensor: condition_dict.get(
-        sensor, tts.Alexa.STATE_OFF)
+    self.amazon_echo.get_state.side_effect = lambda sensor: condition_dict.get(
+        sensor, tts.AmazonEcho.STATE_OFF)
 
-    target = self.alexa.get_target(area)
-    targets = self.alexa.tts(text=self.text)
+    target = self.amazon_echo.get_target(area)
+    targets = self.amazon_echo.tts(text=self.text)
 
     self.assertNotIn(
         target,
@@ -500,18 +502,18 @@ class TestTargetConditionBase(TestBase):
   def _test_played_quite_time(self, area):
     """Assert text was played on the target during quite time. """
 
-    self.alexa.get_state.side_effect = lambda sensor: {
-        self.alexa.quite_time: tts.Alexa.STATE_ON
-    }.get(sensor, tts.Alexa.STATE_OFF)
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
-    with mock.patch.dict(self.alexa.env,
+    with mock.patch.dict(self.amazon_echo.env,
                          {"play_always": {
                              "quite_time": [area]
                          }}):
-      expected_targets = self.alexa.tts(text=self.text)
+      expected_targets = self.amazon_echo.tts(text=self.text)
 
       self.assertIn(
-          self.alexa.get_target(area),
+          self.amazon_echo.get_target(area),
           expected_targets,
           f"Should play in the {area} during quite time.",
       )

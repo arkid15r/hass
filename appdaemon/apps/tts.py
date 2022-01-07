@@ -7,20 +7,22 @@ and a set of default and last resort targets.
 
 __author__ = "Ark (ark@cho.red)"
 
+# pylint: disable=attribute-defined-outside-init
+# pylint: disable=import-error
+# pylint: disable=too-many-instance-attributes
+
 import sys
 import time
 from queue import Queue
 from threading import Thread
 
-# pylint: disable=import-error
 from appdaemon.plugins.hass import hassapi as hass
 
-# pylint: disable=attribute-defined-outside-init
 
+class AmazonEcho(hass.Hass):
+  """Amazon Echo TTS App Daemon class."""
 
-class Alexa(hass.Hass):
-  """Alexa TTS App Daemon class."""
-
+  EVENT_NAME = "tts"
   STATE_OFF = "off"
   STATE_ON = "on"
   TTS_DURATION_DEFAULT_SECONDS = 7
@@ -43,7 +45,7 @@ class Alexa(hass.Hass):
     thread.daemon = True
     thread.start()
 
-    self.listen_event(self.handle_event, "tts")
+    self.listen_event(self.handle_event, self.EVENT_NAME)
 
   # pylint: disable=unused-argument
   def handle_event(self, event, data, kwargs):
@@ -189,9 +191,9 @@ class Alexa(hass.Hass):
     targets = sorted(targets)
     if targets:
       self.call_service("notify/alexa_media",
-                        target=targets,
+                        data={"type": "tts"},
                         message=text,
-                        data={"type": "tts"})
+                        target=targets)
     return targets
 
   def worker(self):
