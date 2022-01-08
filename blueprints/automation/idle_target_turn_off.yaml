@@ -3,7 +3,7 @@
 # Author: Ark (ark@cho.red)
 
 blueprint:
-  name: '[Turn Off Idle]: Target'
+  name: '[Turn Off Idle]: '
   description: |
     Turns Off Idle Target.
 
