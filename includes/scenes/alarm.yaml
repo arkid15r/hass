@@ -1,0 +1,26 @@
+- name: Alarm Armed Home
+  entities:
+    alarm_control_panel.home_alarm:
+      state: armed_home
+    switch.alarm_siren:
+      state: 'off'
+    switch.arming_bypass_mode:
+      state: 'off'
+
+- name: Alarm Armed Away
+  entities:
+    alarm_control_panel.home_alarm:
+      state: armed_away
+    switch.alarm_siren:
+      state: 'off'
+    switch.arming_bypass_mode:
+      state: 'off'
+
+- name: Alarm Disarmed
+  entities:
+    alarm_control_panel.home_alarm:
+      state: disarmed
+    switch.alarm_siren:
+      state: 'off'
+    switch.arming_bypass_mode:
+      state: 'off'
