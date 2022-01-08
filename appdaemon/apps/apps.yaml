@@ -5,7 +5,7 @@ mp_volume:
 
 tts:
   module: tts
-  class: Alexa
+  class: AmazonEcho
   env:
     play_always:
       normal_time: []

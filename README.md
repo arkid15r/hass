@@ -1,20 +1,20 @@
 # Home Assistant Configuration
 
-[HomeAssistant](https://www.home-assistant.io/) related stuff. Scripts,
+[Home Assistant](https://www.home-assistant.io/) related stuff. Scripts,
 blueprints, automations, scenes, sensors, configs.
 
 #### Description
 
 The repository contains Python scripts and YAML configs one might find useful
-for a HASS setup.
+for their Home Assistant setup.
 
-## Python Scripts
+## App Daemon Scripts
 
 ### - tts.py
 
-Plays a TTS message on Amazon Echo devices using Alexa notification service. A
-list of target devices can be configured based on time, recent motion activity,
-and other binary sensors or templates with 'on'/'off' state capabilities.
+Plays a TTS message on Amazon Echo devices using Alexa notification service.
+A list of target devices is generated based on time, recent motion activity,
+and a set of default and last resort targets.
 
 Usage:
 
@@ -149,24 +149,21 @@ env:
       target: media_player.garage_echo
 ```
 
-### - alexa_volume.py
+### - mp_volume.py
 
 Sets the volume level on Amazon Echo devices.
 
-#### DEVICES
+#### AREAS
 
 A list of media player device IDs to control with alexa_volume.py
 
 ```python
-DEVICES = (
-    "bathroom_1_echo",
-    "bathroom_2_echo"
-    "bedroom_1_echo"
-    "corridor_echo",
-    "garage_echo",
-    "living_room_echo",
-    "office_1_echo",
-    "office_2_echo",
+AREAS = (
+    "bathroom_1",
+    "bathroom_2"
+    "bedroom_1"
+    "garage",
+    "living_room",
 )
 ```
 
@@ -178,9 +175,9 @@ The automation periodically checks the target area and loads a specific scene to
 turn off the target if no activity has been detected for a specified amount of
 time.
 
-### - scenes_automation.yaml
+### - scene_automation.yaml
 
-Automates Scenes Activation.
+Automates Scene Activation.
 
 The automation supports two default scenes for 'on'/'off' `Watcher` states and
 three optional scenes which are activated depending on the current time.
@@ -190,5 +187,5 @@ three optional scenes which are activated depending on the current time.
 Plays TTS message upon entity state change event.
 
 The automation uses
-[tts.py](https://github.com/arkid15r/hass/blob/main/appdaemon/apps/tts.py)
-to play the TTS message.
+[tts.py](https://github.com/arkid15r/home-assistant-config/blob/main/appdaemon/apps/tts.py)
+to play TTS messages.
