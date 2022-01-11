@@ -1,0 +1,14 @@
+binary_sensor.front_door_closed:
+  icon: mdi:door
+
+binary_sensor.garage_gate_closed:
+  icon: mdi:garage-variant
+
+binary_sensor.living_room_door_closed:
+  icon: mdi:door
+
+sensor.security_perimeter_breached:
+  icon: mdi:home-alert-outline
+
+sensor.security_perimeter_tampered:
+  icon: mdi:home-alert-outline

@@ -1,7 +1,0 @@
-- name: Indoor Garden Off
-  entities:
-    switch.indoor_garden: 'off'
-
-- name: Indoor Garden On
-  entities:
-    switch.indoor_garden: 'on'

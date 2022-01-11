@@ -2,3 +2,5 @@ tvs:
   name: TVs
   entities:
     - binary_sensor.living_room_tv
+    - media_player.kitchen_tv
+    - media_player.office_1_tv

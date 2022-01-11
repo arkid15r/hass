@@ -14,7 +14,7 @@ mode_front_yard_lights_on_motion:
     - group.light_front_yard
 
 mode_living_room_lights_new_year_on_motion:
-  name: Living Room New Year Lights On Motion Mode
+  name: Living Room New Year Lights On Motion
   entities:
     - binary_sensor.living_room_tv
     - group.light_dining_area
@@ -34,14 +34,14 @@ mode_freeze_bathroom_1:
 mode_freeze_bedroom_1:
   name: Bedroom 1 Mode Freeze
   entities:
-    - input_boolean.mode_afternoon_nap
+    - input_boolean.mode_nap
     - input_boolean.mode_red
-    - input_boolean.mode_wake_up_lighting
+    - input_boolean.mode_wake_up
 
 mode_freeze_garage:
   name: Garage Mode Freeze
   entities:
-    - input_boolean.mode_gym_session
+    - input_boolean.mode_gym
 
 mode_freeze_hallway:
   name: Hallway Mode Freeze

@@ -52,18 +52,6 @@ binary_sensor.motion_living_room_15m:
 binary_sensor.motion_living_room_5m:
   friendly_name: Living Room Motion Last 5 Minutes
 
-binary_sensor.motion_office_1_15m:
-  friendly_name: Office 1 Motion Last 15 Minutes
-
-binary_sensor.motion_office_1_5m:
-  friendly_name: Office 1 Motion Last 5 Minutes
-
-binary_sensor.motion_office_2_15m:
-  friendly_name: Office 2 Motion Last 15 Minutes
-
-binary_sensor.motion_office_2_5m:
-  friendly_name: Office 2 Motion Last 5 Minutes
-
 binary_sensor.motion_storage_room_15m:
   friendly_name: Storage Room Motion Last 15 Minutes
 
