@@ -1,0 +1,35 @@
+alarm_time_off:
+  has_date: false
+  has_time: true
+
+alarm_time_on:
+  has_date: false
+  has_time: true
+
+dining_area_morning_lights_time_off:
+  has_date: false
+  has_time: true
+
+dining_area_morning_lights_time_on:
+  has_date: false
+  has_time: true
+
+indoor_garden_time_off:
+  has_date: false
+  has_time: true
+
+indoor_garden_time_on:
+  has_date: false
+  has_time: true
+
+movie_night_end_time:
+  has_date: false
+  has_time: true
+
+movie_night_start_time:
+  has_date: false
+  has_time: true
+
+wake_up_lighting_start_time:
+  has_date: false
+  has_time: true

@@ -1,0 +1,79 @@
+input_boolean.mode_bar:
+  friendly_name: Bar mode
+  icon: mdi:glass-cocktail
+
+input_boolean.mode_belle:
+  friendly_name: Belle Mode
+  icon: mdi:leaf
+
+input_boolean.mode_gym:
+  friendly_name: Gym Mode
+  icon: mdi:dumbbell
+
+input_boolean.mode_hallway_photo:
+  friendly_name: Hallway Photo Mode
+  icon: mdi:camera
+
+input_boolean.mode_kitchen_tv:
+  friendly_name: Kitchen TV Mode
+  icon: mdi:television-play
+
+input_boolean.mode_nap:
+  friendly_name: Nap Mode
+  icon: mdi:bed-queen
+
+input_boolean.mode_shower:
+  friendly_name: Shower Mode
+  icon: mdi:shower
+
+input_boolean.mode_spa:
+  friendly_name: Spa Mode
+  icon: mdi:hot-tub
+
+input_boolean.mode_wake_up_lighting:
+  friendly_name: Wake Up Lighting Mode
+  icon: mdi:lightbulb-on-outline
+
+input_boolean.play_tts_messages:
+  friendly_name: Play TTS Messages
+  icon: mdi:bullhorn-outline
+
+input_boolean.wake_up_lighting_enabled:
+  friendly_name: Wake Up Lighting Enabled
+  icon: mdi:alarm-snooze
+
+input_datetime.alarm_time_off:
+  friendly_name: Home Alarm Time Off
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.alarm_time_on:
+  friendly_name: Home Alarm Time On
+  icon: mdi:alarm-light-outline
+
+input_datetime.dining_area_morning_lights_time_off:
+  friendly_name: Dining Area Morning Lights Off
+  icon: mdi:clock-time-eight-outline
+
+input_datetime.dining_area_morning_lights_time_on:
+  friendly_name: Dining Area Morning Lights On
+  icon: mdi:clock-time-seven-outline
+
+input_datetime.indoor_garden_time_off:
+  friendly_name: Indoor Garden Turn Off Time
+  icon: mdi:clock-time-ten-outline
+
+input_datetime.indoor_garden_time_on:
+  friendly_name: Indoor Garden Turn On Time
+  icon: mdi:clock-time-seven-outline
+
+input_datetime.movie_night_end_time:
+  friendly_name: Movie Night End Time
+  icon: mdi:television-off
+
+input_datetime.movie_night_start_time:
+  friendly_name: Movie Night Start Time
+  icon: mdi:television
+
+input_datetime.wake_up_lighting_start_time:
+  friendly_name: Wake Up Lighting Start Time
+  icon: mdi:alarm
