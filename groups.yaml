@@ -1,10 +1,3 @@
-light_living_room_new_year:
-  name: Living Room New Year Lights
-  entities:
-    - light.living_room_lamp
-    - switch.living_room_1
-    - switch.living_room_2
-
 indoor_temperature:
   name: Indoor Temperature
   entities:
@@ -13,6 +6,13 @@ indoor_temperature:
     - sensor.dining_area_temperature
     - sensor.office_1_temperature
     - sensor.office_2_temperature
+
+light_living_room_new_year:
+  name: Living Room New Year Lights
+  entities:
+    - light.living_room_lamp
+    - switch.living_room_1
+    - switch.living_room_2
 
 tvs:
   name: TVs
