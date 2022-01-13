@@ -1,0 +1,19 @@
+binary_sensor.hvac_cooling:
+  icon: mdi:thermometer-minus
+
+binary_sensor.hvac_heating:
+  icon: mdi:thermometer-plus
+
+binary_sensor.hvac_running:
+  icon: mdi:thermometer-lines
+
+binary_sensor.thermal_perimeter_breached:
+  icon: mdi:dots-square
+
+sensor.corridor_temperature:
+  icon: mdi:thermometer
+  unit_of_measurement: °F
+
+sensor.indoor_temperature:
+  icon: mdi:thermometer
+  unit_of_measurement: °F
