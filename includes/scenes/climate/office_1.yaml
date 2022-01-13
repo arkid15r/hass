@@ -1,3 +1,11 @@
+- name: Office 1 Heating Mat Off
+  entities:
+    switch.office_1_heating_mat: 'off'
+
+- name: Office 1 Heating Mat On
+  entities:
+    switch.office_1_heating_mat: 'on'
+
 - name: Office 1 Humidifier Off
   entities:
     switch.office_1_humidifier: 'off'
