@@ -20,7 +20,7 @@ tts:
     bathroom_1:
       conditions:
         - binary_sensor.motion_bathroom_1_5m
-        - group.light_bathroom_1
+        - light.bathroom_1
       target: media_player.bathroom_1_echo
       if_not:
         conditions:
@@ -29,7 +29,7 @@ tts:
     bathroom_2:
       conditions:
         - binary_sensor.motion_bathroom_2_5m
-        - group.light_bathroom_2
+        - light.bathroom_2
       target: media_player.bathroom_2_echo
       if_not:
         conditions:
@@ -38,26 +38,26 @@ tts:
     bedroom_1:
       conditions:
         - binary_sensor.motion_bedroom_1_5m
-        - group.light_bedroom_1
+        - light.bedroom_1
       target: media_player.bedroom_1_echo
     garage:
       conditions:
         - binary_sensor.motion_garage_5m
-        - group.light_garage
+        - light.garage
       target: media_player.garage_echo
     living_room:
       conditions:
         - binary_sensor.living_room_tv
         - binary_sensor.motion_living_room_5m
-        - group.light_dining_area
-        - group.light_kitchen
-        - group.light_living_room
-        - group.motion_hallway # now vs last 5m
+        - light.dining_area
+        - light.kitchen
+        - light.living_room
+        - binary_sensor.hallway_motion # now vs last 5m
       target: media_player.living_room_echo
     office_1:
       conditions:
         - binary_sensor.motion_office_1_5m
-        - group.light_office_1
+        - light.office_1
         - remote.office_1_tv_remote
       target: media_player.office_1_echo
       if_not:
@@ -65,5 +65,5 @@ tts:
     office_2:
       conditions:
         - binary_sensor.motion_office_2_15m
-        - group.light_office_2
+        - light.office_2
       target: media_player.office_2_echo
