@@ -1,103 +1,98 @@
 - binary_sensor:
-    - unique_id: hvac_cooling
-      name: HVAC Cooling
-      icon: mdi:thermometer-minus
+    - name: HVAC Cooling
+      unique_id: hvac_cooling
       state: >
         {{ not is_state('climate.thermostat', 'off') and
            state_attr('climate.thermostat', 'hvac_action') in ('cooling',) and
            'compCool1' in state_attr('climate.thermostat', 'equipment_running')
         }}
 
-    - unique_id: hvac_heating
-      name: HVAC Heating
-      icon: mdi:thermometer-plus
+    - name: HVAC Heating
+      unique_id: hvac_heating
       state: >
         {{ not is_state('climate.thermostat', 'off') and
            state_attr('climate.thermostat', 'hvac_action') in ('heating',) and
            'auxHeat1' in state_attr('climate.thermostat', 'equipment_running')
         }}
 
-    - unique_id: hvac_running
-      name: HVAC Running
-      icon: mdi:thermometer-lines
+    - name: HVAC Running
+      unique_id: hvac_running
       state: >
         {{ is_state('binary_sensor.hvac_cooling', 'on') or
            is_state('binary_sensor.hvac_heating', 'on')
         }}
 
-    - unique_id: indoor_temperature_higher
-      name: Indoor Temperature Higher
+    - name: Indoor Temperature Higher
+      unique_id: indoor_temperature_higher
       state: >
         {{ states('sensor.indoor_temperature')|int >
-             states('sensor.outdoor_temperature')|int
+               states('sensor.outdoor_temperature')|int
         }}
 
-    - unique_id: indoor_temperature_2_degree_higher
-      name: Indoor Temperature 2 Degree Higher
+    - name: Indoor Temperature 2 Degree Higher
+      unique_id: indoor_temperature_2_degree_higher
       state: >
         {{ states('sensor.indoor_temperature')|int >
-             states('sensor.outdoor_temperature')|int + 2
+               states('sensor.outdoor_temperature')|int + 2
         }}
 
   sensor:
-    - unique_id: corridor_temperature
-      name: Corridor Temperature
-      unit_of_measurement: °F
+    - name: Corridor Temperature
+      unique_id: corridor_temperature
       state: >
         {{ state_attr('climate.thermostat', 'current_temperature')|round }}
 
-    - unique_id: hvac_preset_mode
-      name: HVAC Preset Mode
+    - name: HVAC Preset Mode
+      unique_id: hvac_preset_mode
       state: >
         {{ state_attr('climate.thermostat', 'preset_mode') }}
 
-    - unique_id: indoor_temperature
-      name: Indoor Temperature
-      icon: mdi:thermometer
-      unit_of_measurement: °F
+    - name: Indoor Temperature
+      unique_id: indoor_temperature
       state: >
         {{ expand('group.indoor_temperature')|
-             rejectattr('state', 'in', ('unavailable',))|
-             map(attribute='state')|
-             map('float')|average|round
+               rejectattr('state', 'in', ('unavailable',))|
+               map(attribute='state')|
+               map('float')|average|round
         }}
 
-    - unique_id: thermal_perimeter_breached
-      name: Thermal Perimeter Breached
-      icon: mdi:door
+    - name: Thermal Perimeter Breached
+      unique_id: thermal_perimeter_breached
       state: >
-        {{  expand('group.perimeter_thermal')|
-              selectattr('state', 'eq', 'on')|list|count > 0
+        {{  expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
+                selectattr('state', 'eq', 'on')|list|count > 0
         }}
       attributes:
         template: climate
         areas: >
-          {{ expand('group.perimeter_thermal')|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='entity_id')|
-               map('area_name')|
-               reject('eq', none)|unique|sort
+          {{ expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
+                 selectattr('state', 'eq', 'on')|
+                 map(attribute='entity_id')|
+                 map('area_name')|
+                 reject('eq', none)|unique|sort
           }}
         area_summary: >
-          {% set entities = expand('group.perimeter_thermal')|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='entity_id')|
-               map('area_name')|
-               reject('eq', none)|unique|sort
+          {% set entities = expand(state_attr(
+                'binary_sensor.thermal_perimeter', 'entity_id'))|
+                     selectattr('state', 'eq', 'on')|
+                     map(attribute='entity_id')|
+                     map('area_name')|
+                     reject('eq', none)|unique|sort
           %}
           {{- entities[0] if entities|count <= 1 else
-                (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+                  (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}
         entities: >
-          {{ expand('group.perimeter_thermal')|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='entity_id')|sort
+          {{ expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
+                 selectattr('state', 'eq', 'on')|
+                 map(attribute='entity_id')|sort
           }}
         entities_summary: >
-          {% set entities = expand('group.perimeter_thermal')|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='name')|unique|sort
+          {% set entities = expand(
+                 state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
+                     selectattr('state', 'eq', 'on')|
+                     map(attribute='name')|unique|sort
           %}
           {{- entities[0] if entities|count <= 1 else
-                (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+                  (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}

@@ -1,78 +1,92 @@
 - binary_sensor:
-    - unique_id: front_door_closed
-      name: Front Door Closed
+    - name: Front Door Closed
+      unique_id: front_door_closed
       state: >
         {{ is_state('binary_sensor.front_door', 'off') }}
 
-    - unique_id: garage_gate_closed
-      name: Garage Gate Closed
+    - name: Garage Gate Closed
+      unique_id: garage_gate_closed
       state: >
         {{ is_state('binary_sensor.garage_gate', 'off') }}
 
-    - unique_id: living_room_door_closed
-      name: Living Room Door Closed
+    - name: Living Room Door Closed
+      unique_id: living_room_door_closed
       state: >
         {{ is_state('binary_sensor.living_room_door', 'off') }}
 
 - sensor:
-    - unique_id: security_perimeter_breached
-      name: Security Perimeter Breached
+    - name: Security Perimeter Breached
+      unique_id: security_perimeter_breached
       state: >
-        {{ 'on' if expand('group.perimeter_security')|
-            selectattr('state', 'eq', 'on')|list|count > 0 else 'off'
+        {{ 'on' if expand(
+               state_attr('binary_sensor.security_perimeter','entity_id'))|
+                   selectattr('state', 'eq', 'on')|
+                   list|
+                   count > 0
+           else 'off'
         }}
       attributes:
         template: boundary
         entities: >
-          {{ expand('group.perimeter_security')|
-              selectattr('state', 'eq', 'on')|
-              map(attribute='entity_id')|sort
+          {{ expand(state_attr(
+                'binary_sensor.security_perimeter', 'entity_id'))|
+                    selectattr('state', 'eq', 'on')|
+                    map(attribute='entity_id')|
+                    sort
           }}
         entities_summary: >
-          {% set entities = expand('group.perimeter_security')|
-              selectattr('state', 'eq', 'on')|
-              map(attribute='name')|unique|sort
+          {% set entities = expand(state_attr(
+                 'binary_sensor.security_perimeter', 'entity_id'))|
+                     selectattr('state', 'eq', 'on')|
+                     map(attribute='name')|
+                     unique|
+                     sort
           %}
           {{- entities[0] if entities|count <= 1 else
-              (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+                  (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}
 
     - unique_id: security_perimeter_tampered
       name: Security Perimeter Tampered
       state: >
-        {% set entities = expand('group.perimeter_security')|
-             map(attribute='entity_id')|
-             map('regex_replace', '$', '_tamper')
+        {% set entities = expand(state_attr(
+               'binary_sensor.security_perimeter', 'entity_id'))|
+                   map(attribute='entity_id')|
+                   map('regex_replace', '$', '_tamper')
         %}
         {% set tampered = expand(entities)|selectattr('state', 'eq', 'on') %}
         {{ 'on' if tampered|list|count > 0 else 'off' }}
       attributes:
         template: boundary
         entities: >
-          {% set entities = expand('group.perimeter_security')|
-               map(attribute='entity_id')|
-               map('regex_replace', '$', '_tamper')
+          {% set entities = expand(state_attr(
+                 'binary_sensor.security_perimeter', 'entity_id'))|
+                     map(attribute='entity_id')|
+                     map('regex_replace', '$', '_tamper')
           %}
           {% set entities = expand(entities)|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='entity_id')|
-               map('regex_replace', '_tamper$', '')
+                 selectattr('state', 'eq', 'on')|
+                 map(attribute='entity_id')|
+                 map('regex_replace', '_tamper$', '')
           %}
           {{ entities|sort }}
         entities_summary: >
-          {% set entities = expand('group.perimeter_security')|
-               map(attribute='entity_id')|
-               map('regex_replace', '$', '_tamper')
+          {% set entities = expand(state_attr(
+                 'binary_sensor.security_perimeter', 'entity_id'))|
+                     map(attribute='entity_id')|
+                     map('regex_replace', '$', '_tamper')
           %}
           {% set entities = expand(entities)|
-               selectattr('state', 'eq', 'on')|
-               map(attribute='entity_id')|
-               map('regex_replace', '_tamper$', '')
+                 selectattr('state', 'eq', 'on')|
+                 map(attribute='entity_id')|
+                 map('regex_replace', '_tamper$', '')
           %}
           {% set entities = expand(entities)|
-               map(attribute='name')|
-               reject('eq', none)|unique|sort
+                 map(attribute='name')|
+                 reject('eq', none)|
+                 unique|
+                 sort
           %}
           {{- entities[0] if entities|count <= 1 else
-                (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
+                  (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
           }}
