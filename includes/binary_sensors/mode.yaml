@@ -1,0 +1,49 @@
+- name: Bathroom 1 Mode Lock
+  platform: group
+  unique_id: bathroom_1_mode_lock
+  entities:
+    - binary_sensor.mode_bath
+    - binary_sensor.mode_belle
+    - binary_sensor.mode_spa
+
+- name: Bedroom 1 Mode Lock
+  platform: group
+  unique_id: bedroom_1_mode_lock
+  entities:
+    - binary_sensor.mode_nap
+    - binary_sensor.mode_red
+    - binary_sensor.mode_wake_up_lighting
+
+- name: Garage Mode Lock
+  platform: group
+  unique_id: garage_mode_lock
+  entities:
+    - binary_sensor.mode_gym
+
+- name: Hallway Mode Lock
+  platform: group
+  unique_id: hallway_mode_lock
+  entities:
+    - binary_sensor.kitchen_lights_on
+    - binary_sensor.kitchen_mode_lock
+    - binary_sensor.mode_hallway_photo
+
+- name: HVAC Mode Lock
+  platform: group
+  unique_id: hvac_mode_lock
+  entities:
+    - binary_sensor.mode_bar
+    - binary_sensor.mode_red
+
+- name: Kitchen Mode Lock
+  platform: group
+  unique_id: kitchen_mode_lock
+  entities:
+    - binary_sensor.mode_bar
+    - binary_sensor.mode_kitchen_tv
+
+- name: Office 1 Mode Lock
+  platform: group
+  unique_id: office_1_mode_lock
+  entities:
+    - binary_sensor.mode_office_1_tv

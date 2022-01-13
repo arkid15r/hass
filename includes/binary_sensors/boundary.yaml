@@ -1,0 +1,21 @@
+- name: Office 1 Windows
+  platform: group
+  unique_id: group_office_1_windows
+  entities:
+    - binary_sensor.office_1_window_1
+    - binary_sensor.office_1_window_2
+
+- name: Security Perimeter
+  platform: group
+  unique_id: group_perimeter_security
+  entities:
+    - binary_sensor.bathroom_1_window
+    - binary_sensor.bedroom_1_window
+    - binary_sensor.front_door
+    - binary_sensor.garage_gate
+    - binary_sensor.living_room_door
+    - binary_sensor.living_room_window
+    - binary_sensor.office_1_window_1
+    - binary_sensor.office_1_window_2
+    - binary_sensor.office_2_window
+    - binary_sensor.storage_room_window

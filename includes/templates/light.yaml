@@ -1,7 +1,27 @@
 - binary_sensor:
-    - unique_id: bedroom_1_blinds_open
-      name: Bedroom 1 Blinds Open
+    - name: Backyard Lights On
+      unique_id: backyard_lights_on
+      state: >
+        {{ is_state('light.backyard', 'on') }}
+
+    - name: Bedroom 1 Blinds Open
+      unique_id: bedroom_1_blinds_open
       state: >
         {{ is_state('group.light_bedroom_1', 'off') and
            states('sensor.bedroom_1_illuminance_sensor_illuminance')|int > 2
         }}
+
+    - name: Dining Area Lights On
+      unique_id: dining_area_lights_on
+      state: >
+        {{ is_state('light.dining_ares', 'on') }}
+
+    - name: Front Yard Lights On
+      unique_id: front_yard_lights_on
+      state: >
+        {{ is_state('light.front_yard', 'on') }}
+
+    - name: Kitchen Lights On
+      unique_id: kitchen_lights_on
+      state: >
+        {{ is_state('light.kitchen_lights', 'on') }}

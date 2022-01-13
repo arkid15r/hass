@@ -1,0 +1,8 @@
+- name: Bathroom 1
+  platform: group
+  unique_id: bathroom_1_lights
+  entities:
+    - light.bathroom_1_1
+    - light.bathroom_1_2
+    - light.bathroom_1_3
+    - light.bathroom_1_4

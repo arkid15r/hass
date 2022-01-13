@@ -1,6 +1,0 @@
-weather_service:
-  name: Weather Services
-  entities:
-    - weather.aw
-    - weather.owm
-    - weather.thermostat

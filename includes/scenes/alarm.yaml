@@ -24,3 +24,11 @@
       state: 'off'
     switch.arming_bypass_mode:
       state: 'off'
+
+- name: Garage Gate Opener Off
+  entities:
+    switch.garage_gate_opener: 'off'
+
+- name: Garage Gate Opener On
+  entities:
+    switch.garage_gate_opener: 'on'

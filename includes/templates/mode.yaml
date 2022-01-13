@@ -1,0 +1,58 @@
+- binary_sensor:
+    - name: Mode Bar
+      unique_id: mode_bar
+      state: >
+        {{ is_state('input_boolean.mode_bar', 'on') }}
+
+    - name: Mode Bath
+      unique_id: mode_bath
+      state: >
+        {{ is_state('input_boolean.mode_bath', 'on') }}
+
+    - name: Mode Belle
+      unique_id: mode_belle
+      state: >
+        {{ is_state('input_boolean.mode_belle', 'on') }}
+
+    - name: Mode Gym
+      unique_id: mode_gym
+      state: >
+        {{ is_state('input_boolean.mode_gym', 'on') }}
+
+    - name: Mode Hallway Photo
+      unique_id: mode_hallway_photo
+      state: >
+        {{ is_state('input_boolean.mode_hallway_photo', 'on') }}
+
+    - name: Mode Kitchen TV
+      unique_id: mode_kitchen_tv
+      state: >
+        {{ is_state('input_boolean.mode_kitchen_tv', 'on') }}
+
+    - name: Mode Nap
+      unique_id: mode_nap
+      state: >
+        {{ is_state('input_boolean.mode_nap', 'on') }}
+
+    - name: Mode Office 1 TV
+      unique_id: mode_office_1_tv
+      state: >
+        {{ is_state('input_boolean.mode_office_1_tv', 'on') }}
+
+    - name: Mode Red
+      unique_id: mode_red
+      icon: mdi:clock-time-twelve-outline
+      state: >
+        {{ is_state('input_boolean.mode_red', 'on') }}
+
+    - name: Mode Spa
+      unique_id: mode_spa
+      icon: mdi:clock-time-twelve-outline
+      state: >
+        {{ is_state('input_boolean.mode_spa', 'on') }}
+
+    - name: Mode Wake Up Lighting
+      unique_id: mode_wake_up_lighting
+      icon: mdi:clock-time-twelve-outline
+      state: >
+        {{ is_state('input_boolean.mode_wake_up_lighting', 'on') }}

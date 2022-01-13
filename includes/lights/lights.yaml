@@ -1,35 +1,41 @@
-light_backyard:
-  name: Backyard Lights
+- name: Backyard
+  platform: group
+  unique_id: light_backyard
   entities:
     - light.backyard_1
 
-light_bathroom_1:
-  name: Bathroom 1 Lights
+- name: Bathroom 1
+  platform: group
+  unique_id: light_bathroom_1
   entities:
     - light.bathroom_1_1
     - light.bathroom_1_2
     - light.bathroom_1_3
     - light.bathroom_1_4
 
-light_bathroom_2:
-  name: Bathroom 2 Lights
+- name: Bathroom 2
+  platform: group
+  unique_id: light_bathroom_2
   entities:
     - light.bathroom_2_1
 
-light_bedroom_1:
-  name: Bedroom 1 Lights
+- name: Bedroom 1
+  platform: group
+  unique_id: light_bedroom_1
   entities:
     - light.bedroom_1_1
     - light.bedroom_1_2
 
-light_corridor:
-  name: Corridor Lights
+- name: Corridor
+  platform: group
+  unique_id: light_corridor
   entities:
     - light.corridor_1
     - light.corridor_2
 
-light_dining_area:
-  name: Dining Area Lights
+- name: Dining Area
+  platform: group
+  unique_id: light_dining_area
   entities:
     - light.dining_area_1
     - light.dining_area_2
@@ -37,21 +43,24 @@ light_dining_area:
     - light.dining_area_4
     - light.dining_area_5
 
-light_front_yard:
-  name: Front Yard Lights
+- name: Front Yard
+  platform: group
+  unique_id: light_front_yard
   entities:
     - light.front_yard_1
     - light.front_yard_2
     - light.front_yard_3
 
-light_garage:
-  name: Garage Lights
+- name: Garage
+  platform: group
+  unique_id: light_garage
   entities:
     - light.garage_1
     - light.garage_2
 
-light_hallway:
-  name: Hallway Lights
+- name: Hallway
+  platform: group
+  unique_id: light_hallway
   entities:
     - light.hallway_1
     - light.hallway_2
@@ -59,39 +68,37 @@ light_hallway:
     - light.hallway_4
     - light.hallway_5
 
-light_kitchen:
-  name: Kitchen Lights
+- name: Kitchen
+  platform: group
+  unique_id: light_kitchen
   entities:
     - light.kitchen_1
     - light.kitchen_2
     - light.kitchen_2
     - light.kitchen_4
 
-light_living_room:
-  name: Living Room Lights
+- name: Living Room
+  platform: group
+  unique_id: light_living_room
   entities:
     - light.living_room_lamp
 
-light_living_room_new_year:
-  name: Living Room New Year Lights
-  entities:
-    - light.living_room_lamp
-    - switch.living_room_1
-    - switch.living_room_2
-
-light_office_1:
-  name: Office 1 Lights
+- name: Office 1
+  platform: group
+  unique_id: light_office_1
   entities:
     - light.office_1_1
     - light.office_1_2
 
-light_office_2:
-  name: Office 2 Lights
+- name: Office 2
+  platform: group
+  unique_id: light_office_2
   entities:
     - light.office_2_1
 
-light_storage_room:
-  name: Storage Room Lights
+- name: Storage Room
+  platform: group
+  unique_id: light_storage_room
   entities:
     - light.storage_room_1
     - light.storage_room_2

@@ -1,0 +1,5 @@
+- name: Backyard
+  platform: group
+  unique_id: backyard_lights
+  entities:
+    - light.backyard_1
