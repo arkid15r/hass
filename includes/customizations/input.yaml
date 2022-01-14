@@ -43,11 +43,11 @@ input_boolean.wake_up_lighting_enabled:
   icon: mdi:alarm-snooze
 
 input_datetime.alarm_time_off:
-  friendly_name: Home Alarm Time Off
+  friendly_name: Alarm Time Off
   icon: mdi:alarm-light-off-outline
 
 input_datetime.alarm_time_on:
-  friendly_name: Home Alarm Time On
+  friendly_name: Alarm Time On
   icon: mdi:alarm-light-outline
 
 input_datetime.dining_area_morning_lights_time_off:
