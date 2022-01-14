@@ -1,15 +1,15 @@
-# Text To Speech Automation Blueprint.
+# Text To Speech On State Change Automation Blueprint.
 #
 # Author: Ark (ark@cho.red)
 
 blueprint:
   name: '[TTS State]: '
   description: |
-    Plays TTS message upon entity state change event.
+    Plays TTS message on entity state change event.
 
     The automation uses [tts.py](https://github.com/arkid15r/home-assistant-config/blob/main/appdaemon/apps/tts.py) to play the TTS message.
 
-    Use input boolean `play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section). Both `Run If/Run If State` and `Run After/Run Before` are optional. But if provided then just one of the `Run If/Run If State` **OR** `Run After/Run Before` conditions must be true in order to run the automation. `Run After/Run Before` only works when both after/before time inputs are set.
+    Use `input_boolean.play_tts_messages` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section). The `Run If` and `Run If State` are optional but if provided then the condition must be true in order to run the automation.
 
     Inputs:
       - **State Change Entity** (*optional*): an entity with 'on'/'off' state capability which state's change triggers TTS message play.
@@ -25,21 +25,21 @@ blueprint:
   input:
     state_change_entity:
       name: State Change Entity
-      description: An entity that triggers automation
+      description: A list of entities that trigger automation
       default:
       selector:
-        entity: {}
+        object:
 
     state_change_from:
       name: State Change From
-      description: When the state changes from this state
+      description: When the state changes from this value
       default: '*'
       selector:
         object:
 
     state_change_to:
       name: State Change To
-      description: To this state
+      description: To this value
       default: '*'
       selector:
         object:
@@ -91,27 +91,9 @@ blueprint:
       selector:
         text:
 
-    run_after_time:
-      name: Run After (optional)
-      description: Don't run the automation before this time
-      default: '00:00:00'
-      selector:
-        entity:
-          domain: input_datetime
-
-    run_before_time:
-      name: Run Before (optional)
-      description: Don't run the automation after this time
-      default: '00:00:00'
-      selector:
-        entity:
-          domain: input_datetime
-
 variables:
   run_if: !input run_if
   run_if_state: !input run_if_state
-  run_after_time: !input run_after_time
-  run_before_time: !input run_before_time
 
 trigger:
   - platform: state
@@ -124,15 +106,8 @@ condition:
   - "{{ states['input_boolean.play_tts_messages'].state == 'on' }}"
   - condition: or
     conditions:
-      - '{{ not run_if and run_after_time == run_before_time }}'
+      - '{{ not run_if }}'
       - '{{ run_if and run_if_state and states[run_if].state == run_if_state }}'
-      - condition: and
-        conditions:
-          - '{{ run_after_time != run_before_time }}'
-          - condition: time
-            after: !input run_after_time
-            before: !input run_before_time
-
 action:
   - event: tts
     event_data:
