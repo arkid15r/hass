@@ -17,7 +17,7 @@
     - name: Bedroom 1 Blinds Open
       unique_id: bedroom_1_blinds_open
       state: >
-        {{ is_state('light.bedroom_1', 'off') and
+        {{ is_state('light.bedroom_1_lights', 'off') and
            states('sensor.bedroom_1_illuminance_sensor_illuminance')|int > 2
         }}
 
