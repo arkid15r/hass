@@ -2,7 +2,7 @@
     - name: Backyard Lights On
       unique_id: backyard_lights_on
       state: >
-        {{ is_state('light.backyard', 'on') }}
+        {{ is_state('light.backyard_lights', 'on') }}
 
     - name: Bedroom 1 Blinds Open
       unique_id: bedroom_1_blinds_open
@@ -14,12 +14,12 @@
     - name: Dining Area Lights On
       unique_id: dining_area_lights_on
       state: >
-        {{ is_state('light.dining_ares', 'on') }}
+        {{ is_state('light.dining_area_lights', 'on') }}
 
     - name: Front Yard Lights On
       unique_id: front_yard_lights_on
       state: >
-        {{ is_state('light.front_yard', 'on') }}
+        {{ is_state('light.front_yard_lights', 'on') }}
 
     - name: Kitchen Lights On
       unique_id: kitchen_lights_on
