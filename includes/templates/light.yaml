@@ -1,8 +1,18 @@
 - binary_sensor:
-    - name: Backyard Lights On
-      unique_id: backyard_lights_on
+    - name: Backyard Lights
+      unique_id: backyard_lights
       state: >
         {{ is_state('light.backyard_lights', 'on') }}
+
+    - name: Bathroom 1 Lights
+      unique_id: bathroom_1_lights
+      state: >
+        {{ is_state('light.bathroom_1_lights', 'on') }}
+
+    - name: Bathroom 2 Lights
+      unique_id: bathroom_2_lights
+      state: >
+        {{ is_state('light.bathroom_2_lights', 'on') }}
 
     - name: Bedroom 1 Blinds Open
       unique_id: bedroom_1_blinds_open
@@ -11,17 +21,67 @@
            states('sensor.bedroom_1_illuminance_sensor_illuminance')|int > 2
         }}
 
-    - name: Dining Area Lights On
-      unique_id: dining_area_lights_on
+    - name: Bedroom 1 Lights
+      unique_id: bedroom_1_lights
+      state: >
+        {{ is_state('light.bedroom_1_lights', 'on') }}
+
+    - name: Corridor Lights
+      unique_id: corridor_lights
+      state: >
+        {{ is_state('light.corridor_lights', 'on') }}
+
+    - name: Dining Area Lights
+      unique_id: dining_area_lights
       state: >
         {{ is_state('light.dining_area_lights', 'on') }}
 
-    - name: Front Yard Lights On
-      unique_id: front_yard_lights_on
+    - name: Front Yard Lights
+      unique_id: front_yard_lights
       state: >
         {{ is_state('light.front_yard_lights', 'on') }}
 
-    - name: Kitchen Lights On
-      unique_id: kitchen_lights_on
+    - name: Garage Lights
+      unique_id: garage_lights
+      state: >
+        {{ is_state('light.garage_lights', 'on') }}
+
+    - name: Hallway Lights
+      unique_id: hallway_lights
+      state: >
+        {{ is_state('light.hallway_lights', 'on') }}
+
+    - name: Kitchen Lights
+      unique_id: kitchen_lights
       state: >
         {{ is_state('light.kitchen_lights', 'on') }}
+
+    - name: Laundry Room Lights
+      unique_id: laundry_room_lights
+      state: >
+        {{ is_state('light.laundry_room_lights', 'on') }}
+
+    - name: Living Room Lights
+      unique_id: living_room_lights
+      state: >
+        {{ is_state('light.living_room_lights', 'on') }}
+
+    - name: Office 1 Lights
+      unique_id: office_1_lights
+      state: >
+        {{ is_state('light.office_1_lights', 'on') }}
+
+    - name: Office 2 Lights
+      unique_id: office_2_lights
+      state: >
+        {{ is_state('light.office_2_lights', 'on') }}
+
+    - name: Storage Room Lights
+      unique_id: storage_room_lights
+      state: >
+        {{ is_state('light.storage_room_lights', 'on') }}
+
+    - name: Wardrobe Lights
+      unique_id: wardrobe_lights
+      state: >
+        {{ is_state('light.wardrobe_lights', 'on') }}

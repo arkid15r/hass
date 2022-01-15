@@ -1,15 +1,15 @@
-- name: Backyard Lights On Motion Mode
+- name: Backyard Lights On Motion
   all: true
   platform: group
-  unique_id: backyard_lights_on_motion_mode
+  unique_id: backyard_lights_on_motion_group
   entities:
+    - binary_sensor.backyard_lights
     - binary_sensor.living_room_door_closed
-    - binary_sensor.backyard_lights_on
 
 - name: Backyard Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_backyard
+  unique_id: backyard_motion_group
   entities:
     - binary_sensor.backyard_camera_1_motion
     - binary_sensor.backyard_light_2_motion
@@ -17,28 +17,28 @@
 - name: Bathroom 1 Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_bathroom_1
+  unique_id: bathroom_1_motion_group
   entities:
     - binary_sensor.bathroom_1_motion_sensor_1_motion
 
 - name: Bathroom 2 Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_bathroom_2
+  unique_id: bathroom_2_motion_group
   entities:
     - binary_sensor.bathroom_2_motion_sensor_1_motion
 
 - name: Bedroom 1 Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_bedroom_1
+  unique_id: bedroom_1_motion_group
   entities:
     - binary_sensor.bedroom_1_motion_sensor_1_motion
 
 - name: Corridor Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_corridor
+  unique_id: corridor_motion_group
   entities:
     - binary_sensor.corridor_motion_sensor_1_motion
     - binary_sensor.hallway_motion_sensor_2_motion
@@ -46,25 +46,25 @@
 - name: Front Yard Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_front_yard
+  unique_id: front_yard_motion_group
   entities:
     - binary_sensor.doorbell_motion
     - binary_sensor.front_yard_camera_1_motion
     - binary_sensor.front_yard_camera_2_motion
 
-- name: Front Yard Lights On Motion Mode
+- name: Front Yard Lights On Motion
   all: true
   platform: group
-  unique_id: front_yard_lights_on_motion_mode
+  unique_id: front_yard_lights_on_motion_group
   entities:
     - binary_sensor.front_door_closed
-    - binary_sensor.front_yard_lights_on
+    - binary_sensor.front_yard_lights
     - binary_sensor.garage_gate_closed
 
 - name: Garage Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_garage
+  unique_id: garage_motion_group
   entities:
     - binary_sensor.garage_motion_sensor_1_motion
     - binary_sensor.garage_motion_sensor_2_motion
@@ -73,7 +73,7 @@
 - name: Hallway Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_hallway
+  unique_id: hallway_motion_group
   entities:
     - binary_sensor.hallway_motion_sensor_1_motion
     - binary_sensor.hallway_motion_sensor_2_motion
@@ -81,60 +81,60 @@
 - name: Kitchen Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_kitchen
+  unique_id: kitchen_motion_group
   entities:
     - binary_sensor.kitchen_motion_sensor_1_motion
 
 - name: Laundry Room Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_laundry_room
+  unique_id: laundry_room_motion_group
   entities:
     - binary_sensor.laundry_room_motion_sensor_1_motion
 
 - name: Living Room Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_living_room
+  unique_id: living_room_motion_group
   entities:
     - binary_sensor.living_room_motion_sensor_1_motion
 
-- name: Living Room New Year Lights On Motion Mode
-  unique_id: living_room_lights_new_year_on_motion_mode
+- name: Living Room New Year Lights On Motion
+  unique_id: living_room_new_year_lights_on_motion_group
   platform: group
   entities:
+    - binary_sensor.dining_area_lights
     - binary_sensor.hallway_motion
+    - binary_sensor.kitchen_lights
     - binary_sensor.kitchen_motion
+    - binary_sensor.kitchen_tv
     - binary_sensor.living_room_motion
     - binary_sensor.living_room_tv
-    - binary_sensor.dining_area_lights_on
-    - binary_sensor.kitchen_lights_on
-    - binary_sensor.kitchen_tv
 
 - name: Office 1 Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_office_1
+  unique_id: office_1_motion_group
   entities:
     - binary_sensor.office_1_motion_sensor_1_motion
 
 - name: Office 2 Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_office_2
+  unique_id: office_2_motion_group
   entities:
     - binary_sensor.office_2_motion_sensor_1_motion
 
 - name: Storage Room Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_storage_room
+  unique_id: storage_room_motion_group
   entities:
     - binary_sensor.storage_room_motion_sensor_1_motion
 
 - name: Wardrobe Motion
   device_class: motion
   platform: group
-  unique_id: group_motion_wardrobe
+  unique_id: wardrobe_motion_group
   entities:
     - binary_sensor.wardrobe_motion_sensor_1_motion

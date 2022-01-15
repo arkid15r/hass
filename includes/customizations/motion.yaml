@@ -1,65 +1,65 @@
-binary_sensor.motion_bathroom_1_15m:
+binary_sensor.bathroom_1_motion_15m:
   friendly_name: Bathroom 1 Motion Last 15 Minutes
 
-binary_sensor.motion_bathroom_1_5m:
+binary_sensor.bathroom_1_motion_5m:
   friendly_name: Bathroom 1 Motion Last 5 Minutes
 
-binary_sensor.motion_bathroom_2_15m:
+binary_sensor.bathroom_2_motion_15m:
   friendly_name: Bathroom 2 Motion Last 15 Minutes
 
-binary_sensor.motion_bathroom_2_5m:
+binary_sensor.bathroom_2_motion_5m:
   friendly_name: Bathroom 2 Motion Last 5 Minutes
 
-binary_sensor.motion_bedroom_1_15m:
+binary_sensor.bedroom_1_motion_15m:
   friendly_name: Bedroom 1 Motion Last 15 Minutes
 
-binary_sensor.motion_bedroom_1_5m:
+binary_sensor.bedroom_1_motion_5m:
   friendly_name: Bedroom 1 Motion Last 5 Minutes
 
-binary_sensor.motion_corridor_15m:
+binary_sensor.corridor_motion_15m:
   friendly_name: Corridor Motion Last 15 Minutes
 
-binary_sensor.motion_corridor_5m:
+binary_sensor.corridor_motion_5m:
   friendly_name: Corridor Motion Last 5 Minutes
 
-binary_sensor.motion_garage_15m:
+binary_sensor.garage_motion_15m:
   friendly_name: Garage Motion Last 15 Minutes
 
-binary_sensor.motion_garage_5m:
+binary_sensor.garage_motion_5m:
   friendly_name: Garage Motion Last 5 Minutes
 
-binary_sensor.motion_hallway_15m:
+binary_sensor.hallway_motion_15m:
   friendly_name: Hallway Motion Last 15 Minutes
 
-binary_sensor.motion_hallway_5m:
+binary_sensor.hallway_motion_5m:
   friendly_name: Hallway Motion Last 5 Minutes
 
-binary_sensor.motion_kitchen_15m:
+binary_sensor.kitchen_motion_15m:
   friendly_name: Kitchen Motion Last 15 Minutes
 
-binary_sensor.motion_kitchen_5m:
+binary_sensor.kitchen_motion_5m:
   friendly_name: Kitchen Motion Last 5 Minutes
 
-binary_sensor.motion_laundry_room_15m:
+binary_sensor.laundry_room_motion_15m:
   friendly_name: Laundry Room Motion Last 15 Minutes
 
-binary_sensor.motion_laundry_room_5m:
+binary_sensor.laundry_room_motion_5m:
   friendly_name: Laundry Room Motion Last 5 Minutes
 
-binary_sensor.motion_living_room_15m:
+binary_sensor.living_room_motion_15m:
   friendly_name: Living Room Motion Last 15 Minutes
 
-binary_sensor.motion_living_room_5m:
+binary_sensor.living_room_motion_5m:
   friendly_name: Living Room Motion Last 5 Minutes
 
-binary_sensor.motion_storage_room_15m:
+binary_sensor.storage_room_motion_15m:
   friendly_name: Storage Room Motion Last 15 Minutes
 
-binary_sensor.motion_storage_room_5m:
+binary_sensor.storage_room_motion_5m:
   friendly_name: Storage Room Motion Last 5 Minutes
 
-binary_sensor.motion_wardrobe_15m:
+binary_sensor.wardrobe_motion_15m:
   friendly_name: Wardrobe Motion Last 15 Minutes
 
-binary_sensor.motion_wardrobe_5m:
+binary_sensor.wardrobe_motion_5m:
   friendly_name: Wardrobe Motion Last 5 Minutes
