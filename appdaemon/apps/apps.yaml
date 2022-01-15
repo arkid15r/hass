@@ -23,8 +23,8 @@ tts:
           - binary_sensor.bathroom_1_door
         target: media_player.bedroom_1_echo
       conditions:
-        - binary_sensor.motion_bathroom_1_5m
-        - light.bathroom_1_lights
+        - binary_sensor.bathroom_1_lights
+        - binary_sensor.bathroom_1_motion_5m
       target: media_player.bathroom_1_echo
     bathroom_2:
       if_not:
@@ -32,43 +32,42 @@ tts:
           - binary_sensor.bathroom_2_door
         target: media_player.living_room_echo
       conditions:
-        - binary_sensor.motion_bathroom_2_5m
-        - light.bathroom_2_lights
+        - binary_sensor.bathroom_2_lights
+        - binary_sensor.bathroom_2_motion_5m
       target: media_player.bathroom_2_echo
     bedroom_1:
       if_not:
         conditions:
-          - binary_sensor.mode_shower
-          - binary_sensor.mode_spa
+          - binary_sensor.bathroom_1_mode_lock
         target: media_player.bathroom_1_echo
       conditions:
-        - binary_sensor.motion_bedroom_1_5m
-        - light.bedroom_1_lights
+        - binary_sensor.bedroom_1_lights
+        - binary_sensor.bedroom_1_motion_5m
       target: media_player.bedroom_1_echo
     garage:
       conditions:
-        - binary_sensor.motion_garage_5m
-        - light.garage_lights
+        - binary_sensor.garage_lights
+        - binary_sensor.garage_motion_5m
       target: media_player.garage_echo
     living_room:
       conditions:
+        - binary_sensor.dining_area_lights
         - binary_sensor.hallway_motion # now vs last 5m
+        - binary_sensor.kitchen_lights
+        - binary_sensor.living_room_motion_5m
+        - binary_sensor.living_room_lights
         - binary_sensor.living_room_tv
-        - binary_sensor.motion_living_room_5m
-        - light.dining_area
-        - light.kitchen
-        - light.living_room
       target: media_player.living_room_echo
     office_1:
       if_not:
         target: media_player.living_room_echo
       conditions:
-        - binary_sensor.motion_office_1_5m
-        - light.office_1
+        - binary_sensor.office_1_lights
+        - binary_sensor.office_1_motion_5m
         - remote.office_1_tv_remote
       target: media_player.office_1_echo
     office_2:
       conditions:
-        - binary_sensor.motion_office_2_15m
-        - light.office_2
+        - binary_sensor.office_2_lights
+        - binary_sensor.office_2_motion_15m
       target: media_player.office_2_echo
