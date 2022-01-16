@@ -27,7 +27,7 @@
       unique_id: temperature_low_forecast
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_service')|
+        {{ expand('group.weather_services')|
              map(attribute='attributes.forecast.0.templow')|
              map('float')|
              list|
@@ -58,7 +58,7 @@
       unique_id: wind_speed
       unit_of_measurement: mph
       state: >
-        {{ expand('group.weather_service')|
+        {{ expand('group.weather_services')|
              map(attribute='attributes.wind_speed')|
              map('float')|
              list|
@@ -70,7 +70,7 @@
       unique_id: wind_speed_forecast
       unit_of_measurement: mph
       state: >
-        {{ expand('group.weather_service')|
+        {{ expand('group.weather_services')|
              map(attribute='attributes.forecast.0.wind_speed')|
              map('float')|
              list|
