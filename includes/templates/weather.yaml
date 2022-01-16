@@ -1,33 +1,42 @@
 - sensor:
-    - unique_id: outdoor_temperature
-      name: Outdoor Temperature
+    - name: Outdoor Temperature
+      unique_id: outdoor_temperature
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_service')|
-             map(attribute='attributes.temperature')|
-             map('float')|list|average|round
+        {{ expand('group.weather_services')|
+               map(attribute='attributes.temperature')|
+               map('float')|
+               list|
+               average|
+               round
         }}
 
-    - unique_id: temperature_forecast
-      name: Temperature Forecast
+    - name: Temperature Forecast
+      unique_id: temperature_forecast
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_service')|
+        {{ expand('group.weather_services')|
              map(attribute='attributes.forecast.0.temperature')|
-             map('float')|list|average|round
+             map('float')|
+             list|
+             average|
+             round
         }}
 
-    - unique_id: temperature_low_forecast
-      name: Temperature Low Forecast
+    - name: Temperature Low Forecast
+      unique_id: temperature_low_forecast
       unit_of_measurement: °F
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.forecast.0.templow')|
-             map('float')|list|average|round
+             map('float')|
+             list|
+             average|
+             round
         }}
 
-    - unique_id: weather_forecast_summary
-      name: Weather Forecast Summary
+    - name: Weather Forecast Summary
+      unique_id: weather_forecast_summary
       state: >
         {% if states('sensor.temperature_low_forecast')|int < 35 or
               states('sensor.wind_speed_forecast')|int >= 25
@@ -45,20 +54,26 @@
           fine
         {% endif %}
 
-    - unique_id: wind_speed
-      name: Wind Speed
+    - name: Wind Speed
+      unique_id: wind_speed
       unit_of_measurement: mph
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.wind_speed')|
-             map('float')|list|average|round
+             map('float')|
+             list|
+             average|
+             round
         }}
 
-    - unique_id: wind_speed_forecast
-      name: Wind Speed Forecast
+    - name: Wind Speed Forecast
+      unique_id: wind_speed_forecast
       unit_of_measurement: mph
       state: >
         {{ expand('group.weather_service')|
              map(attribute='attributes.forecast.0.wind_speed')|
-             map('float')|list|average|round
+             map('float')|
+             list|
+             average|
+             round
         }}

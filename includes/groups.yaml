@@ -7,7 +7,7 @@ indoor_temperature:
     - sensor.office_1_temperature
     - sensor.office_2_temperature
 
-light_living_room_new_year:
+living_room_new_year_lights:
   name: Living Room New Year Lights
   entities:
     - light.living_room_lamp
@@ -21,7 +21,7 @@ tvs:
     - media_player.kitchen_tv
     - media_player.office_1_tv
 
-weather_service:
+weather_services:
   name: Weather Services
   entities:
     - weather.aw
