@@ -4,11 +4,6 @@
       state: >
         {{ is_state('input_boolean.mode_bar', 'on') }}
 
-    - name: Mode Bath
-      unique_id: mode_bath
-      state: >
-        {{ is_state('input_boolean.mode_bath', 'on') }}
-
     - name: Mode Belle
       unique_id: mode_belle
       state: >
@@ -41,18 +36,20 @@
 
     - name: Mode Red
       unique_id: mode_red
-      icon: mdi:clock-time-twelve-outline
       state: >
         {{ is_state('input_boolean.mode_red', 'on') }}
 
+    - name: Mode Shower
+      unique_id: mode_shower
+      state: >
+        {{ is_state('input_boolean.mode_shower', 'on') }}
+
     - name: Mode Spa
       unique_id: mode_spa
-      icon: mdi:clock-time-twelve-outline
       state: >
         {{ is_state('input_boolean.mode_spa', 'on') }}
 
     - name: Mode Wake Up Lighting
       unique_id: mode_wake_up_lighting
-      icon: mdi:clock-time-twelve-outline
       state: >
         {{ is_state('input_boolean.mode_wake_up_lighting', 'on') }}

@@ -1,41 +1,41 @@
-- name: Backyard Lights
+- name: Backyard Light Group
   platform: group
-  unique_id: backyard_lights_group
+  unique_id: backyard_light_group
   entities:
     - light.backyard_1
 
-- name: Bathroom 1 Lights
+- name: Bathroom 1 Light Group
   platform: group
-  unique_id: bathroom_1_lights_group
+  unique_id: bathroom_1_light_group
   entities:
     - light.bathroom_1_1
     - light.bathroom_1_2
     - light.bathroom_1_3
     - light.bathroom_1_4
 
-- name: Bathroom 2 Lights
+- name: Bathroom 2 Light Group
   platform: group
-  unique_id: bathroom_2_lights_group
+  unique_id: bathroom_2_light_group
   entities:
     - light.bathroom_2_1
 
-- name: Bedroom 1 Lights
+- name: Bedroom 1 Light Group
   platform: group
-  unique_id: bedroom_1_lights_group
+  unique_id: bedroom_1_light_group
   entities:
     - light.bedroom_1_1
     - light.bedroom_1_2
 
-- name: Corridor Lights
+- name: Corridor Light Group
   platform: group
-  unique_id: corridor_lights_group
+  unique_id: corridor_light_group
   entities:
     - light.corridor_1
     - light.corridor_2
 
 - name: Dining Area Lights
   platform: group
-  unique_id: dining_area_lights_group
+  unique_id: dining_area_light_group
   entities:
     - light.dining_area_1
     - light.dining_area_2
@@ -43,24 +43,24 @@
     - light.dining_area_4
     - light.dining_area_5
 
-- name: Front Yard Lights
+- name: Front Yard Light Group
   platform: group
-  unique_id: front_yard_lights_group
+  unique_id: front_yard_light_group
   entities:
     - light.front_yard_1
     - light.front_yard_2
     - light.front_yard_3
 
-- name: Garage Lights
+- name: Garage Light Group
   platform: group
-  unique_id: garage_lights_group
+  unique_id: garage_light_group
   entities:
     - light.garage_1
     - light.garage_2
 
-- name: Hallway Lights
+- name: Hallway Light Group
   platform: group
-  unique_id: hallway_lights_group
+  unique_id: hallway_light_group
   entities:
     - light.hallway_1
     - light.hallway_2
@@ -68,49 +68,49 @@
     - light.hallway_4
     - light.hallway_5
 
-- name: Kitchen Lights
+- name: Kitchen Light Group
   platform: group
-  unique_id: kitchen_lights_group
+  unique_id: kitchen_light_group
   entities:
     - light.kitchen_1
     - light.kitchen_2
     - light.kitchen_2
     - light.kitchen_4
 
-- name: Laundry Room Lights
+- name: Laundry Room Light Group
   platform: group
-  unique_id: laundry_room_lights_group
+  unique_id: laundry_room_light_group
   entities:
     - light.laundry_room_1
 
-- name: Living Room Lights
+- name: Living Room Light Group
   platform: group
-  unique_id: living_room_lights_group
+  unique_id: living_room_light_group
   entities:
     - light.living_room_lamp
 
-- name: Office 1 Lights
+- name: Office 1 Light Group
   platform: group
-  unique_id: office_1_lights_group
+  unique_id: office_1_light_group
   entities:
     - light.office_1_1
     - light.office_1_2
 
-- name: Office 2 Lights
+- name: Office 2 Light Group
   platform: group
-  unique_id: office_2_lights_group
+  unique_id: office_2_light_group
   entities:
     - light.office_2_1
 
-- name: Storage Room Lights
+- name: Storage Room Light Group
   platform: group
-  unique_id: storage_room_lights_group
+  unique_id: storage_room_light_group
   entities:
     - light.storage_room_1
     - light.storage_room_2
 
-- name: Wardrobe Lights
+- name: Wardrobe Light Group
   platform: group
-  unique_id: wardrobe_lights_group
+  unique_id: wardrobe_light_group
   entities:
     - light.wardrobe_1

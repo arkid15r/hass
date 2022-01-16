@@ -1,5 +1,5 @@
 input_boolean.mode_bar:
-  friendly_name: Bar mode
+  friendly_name: Bar Mode
   icon: mdi:glass-cocktail
 
 input_boolean.mode_belle:

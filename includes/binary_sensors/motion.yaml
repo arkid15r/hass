@@ -1,12 +1,4 @@
-- name: Backyard Lights On Motion
-  all: true
-  platform: group
-  unique_id: backyard_lights_on_motion_group
-  entities:
-    - binary_sensor.backyard_lights
-    - binary_sensor.living_room_door_closed
-
-- name: Backyard Motion
+- name: Backyard Motion Group
   device_class: motion
   platform: group
   unique_id: backyard_motion_group
@@ -14,28 +6,28 @@
     - binary_sensor.backyard_camera_1_motion
     - binary_sensor.backyard_light_2_motion
 
-- name: Bathroom 1 Motion
+- name: Bathroom 1 Motion Group
   device_class: motion
   platform: group
   unique_id: bathroom_1_motion_group
   entities:
     - binary_sensor.bathroom_1_motion_sensor_1_motion
 
-- name: Bathroom 2 Motion
+- name: Bathroom 2 Motion Group
   device_class: motion
   platform: group
   unique_id: bathroom_2_motion_group
   entities:
     - binary_sensor.bathroom_2_motion_sensor_1_motion
 
-- name: Bedroom 1 Motion
+- name: Bedroom 1 Motion Group
   device_class: motion
   platform: group
   unique_id: bedroom_1_motion_group
   entities:
     - binary_sensor.bedroom_1_motion_sensor_1_motion
 
-- name: Corridor Motion
+- name: Corridor Motion Group
   device_class: motion
   platform: group
   unique_id: corridor_motion_group
@@ -43,7 +35,7 @@
     - binary_sensor.corridor_motion_sensor_1_motion
     - binary_sensor.hallway_motion_sensor_2_motion
 
-- name: Front Yard Motion
+- name: Front Yard Motion Group
   device_class: motion
   platform: group
   unique_id: front_yard_motion_group
@@ -52,16 +44,7 @@
     - binary_sensor.front_yard_camera_1_motion
     - binary_sensor.front_yard_camera_2_motion
 
-- name: Front Yard Lights On Motion
-  all: true
-  platform: group
-  unique_id: front_yard_lights_on_motion_group
-  entities:
-    - binary_sensor.front_door_closed
-    - binary_sensor.front_yard_lights
-    - binary_sensor.garage_gate_closed
-
-- name: Garage Motion
+- name: Garage Motion Group
   device_class: motion
   platform: group
   unique_id: garage_motion_group
@@ -70,7 +53,7 @@
     - binary_sensor.garage_motion_sensor_2_motion
     - binary_sensor.garage_motion_sensor_3_motion
 
-- name: Hallway Motion
+- name: Hallway Motion Group
   device_class: motion
   platform: group
   unique_id: hallway_motion_group
@@ -78,61 +61,49 @@
     - binary_sensor.hallway_motion_sensor_1_motion
     - binary_sensor.hallway_motion_sensor_2_motion
 
-- name: Kitchen Motion
+- name: Kitchen Motion Group
   device_class: motion
   platform: group
   unique_id: kitchen_motion_group
   entities:
     - binary_sensor.kitchen_motion_sensor_1_motion
 
-- name: Laundry Room Motion
+- name: Laundry Room Motion Group
   device_class: motion
   platform: group
   unique_id: laundry_room_motion_group
   entities:
     - binary_sensor.laundry_room_motion_sensor_1_motion
 
-- name: Living Room Motion
+- name: Living Room Motion Group
   device_class: motion
   platform: group
   unique_id: living_room_motion_group
   entities:
     - binary_sensor.living_room_motion_sensor_1_motion
 
-- name: Living Room New Year Lights On Motion
-  unique_id: living_room_new_year_lights_on_motion_group
-  platform: group
-  entities:
-    - binary_sensor.dining_area_lights
-    - binary_sensor.hallway_motion
-    - binary_sensor.kitchen_lights
-    - binary_sensor.kitchen_motion
-    - binary_sensor.kitchen_tv
-    - binary_sensor.living_room_motion
-    - binary_sensor.living_room_tv
-
-- name: Office 1 Motion
+- name: Office 1 Motion Group
   device_class: motion
   platform: group
   unique_id: office_1_motion_group
   entities:
     - binary_sensor.office_1_motion_sensor_1_motion
 
-- name: Office 2 Motion
+- name: Office 2 Motion Group
   device_class: motion
   platform: group
   unique_id: office_2_motion_group
   entities:
     - binary_sensor.office_2_motion_sensor_1_motion
 
-- name: Storage Room Motion
+- name: Storage Room Motion Group
   device_class: motion
   platform: group
   unique_id: storage_room_motion_group
   entities:
     - binary_sensor.storage_room_motion_sensor_1_motion
 
-- name: Wardrobe Motion
+- name: Wardrobe Motion Group
   device_class: motion
   platform: group
   unique_id: wardrobe_motion_group

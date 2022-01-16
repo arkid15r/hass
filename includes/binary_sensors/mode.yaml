@@ -1,3 +1,11 @@
+- name: Backyard Lights Mode
+  all: true
+  platform: group
+  unique_id: backyard_lights_mode
+  entities:
+    - binary_sensor.backyard_lights
+    - binary_sensor.living_room_door_closed
+
 - name: Bathroom 1 Mode Lock
   platform: group
   unique_id: bathroom_1_mode_lock
@@ -13,6 +21,15 @@
     - binary_sensor.mode_nap
     - binary_sensor.mode_red
     - binary_sensor.mode_wake_up_lighting
+
+- name: Front Yard Lights Mode
+  all: true
+  platform: group
+  unique_id: front_yard_lights_mode
+  entities:
+    - binary_sensor.front_door_closed
+    - binary_sensor.front_yard_lights
+    - binary_sensor.garage_gate_closed
 
 - name: Garage Mode Lock
   platform: group
@@ -41,6 +58,18 @@
   entities:
     - binary_sensor.mode_bar
     - binary_sensor.mode_kitchen_tv
+
+- name: Living Room New Year Lights Mode
+  unique_id: living_room_new_year_lights_mode
+  platform: group
+  entities:
+    - binary_sensor.dining_area_lights
+    - binary_sensor.hallway_motion
+    - binary_sensor.kitchen_lights
+    - binary_sensor.kitchen_motion
+    - binary_sensor.kitchen_tv
+    - binary_sensor.living_room_motion
+    - binary_sensor.living_room_tv
 
 - name: Office 1 Mode Lock
   platform: group

@@ -53,14 +53,18 @@
         {{ expand('group.indoor_temperature')|
                rejectattr('state', 'in', ('unavailable',))|
                map(attribute='state')|
-               map('float')|average|round
+               map('float')|
+               average|
+               round
         }}
 
     - name: Thermal Perimeter Breached
       unique_id: thermal_perimeter_breached
       state: >
         {{  expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
-                selectattr('state', 'eq', 'on')|list|count > 0
+                selectattr('state', 'eq', 'on')|
+                list|
+                count > 0
         }}
       attributes:
         template: climate
@@ -69,7 +73,9 @@
                  selectattr('state', 'eq', 'on')|
                  map(attribute='entity_id')|
                  map('area_name')|
-                 reject('eq', none)|unique|sort
+                 reject('eq', none)|
+                 unique|
+                 sort
           }}
         area_summary: >
           {% set entities = expand(state_attr(
@@ -77,7 +83,9 @@
                      selectattr('state', 'eq', 'on')|
                      map(attribute='entity_id')|
                      map('area_name')|
-                     reject('eq', none)|unique|sort
+                     reject('eq', none)|
+                     unique|
+                     sort
           %}
           {{- entities[0] if entities|count <= 1 else
                   (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')
@@ -85,13 +93,16 @@
         entities: >
           {{ expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
                  selectattr('state', 'eq', 'on')|
-                 map(attribute='entity_id')|sort
+                 map(attribute='entity_id')|
+                 sort
           }}
         entities_summary: >
           {% set entities = expand(
                  state_attr('binary_sensor.thermal_perimeter', 'entity_id'))|
                      selectattr('state', 'eq', 'on')|
-                     map(attribute='name')|unique|sort
+                     map(attribute='name')|
+                     unique|
+                     sort
           %}
           {{- entities[0] if entities|count <= 1 else
                   (entities[:-1]|join(', '), 'and', entities[-1])|join(' ')

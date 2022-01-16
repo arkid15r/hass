@@ -19,7 +19,7 @@
       unique_id: security_perimeter_breached
       state: >
         {{ 'on' if expand(
-               state_attr('binary_sensor.security_perimeter','entity_id'))|
+               state_attr('binary_sensor.security_perimeter', 'entity_id'))|
                    selectattr('state', 'eq', 'on')|
                    list|
                    count > 0

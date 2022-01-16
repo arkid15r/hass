@@ -52,6 +52,9 @@ binary_sensor.living_room_motion_15m:
 binary_sensor.living_room_motion_5m:
   friendly_name: Living Room Motion Last 5 Minutes
 
+binary_sensor.living_room_motion_group:
+  friendly_name: Living Room
+
 binary_sensor.storage_room_motion_15m:
   friendly_name: Storage Room Motion Last 15 Minutes
 

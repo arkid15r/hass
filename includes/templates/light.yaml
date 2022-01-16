@@ -2,86 +2,86 @@
     - name: Backyard Lights
       unique_id: backyard_lights
       state: >
-        {{ is_state('light.backyard_lights', 'on') }}
+        {{ is_state('light.backyard_light_group', 'on') }}
 
     - name: Bathroom 1 Lights
       unique_id: bathroom_1_lights
       state: >
-        {{ is_state('light.bathroom_1_lights', 'on') }}
+        {{ is_state('light.bathroom_1_light_group', 'on') }}
 
     - name: Bathroom 2 Lights
       unique_id: bathroom_2_lights
       state: >
-        {{ is_state('light.bathroom_2_lights', 'on') }}
+        {{ is_state('light.bathroom_2_light_group', 'on') }}
 
     - name: Bedroom 1 Blinds Open
       unique_id: bedroom_1_blinds_open
       state: >
-        {{ is_state('light.bedroom_1_lights', 'off') and
+        {{ is_state('light.bedroom_1_light_group', 'off') and
            states('sensor.bedroom_1_illuminance_sensor_illuminance')|int > 2
         }}
 
     - name: Bedroom 1 Lights
       unique_id: bedroom_1_lights
       state: >
-        {{ is_state('light.bedroom_1_lights', 'on') }}
+        {{ is_state('light.bedroom_1_light_group', 'on') }}
 
     - name: Corridor Lights
       unique_id: corridor_lights
       state: >
-        {{ is_state('light.corridor_lights', 'on') }}
+        {{ is_state('light.corridor_light_group', 'on') }}
 
     - name: Dining Area Lights
       unique_id: dining_area_lights
       state: >
-        {{ is_state('light.dining_area_lights', 'on') }}
+        {{ is_state('light.dining_area_light_group', 'on') }}
 
     - name: Front Yard Lights
       unique_id: front_yard_lights
       state: >
-        {{ is_state('light.front_yard_lights', 'on') }}
+        {{ is_state('light.front_yard_light_group', 'on') }}
 
     - name: Garage Lights
       unique_id: garage_lights
       state: >
-        {{ is_state('light.garage_lights', 'on') }}
+        {{ is_state('light.garage_light_group', 'on') }}
 
     - name: Hallway Lights
       unique_id: hallway_lights
       state: >
-        {{ is_state('light.hallway_lights', 'on') }}
+        {{ is_state('light.hallway_light_group', 'on') }}
 
     - name: Kitchen Lights
       unique_id: kitchen_lights
       state: >
-        {{ is_state('light.kitchen_lights', 'on') }}
+        {{ is_state('light.kitchen_light_group', 'on') }}
 
     - name: Laundry Room Lights
       unique_id: laundry_room_lights
       state: >
-        {{ is_state('light.laundry_room_lights', 'on') }}
+        {{ is_state('light.laundry_room_light_group', 'on') }}
 
     - name: Living Room Lights
       unique_id: living_room_lights
       state: >
-        {{ is_state('light.living_room_lights', 'on') }}
+        {{ is_state('light.living_room_light_group', 'on') }}
 
     - name: Office 1 Lights
       unique_id: office_1_lights
       state: >
-        {{ is_state('light.office_1_lights', 'on') }}
+        {{ is_state('light.office_1_light_group', 'on') }}
 
     - name: Office 2 Lights
       unique_id: office_2_lights
       state: >
-        {{ is_state('light.office_2_lights', 'on') }}
+        {{ is_state('light.office_2_light_group', 'on') }}
 
     - name: Storage Room Lights
       unique_id: storage_room_lights
       state: >
-        {{ is_state('light.storage_room_lights', 'on') }}
+        {{ is_state('light.storage_room_light_group', 'on') }}
 
     - name: Wardrobe Lights
       unique_id: wardrobe_lights
       state: >
-        {{ is_state('light.wardrobe_lights', 'on') }}
+        {{ is_state('light.wardrobe_light_group', 'on') }}

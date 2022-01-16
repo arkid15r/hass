@@ -1,0 +1,5 @@
+light.backyard_light_group:
+  friendly_name: Backyard Lights
+
+light.bathroom_1_light_group:
+  friendly_name: Bathroom 1 Lights
