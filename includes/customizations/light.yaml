@@ -1,5 +1,55 @@
 light.backyard_light_group:
   friendly_name: Backyard Lights
+  icon: mdi:lightbulb
 
 light.bathroom_1_light_group:
   friendly_name: Bathroom 1 Lights
+  icon: mdi:lightbulb
+
+light.bathroom_2_light_group:
+  friendly_name: Bathroom 2 Lights
+  icon: mdi:lightbulb
+
+light.bedroom_1_light_group:
+  friendly_name: Bedroom Lights
+  icon: mdi:lightbulb
+
+light.corridor_light_group:
+  friendly_name: Corridor Lights
+  icon: mdi:lightbulb
+
+light.dining_area_light_group:
+  friendly_name: Dining Area Lights
+  icon: mdi:lightbulb
+
+light.front_yard_light_group:
+  friendly_name: Front Yard Lights
+  icon: mdi:lightbulb
+
+light.garage_light_group:
+  friendly_name: Garage Lights
+  icon: mdi:lightbulb
+
+light.hallway_light_group:
+  friendly_name: Hallway Lights
+  icon: mdi:lightbulb
+
+light.kitchen_light_group:
+  friendly_name: Kitchen Lights
+  icon: mdi:lightbulb
+
+light.laundry_room_light_group:
+  friendly_name: Laundry Room Lights
+  icon: mdi:lightbulb
+
+light.living_room_light_group:
+  friendly_name: Living Room Lights
+  icon: mdi:lightbulb
+
+light.storage_room_light_group:
+  friendly_name: Storage Room Lights
+  icon: mdi:lightbulb
+
+light.wardrobe_light_group:
+  friendly_name: Wardrobe Lights
+  icon: mdi:lightbulb

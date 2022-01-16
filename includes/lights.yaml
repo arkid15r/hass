@@ -33,7 +33,7 @@
     - light.corridor_1
     - light.corridor_2
 
-- name: Dining Area Lights
+- name: Dining Area Light Group
   platform: group
   unique_id: dining_area_light_group
   entities:

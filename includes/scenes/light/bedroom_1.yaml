@@ -6,13 +6,6 @@
       state: 'on'
     light.bedroom_1_2: 'off'
 
-- name: Bedroom 1 Mode Red Lights
-  entities:
-    light.bedroom_1_1:
-      brightness: 1
-      rgb_color: [255, 0, 0]
-      state: 'on'
-
 - name: Bedroom 1 Night Lights
   entities:
     light.bedroom_1_1:
