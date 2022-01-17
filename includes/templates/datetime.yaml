@@ -1,18 +1,35 @@
 - binary_sensor:
-    - unique_id: am
-      name: AM
-      icon: mdi:clock-time-twelve-outline
+    - name: AM
+      unique_id: am
       state: >
-        {{ now().strftime('%p')|lower == 'am' }}
+        {{ now().strftime('%p') | lower == 'am' }}
 
-    - unique_id: pm
-      name: PM
-      icon: mdi:clock-time-twelve
+    - name: DND
+      unique_id: dnd
       state: >
-        {{ now().strftime('%p')|lower == 'pm' }}
+        {%- macro is_in_range(value, time_from, time_to) %}
+          {%- if time_from < time_to %}
+            {{- time_from <= value < time_to }}
+          {%- else %}
+            {{- value >= time_from or value < time_to }}
+          {%- endif %}
+        {%- endmacro %}
 
-    - unique_id: quite_time
-      name: Quite Time
-      icon: mdi:sleep
+        {{ is_in_range(
+               now().strftime('%H:%M:%S'),
+               states('input_datetime.alarm_time_on'),
+               states('input_datetime.alarm_time_off')) or
+           is_state('input_boolean.mode_nap', 'on')
+        }}
+
+    - name: PM
+      unique_id: pm
       state: >
-        {{ now().strftime('%-H')|int < 7 or now().strftime('%-H')|int > 21 }}
+        {{ now().strftime('%p') | lower == 'pm' }}
+
+    - name: Quite Time
+      unique_id: quite_time
+      state: >
+        {{ now().strftime('%-H') | int < 7 or
+           now().strftime('%-H') | int > 21
+        }}

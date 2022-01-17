@@ -1,55 +1,81 @@
-light.backyard_light_group:
+binary_sensor.backyard_lights: &backyard_lights
   friendly_name: Backyard Lights
-  icon: mdi:lightbulb
+  icon: &icon_lightbulb_group mdi:lightbulb-group
 
-light.bathroom_1_light_group:
+binary_sensor.bathroom_1_lights: &bathroom_1_lights
   friendly_name: Bathroom 1 Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.bathroom_2_light_group:
+binary_sensor.bathroom_2_lights: &bathroom_2_lights
   friendly_name: Bathroom 2 Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.bedroom_1_light_group:
+binary_sensor.bedroom_1_light: &bedroom_1_light
   friendly_name: Bedroom Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.corridor_light_group:
+binary_sensor.corridor_lights: &corridor_lights
   friendly_name: Corridor Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.dining_area_light_group:
+binary_sensor.dining_area_lights: &dining_area_lights
   friendly_name: Dining Area Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.front_yard_light_group:
+binary_sensor.front_yard_lights: &front_yard_lights
   friendly_name: Front Yard Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.garage_light_group:
+binary_sensor.garage_lights: &garage_lights
   friendly_name: Garage Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.hallway_light_group:
+binary_sensor.hallway_lights: &hallway_lights
   friendly_name: Hallway Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.kitchen_light_group:
+binary_sensor.kitchen_lights: &kitchen_lights
   friendly_name: Kitchen Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.laundry_room_light_group:
+binary_sensor.laundry_room_lights: &laundry_room_lights
   friendly_name: Laundry Room Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.living_room_light_group:
+binary_sensor.living_room_lights: &living_room_lights
   friendly_name: Living Room Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.storage_room_light_group:
+binary_sensor.storage_room_lights: &storage_room_lights
   friendly_name: Storage Room Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
 
-light.wardrobe_light_group:
+binary_sensor.wardrobe_lights: &wardrobe_lights
   friendly_name: Wardrobe Lights
-  icon: mdi:lightbulb
+  icon: *icon_lightbulb_group
+
+light.backyard_light_group: *backyard_lights
+
+light.bathroom_1_light_group: *bathroom_1_lights
+
+light.bathroom_2_light_group: *bathroom_2_lights
+
+light.corridor_light_group: *corridor_lights
+
+light.dining_area_light_group: *dining_area_lights
+
+light.front_yard_light_group: *front_yard_lights
+
+light.garage_light_group: *garage_lights
+
+light.hallway_light_group: *hallway_lights
+
+light.kitchen_light_group: *kitchen_lights
+
+light.laundry_room_light_group: *laundry_room_lights
+
+light.living_room_light_group: *living_room_lights
+
+light.storage_room_light_group: *storage_room_lights
+
+light.wardrobe_light_group: *wardrobe_lights

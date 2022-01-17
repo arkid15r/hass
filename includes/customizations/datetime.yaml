@@ -1,5 +1,15 @@
 binary_sensor.am:
   friendly_name: Before Noon
+  icon: mdi:clock-time-twelve-outline
+
+binary_sensor.dnd:
+  friendly_name: Do Not Disturb
+  icon: mdi:volume-off
 
 binary_sensor.pm:
   friendly_name: After Noon
+  icon: mdi:clock-time-twelve
+
+binary_sensor.quite_time:
+  friendly_name: Quite Time
+  icon: mdi:sleep
