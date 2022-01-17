@@ -1,4 +1,9 @@
 - binary_sensor:
+    - name: Bathroom 1 Motion
+      unique_id: bathroom_1_motion
+      state: >
+        {{ is_state('binary_sensor.bathroom_1_motion_group', 'on') }}
+
     - name: Bathroom 1 Motion 15m
       unique_id: bathroom_1_motion_15m
       state: >
@@ -14,6 +19,11 @@
                states.binary_sensor.bathroom_1_motion_group.last_changed)
            < 300
         }}
+
+    - name: Bathroom 2 Motion
+      unique_id: bathroom_2_motion
+      state: >
+        {{ is_state('binary_sensor.bathroom_2_motion_group', 'on') }}
 
     - name: Bathroom 2 Motion 15m
       unique_id: bathroom_2_motion_15m
@@ -31,6 +41,11 @@
            < 300
         }}
 
+    - name: Bedroom 1 Motion
+      unique_id: bedroom_1_motion
+      state: >
+        {{ is_state('binary_sensor.bedroom_1_motion_group', 'on') }}
+
     - name: Bedroom 1 Motion 15m
       unique_id: bedroom_1_motion_15m
       state: >
@@ -46,6 +61,11 @@
                states.binary_sensor.bedroom_1_motion_group.last_changed)
            < 300
         }}
+
+    - name: Corridor Motion
+      unique_id: corridor_motion
+      state: >
+        {{ is_state('binary_sensor.corridor_motion_group', 'on') }}
 
     - name: Corridor Motion 15 Minutes
       unique_id: corridor_motion_15m
@@ -63,6 +83,11 @@
            < 300
         }}
 
+    - name: Garage Motion
+      unique_id: garage_motion
+      state: >
+        {{ is_state('binary_sensor.garage_motion_group', 'on') }}
+
     - name: Garage Motion 15m
       unique_id: garage_motion_15m
       state: >
@@ -78,6 +103,11 @@
                states.binary_sensor.garage_motion_group.last_changed)
            < 300
         }}
+
+    - name: Hallway Motion
+      unique_id: hallway_motion
+      state: >
+        {{ is_state('binary_sensor.hallway_motion_group', 'on') }}
 
     - name: Hallway Motion 15m
       unique_id: hallway_motion_15m
@@ -95,6 +125,11 @@
            < 300
         }}
 
+    - name: Kitchen Motion
+      unique_id: kitchen_motion
+      state: >
+        {{ is_state('binary_sensor.kitchen_motion_group', 'on') }}
+
     - name: Kitchen Motion 15m
       unique_id: kitchen_motion_15m
       state: >
@@ -110,6 +145,11 @@
                states.binary_sensor.kitchen_motion_group.last_changed)
            < 300
         }}
+
+    - name: Laundry Room Motion
+      unique_id: laundry_room_motion
+      state: >
+        {{ is_state('binary_sensor.laundry_room_motion_group', 'on') }}
 
     - name: Laundry Room Motion 15m
       unique_id: laundry_room_motion_15m
@@ -127,6 +167,11 @@
            < 300
         }}
 
+    - name: Living Room Motion
+      unique_id: living_room_motion
+      state: >
+        {{ is_state('binary_sensor.living_room_motion_group', 'on') }}
+
     - name: Living Room Motion 15m
       unique_id: living_room_motion_15m
       state: >
@@ -142,6 +187,11 @@
                states.binary_sensor.living_room_motion_group.last_changed)
            < 300
         }}
+
+    - name: Office 1 Motion
+      unique_id: office_1_motion
+      state: >
+        {{ is_state('binary_sensor.office_1_motion_group', 'on') }}
 
     - name: Office 1 Motion 15m
       unique_id: office_1_motion_15m
@@ -159,6 +209,11 @@
            < 300
         }}
 
+    - name: Office 2 Motion
+      unique_id: office_2_motion
+      state: >
+        {{ is_state('binary_sensor.office_2_motion_group', 'on') }}
+
     - name: Office 2 Motion 15m
       unique_id: office_2_motion_15m
       state: >
@@ -175,6 +230,11 @@
            < 300
         }}
 
+    - name: Storage Room Motion
+      unique_id: storage_room_motion
+      state: >
+        {{ is_state('binary_sensor.storage_room_motion_group', 'on') }}
+
     - name: Storage Room Motion 15m
       unique_id: storage_room_motion_15m
       state: >
@@ -190,6 +250,11 @@
                states.binary_sensor.storage_room_motion_group.last_changed)
            < 300
         }}
+
+    - name: Wardrobe Motion
+      unique_id: wardrobe_motion
+      state: >
+        {{ is_state('binary_sensor.wardrobe_motion_group', 'on') }}
 
     - name: Wardrobe Motion 15m
       unique_id: wardrobe_motion_15m

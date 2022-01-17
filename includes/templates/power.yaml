@@ -4,6 +4,11 @@
       state: >
         {{ states('sensor.indoor_garden_input')|int > 1 }}
 
+    - name: Indoor Garden Heater
+      unique_id: indoor_garden_heater
+      state: >
+        {{ states('sensor.indoor_garden_heater_input')|int > 2 }}
+
     - name: Kitchen TV
       unique_id: kitchen_tv
       state: >
