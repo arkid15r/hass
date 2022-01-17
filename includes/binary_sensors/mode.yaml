@@ -41,7 +41,7 @@
   platform: group
   unique_id: hallway_mode_lock
   entities:
-    - binary_sensor.kitchen_lights_on
+    - binary_sensor.kitchen_lights
     - binary_sensor.kitchen_mode_lock
     - binary_sensor.mode_hallway_photo
 
