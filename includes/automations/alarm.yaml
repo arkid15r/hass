@@ -27,49 +27,56 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: alarm_control_panel.home_alarm
-              state: [armed_away, armed_home]
+              entity_id: binary_sensor.alarm_armed
+              state: 'on'
           sequence:
             - scene: scene.garage_gate_opener_off
         - conditions:
             - condition: state
-              entity_id: alarm_control_panel.home_alarm
-              state: disarmed
+              entity_id: binary_sensor.alarm_armed
+              state: 'off'
           sequence:
             - scene: scene.garage_gate_opener_on
 
 - id: tts_state_alarm_armed_away
-  alias: '[TTS State]: Alarm Armed Away'
+  alias: '[TTS State: Alarm Armed Away]'
   use_blueprint:
     path: tts_state.yaml
     input:
-      state_change_entity: [alarm_control_panel.home_alarm]
-      state_change_from: [armed_home, arming, disarmed]
-      state_change_to: [armed_away]
+      state_change_entity: alarm_control_panel.home_alarm
+      state_change_from:
+        - armed_home
+        - arming
+        - disarmed
+      state_change_to: armed_away
       text: >
         <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
         Away <break time="100ms"/> and armed.
 
 - id: tts_state_alarm_armed_home
-  alias: '[TTS State]: Alarm Armed Home'
+  alias: '[TTS State: Alarm Armed Home]'
   use_blueprint:
     path: tts_state.yaml
     input:
-      state_change_entity: [alarm_control_panel.home_alarm]
-      state_change_from: [armed_away, disarmed]
+      state_change_entity: alarm_control_panel.home_alarm
+      state_change_from:
+        - armed_away
+        - disarmed
       state_change_to: armed_home
       text: >
         <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
         Home <break time="100ms"/> and armed.
 
 - id: tts_state_alarm_disarmed
-  alias: '[TTS State]: Alarm Disarmed'
+  alias: '[TTS State: Alarm Disarmed]'
   use_blueprint:
     path: tts_state.yaml
     input:
-      state_change_entity: [alarm_control_panel.home_alarm]
-      state_change_from: [armed_away, armed_home]
-      state_change_to: [disarmed]
+      state_change_entity: alarm_control_panel.home_alarm
+      state_change_from:
+        - armed_away
+        - armed_home
+      state_change_to: disarmed
       text: >
         <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
         Disarmed.

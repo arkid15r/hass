@@ -10,13 +10,12 @@
       after: input_datetime.alarm_time_off
       before: input_datetime.alarm_time_on
   action:
-    - event: &doorbell_ding tts
-      event_data:
-        text: >
-          <audio
-               src="soundbank://soundlibrary/home/amzn_sfx_doorbell_chime_02"/>
-    - delay: &doorbell_ding_delay
-        seconds: 2
-    - event: *doorbell_ding
-    - delay: *doorbell_ding_delay
-    - event: *doorbell_ding
+    - repeat:
+        count: 3
+        sequence:
+          - event: tts
+            event_data:
+              text: >
+                <audio src="soundbank://soundlibrary/home/amzn_sfx_doorbell_chime_02"/>
+          - delay:
+              seconds: 1
