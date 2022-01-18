@@ -1,0 +1,43 @@
+- id: tts_state_indoor_perimeter_off
+  alias: '[TTS State: Indoor Perimeter Off]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      areas_off:
+        - >
+          {{ area_id(trigger.entity_id) }}
+      state_change_entity: &indoor_perimeter
+        - binary_sensor.bathroom_1_window
+        - binary_sensor.bedroom_1_window
+        - binary_sensor.front_door
+        - binary_sensor.garage_gate
+        - binary_sensor.living_room_door
+        - binary_sensor.living_room_window
+        - binary_sensor.office_1_window_1
+        - binary_sensor.office_1_window_2
+        - binary_sensor.office_2_window
+        - binary_sensor.storage_room_window
+      state_change_from: 'on'
+      state_change_to: 'off'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        {{ state_attr(trigger.entity_id, 'friendly_name') }} closed.
+  mode: queued
+  max: 10
+
+- id: tts_state_indoor_perimeter_on
+  alias: '[TTS State: Indoor Perimeter On]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      areas_off:
+        - >
+          {{ area_id(trigger.entity_id) }}
+      state_change_entity: *indoor_perimeter
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        {{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
+  mode: queued
+  max: 10

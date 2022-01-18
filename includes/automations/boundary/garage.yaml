@@ -1,0 +1,103 @@
+- id: close_idle_garage_gate
+  alias: Close Idle Garage Gate
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_gate
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 15
+  condition:
+    - condition: state
+      entity_id: binary_sensor.garage_motion_5m
+      state: 'off'
+  action:
+    - event: tts
+      event_data:
+        areas_on:
+          - garage
+        text: >
+          <audio
+               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          It seems that the garage gate has been open too long for no reason.<break time="350ms"/>I'm going to go ahead and close the gate. <break time="350ms"/>Watch out!
+    - delay:
+        seconds: 15
+    - service: cover.close_cover
+      target:
+        entity_id: cover.garage_gate
+
+- id: tts_state_garage_door_open_1m
+  alias: '[TTS State Garage Door Open 1m]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity: binary_sensor.garage_door
+      state_change_for_time_seconds: 60
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        Just FYI: the garage door is still open.
+
+- id: tts_state_garage_door_open_2m
+  alias: '[TTS State: Garage Door Open 2m]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity: binary_sensor.garage_door
+      state_change_for_time_seconds: 120
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        The garage door is still open. <break time="350ms"/><prosody pitch="x-low"> I'm just saying</prosody>.
+
+- id: tts_state_garage_door_opened
+  alias: '[TTS State: Garage Door Opened]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity: binary_sensor.garage_door
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text:
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        Garage door opened.
+      areas_off:
+        - garage
+      run_if: alarm_control_panel.home_alarm
+      run_if_state: armed_home
+
+- id: tts_state_garage_gate_open_5m
+  alias: '[TTS State: Garage Gate Open 5m]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      areas_off:
+        - garage
+      run_if: binary_sensor.garage_motion
+      run_if_state: 'off'
+      state_change_entity: binary_sensor.garage_gate
+      state_change_for_time_seconds: 300
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        Just FYI: the garage gate is still open.
+
+- id: tts_state_garage_gate_open_10m
+  alias: '[TTS State: Garage Gate Open 10m]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      areas_off:
+        - garage
+      run_if: binary_sensor.garage_motion_5m
+      run_if_state: 'off'
+      state_change_entity: binary_sensor.garage_gate
+      state_change_for_time_seconds: 600
+      state_change_from: 'off'
+      state_change_to: 'on'
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        The garage gate is still open. <break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>
