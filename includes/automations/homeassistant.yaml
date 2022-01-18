@@ -1,0 +1,18 @@
+- id: tts_state_home_assistant_restarted
+  alias: 'TTS State: Home Assistant Restarted'
+  trigger:
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+  action:
+    - delay:
+        minutes: 1
+    - event: tts
+      event_data:
+        text: >
+          <audio
+               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          The smart home system has been restarted.
