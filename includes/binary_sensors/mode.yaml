@@ -76,3 +76,9 @@
   unique_id: office_1_mode_lock
   entities:
     - binary_sensor.mode_office_1_tv
+
+- name: Office 2 Mode Lock
+  platform: group
+  unique_id: office_2_mode_lock
+  entities:
+    - binary_sensor.mode_office_2_lights

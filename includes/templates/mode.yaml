@@ -34,6 +34,11 @@
       state: >
         {{ is_state('input_boolean.mode_office_1_tv', 'on') }}
 
+    - name: Mode Office 2 Lights
+      unique_id: mode_office_2_lights
+      state: >
+        {{ is_state('input_boolean.mode_office_2_lights', 'on') }}
+
     - name: Mode Red
       unique_id: mode_red
       state: >
