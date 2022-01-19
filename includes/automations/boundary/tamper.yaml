@@ -1,0 +1,54 @@
+- id: tts_state_sensor_tampering_cleared
+  alias: 'TTS State: Sensor Tampering Cleared'
+  trigger:
+    - platform: state
+      entity_id: &sensors
+        - binary_sensor.bathroom_1_window_tamper
+        - binary_sensor.bedroom_1_window_tamper
+        - binary_sensor.front_door_tamper
+        - binary_sensor.front_yard_gate_1_tamper
+        - binary_sensor.front_yard_gate_2_tamper
+        - binary_sensor.garage_door_tamper
+        - binary_sensor.garage_gate_tamper
+        - binary_sensor.living_room_door_tamper
+        - binary_sensor.living_room_window_tamper
+        - binary_sensor.office_1_window_1_tamper
+        - binary_sensor.office_1_window_2_tamper
+        - binary_sensor.office_2_window_tamper
+        - binary_sensor.storage_room_window_tamper
+      from: 'on'
+      to: 'off'
+  action:
+    - event: tts
+      event_data:
+        areas_on:
+          - >
+            {{ area_id(trigger.entity_id) }}
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          {{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name')
+          }} tampering cleared.
+  mode: queued
+  max: 10
+
+- id: tts_state_sensor_tampering_detected
+  alias: 'TTS State: Sensor Tampering Detected'
+  trigger:
+    - platform: state
+      entity_id: *sensors
+      from: 'off'
+      to: 'on'
+  action:
+    - event: tts
+      event_data:
+        areas_on:
+          - >
+            {{ area_id(trigger.entity_id) }}
+        text: >
+          <audio
+               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          {{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name')
+          }} tampering detected.
+  mode: queued
+  max: 10
