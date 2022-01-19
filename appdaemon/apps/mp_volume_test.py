@@ -1,6 +1,6 @@
 """Tests for tts_volume.py"""
 
-__author__ = "Ark (ark@cho.red)"
+__author__ = 'Ark (ark@cho.red)'
 
 import unittest
 from unittest import mock
@@ -25,7 +25,7 @@ class TestAmazonEcho(unittest.TestCase):
         mp_volume.AmazonEcho.get_target(area) for area in areas)
     volume_level = float(volume_level / 100)
 
-    self.alexa_volume.call_service.assert_called_with("media_player/volume_set",
+    self.alexa_volume.call_service.assert_called_with('media_player/volume_set',
                                                       entity_id=entity_id,
                                                       volume_level=volume_level)
 
@@ -43,8 +43,8 @@ class TestAmazonEcho(unittest.TestCase):
     """Test set volume generates HASS calls."""
 
     areas = (
-        "area1",
-        "area2",
+        'area1',
+        'area2',
     )
     volume_level = 42
 
@@ -58,9 +58,9 @@ class TestAmazonEcho(unittest.TestCase):
       with self.assertRaises(ValueError) as ctx:
         self.alexa_volume.set_volume(volume_level, ())
 
-      self.assertIn("The volume level must be a number from 0 to 100.",
+      self.assertIn('The volume level must be a number from 0 to 100.',
                     str(ctx.exception))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   unittest.main()

@@ -54,6 +54,7 @@ tts:
         - binary_sensor.dining_area_lights
         - binary_sensor.hallway_motion # now vs last 5m
         - binary_sensor.kitchen_lights
+        - binary_sensor.kitchen_tv
         - binary_sensor.living_room_motion_5m
         - binary_sensor.living_room_lights
         - binary_sensor.living_room_tv
