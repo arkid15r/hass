@@ -1,3 +1,9 @@
+binary_sensor.backyard_motion: &backyard_motion
+  friendly_name: Backyard
+  icon: &icon_motion mdi:run
+
+binary_sensor.backyard_motion_group: *backyard_motion
+
 binary_sensor.bathroom_1_motion: &bathroom_1_motion
   friendly_name: Bathroom 1
   icon: &icon_motion mdi:run
@@ -53,6 +59,12 @@ binary_sensor.corridor_motion_5m:
   icon: *icon_motion
 
 binary_sensor.corridor_motion_group: *corridor_motion
+
+binary_sensor.front_yard_motion: &front_yard_motion
+  friendly_name: Front Yard
+  icon: &icon_motion mdi:run
+
+binary_sensor.front_yard_motion_group: *front_yard_motion
 
 binary_sensor.garage_motion: &garage_motion
   friendly_name: Garage

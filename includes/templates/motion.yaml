@@ -1,4 +1,9 @@
 - binary_sensor:
+    - name: Backyard Motion
+      unique_id: backyard_motion
+      state: >
+        {{ is_state('binary_sensor.backyard_motion_group', 'on') }}
+
     - name: Bathroom 1 Motion
       unique_id: bathroom_1_motion
       state: >
@@ -82,6 +87,11 @@
                states.binary_sensor.corridor_motion_group.last_changed)
            < 300
         }}
+
+    - name: Front Yard Motion
+      unique_id: front_yard_motion
+      state: >
+        {{ is_state('binary_sensor.front_yard_motion_group', 'on') }}
 
     - name: Garage Motion
       unique_id: garage_motion
