@@ -1,0 +1,46 @@
+- id: tts_state_backyard_motion
+  alias: '[TTS State: Backyard Motion]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      text: >
+        <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>
+        Outdoor activity. Backyard motion detected. I repeat, backyard motion detected.'
+      state_change_entity:
+        - binary_sensor.backyard_motion
+      state_change_to: 'on'
+      state_change_from: 'off'
+      run_if: binary_sensor.alarm_armed
+      run_if_state: 'on'
+
+- id: tts_state_indoor_motion
+  alias: 'TTS State: Indoor Motion'
+  trigger:
+    - platform: state
+      entity_id: &indoor_motion_sensors
+        - binary_sensor.bathroom_2_motion
+        - binary_sensor.corridor_motion_sensor_1_motion
+        - binary_sensor.garage_motion
+        - binary_sensor.hallway_motion_sensor_1_motion
+        - binary_sensor.kitchen_motion
+        - binary_sensor.laundry_room_motion
+        - binary_sensor.living_room_motion
+        - binary_sensor.office_1_motion
+        - binary_sensor.office_2_motion
+        - binary_sensor.storage_room_motion
+        - binary_sensor.wardrobe_motion
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.alarm_armed
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          Indoor activity. {{ area_name(trigger.entity_id) }} motion detected.
+  mode: queued
+  max: 5
