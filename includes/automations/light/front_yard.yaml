@@ -1,0 +1,43 @@
+- id: front_yard_lights_mode
+  alias: Front Yard Lights Mode
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.front_yard_night_lights
+      default_scene_on: scene.front_yard_max_lights
+      run_if: binary_sensor.front_yard_lights_mode
+      run_if_state: 'on'
+      watcher: binary_sensor.front_yard_motion
+      watcher_inactive_time_seconds: 90
+
+- id: front_yard_lights_schedule
+  alias: Front Yard Lights Schedule
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: +00:30:00
+    - platform: sun
+      event: sunrise
+      offset: -00:30:00
+  action:
+    - choose:
+        - conditions:
+            - condition: sun
+              after: sunset
+          sequence:
+            - scene: scene.front_yard_night_lights
+        - conditions:
+            - condition: sun
+              before: sunrise
+          sequence:
+            - scene: scene.front_yard_no_lights
+
+- id: front_yard_lights_on_switch_state_on
+  alias: Front Yard Lights On Switch State On
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      watcher: binary_sensor.front_yard_lights
+      watcher_inactive_time_seconds: 0
+      default_scene_on: scene.front_yard_night_lights
+      default_scene_off: scene.front_yard_no_lights

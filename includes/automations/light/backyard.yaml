@@ -1,0 +1,74 @@
+- id: backyard_left_light_1_on_left_gate_state_on
+  alias: Backyard Left Light 1 On Left Gate State On
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_yard_gate_1
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: time
+      after: '21:00:00'
+      before: '06:00:00'
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.backyard_left_1
+
+- id: backyard_lights_mode
+  alias: Backyard Lights Mode
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.backyard_night_lights
+      default_scene_on: scene.backyard_max_lights
+      run_if: binary_sensor.backyard_lights_mode
+      run_if_state: 'on'
+      watcher: binary_sensor.backyard_motion
+      watcher_inactive_time_seconds: 90
+
+- id: backyard_lights_schedule
+  alias: Backyard Lights Schedule
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: +00:30:00
+    - platform: sun
+      event: sunrise
+      offset: -00:30:00
+  action:
+    - choose:
+        - conditions:
+            - condition: sun
+              after: sunset
+          sequence:
+            - scene: scene.backyard_night_lights
+        - conditions:
+            - condition: sun
+              before: sunrise
+          sequence:
+            - scene: scene.backyard_no_lights
+
+- id: backyard_lights_on_switch_state_on
+  alias: Backyard Lights On Switch State On
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      watcher: binary_sensor.backyard_lights
+      watcher_inactive_time_seconds: 0
+      default_scene_on: scene.backyard_night_lights
+
+- id: backyard_right_light_1_on_right_gate_state_on
+  alias: Backyard Right Light 1 On Right Gate State On
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_yard_gate_2
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: time
+      after: '21:00:00'
+      before: '06:00:00'
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.backyard_right_1
