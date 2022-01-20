@@ -6,7 +6,7 @@ binary_sensor.backyard_motion_group: *backyard_motion
 
 binary_sensor.bathroom_1_motion: &bathroom_1_motion
   friendly_name: Bathroom 1
-  icon: &icon_motion mdi:run
+  icon: *icon_motion
 
 binary_sensor.bathroom_1_motion_15m:
   friendly_name: Bathroom 1 Last 15 Minutes
@@ -62,7 +62,7 @@ binary_sensor.corridor_motion_group: *corridor_motion
 
 binary_sensor.front_yard_motion: &front_yard_motion
   friendly_name: Front Yard
-  icon: &icon_motion mdi:run
+  icon: *icon_motion
 
 binary_sensor.front_yard_motion_group: *front_yard_motion
 
