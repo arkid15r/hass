@@ -1,0 +1,30 @@
+- id: storage_room_lights
+  alias: '[Storage Room Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.storage_room_no_lights
+      default_scene_on: scene.storage_room_max_lights
+      watcher: binary_sensor.storage_room_motion
+      watcher_inactive_time_seconds: 300
+
+- id: storage_room_lights_on_door_state
+  alias: '[Storage Room Lights On Door State]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.storage_room_max_lights
+      default_scene_off: scene.storage_room_no_lights
+      watcher: binary_sensor.storage_room_door
+      watcher_inactive_time_seconds: 0
+
+- id: turn_off_idle_storage_room_lights
+  alias: '[Turn Off Idle Storage Room Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      scene: scene.storage_room_no_lights
+      target: binary_sensor.storage_room_lights
+      target_active_time_seconds: 60
+      watcher: binary_sensor.storage_room_motion
+      watcher_inactive_time_seconds: 300

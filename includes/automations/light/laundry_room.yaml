@@ -1,0 +1,23 @@
+- id: laundry_room_lights
+  alias: '[Laundry Room Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.laundry_room_max_lights
+      default_scene_off: scene.laundry_room_no_lights
+      run_if: binary_sensor.indoor_garden
+      run_if_state: 'off'
+      watcher: binary_sensor.laundry_room_motion
+      watcher_inactive_time_seconds: 120
+
+- id: turn_off_idle_laundry_room_lights
+  alias: '[Turn Off Idle Laundry Room Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.laundry_room_no_lights
+      target: binary_sensor.laundry_room_lights
+      target_active_time_seconds: 120
+      watcher: binary_sensor.laundry_room_motion
+      watcher_inactive_time_seconds: 90
