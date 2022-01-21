@@ -1,0 +1,63 @@
+- id: bathroom_2_lights
+  alias: '[Bathroom 2 Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.bathroom_2_lights
+      default_scene_off: scene.bathroom_2_no_lights
+      scene_1: scene.bathroom_2_faded_lights
+      scene_1_start_time: '07:00:00'
+      scene_1_end_time: '08:00:00'
+      scene_2: scene.bathroom_2_faded_lights
+      scene_2_start_time: '20:00:00'
+      scene_2_end_time: '22:30:00'
+      scene_3_start_time: '22:30:00'
+      scene_3_end_time: '07:00:00'
+      scene_3: scene.bathroom_2_night_lights
+      watcher: binary_sensor.bathroom_2_motion
+      watcher_inactive_time_seconds: 180
+
+- id: bathroom_2_occupancy_indicator
+  alias: Bathroom 2 Occupancy Indicator
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_2_door
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bathroom_2_door
+              state: 'off'
+            - condition: state
+              entity_id: binary_sensor.bathroom_2_lights
+              state: 'on'
+          sequence:
+            - scene: scene.bathroom_2_occupied
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bathroom_2_door
+              state: 'on'
+          sequence:
+            - scene: scene.bathroom_2_unoccupied
+
+- id: turn_off_idle_bathroom_2_lights
+  alias: '[Turn Off Idle Bathroom 2 Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.bathroom_2_no_lights
+      target: binary_sensor.bathroom_2_lights
+      watcher: binary_sensor.bathroom_2_motion
+      watcher_inactive_time_seconds: 300
+
+- id: turn_off_idle_bathroom_2_occupancy_indicator
+  alias: '[Turn Off Idle Bathroom 2 Occupancy Indicator]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.bathroom_2_unoccupied
+      target: light.corridor_1
+      watcher: binary_sensor.bathroom_2_motion
+      watcher_inactive_time_seconds: 150

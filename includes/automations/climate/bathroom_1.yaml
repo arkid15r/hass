@@ -1,0 +1,77 @@
+- id: turn_off_bathroom_1_vent
+  alias: Turn Off Bathroom 1 Vent
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_1_vent
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: numeric_state
+      entity_id: sensor.bathroom_1_humidity
+      below: 50
+  condition:
+    - condition: state
+      entity_id: switch.bathroom_1_vent
+      state: 'on'
+  action:
+    - scene: scene.bathroom_1_vent_off
+
+- id: turn_off_idle_bathroom_1_vent
+  alias: '[Turn Off Idle Bathroom 1 Vent]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      run_if: binary_sensor.bathroom_1_mode_lock
+      run_if_state: 'off'
+      scene: scene.bathroom_1_vent_off
+      target: switch.bathroom_1_vent
+      target_active_time_seconds: 900
+      watcher: binary_sensor.bathroom_1_motion
+
+- id: turn_on_bathroom_1_vent
+  alias: Turn On Bathroom 1 Vent
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_1_door
+      from: 'on'
+      to: 'off'
+    - platform: numeric_state
+      entity_id: sensor.bathroom_1_humidity
+      above: 65
+  condition:
+    - condition: time
+      after: '07:30:00'
+      before: '22:30:00'
+    - condition: state
+      entity_id: switch.bathroom_1_vent
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bathroom_1_mode_lock
+      state: 'off'
+  action:
+    - scene: scene.bathroom_1_vent_on
+
+- id: turn_on_bathroom_1_vent_on_motion
+  alias: Turn On Bathroom 1 Vent On Motion
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_1_motion
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: time
+      after: '07:30:00'
+      before: '22:30:00'
+    - condition: state
+      entity_id: switch.bathroom_1_vent
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bathroom_1_mode_lock
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bathroom_1_door
+      state: 'off'
+  action:
+    - scene: scene.bathroom_1_vent_on
