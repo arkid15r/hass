@@ -1,0 +1,52 @@
+- id: media_player_volume_level
+  alias: Media Player Volume Level
+  trigger:
+    - platform: time
+      at:
+        - '07:00:00'
+        - '08:00:00'
+        - '12:00:00'
+        - '20:00:00'
+        - '22:00:00'
+  action:
+    - choose:
+        - conditions:
+            - condition: time
+              after: '07:00:00'
+              before: '08:00:00'
+          sequence:
+            - event: mp_volume
+              event_data:
+                volume_level: 20
+        - conditions:
+            - condition: time
+              after: '08:00:00'
+              before: '12:00:00'
+          sequence:
+            - event: mp_volume
+              event_data:
+                volume_level: 25
+        - conditions:
+            - condition: time
+              after: '12:00:00'
+              before: '20:00:00'
+          sequence:
+            - event: mp_volume
+              event_data:
+                volume_level: 30
+        - conditions:
+            - condition: time
+              after: '20:00:00'
+              before: '22:00:00'
+          sequence:
+            - event: mp_volume
+              event_data:
+                volume_level: 25
+        - conditions:
+            - condition: time
+              after: '22:00:00'
+              before: '07:00:00'
+          sequence:
+            - event: mp_volume
+              event_data:
+                volume_level: 5
