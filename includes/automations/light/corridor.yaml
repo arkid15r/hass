@@ -1,0 +1,26 @@
+- id: corridor_lights
+  alias: '[Corridor Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.corridor_no_lights
+      default_scene_off: scene.corridor_no_lights
+      scene_1: scene.corridor_faded_lights
+      scene_1_start_time: '17:00:00'
+      scene_1_end_time: '22:00:00'
+      scene_2: scene.corridor_night_lights
+      scene_2_start_time: '22:00:00'
+      scene_2_end_time: '08:00:00'
+      watcher: binary_sensor.corridor_motion
+      watcher_inactive_time_seconds: 30
+
+- id: turn_off_idle_corridor_lights
+  alias: '[Turn Off Idle Corridor Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      scene: scene.corridor_no_lights
+      target: light.corridor_2
+      watcher: binary_sensor.corridor_motion
+      watcher_inactive_time_seconds: 300

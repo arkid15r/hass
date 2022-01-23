@@ -1,0 +1,57 @@
+- id: garage_lights
+  alias: Garage Lights
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.garage_no_lights
+      default_scene_on: scene.garage_max_lights
+      run_if: binary_sensor.garage_mode_lock
+      run_if_state: 'off'
+      watcher: binary_sensor.garage_motion
+      watcher_inactive_time_seconds: 150
+
+- id: garage_lights_on_door_state
+  alias: '[Garage Lights On Door State]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.garage_max_lights
+      watcher: binary_sensor.garage_door
+      watcher_inactive_time_seconds: 90
+
+- id: garage_lights_on_gate_state
+  alias: Garage Lights On Gate State
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.garage_gate
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.garage_gate
+              state: 'off'
+          sequence:
+            - scene: scene.garage_max_lights
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.garage_gate
+              state: 'on'
+            - condition: time
+              after: '09:00:00'
+              before: '18:00:00'
+          sequence:
+            - scene: scene.garage_no_lights
+
+- id: turn_off_idle_garage_lights
+  alias: '[Turn Off Idle Garage Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.garage_mode_lock
+      run_if_state: 'off'
+      scene: scene.garage_no_lights
+      target: binary_sensor.garage_lights
+      target_active_time_seconds: 300
+      watcher: binary_sensor.garage_motion
+      watcher_inactive_time_seconds: 600

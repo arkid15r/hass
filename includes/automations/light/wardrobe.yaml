@@ -1,0 +1,23 @@
+- id: wardrobe_lights
+  alias: '[Wardrobe Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.wardrobe_no_lights
+      default_scene_on: scene.wardrobe_lights
+      scene_1: scene.wardrobe_night_lights
+      scene_1_start_time: '22:00:00'
+      scene_1_end_time: '07:30:00'
+      watcher: binary_sensor.wardrobe_motion
+      watcher_inactive_time_seconds: 90
+
+- id: turn_off_idle_wardrobe_lights
+  alias: '[Turn Off Idle Wardrobe Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      scene: scene.wardrobe_no_lights
+      target: binary_sensor.wardrobe_lights
+      watcher: binary_sensor.wardrobe_motion
+      watcher_inactive_time_seconds: 120

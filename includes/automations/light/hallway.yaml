@@ -1,0 +1,30 @@
+- id: hallway_lights
+  alias: '[Hallway Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.hallway_faded_lights
+      default_scene_off: scene.hallway_no_lights
+      scene_1: scene.hallway_no_lights
+      scene_1_start_time: '07:30:00'
+      scene_1_end_time: '16:30:00'
+      scene_2: scene.hallway_night_lights
+      scene_2_start_time: '22:00:00'
+      scene_2_end_time: '06:30:00'
+      run_if: binary_sensor.hallway_mode_lock
+      run_if_state: 'off'
+      watcher: binary_sensor.hallway_motion
+      watcher_inactive_time_seconds: 30
+
+- id: turn_off_idle_hallway_lights
+  alias: '[Turn Off Idle Hallway Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.hallway_mode_lock
+      run_if_state: 'off'
+      scene: scene.hallway_no_lights
+      target: binary_sensor.hallway_lights
+      watcher: binary_sensor.hallway_motion
+      watcher_inactive_time_seconds: 300
