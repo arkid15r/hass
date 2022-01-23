@@ -10,7 +10,7 @@ binary_sensor.bathroom_2_lights: &bathroom_2_lights
   friendly_name: Bathroom 2 Lights
   icon: *icon_lightbulb_group
 
-binary_sensor.bedroom_1_light: &bedroom_1_light
+binary_sensor.bedroom_1_lights: &bedroom_1_lights
   friendly_name: Bedroom Lights
   icon: *icon_lightbulb_group
 
@@ -59,6 +59,8 @@ light.backyard_light_group: *backyard_lights
 light.bathroom_1_light_group: *bathroom_1_lights
 
 light.bathroom_2_light_group: *bathroom_2_lights
+
+light.bedroom_1_light_group: *bedroom_1_lights
 
 light.corridor_light_group: *corridor_lights
 
