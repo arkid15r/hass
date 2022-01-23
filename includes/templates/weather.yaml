@@ -3,11 +3,11 @@
       unique_id: outdoor_temperature
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_services')|
-               map(attribute='attributes.temperature')|
-               map('float')|
-               list|
-               average|
+        {{ expand('group.weather_services') |
+               map(attribute='attributes.temperature') |
+               map('float') |
+               list |
+               average |
                round
         }}
 
@@ -15,11 +15,11 @@
       unique_id: temperature_forecast
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_services')|
-             map(attribute='attributes.forecast.0.temperature')|
-             map('float')|
-             list|
-             average|
+        {{ expand('group.weather_services') |
+             map(attribute='attributes.forecast.0.temperature') |
+             map('float') |
+             list |
+             average |
              round
         }}
 
@@ -27,27 +27,27 @@
       unique_id: temperature_low_forecast
       unit_of_measurement: °F
       state: >
-        {{ expand('group.weather_services')|
-             map(attribute='attributes.forecast.0.templow')|
-             map('float')|
-             list|
-             average|
+        {{ expand('group.weather_services') |
+             map(attribute='attributes.forecast.0.templow') |
+             map('float') |
+             list |
+             average |
              round
         }}
 
     - name: Weather Forecast Summary
       unique_id: weather_forecast_summary
       state: >
-        {% if states('sensor.temperature_low_forecast')|int < 35 or
-              states('sensor.wind_speed_forecast')|int >= 25
+        {% if states('sensor.temperature_low_forecast') | int < 35 or
+              states('sensor.wind_speed_forecast') | int >= 25
         %}
           extremely concerning
-        {% elif states('sensor.temperature_low_forecast')|int < 45 or
-                states('sensor.wind_speed_forecast')|int >= 15
+        {% elif states('sensor.temperature_low_forecast') | int < 45 or
+                states('sensor.wind_speed_forecast') | int >= 15
         %}
           very concerning
-        {% elif states('sensor.temperature_low_forecast')|int < 55 or
-                states('sensor.wind_speed_forecast')|int >= 5
+        {% elif states('sensor.temperature_low_forecast') | int < 55 or
+                states('sensor.wind_speed_forecast') | int >= 5
         %}
           a bit concerning
         {% else %}

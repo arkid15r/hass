@@ -2,12 +2,12 @@
     - name: Indoor Garden
       unique_id: indoor_garden
       state: >
-        {{ states('sensor.indoor_garden_input')|int > 1 }}
+        {{ states('sensor.indoor_garden_input') | int > 1 }}
 
     - name: Indoor Garden Heater
       unique_id: indoor_garden_heater
       state: >
-        {{ states('sensor.indoor_garden_heater_input')|int > 2 }}
+        {{ states('sensor.indoor_garden_heater_input') | int > 2 }}
 
     - name: Kitchen TV
       unique_id: kitchen_tv
@@ -17,9 +17,9 @@
     - name: Living Room TV
       unique_id: living_room_tv
       state: >
-        {{ states('sensor.living_room_tv_input')|int > 1 }}
+        {{ states('sensor.living_room_tv_input') | int > 1 }}
 
     - name: Office 2 PC
       unique_id: office_2_pc
       state: >
-        {{ states('sensor.office_2_pc_input')|int > 5 }}
+        {{ states('sensor.office_2_pc_input') | int > 5 }}
