@@ -22,11 +22,19 @@ indoor_garden_time_on:
   has_date: false
   has_time: true
 
+morning_lights_end_time:
+  has_date: false
+  has_time: true
+
 movie_night_end_time:
   has_date: false
   has_time: true
 
 movie_night_start_time:
+  has_date: false
+  has_time: true
+
+night_lights_start_time:
   has_date: false
   has_time: true
 

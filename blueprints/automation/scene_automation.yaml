@@ -75,14 +75,16 @@ blueprint:
       description: 'A start time for the Scene #1'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     scene_1_end_time:
       name: 'Scene #1 End Time (optional)'
       description: 'An end time for the Scene #1'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     scene_2:
       name: 'Scene #2 (optional)'
@@ -97,14 +99,16 @@ blueprint:
       description: 'A start time for the Scene #2'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     scene_2_end_time:
       name: 'Scene #2 End Time (optional)'
       description: 'An end time for the Scene #2'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     scene_3:
       name: 'Scene #3 (optional)'
@@ -119,14 +123,16 @@ blueprint:
       description: 'A start time for the Scene #3'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     scene_3_end_time:
       name: 'Scene #3 End Time (optional)'
       description: 'An end time for the Scene #3'
       default: '00:00:00'
       selector:
-        time:
+        entity:
+          domain: input_datetime
 
     run_if:
       name: Run If Only (optional)
