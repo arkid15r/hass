@@ -1,0 +1,31 @@
+- id: kitchen_lights
+  alias: '[Kitchen Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      run_if: binary_sensor.kitchen_mode_lock
+      run_if_state: 'off'
+      default_scene_on: scene.kitchen_max_lights
+      default_scene_off: scene.kitchen_no_lights
+      scene_1: scene.kitchen_faded_lights
+      scene_1_start_time: '20:30:00'
+      scene_1_end_time: '22:00:00'
+      scene_2: scene.kitchen_nights_lights
+      scene_2_start_time: '22:00:00'
+      scene_2_end_time: '06:30:00'
+      watcher: binary_sensor.kitchen_motion
+      watcher_inactive_time_seconds: 180
+
+- id: turn_off_idle_kitchen_lights
+  alias: '[Turn Off Idle Kitchen Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.kitchen_mode_lock
+      run_if_state: 'off'
+      scene: scene.kitchen_no_lights
+      target: binary_sensor.kitchen_lights
+      target_active_time_seconds: 300
+      watcher: binary_sensor.kitchen_motion
+      watcher_inactive_time_seconds: 1800
