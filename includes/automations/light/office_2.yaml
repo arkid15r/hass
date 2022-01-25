@@ -5,7 +5,7 @@
     input:
       default_scene_on: scene.office_2_no_lights
       default_scene_off: scene.office_2_no_lights
-      run_if: office_2_mode_lock
+      run_if: binary_sensor.office_2_mode_lock
       run_if_state: 'off'
       scene_1: scene.office_2_lights
       scene_1_start_time: input_datetime.night_lights_start_time

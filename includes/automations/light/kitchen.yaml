@@ -10,7 +10,7 @@
       scene_1: scene.kitchen_faded_lights
       scene_1_start_time: '20:30:00'
       scene_1_end_time: '22:00:00'
-      scene_2: scene.kitchen_nights_lights
+      scene_2: scene.kitchen_night_lights
       scene_2_start_time: '22:00:00'
       scene_2_end_time: '06:30:00'
       watcher: binary_sensor.kitchen_motion
