@@ -1,0 +1,39 @@
+- id: tts_state_basement_temperature_extremely_low
+  alias: 'TTS State: Basement Temperature Extremely Low'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.basement_temperature
+      below: 35
+      for:
+        minutes: 30
+  condition:
+    - condition: time
+      after: input_datetime.alarm_time_off
+      before: input_datetime.alarm_time_on
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          Just FYI: the basement temperature is extremely low.
+
+- id: tts_state_basement_temperature_very_low
+  alias: 'TTS State: Basement Temperature Very Low'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.basement_temperature
+      below: 40
+      for:
+        minutes: 30
+  condition:
+    - condition: time
+      after: input_datetime.alarm_time_off
+      before: input_datetime.alarm_time_on
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          Just FYI: the basement temperature is very low.

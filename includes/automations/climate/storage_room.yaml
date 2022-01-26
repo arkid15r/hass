@@ -1,0 +1,23 @@
+- id: turn_off_storage_room_fan
+  alias: Turn Off Storage Room Fan
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.indoor_temperature
+      below: 70
+    - platform: time
+      at: input_datetime.alarm_time_on
+  action:
+    - scene: scene.storage_room_fan_off
+
+- id: turn_on_storage_room_fan
+  alias: Turn On Storage Room Fan
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.indoor_temperature
+      above: 80
+  condition:
+    - condition: time
+      after: input_datetime.alarm_time_off
+      before: input_datetime.alarm_time_on
+  action:
+    - scene: scene.storage_room_fan_on
