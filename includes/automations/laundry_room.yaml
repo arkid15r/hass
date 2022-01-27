@@ -1,0 +1,51 @@
+- id: tts_state_dry_cycle_completed
+  alias: '[TTS State: Dry Cycle Completed]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity:
+        - sensor.dryer_machine_state
+      state_change_from: run
+      state_change_to: stop
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        Just FYI: the dry cycle has been completed. Please don't forget to unload your laundry.
+
+- id: tts_state_dry_cycle_started
+  alias: '[TTS State: Dry Cycle Started]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity:
+        - sensor.dryer_machine_state
+      state_change_from: stop
+      state_change_to: run
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        The dry cycle has been started.
+
+- id: tts_state_wash_cycle_completed
+  alias: '[TTS State: Wash Cycle Completed]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity:
+        - sensor.washer_machine_state
+      state_change_from: run
+      state_change_to: stop
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        Just FYI: the wash cycle has been completed. Please don't forget to dry your laundry.
+
+- id: tts_state_wash_cycle_started
+  alias: '[TTS State: Wash Cycle Started]'
+  use_blueprint:
+    path: tts_state.yaml
+    input:
+      state_change_entity:
+        - sensor.washer_machine_state
+      state_change_from: stop
+      state_change_to: run
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+        The wash cycle has been started.

@@ -7,6 +7,9 @@
       default_scene_off: scene.laundry_room_no_lights
       run_if: binary_sensor.indoor_garden
       run_if_state: 'off'
+      scene_1: scene.laundry_room_night_lights
+      scene_1_start_time: '22:00:00'
+      scene_1_end_time: '07:00:00'
       watcher: binary_sensor.laundry_room_motion
       watcher_inactive_time_seconds: 120
 
