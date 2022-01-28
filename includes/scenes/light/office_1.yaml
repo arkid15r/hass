@@ -42,6 +42,15 @@
       state: 'on'
     light.office_1_2: *o1mnl_state
 
+- name: Office 1 Night Lights
+  entities:
+    light.office_1_1: &o1nl_state
+      brightness: 2
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+    light.office_1_2: *o1fl_state
+
 - name: Office 1 No Lights
   entities:
     light.office_1_1: 'off'

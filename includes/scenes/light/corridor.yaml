@@ -7,7 +7,7 @@
 - name: Corridor Night Lights
   entities:
     light.corridor_2:
-      brightness: 1
+      brightness: 2
       state: 'on'
 
 - name: Corridor No Lights

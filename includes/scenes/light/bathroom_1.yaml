@@ -22,13 +22,13 @@
 
 - name: Bathroom 1 Night Lights
   entities:
-    light.bathroom_1_1:
-      brightness: 2
-      rgb_color: [255, 25, 0]
-      state: 'on'
+    light.bathroom_1_1: 'off'
     light.bathroom_1_2: 'off'
     light.bathroom_1_3: 'off'
-    light.bathroom_1_4: 'off'
+    light.bathroom_1_4:
+      brightness: 2
+      rgb_color: [255, 0, 0]
+      state: 'on'
 
 - name: Bathroom 1 No Lights
   entities:

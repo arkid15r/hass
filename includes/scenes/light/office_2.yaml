@@ -19,7 +19,7 @@
 - name: Office 2 Night Lights
   entities:
     light.office_2_1:
-      brightness: 1
+      brightness: 2
       state: 'on'
 
 - name: Office 2 No Lights
