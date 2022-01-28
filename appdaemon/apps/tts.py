@@ -149,25 +149,28 @@ class AmazonEcho(hass.Hass):
       targets_on = {self.get_target(area) for area in areas_on or ()}
 
     targets = set()
-    # Add targets based on the rule conditions.
-    for area in self.rules:
-      rule = self.rules[area]
 
-      if any((is_on(c) for c in rule['conditions'])):
-        targets.add(rule['target'])
+    # Normal time targets.
+    if not is_on(self.quite_time):
+      # Add targets based on the rule conditions.
+      for area in self.rules:
+        rule = self.rules[area]
 
-    # Remove targets based on the if_not condition.
-    for area in self.rules:
-      rule = self.rules[area]
-      target = rule['target']
+        if any((is_on(c) for c in rule['conditions'])):
+          targets.add(rule['target'])
 
-      if (target not in targets or 'if_not' not in rule
-          or rule['if_not']['target'] not in targets):
-        continue
+      # Remove targets based on the if_not condition.
+      for area in self.rules:
+        rule = self.rules[area]
+        target = rule['target']
 
-      conditions = rule['if_not'].get('conditions', ())
-      if not conditions or any((is_on(c) for c in conditions)):
-        targets.remove(target)
+        if (target not in targets or 'if_not' not in rule
+            or rule['if_not']['target'] not in targets):
+          continue
+
+        conditions = rule['if_not'].get('conditions', ())
+        if not conditions or any((is_on(c) for c in conditions)):
+          targets.remove(target)
 
     # Update targets based on areas_off/areas_on values.
     targets.update(targets_on)

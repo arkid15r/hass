@@ -280,11 +280,9 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
           TestBase.LIVING_ROOM_MOTION: tts.AmazonEcho.STATE_ON
       }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
-      super()._test_not_played(
-          set(self.play_always).union((TestBase.LIVING_ROOM,)))
-      super()._test_not_played((TestBase.LIVING_ROOM,),
-                               areas_off=self.play_always)
-      super()._test_not_played((TestBase.LIVING_ROOM,))
+      super()._test_not_played(set(self.play_always))
+      super()._test_not_played((), areas_off=self.play_always)
+      super()._test_not_played((), areas_off=self.play_default)
 
   def test_played(self):
     # Normal time.
