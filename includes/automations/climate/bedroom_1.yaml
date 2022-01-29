@@ -1,0 +1,49 @@
+- id: bedroom_1_humidifier
+  alias: Bedroom 1 Humidifier
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bedroom_1_humidity
+      above: 70
+    - platform: numeric_state
+      entity_id: sensor.bedroom_1_humidity
+      below: 60
+  condition:
+    - condition: state
+      entity_id: binary_sensor.bedroom_1_window
+      state: 'off'
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_humidity
+              above: 70
+          sequence:
+            - scene: scene.bedroom_1_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_humidity
+              below: 60
+          sequence:
+            - scene: scene.bedroom_1_humidifier_on
+
+- id: bedroom_1_humidifier_on_window_state
+  alias: 'Bedroom 1 Humidifier On Window State'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_1_window
+      for:
+        seconds: 10
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bedroom_1_window
+              state: 'off'
+          sequence:
+            - scene: scene.bedroom_1_humidifier_on
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bedroom_1_window
+              state: 'on'
+          sequence:
+            - scene: scene.bedroom_1_humidifier_off
