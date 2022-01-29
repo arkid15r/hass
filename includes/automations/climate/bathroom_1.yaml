@@ -1,15 +1,15 @@
 - id: turn_off_bathroom_1_vent
   alias: Turn Off Bathroom 1 Vent
   trigger:
+    - platform: numeric_state
+      entity_id: sensor.bathroom_1_humidity
+      below: 50
     - platform: state
       entity_id: switch.bathroom_1_vent
       from: 'off'
       to: 'on'
       for:
         minutes: 15
-    - platform: numeric_state
-      entity_id: sensor.bathroom_1_humidity
-      below: 50
   condition:
     - condition: state
       entity_id: switch.bathroom_1_vent
@@ -33,13 +33,13 @@
 - id: turn_on_bathroom_1_vent
   alias: Turn On Bathroom 1 Vent
   trigger:
+    - platform: numeric_state
+      entity_id: sensor.bathroom_1_humidity
+      above: 65
     - platform: state
       entity_id: binary_sensor.bathroom_1_door
       from: 'on'
       to: 'off'
-    - platform: numeric_state
-      entity_id: sensor.bathroom_1_humidity
-      above: 65
   condition:
     - condition: time
       after: '07:30:00'
@@ -61,17 +61,17 @@
       from: 'off'
       to: 'on'
   condition:
-    - condition: time
-      after: '07:30:00'
-      before: '22:30:00'
     - condition: state
-      entity_id: switch.bathroom_1_vent
+      entity_id: binary_sensor.bathroom_1_door
       state: 'off'
     - condition: state
       entity_id: binary_sensor.bathroom_1_mode_lock
       state: 'off'
     - condition: state
-      entity_id: binary_sensor.bathroom_1_door
+      entity_id: switch.bathroom_1_vent
       state: 'off'
+    - condition: time
+      after: '07:30:00'
+      before: '22:30:00'
   action:
     - scene: scene.bathroom_1_vent_on

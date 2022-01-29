@@ -2,9 +2,9 @@
   alias: Office 1 Heating Mat
   trigger:
     - platform: state
-      entity_id: binary_sensor.office_1_motion_15m
-    - platform: state
       entity_id: binary_sensor.office_1_motion
+    - platform: state
+      entity_id: binary_sensor.office_1_motion_15m
   condition:
     - condition: time
       after: '08:00:00'
@@ -27,8 +27,12 @@
 - id: office_1_humidifier
   alias: Office 1 Humidifier
   trigger:
-    - platform: time_pattern
-      minutes: /15
+    - platform: numeric_state
+      entity_id: sensor.office_1_humidity
+      above: 65
+    - platform: numeric_state
+      entity_id: sensor.office_1_humidity
+      below: 55
   condition:
     - condition: state
       entity_id: binary_sensor.office_1_windows
@@ -41,15 +45,15 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_1_humidity
-              below: 55
-          sequence:
-            - scene: scene.office_1_humidifier_on
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.office_1_humidity
               above: 60
           sequence:
             - scene: scene.office_1_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.office_1_humidity
+              below: 55
+          sequence:
+            - scene: scene.office_1_humidifier_on
 
 - id: office_1_humidifier_on_windows_state
   alias: Office 1 Humidifier On Windows State
