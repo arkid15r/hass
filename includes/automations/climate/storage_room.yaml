@@ -6,6 +6,10 @@
       below: 70
     - platform: time
       at: input_datetime.alarm_time_on
+  condition:
+    - condition: state
+      entity_id: switch.storage_room_fan
+      state: 'on'
   action:
     - scene: scene.storage_room_fan_off
 
@@ -16,6 +20,9 @@
       entity_id: sensor.indoor_temperature
       above: 80
   condition:
+    - condition: state
+      entity_id: switch.storage_room_fan
+      state: 'off'
     - condition: time
       after: input_datetime.alarm_time_off
       before: input_datetime.alarm_time_on
