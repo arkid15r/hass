@@ -14,13 +14,6 @@ living_room_new_year_lights:
     - switch.living_room_1
     - switch.living_room_2
 
-tvs:
-  name: TVs
-  entities:
-    - binary_sensor.living_room_tv
-    - media_player.kitchen_tv
-    - media_player.office_1_tv
-
 weather_services:
   name: Weather Services
   entities:

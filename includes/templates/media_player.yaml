@@ -1,0 +1,15 @@
+- binary_sensor:
+    - name: Kitchen TV
+      unique_id: kitchen_tv
+      state: >
+        {{ is_state('media_player.kitchen_tv', 'on') }}
+
+    - name: Living Room TV
+      unique_id: living_room_tv
+      state: >
+        {{ states('sensor.living_room_tv_input') | int > 1 }}
+
+    - name: Office 1 TV
+      unique_id: office_1_tv
+      state: >
+        {{ is_state('remote.office_1_tv', 'on') }}

@@ -18,12 +18,11 @@
     - name: Security Perimeter Breached
       unique_id: security_perimeter_breached
       state: >
-        {{ 'on' if expand(
+        {{ expand(
                state_attr('binary_sensor.security_perimeter', 'entity_id')) |
                    selectattr('state', 'eq', 'on') |
                    list |
                    count > 0
-           else 'off'
         }}
       attributes:
         template: boundary
@@ -55,7 +54,7 @@
                    map('regex_replace', '$', '_tamper')
         %}
         {% set tampered = expand(entities) | selectattr('state', 'eq', 'on') %}
-        {{ 'on' if tampered | list | count > 0 else 'off' }}
+        {{ tampered | list | count > 0 }}
       attributes:
         template: boundary
         entities: >

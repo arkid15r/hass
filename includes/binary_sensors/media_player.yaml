@@ -1,0 +1,7 @@
+- name: TVs
+  platform: group
+  unique_id: tvs
+  entities:
+    - binary_sensor.kitchen_tv
+    - binary_sensor.living_room_tv
+    - binary_sensor.office_1_tv
