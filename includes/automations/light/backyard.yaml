@@ -1,14 +1,18 @@
-- id: backyard_left_light_1_on_left_gate_state_on
-  alias: Backyard Left Light 1 On Left Gate State On
+- id: backyard_left_light_1_on_state
+  alias: Backyard Left Light 1 On State
   trigger:
     - platform: state
-      entity_id: binary_sensor.front_yard_gate_1
+      entity_id: binary_sensor.backyard_left_1_motion
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.front_left_gate
       from: 'off'
       to: 'on'
   condition:
-    - condition: time
-      after: '21:00:00'
-      before: '06:00:00'
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
   action:
     - service: light.turn_on
       target:
@@ -24,17 +28,36 @@
       run_if: binary_sensor.backyard_lights_mode
       run_if_state: 'on'
       watcher: binary_sensor.backyard_motion
-      watcher_inactive_time_seconds: 90
+      watcher_inactive_time_seconds: 60
+
+- id: backyard_light_2_on_state
+  alias: Backyard Light 2 On State
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.backyard_motion
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.backyard_lights_mode
+      state: 'on'
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.backyard_2
 
 - id: backyard_lights_schedule
   alias: Backyard Lights Schedule
   trigger:
     - platform: sun
       event: sunset
-      offset: +00:30:00
+      offset: +00:15:00
     - platform: sun
       event: sunrise
-      offset: -00:30:00
+      offset: -00:15:00
   action:
     - choose:
         - conditions:
@@ -57,17 +80,21 @@
       watcher_inactive_time_seconds: 0
       default_scene_on: scene.backyard_night_lights
 
-- id: backyard_right_light_1_on_right_gate_state_on
-  alias: Backyard Right Light 1 On Right Gate State On
+- id: backyard_right_light_1_on_state
+  alias: Backyard Right Light 1 State
   trigger:
     - platform: state
-      entity_id: binary_sensor.front_yard_gate_2
+      entity_id: binary_sensor.front_right_gate
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.backyard_right_1_motion
       from: 'off'
       to: 'on'
   condition:
-    - condition: time
-      after: '21:00:00'
-      before: '06:00:00'
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
   action:
     - service: light.turn_on
       target:
