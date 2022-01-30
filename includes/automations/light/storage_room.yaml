@@ -15,6 +15,12 @@
     input:
       default_scene_on: scene.storage_room_max_lights
       default_scene_off: scene.storage_room_no_lights
+      scene_1: scene.storage_room_faded_lights
+      scene_1_start_time: '20:00:00'
+      scene_1_end_time: '21:00:00'
+      scene_2: scene.storage_room_night_lights
+      scene_2_start_time: '21:00:00'
+      scene_2_end_time: '22:00:00'
       watcher: binary_sensor.storage_room_door
       watcher_inactive_time_seconds: 0
 
