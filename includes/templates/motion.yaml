@@ -72,7 +72,7 @@
       state: >
         {{ is_state('binary_sensor.corridor_motion_group', 'on') }}
 
-    - name: Corridor Motion 15 Minutes
+    - name: Corridor Motion 15m
       unique_id: corridor_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
