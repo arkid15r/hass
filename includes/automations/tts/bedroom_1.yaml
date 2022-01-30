@@ -1,0 +1,16 @@
+- id: tts_bedroom_1_humidifier_refill_reminder
+  alias: 'TTS: Bedroom 1 Humidifier Refill Reminder'
+  trigger:
+    - platform: time
+      at: '22:00:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          This is just a friendly reminder that the bedroom humidifier needs to be refilled on a daily basis. Thank you!

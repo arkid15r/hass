@@ -1,0 +1,42 @@
+- id: tts_indoor_garden_daily_attention_reminder
+  alias: 'TTS: Indoor Garden Daily Attention Reminder'
+  trigger:
+    - platform: time
+      at: '20:00:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          Hey gardeners, this is just a friendly reminder that all your plants require attention on a daily basis. Thank you!
+
+- id: tts_indoor_garden_heater_turn_on_reminder
+  alias: 'TTS: Indoor Garden Heater Turn On Reminder'
+  trigger:
+    - platform: time_pattern
+      minutes: /10
+  condition:
+    - condition: state
+      entity_id: binary_sensor.indoor_garden_heater
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: time
+      before: input_datetime.indoor_garden_time_off
+      after: input_datetime.indoor_garden_time_on
+    - condition: numeric_state
+      entity_id: sensor.indoor_garden_temperature
+      below: 70
+  action:
+    - event: tts
+      event_data:
+        text: >
+          <audio
+              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+          It seems that the indoor garden heater is still turned off. Please turn it on when you have a chance. Thank you!

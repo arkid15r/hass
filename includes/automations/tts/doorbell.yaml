@@ -1,5 +1,5 @@
-- id: doorbell_ding
-  alias: Doorbell Ding
+- id: tts_state_doorbell_ding
+  alias: 'TTS State: Doorbell Ding'
   trigger:
     - platform: state
       entity_id: binary_sensor.doorbell
