@@ -3,14 +3,14 @@
   use_blueprint:
     path: scene_automation.yaml
     input:
-      default_scene_on: scene.corridor_no_lights
+      default_scene_on: scene.corridor_faded_lights
       default_scene_off: scene.corridor_no_lights
-      scene_1: scene.corridor_faded_lights
-      scene_1_start_time: input_datetime.night_lights_start_time
-      scene_1_end_time: '22:00:00'
+      scene_1: scene.corridor_no_lights
+      scene_1_start_time: input_datetime.morning_lights_end_time
+      scene_1_end_time: input_datetime.night_lights_start_time
       scene_2: scene.corridor_night_lights
       scene_2_start_time: '22:00:00'
-      scene_2_end_time: input_datetime.morning_lights_end_time
+      scene_2_end_time: '06:30:00'
       watcher: binary_sensor.corridor_motion
       watcher_inactive_time_seconds: 30
 
