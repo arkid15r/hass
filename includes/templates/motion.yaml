@@ -13,16 +13,14 @@
       unique_id: bathroom_1_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bathroom_1_motion_group.last_changed)
-           < 900
+            states.binary_sensor.bathroom_1_motion_group.last_changed) < 900
         }}
 
     - name: Bathroom 1 Motion 5m
       unique_id: bathroom_1_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bathroom_1_motion_group.last_changed)
-           < 300
+            states.binary_sensor.bathroom_1_motion_group.last_changed) < 300
         }}
 
     - name: Bathroom 2 Motion
@@ -34,16 +32,14 @@
       unique_id: bathroom_2_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bathroom_2_motion_group.last_changed)
-           < 900
+            states.binary_sensor.bathroom_2_motion_group.last_changed) < 900
         }}
 
     - name: Bathroom 2 Motion 5m
       unique_id: bathroom_2_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bathroom_2_motion_group.last_changed)
-           < 300
+            states.binary_sensor.bathroom_2_motion_group.last_changed) < 300
         }}
 
     - name: Bedroom 1 Motion
@@ -55,16 +51,14 @@
       unique_id: bedroom_1_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bedroom_1_motion_group.last_changed)
-           < 900
+            states.binary_sensor.bedroom_1_motion_group.last_changed) < 900
         }}
 
     - name: Bedroom 1 Motion 5m
       unique_id: bedroom_1_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.bedroom_1_motion_group.last_changed)
-           < 300
+            states.binary_sensor.bedroom_1_motion_group.last_changed) < 300
         }}
 
     - name: Corridor Motion
@@ -76,16 +70,14 @@
       unique_id: corridor_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.corridor_motion_group.last_changed)
-           < 900
+            states.binary_sensor.corridor_motion_group.last_changed) < 900
         }}
 
     - name: Corridor Motion 5m
       unique_id: corridor_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.corridor_motion_group.last_changed)
-           < 300
+            states.binary_sensor.corridor_motion_group.last_changed) < 300
         }}
 
     - name: Front Yard Motion
@@ -102,16 +94,14 @@
       unique_id: garage_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.garage_motion_group.last_changed)
-           < 900
+            states.binary_sensor.garage_motion_group.last_changed) < 900
         }}
 
     - name: Garage Motion 5m
       unique_id: garage_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.garage_motion_group.last_changed)
-           < 300
+            states.binary_sensor.garage_motion_group.last_changed) < 300
         }}
 
     - name: Hallway Motion
@@ -123,16 +113,14 @@
       unique_id: hallway_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.hallway_motion_group.last_changed)
-           < 900
+            states.binary_sensor.hallway_motion_group.last_changed) < 900
         }}
 
     - name: Hallway Motion 5m
       unique_id: hallway_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.hallway_motion_group.last_changed)
-           < 300
+            states.binary_sensor.hallway_motion_group.last_changed) < 300
         }}
 
     - name: Kitchen Motion
@@ -144,16 +132,14 @@
       unique_id: kitchen_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.kitchen_motion_group.last_changed)
-           < 900
+            states.binary_sensor.kitchen_motion_group.last_changed) < 900
         }}
 
     - name: Kitchen Motion 5m
       unique_id: kitchen_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.kitchen_motion_group.last_changed)
-           < 300
+            states.binary_sensor.kitchen_motion_group.last_changed) < 300
         }}
 
     - name: Laundry Room Motion
@@ -165,16 +151,14 @@
       unique_id: laundry_room_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.laundry_room_motion_group.last_changed)
-           < 900
+            states.binary_sensor.laundry_room_motion_group.last_changed) < 900
         }}
 
     - name: Laundry Room Motion 5m
       unique_id: laundry_room_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.laundry_room_motion_group.last_changed)
-           < 300
+            states.binary_sensor.laundry_room_motion_group.last_changed) < 300
         }}
 
     - name: Living Room Motion
@@ -186,16 +170,14 @@
       unique_id: living_room_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.living_room_motion_group.last_changed)
-           < 900
+            states.binary_sensor.living_room_motion_group.last_changed) < 900
         }}
 
     - name: Living Room Motion 5m
       unique_id: living_room_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.living_room_motion_group.last_changed)
-           < 300
+            states.binary_sensor.living_room_motion_group.last_changed) < 300
         }}
 
     - name: Office 1 Motion
@@ -207,16 +189,14 @@
       unique_id: office_1_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.office_1_motion_group.last_changed)
-          < 900
+            states.binary_sensor.office_1_motion_group.last_changed) < 900
         }}
 
-    - unique_id: office_1_motion_5m
-      name: Office 1 Motion 5m
+    - name: Office 1 Motion 5m
+      unique_id: office_1_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.office_1_motion_group.last_changed)
-           < 300
+            states.binary_sensor.office_1_motion_group.last_changed) < 300
         }}
 
     - name: Office 2 Motion
@@ -228,16 +208,14 @@
       unique_id: office_2_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.office_2_motion_group.last_changed)
-           < 900
+            states.binary_sensor.office_2_motion_group.last_changed) < 900
         }}
 
     - name: Office 2 Motion 5m
       unique_id: office_2_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.office_2_motion_group.last_changed)
-           < 300
+            states.binary_sensor.office_2_motion_group.last_changed) < 300
         }}
 
     - name: Storage Room Motion
@@ -249,16 +227,14 @@
       unique_id: storage_room_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.storage_room_motion_group.last_changed)
-           < 900
+            states.binary_sensor.storage_room_motion_group.last_changed) < 900
         }}
 
     - name: Storage Room Motion 5m
       unique_id: storage_room_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.storage_room_motion_group.last_changed)
-           < 300
+            states.binary_sensor.storage_room_motion_group.last_changed) < 300
         }}
 
     - name: Wardrobe Motion
@@ -270,14 +246,12 @@
       unique_id: wardrobe_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.wardrobe_motion_group.last_changed)
-           < 900
+            states.binary_sensor.wardrobe_motion_group.last_changed) < 900
         }}
 
     - name: Wardrobe Motion 5m
       unique_id: wardrobe_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-               states.binary_sensor.wardrobe_motion_group.last_changed)
-           < 300
+            states.binary_sensor.wardrobe_motion_group.last_changed) < 300
         }}
