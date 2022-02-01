@@ -2,9 +2,9 @@
   alias: Indoor Garden Schedule
   trigger:
     - platform: time
-      at: input_datetime.indoor_garden_time_on
-    - platform: time
       at: input_datetime.indoor_garden_time_off
+    - platform: time
+      at: input_datetime.indoor_garden_time_on
   action:
     - choose:
         - conditions:
