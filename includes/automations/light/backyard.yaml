@@ -53,23 +53,23 @@
   alias: Backyard Lights Schedule
   trigger:
     - platform: sun
-      event: sunset
-      offset: +00:15:00
-    - platform: sun
       event: sunrise
-      offset: -00:15:00
+      offset: -00:30:00
+    - platform: sun
+      event: sunset
+      offset: +00:30:00
   action:
     - choose:
-        - conditions:
-            - condition: sun
-              after: sunset
-          sequence:
-            - scene: scene.backyard_night_lights
         - conditions:
             - condition: sun
               before: sunrise
           sequence:
             - scene: scene.backyard_no_lights
+        - conditions:
+            - condition: sun
+              after: sunset
+          sequence:
+            - scene: scene.backyard_night_lights
 
 - id: backyard_lights_on_switch_state_on
   alias: Backyard Lights On Switch State On
