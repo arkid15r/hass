@@ -4,7 +4,7 @@
       icon: mdi:shield-lock
       state: >
         {{ states('alarm_control_panel.home_alarm') in (
-             'armed_away', 'armed_home')
+            'armed_away', 'armed_home')
         }}
 
 - sensor:

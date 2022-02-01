@@ -26,14 +26,14 @@
       unique_id: indoor_temperature_higher
       state: >
         {{ states('sensor.indoor_temperature') | int >
-               states('sensor.outdoor_temperature') | int
+            states('sensor.outdoor_temperature') | int
         }}
 
     - name: Indoor Temperature 2 Degree Higher
       unique_id: indoor_temperature_2_degree_higher
       state: >
         {{ states('sensor.indoor_temperature') | int >
-               states('sensor.outdoor_temperature') | int + 2
+            states('sensor.outdoor_temperature') | int + 2
         }}
 
   sensor:
@@ -51,61 +51,61 @@
       unique_id: indoor_temperature
       state: >
         {{ expand('group.indoor_temperature') |
-               rejectattr('state', 'in', ('unavailable',)) |
-               map(attribute='state') |
-               map('float') |
-               average |
-               round
+            rejectattr('state', 'in', ('unavailable',)) |
+            map(attribute='state') |
+            map('float') |
+            average |
+            round
         }}
 
     - name: Thermal Perimeter Breached
       unique_id: thermal_perimeter_breached
       state: >
         {{  expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
-                selectattr('state', 'eq', 'on') |
-                list |
-                count > 0
+            selectattr('state', 'eq', 'on') |
+            list |
+            count > 0
         }}
       attributes:
         template: climate
         areas: >
           {{ expand(state_attr(
-                 'binary_sensor.thermal_perimeter', 'entity_id')) |
-                     selectattr('state', 'eq', 'on') |
-                     map(attribute='entity_id') |
-                     map('area_name') |
-                     reject('eq', none) |
-                     unique |
-                     sort
+              'binary_sensor.thermal_perimeter', 'entity_id')) |
+                  selectattr('state', 'eq', 'on') |
+                  map(attribute='entity_id') |
+                  map('area_name') |
+                  reject('eq', none) |
+                  unique |
+                  sort
           }}
         area_summary: >
           {% set entities = expand(state_attr(
-                'binary_sensor.thermal_perimeter', 'entity_id')) |
-                     selectattr('state', 'eq', 'on') |
-                     map(attribute='entity_id') |
-                     map('area_name') |
-                     reject('eq', none) |
-                     unique |
-                     sort
+              'binary_sensor.thermal_perimeter', 'entity_id')) |
+                  selectattr('state', 'eq', 'on') |
+                  map(attribute='entity_id') |
+                  map('area_name') |
+                  reject('eq', none) |
+                  unique |
+                  sort
           %}
           {{- entities[0] if entities | count <= 1 else
-                  (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
+              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
           }}
         entities: >
           {{ expand(state_attr(
-                 'binary_sensor.thermal_perimeter', 'entity_id')) |
-                     selectattr('state', 'eq', 'on') |
-                     map(attribute='entity_id') |
-                     sort
+              'binary_sensor.thermal_perimeter', 'entity_id')) |
+                  selectattr('state', 'eq', 'on') |
+                  map(attribute='entity_id') |
+                  sort
           }}
         entities_summary: >
           {% set entities = expand(
-                 state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
-                     selectattr('state', 'eq', 'on') |
-                     map(attribute='name') |
-                     unique |
-                     sort
+              state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
+                  selectattr('state', 'eq', 'on') |
+                  map(attribute='name') |
+                  unique |
+                  sort
           %}
           {{- entities[0] if entities | count <= 1 else
-                  (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
+              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
           }}
