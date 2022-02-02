@@ -1,0 +1,74 @@
+- id: bedroom_1_lights
+  alias: '[Bedroom 1 Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.bedroom_1_no_lights
+      default_scene_on: scene.bedroom_1_no_lights
+      scene_1: scene.bedroom_1_faded_lights
+      scene_1_start_time: input_datetime.night_lights_start_time
+      scene_1_end_time: '22:00:00'
+      scene_2: scene.bedroom_1_night_lights
+      scene_2_start_time: '22:00:00'
+      scene_2_end_time: '22:30:00'
+      run_if: binary_sensor.bedroom_1_mode_lock
+      run_if_state: 'off'
+      watcher: binary_sensor.bedroom_1_motion
+      watcher_inactive_time_seconds: 180
+
+- id: turn_off_idle_bedroom_1_lights
+  alias: '[Turn Off Idle Bedroom 1 Lights]'
+  use_blueprint:
+    path: idle_target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.bedroom_1_mode_lock
+      run_if_state: 'off'
+      scene: scene.bedroom_1_no_lights
+      target: binary_sensor.bedroom_1_lights
+      watcher: binary_sensor.bedroom_1_motion
+      watcher_inactive_time_seconds: 900
+
+- id: wake_up_lighting
+  alias: Wake Up Lighting
+  trigger:
+    - platform: time
+      at: input_datetime.wake_up_lighting_start_time
+  condition:
+    - condition: state
+      entity_id: input_boolean.wake_up_lighting_enabled
+      state: 'on'
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_wake_up_lighting
+    - service: light.turn_on
+      data:
+        brightness_pct: 1
+        rgb_color: [255, 0, 0]
+      target:
+        entity_id: light.bedroom_1_1
+    - service: light.turn_on
+      data:
+        transition: 1200
+        brightness_pct: 45
+        kelvin: 2500
+      target:
+        entity_id: light.bedroom_1_1
+    - delay:
+        minutes: 20
+    - service: light.turn_on
+      data:
+        transition: 600
+        kelvin: 2500
+        brightness_pct: 65
+      target:
+        entity_id: light.bedroom_1_1
+    - delay:
+        minutes: 30
+    - service: light.turn_off
+      target:
+        entity_id: light.bedroom_1_1
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_wake_up_lighting
