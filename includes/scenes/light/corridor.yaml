@@ -1,13 +1,15 @@
 - name: Corridor Faded Lights
   entities:
     light.corridor_2:
-      brightness: 5
+      brightness: 2
+      color_temp: 320
       state: 'on'
 
 - name: Corridor Night Lights
   entities:
     light.corridor_2:
       brightness: 2
+      rgb_color: [255, 0, 0]
       state: 'on'
 
 - name: Corridor No Lights
