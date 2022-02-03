@@ -1,19 +1,24 @@
 - name: Bedroom 1 Faded Lights
   entities:
     light.bedroom_1_1:
-      brightness: 1
-      rgb_color: [255, 190, 0]
+      brightness: 65
+      color_temp: 500
       state: 'on'
-    light.bedroom_1_2: 'off'
+
+- name: Bedroom 1 Lights
+  entities:
+    light.bedroom_1_1:
+      brightness: 125
+      color_temp: 500
+      state: 'on'
 
 - name: Bedroom 1 Night Lights
   entities:
     light.bedroom_1_1:
-      brightness: 1
+      brightness: 35
       rgb_color: [255, 0, 0]
       state: 'on'
 
 - name: Bedroom 1 No Lights
   entities:
     light.bedroom_1_1: 'off'
-    light.bedroom_1_2: 'off'
