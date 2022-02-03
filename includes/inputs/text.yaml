@@ -1,0 +1,4 @@
+weather_sensor:
+  name: Weather Sensor
+  initial: weather.thermostat
+  pattern: 'weather\.[a-z]{2,}'
