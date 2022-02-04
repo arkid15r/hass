@@ -1,0 +1,45 @@
+- id: turn_off_dining_area_morning_lights
+  alias: Turn Off Dining Area Morning Lights
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.dining_area_lights
+      to: 'on'
+      for:
+        hours: 1
+  condition:
+    - condition: time
+      after: input_datetime.dining_area_morning_lights_time_off
+  action:
+    - scene: scene.dining_area_no_lights
+
+- id: turn_on_dining_area_morning_lights
+  alias: Turn On Dining Area Morning Lights
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.corridor_motion
+        - binary_sensor.kitchen_motion
+      from: 'off'
+      to: 'on'
+    - platform: time
+      at: input_datetime.dining_area_morning_lights_time_on
+  condition:
+    - condition: state
+      entity_id: binary_sensor.dining_area_lights
+      state: 'off'
+    - condition: time
+      after: input_datetime.dining_area_morning_lights_time_on
+      before: input_datetime.dining_area_morning_lights_time_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.corridor_motion_5m
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.hallway_motion_5m
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.kitchen_motion_5m
+          state: 'on'
+  action:
+    - scene: scene.dining_area_faded_lights
