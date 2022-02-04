@@ -1,25 +1,33 @@
 - binary_sensor:
-    - name: HVAC Cooling
-      unique_id: hvac_cooling
+    - name: HVAC Is Cooling
+      unique_id: hvac_is_cooling
       state: >
         {{ not is_state('climate.thermostat', 'off') and
-           state_attr('climate.thermostat', 'hvac_action') in ('cooling',) and
+           state_attr('climate.thermostat', 'hvac_action') in ['cooling'] and
            'compCool1' in state_attr('climate.thermostat', 'equipment_running')
         }}
 
-    - name: HVAC Heating
-      unique_id: hvac_heating
+    - name: HVAC Has Been Turned Off
+      unique_id: hvac_has_been_turned_off
+      state: >
+        {{ is_state('binary_sensor.hvac_is_running', 'off') and
+           as_timestamp(now()) - as_timestamp(
+            states.binary_sensor.hvac_is_running.last_changed) <= 60
+        }}
+
+    - name: HVAC Is Heating
+      unique_id: hvac_is_heating
       state: >
         {{ not is_state('climate.thermostat', 'off') and
-           state_attr('climate.thermostat', 'hvac_action') in ('heating',) and
+           state_attr('climate.thermostat', 'hvac_action') in ['heating'] and
            'auxHeat1' in state_attr('climate.thermostat', 'equipment_running')
         }}
 
-    - name: HVAC Running
-      unique_id: hvac_running
+    - name: HVAC Is Running
+      unique_id: hvac_is_running
       state: >
-        {{ is_state('binary_sensor.hvac_cooling', 'on') or
-           is_state('binary_sensor.hvac_heating', 'on')
+        {{ is_state('binary_sensor.hvac_is_cooling', 'on') or
+           is_state('binary_sensor.hvac_is_heating', 'on')
         }}
 
     - name: Indoor Temperature Higher

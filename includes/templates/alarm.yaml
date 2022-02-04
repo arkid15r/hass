@@ -1,21 +1,21 @@
 - binary_sensor:
-    - unique_id: alarm_armed
-      name: Alarm Armed
+    - name: Alarm Armed
+      unique_id: alarm_armed
       icon: mdi:shield-lock
       state: >
-        {{ states('alarm_control_panel.home_alarm') in (
-            'armed_away', 'armed_home')
+        {{ states('alarm_control_panel.home_alarm') in [
+            'armed_away', 'armed_home']
         }}
 
 - sensor:
-    - unique_id: alarm_garage_keypad_status
-      name: Alarm Garage Keypad Status
+    - name: Alarm Garage Keypad Status
+      unique_id: alarm_garage_keypad_status
       icon: mdi:information-outline
       state: >
         {{ state_attr('sensor.garage_keypad_info', 'acStatus') }}
 
-    - unique_id: alarm_kitchen_keypad_status
-      name: Alarm Kitchen Keypad Status
+    - name: Alarm Kitchen Keypad Status
+      unique_id: alarm_kitchen_keypad_status
       icon: mdi:information-outline
       state: >
         {{ state_attr('sensor.kitchen_keypad_info', 'acStatus') }}
