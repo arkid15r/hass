@@ -24,7 +24,6 @@
   unique_id: bedroom_1_light_group
   entities:
     - light.bedroom_1_1
-    - light.bedroom_1_2
 
 - name: Corridor Light Group
   platform: group
