@@ -1,0 +1,111 @@
+- id: mode_bar
+  alias: Bar Mode
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mode_bar
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_bar
+              state: 'off'
+          sequence:
+            - scene: scene.hallway_night_lights
+            - scene: scene.kitchen_night_lights
+            - scene: scene.bar_no_lights
+            - scene: scene.living_room_no_lights
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_bar
+              state: 'on'
+          sequence:
+            - scene: scene.kitchen_no_lights
+            - scene: scene.hallway_no_lights
+            - scene: scene.bar_lights
+
+- id: mode_kitchen_tv
+  alias: Kitchen TV Mode
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mode_kitchen_tv
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_kitchen_tv
+              state: 'off'
+          sequence:
+            - scene: scene.kitchen_faded_lights
+            - scene: scene.hallway_no_lights
+            - service: remote.turn_off
+              entity_id: remote.kitchen_tv_remote
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_kitchen_tv
+              state: 'on'
+          sequence:
+            - scene: scene.kitchen_tv_mode_lights
+            - condition: state
+              entity_id: binary_sensor.kitchen_tv
+              state: 'off'
+            - service: remote.turn_on
+              entity_id: remote.kitchen_tv_remote
+
+- id: mode_kitchen_tv_on_kitchen_tv_state
+  alias: Kitchen TV Mode On Kitchen TV State
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_tv
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.mode_kitchen_tv
+      state: 'on'
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_kitchen_tv
+
+- id: mode_office_1_tv
+  alias: Office 1 TV Mode
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mode_office_1_tv
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_office_1_tv
+              state: 'off'
+          sequence:
+            - scene: scene.office_1_faded_lights
+            - service: remote.turn_off
+              entity_id: remote.office_1_tv_remote
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_office_1_tv
+              state: 'on'
+          sequence:
+            - scene: scene.office_1_movie_night_mode_lights
+            - service: remote.turn_on
+              entity_id: remote.office_1_tv_remote
+
+- id: mode_office_2_lights
+  alias: Office 2 Lights Mode
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mode_office_2_lights
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_office_2_lights
+              state: 'on'
+          sequence:
+            - scene: scene.office_2_max_lights
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.mode_office_2_lights
+              state: 'off'
+          sequence:
+            - scene: scene.office_2_no_lights
