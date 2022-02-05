@@ -10,10 +10,7 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          Hey gardeners, this is just a friendly reminder that all your plants require attention on a daily basis. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, this is just a friendly reminder that all your plants require attention on a daily basis. Thank you!
 
 - id: tts_indoor_garden_heater_turn_on_reminder
   alias: 'TTS: Indoor Garden Heater Turn On Reminder'
@@ -36,7 +33,4 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          It seems that the indoor garden heater is still turned off. Please turn it on when you have a chance. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden heater is still turned off. Please turn it on when you have a chance. Thank you!

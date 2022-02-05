@@ -3,9 +3,7 @@
   use_blueprint:
     path: tts_state.yaml
     input:
-      text: >
-        <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>
-        Outdoor activity. Backyard motion detected. I repeat, backyard motion detected.'
+      text: <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>Outdoor activity. Backyard motion detected. I repeat, backyard motion detected.'
       state_change_entity:
         - binary_sensor.backyard_motion
       state_change_to: 'on'
@@ -38,9 +36,6 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          Indoor activity. {{ area_name(trigger.entity_id) }} motion detected.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Indoor activity. {{ area_name(trigger.entity_id) }} motion detected.
   mode: queued
   max: 5

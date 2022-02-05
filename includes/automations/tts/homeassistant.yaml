@@ -12,7 +12,4 @@
         minutes: 1
     - event: tts
       event_data:
-        text: >
-          <audio
-               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          The smart home system has been restarted.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The smart home system has been restarted.

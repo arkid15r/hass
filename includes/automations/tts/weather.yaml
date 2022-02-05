@@ -1,0 +1,73 @@
+- id: tts_porch_cooling_station_reminder
+  alias: 'TTS: Porch Cooling Station Reminder'
+  trigger:
+    - platform: time
+      at: '11:30:00'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.temperature_forecast
+      above: 99
+    - condition: time
+      weekday: [mon, tue, wed, thu, fri, sat]
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. The porch cooling station would be very appreciated by the postal workers. Thank you!
+
+- id: tts_state_weather_changed
+  alias: 'TTS State: Weather Changed'
+  trigger:
+    - platform: state
+      entity_id: input_text.weather_sensor
+      to:
+        - exceptional
+        - hail
+        - lightning
+        - lightning-rainy
+        - pouring
+        - rainy
+        - snowy
+        - snowy-rainy
+        - windy
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: time
+      after: input_datetime.alarm_time_off
+      before: input_datetime.alarm_time_on
+    - condition: state
+      entity_id: input_boolean.mode_nap
+      state: 'off'
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('weather.thermostat') }}. The temperature is {{ states('sensor.outdoor_temperature') }} degrees with relative humidity around {{ states('sensor.outdoor_humidity') }} percents. The wind speed is {{ states('sensor.wind_speed') }} miles per hour. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+
+- id: tts_weather_forecast
+  alias: 'TTS: Weather Forecast'
+  trigger:
+    - platform: time
+      at: '19:00:00'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.temperature_low_forecast
+      below: 60
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: sensor.weather_forecast_summary
+              state: fine
+          sequence:
+            - event: tts
+              event_data:
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks fine! Have a good night!
+      default:
+        - event: tts
+          event_data:
+            duration: 15
+            text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.

@@ -22,13 +22,8 @@
     - event: tts
       event_data:
         areas_on:
-          - >
-            {{ area_id(trigger.entity_id) }}
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          {{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name')
-          }} tampering cleared.
+          - '{{ area_id(trigger.entity_id) }}'
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>{{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name') }} tampering cleared.
   mode: queued
   max: 10
 
@@ -45,10 +40,6 @@
         areas_on:
           - >
             {{ area_id(trigger.entity_id) }}
-        text: >
-          <audio
-               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          {{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name')
-          }} tampering detected.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>{{ state_attr(trigger.entity_id | regex_replace('_tamper$', ''), 'friendly_name') }} tampering detected.
   mode: queued
   max: 10

@@ -8,9 +8,7 @@
         - binary_sensor.front_right_gate
       state_change_from: 'on'
       state_change_to: 'off'
-      text: >
-        <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>
-        {{ state_attr(trigger.entity_id, 'friendly_name') }} closed.
+      text: <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>{{ state_attr(trigger.entity_id, 'friendly_name') }} closed.
   mode: queued
   max: 10
 
@@ -22,9 +20,7 @@
       state_change_entity: *sensors
       state_change_from: 'off'
       state_change_to: 'on'
-      text: >
-        <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>
-        {{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
+      text: <audio src="soundbank://soundlibrary/office/amzn_sfx_elevator_open_bell_01"/>{{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
   mode: queued
   max: 10
 
@@ -47,8 +43,7 @@
         seconds: 1
     - event: tts
       event_data:
-        text: >
-          I repeat! {{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
+        text: I repeat! {{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
   mode: queued
   max: 10
 
@@ -61,9 +56,7 @@
       state_change_for_time_seconds: 300
       state_change_from: 'off'
       state_change_to: 'on'
-      text: >
-        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-        Just FYI: the {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open.'
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open.
 
 - id: tts_state_outdoor_perimeter_on_10m
   alias: '[TTS State: Outdoor Perimeter On 10m]'
@@ -74,6 +67,4 @@
       state_change_for_time_seconds: 600
       state_change_from: 'off'
       state_change_to: 'on'
-      text: >
-        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-        The {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open.<break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open.<break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>.

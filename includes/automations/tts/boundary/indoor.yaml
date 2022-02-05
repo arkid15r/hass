@@ -4,8 +4,7 @@
     path: tts_state.yaml
     input:
       areas_off:
-        - >
-          {{ area_id(trigger.entity_id) }}
+        - '{{ area_id(trigger.entity_id) }}'
       state_change_entity: &indoor_perimeter
         - binary_sensor.bathroom_1_window
         - binary_sensor.bedroom_1_window
@@ -19,9 +18,7 @@
         - binary_sensor.storage_room_window
       state_change_from: 'on'
       state_change_to: 'off'
-      text: >
-        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-        {{ state_attr(trigger.entity_id, 'friendly_name') }} closed.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>{{ state_attr(trigger.entity_id, 'friendly_name') }} closed.
   mode: queued
   max: 10
 
@@ -31,13 +28,10 @@
     path: tts_state.yaml
     input:
       areas_off:
-        - >
-          {{ area_id(trigger.entity_id) }}
+        - '{{ area_id(trigger.entity_id) }}'
       state_change_entity: *indoor_perimeter
       state_change_from: 'off'
       state_change_to: 'on'
-      text: >
-        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-        {{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>{{ state_attr(trigger.entity_id, 'friendly_name') }} opened.
   mode: queued
   max: 10

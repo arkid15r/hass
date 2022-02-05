@@ -13,10 +13,7 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          Just FYI: the basement temperature is extremely low.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the basement temperature is extremely low.
 
 - id: tts_state_basement_temperature_very_low
   alias: 'TTS State: Basement Temperature Very Low'
@@ -33,7 +30,4 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          Just FYI: the basement temperature is very low.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the basement temperature is very low.

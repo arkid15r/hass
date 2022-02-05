@@ -10,7 +10,4 @@
   action:
     - event: tts
       event_data:
-        text: >
-          <audio
-              src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          This is just a friendly reminder that the bedroom humidifier needs to be refilled on a daily basis. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that the bedroom humidifier needs to be refilled on a daily basis. Thank you!
