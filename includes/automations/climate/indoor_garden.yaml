@@ -1,3 +1,31 @@
+- id: indoor_garden_humidifier
+  alias: Indoor Garden Humidifier
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.indoor_garden_humidity
+      above: 55
+    - platform: numeric_state
+      entity_id: sensor.indoor_garden_humidity
+      below: 50
+  condition:
+    - condition: time
+      after: input_datetime.indoor_garden_time_on
+      before: input_datetime.indoor_garden_time_off
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.indoor_garden_humidity
+              above: 55
+          sequence:
+            - scene: scene.indoor_garden_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.indoor_garden_humidity
+              below: 50
+          sequence:
+            - scene: scene.indoor_garden_humidifier_on
+
 - id: indoor_garden_schedule
   alias: Indoor Garden Schedule
   trigger:
@@ -20,6 +48,7 @@
               before: input_datetime.indoor_garden_time_on
           sequence:
             - scene: scene.indoor_garden_heater_off
+            - scene: scene.indoor_garden_humidifier_off
             - scene: scene.indoor_garden_off
             - scene: scene.indoor_garden_vent_off
 
@@ -58,6 +87,7 @@
               state: 'on'
           sequence:
             - scene: scene.indoor_garden_heater_off
+            - scene: scene.indoor_garden_humidifier_off
             - scene: scene.indoor_garden_off
             - scene: scene.indoor_garden_vent_off
         - conditions:
@@ -81,9 +111,7 @@
               state: 'unavailable'
         - event: tts
           event_data:
-            text: >
-              <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-              It seems that the indoor garden cycle is out of schedule. Please fix the issue as soon as possible. It's important. Thank you!
+            text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops tone_05"/>It seems that the indoor garden cycle is out of schedule. Please fix the issue as soon as possible. It's important. Thank you!
 
 - id: indoor_garden_vent
   alias: Indoor Garden Vent

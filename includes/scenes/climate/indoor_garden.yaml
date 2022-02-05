@@ -6,6 +6,14 @@
   entities:
     switch.indoor_garden_heater: 'off'
 
+- name: Indoor Garden Humidifier Off
+  entities:
+    switch.indoor_garden_humidifier: 'off'
+
+- name: Indoor Garden Humidifier On
+  entities:
+    switch.indoor_garden_humidifier: 'on'
+
 - name: Indoor Garden Off
   entities:
     switch.indoor_garden: 'off'
