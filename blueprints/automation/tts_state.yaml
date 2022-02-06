@@ -103,11 +103,11 @@ trigger:
     for: !input state_change_for_time_seconds
 
 condition:
-  - "{{ states['input_boolean.play_tts_messages'].state == 'on' }}"
+  - '{{ is_state("input_boolean.play_tts_messages", "on") }}'
   - condition: or
     conditions:
       - '{{ not run_if }}'
-      - '{{ run_if and run_if_state and states[run_if].state == run_if_state }}'
+      - '{{ run_if and run_if_state and is_state(run_if, run_if_state) }}'
 action:
   - event: tts
     event_data:
