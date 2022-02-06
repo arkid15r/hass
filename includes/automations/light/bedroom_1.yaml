@@ -29,46 +29,10 @@
       watcher: binary_sensor.bedroom_1_motion
       watcher_inactive_time_seconds: 900
 
-- id: wake_up_lighting
-  alias: Wake Up Lighting
-  trigger:
-    - platform: time
-      at: input_datetime.wake_up_lighting_start_time
-  condition:
-    - condition: state
-      entity_id: input_boolean.wake_up_lighting_enabled
-      state: 'on'
-  action:
-    - service: input_boolean.turn_on
-      target:
-        entity_id: input_boolean.mode_wake_up_lighting
-    - service: light.turn_on
-      data:
-        brightness_pct: 1
-        rgb_color: [255, 0, 0]
-      target:
-        entity_id: light.bedroom_1_1
-    - service: light.turn_on
-      data:
-        transition: 1200
-        brightness_pct: 45
-        kelvin: 2500
-      target:
-        entity_id: light.bedroom_1_1
-    - delay:
-        minutes: 20
-    - service: light.turn_on
-      data:
-        transition: 600
-        kelvin: 2500
-        brightness_pct: 65
-      target:
-        entity_id: light.bedroom_1_1
-    - delay:
-        minutes: 30
-    - service: light.turn_off
-      target:
-        entity_id: light.bedroom_1_1
-    - service: input_boolean.turn_off
-      target:
-        entity_id: input_boolean.mode_wake_up_lighting
+- id: wake_up_lighting_bedroom_1
+  alias: '[Wake Up Lighting]: Bedroom 1'
+  use_blueprint:
+    path: wake_up_lighting.yaml
+    input:
+      light_entity: light.bedroom_1_1
+      start_time: input_datetime.wake_up_lighting_start_time

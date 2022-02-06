@@ -1,0 +1,158 @@
+# Wake up lighting automation blueprint.
+#
+# Author: Ark (ark@cho.red), 2022
+
+blueprint:
+  name: '[Wake Up Lighting]: '
+  description: |
+    Imitates sunrise lighting using a light device with brightness and color temperature control capability.
+
+    Use `input_boolean.wake_up_lighting_enabled` to enable/disable the automation globally (see Home Assistant > Configuration > Helpers section).
+
+    Inputs:
+      - **Light Entity**: an entity with brightness and color control capabilities.
+      - **Wake Up Lighting Flag**: an input boolean entity to turn on when the imitation starts and to turn off when it ends.
+      - **Week Days** (*default*: [mon, tue, wed, thu, fri]): a list of week days the imitation runs on.
+      - **Start Time** (*default*: 06:00): a time at which the imitation starts. It can be either time value or an input time entity.
+      - **Start Brightness** (*default*: 1, *unit*: %): an initial brightness of the `Light Entity`.
+      - **Start Color** (*default*: [255, 0, 0], *unit*: RGB): an initial color of the `Light Entity`.
+      - **End Brightness** (*default*: 65, *unit*: %): a final brightness of the `Light Entity`.
+      - **End Color Temperature** (*default*: 500, *unit*: kelvin): a final color temperature of the `Light Entity`.
+      - **Duration** (*default*: 30, *unit*: minutes): an imitation transition process duration in minutes.
+      - **Turn Off Delay** (*default*: 20, *unit*: minutes): a delay after the imitation process completion. This is how long the `Light Entity` stays in `End Brightness` / `End Color Temperature` state before it's turned off.
+
+  domain: automation
+  input:
+    light_entity:
+      name: Light Entity
+      description: A light entity to use for the imitation
+      default:
+      selector:
+        entity:
+          domain: light
+
+    wake_up_lighting_flag_entity:
+      name: Wake Up Lighting Flag
+      description: An entity to switch on/off when the imitation turns on/off
+      default: input_boolean.mode_wake_up_lighting
+      selector:
+        entity:
+          domain: input_boolean
+
+    run_on_days_of_week:
+      name: Week Days
+      description: Run on these days of week
+      default: [mon, tue, wed, thu, fri, sat, sun]
+      selector:
+        object:
+
+    start_time:
+      name: Start Time
+      description: A time when the sunrise imitation starts
+      default: '06:00:00'
+      selector:
+        entity:
+          domain: input_datetime
+
+    start_brightness_pct:
+      name: Start Brightness
+      description: An initial brightness (%)
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 100
+
+    start_color_rgb:
+      name: Start Color
+      description: An initial color (RGB)
+      default: [255, 0, 0]
+      selector:
+        object:
+
+    end_brightness_pct:
+      name: End Brightness
+      description: A final brightness (%)
+      default: 65
+      selector:
+        number:
+          min: 1
+          max: 100
+
+    end_color_temperature_kelvin:
+      name: End Color Temperature
+      description: A final color temperature (kelvin)
+      default: 500
+      selector:
+        number:
+          min: 250
+          max: 500
+          step: 1
+          unit_of_measurement: K
+          mode: slider
+
+    duration_minutes:
+      name: Duration
+      description: An imitation duration in minutes
+      default: 30
+      selector:
+        number:
+          min: 10
+          max: 60
+          step: 1
+          unit_of_measurement: minutes
+          mode: slider
+
+    turn_off_delay_minutes:
+      name: Turn Off Delay
+      description: A time to wait before turning the lights off
+      default: 20
+      selector:
+        number:
+          min: 1
+          max: 60
+          step: 1
+          unit_of_measurement: minutes
+          mode: slider
+
+variables:
+  day_of_week: '{{ as_timestamp(now()) | timestamp_custom("%a") | lower }}'
+  duration_minutes: !input duration_minutes
+  duration_seconds: '{{ duration_minutes * 60 }}'
+  run_on_days_of_week: !input run_on_days_of_week
+
+trigger:
+  - platform: time
+    at: !input start_time
+
+condition:
+  - '{{ is_state("input_boolean.wake_up_lighting_enabled", "on") }}'
+  - '{{ day_of_week in run_on_days_of_week }}'
+
+action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: !input wake_up_lighting_flag_entity
+  - service: light.turn_on
+    data:
+      brightness_pct: !input start_brightness_pct
+      rgb_color: !input start_color_rgb
+    target:
+      entity_id: !input light_entity
+  - service: light.turn_on
+    data:
+      brightness_pct: !input end_brightness_pct
+      kelvin: !input end_color_temperature_kelvin
+      transition: '{{ duration_seconds }}'
+    target:
+      entity_id: !input light_entity
+  - delay:
+      minutes: !input duration_minutes
+  - delay:
+      minutes: !input turn_off_delay_minutes
+  - service: light.turn_off
+    target:
+      entity_id: !input light_entity
+  - service: input_boolean.turn_off
+    target:
+      entity_id: !input wake_up_lighting_flag_entity
