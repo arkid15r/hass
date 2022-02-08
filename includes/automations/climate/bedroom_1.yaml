@@ -3,10 +3,10 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.bedroom_1_humidity
-      above: 70
+      above: input_number.bedroom_1_humidity_high
     - platform: numeric_state
       entity_id: sensor.bedroom_1_humidity
-      below: 60
+      below: input_number.bedroom_1_humidity_low
   condition:
     - condition: state
       entity_id: binary_sensor.bedroom_1_window
@@ -16,13 +16,13 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_humidity
-              above: 70
+              above: input_number.bedroom_1_humidity_high
           sequence:
             - scene: scene.bedroom_1_humidifier_off
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_humidity
-              below: 60
+              below: input_number.bedroom_1_humidity_low
           sequence:
             - scene: scene.bedroom_1_humidifier_on
 

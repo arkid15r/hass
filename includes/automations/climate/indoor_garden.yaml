@@ -1,28 +1,27 @@
 - id: indoor_garden_humidifier
   alias: Indoor Garden Humidifier
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.indoor_garden_humidity
-      above: 55
-    - platform: numeric_state
-      entity_id: sensor.indoor_garden_humidity
-      below: 50
+    - platform: time_pattern
+      minutes: /1
   condition:
     - condition: time
       after: input_datetime.indoor_garden_time_on
       before: input_datetime.indoor_garden_time_off
+  variables:
+    humidity: >
+      {{ states('sensor.indoor_garden_humidity') | int }}
+    humidity_low: >
+      {{ states('input_number.indoor_garden_humidity_low') | int }}
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.indoor_garden_humidity
-              above: 55
+            - condition: template
+              value_template: '{{ humidity > humidity_low + 5 }}'
           sequence:
             - scene: scene.indoor_garden_humidifier_off
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.indoor_garden_humidity
-              below: 50
+            - condition: template
+              value_template: '{{ humidity < humidity_low }}'
           sequence:
             - scene: scene.indoor_garden_humidifier_on
 
@@ -117,22 +116,25 @@
   alias: Indoor Garden Vent
   trigger:
     - platform: time_pattern
-      minutes: /5
+      minutes: /1
   condition:
     - condition: time
       before: input_datetime.indoor_garden_time_off
       after: input_datetime.indoor_garden_time_on
+  variables:
+    humidity: >
+      {{ states('sensor.indoor_garden_humidity') | int }}
+    humidity_high: >
+      {{ states('input_number.indoor_garden_humidity_high') | int }}
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.indoor_garden_humidity
-              above: 60
+            - condition: template
+              value_template: '{{ humidity > humidity_high }}'
           sequence:
             - scene: scene.indoor_garden_vent_on
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.indoor_garden_humidity
-              below: 55
+            - condition: template
+              value_template: '{{ humidity < humidity_high - 5 }}'
           sequence:
             - scene: scene.indoor_garden_vent_off

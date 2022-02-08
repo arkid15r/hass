@@ -1,8 +1,12 @@
 - id: office_2_humidifier
   alias: Office 2 Humidifier
   trigger:
-    - platform: time_pattern
-      minutes: /15
+    - platform: numeric_state
+      entity_id: sensor.office_2_humidity
+      above: input_number.office_1_humidity_high
+    - platform: numeric_state
+      entity_id: sensor.office_2_humidity
+      below: input_number.office_1_humidity_low
   condition:
     - condition: state
       entity_id: binary_sensor.office_2_window
@@ -14,16 +18,16 @@
     - choose:
         - conditions:
             - condition: numeric_state
-              below: 50
               entity_id: sensor.office_2_humidity
-          sequence:
-            - scene: scene.office_2_humidifier_on
-        - conditions:
-            - condition: numeric_state
-              above: 60
-              entity_id: sensor.office_2_humidity
+              above: input_number.office_1_humidity_high
           sequence:
             - scene: scene.office_2_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.office_2_humidity
+              below: input_number.office_1_humidity_low
+          sequence:
+            - scene: scene.office_2_humidifier_on
 
 - id: office_2_humidifier_on_window_state
   alias: Office 2 Humidifier On Window State

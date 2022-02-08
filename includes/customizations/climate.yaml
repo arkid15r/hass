@@ -1,10 +1,10 @@
-binary_sensor.hvac_cooling:
+binary_sensor.hvac_is_cooling:
   icon: mdi:thermometer-minus
 
-binary_sensor.hvac_heating:
+binary_sensor.hvac_is_heating:
   icon: mdi:thermometer-plus
 
-binary_sensor.hvac_running:
+binary_sensor.hvac_is_running:
   icon: mdi:thermometer-lines
 
 binary_sensor.thermal_perimeter_breached:

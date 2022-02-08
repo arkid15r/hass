@@ -1,0 +1,39 @@
+bedroom_1_humidity_high:
+  max: 75
+  min: 25
+  mode: box
+
+bedroom_1_humidity_low:
+  max: 75
+  min: 25
+  mode: box
+
+indoor_garden_humidity_high:
+  max: 75
+  min: 25
+  mode: box
+
+indoor_garden_humidity_low:
+  max: 75
+  min: 25
+  mode: box
+
+office_1_humidity_high:
+  max: 75
+  min: 25
+  mode: box
+
+office_1_humidity_low:
+  max: 75
+  min: 25
+  mode: box
+
+office_2_humidity_high:
+  max: 75
+  min: 25
+  mode: box
+
+office_2_humidity_low:
+  max: 75
+  min: 25
+  mode: box

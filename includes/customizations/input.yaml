@@ -18,14 +18,6 @@ input_boolean.mode_kitchen_tv:
   friendly_name: Kitchen TV Mode
   icon: mdi:television-play
 
-input_boolean.mode_nap:
-  friendly_name: Nap Mode
-  icon: mdi:bed-queen
-
-input_boolean.mode_shower:
-  friendly_name: Shower Mode
-  icon: mdi:shower
-
 input_boolean.mode_spa:
   friendly_name: Spa Mode
   icon: mdi:hot-tub
@@ -85,3 +77,47 @@ input_datetime.night_lights_start_time:
 input_datetime.wake_up_lighting_start_time:
   friendly_name: Wake Up Lighting Start Time
   icon: mdi:alarm
+
+input_number.bedroom_1_humidity_high:
+  friendly_name: Bedroom 1 Humidity High
+  icon: &icon_humidity mdi:water-percent
+  unit_of_measurement: '%'
+
+input_number.bedroom_1_humidity_low:
+  friendly_name: Bedroom 1 Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.indoor_garden_humidity_high:
+  friendly_name: Indoor Garden Humidity High
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.indoor_garden_humidity_low:
+  friendly_name: Indoor Garden Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.office_1_humidity_high:
+  friendly_name: Office 1 Humidity High
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.office_1_humidity_low:
+  friendly_name: Office 1 Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.office_2_humidity_high:
+  friendly_name: Office 2 Humidity High
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.office_2_humidity_low:
+  friendly_name: Office 2 Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_text.weather_sensor:
+  friendly_name: Weather Sensor
+  icon: mdi:weather-pouring
