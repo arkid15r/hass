@@ -7,7 +7,7 @@
       state_change_for_time_seconds: 60
       state_change_from: 'off'
       state_change_to: 'on'
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/Just FYI, the garage door is still open.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garage door is still open.
 
 - id: tts_state_garage_door_open_2m
   alias: '[TTS State: Garage Door Open 2m]'
