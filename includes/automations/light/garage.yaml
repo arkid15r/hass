@@ -24,6 +24,8 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.garage_gate
+      from: ['off', 'on']
+      to: ['off', 'on']
   action:
     - choose:
         - conditions:
@@ -37,8 +39,8 @@
               entity_id: binary_sensor.garage_gate
               state: 'on'
             - condition: time
-              after: '09:00:00'
-              before: '18:00:00'
+              after: input_datetime.morning_lights_end_time
+              before: input_datetime.night_lights_start_time
           sequence:
             - scene: scene.garage_no_lights
 

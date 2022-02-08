@@ -16,10 +16,7 @@
       event_data:
         areas_on:
           - garage
-        text: >
-          <audio
-               src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
-          It seems that the garage gate has been open too long for no reason.<break time="350ms"/>I'm going to go ahead and close the gate. <break time="350ms"/>Watch out!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the garage gate has been open too long for no reason.<break time="350ms"/>I'm going to go ahead and close the gate.<break time="350ms"/>Watch out!
     - delay:
         seconds: 15
     - service: cover.close_cover
