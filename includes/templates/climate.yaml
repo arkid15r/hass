@@ -12,7 +12,7 @@
       state: >
         {{ is_state('binary_sensor.hvac_is_running', 'off') and
            as_timestamp(now()) - as_timestamp(
-            states.binary_sensor.hvac_is_running.last_changed) <= 60
+            states.binary_sensor.hvac_is_running.last_changed) <= 60 * 5
         }}
 
     - name: HVAC Is Heating
@@ -69,7 +69,7 @@
     - name: Thermal Perimeter Breached
       unique_id: thermal_perimeter_breached
       state: >
-        {{  expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
+        {{ expand(state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
             selectattr('state', 'eq', 'on') |
             list |
             count > 0
