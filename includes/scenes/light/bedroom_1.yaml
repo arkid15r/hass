@@ -2,14 +2,14 @@
   entities:
     light.bedroom_1_1:
       brightness: 65
-      color_temp: 500
+      color_temp: 450
       state: 'on'
 
 - name: Bedroom 1 Lights
   entities:
     light.bedroom_1_1:
       brightness: 125
-      color_temp: 500
+      color_temp: 450
       state: 'on'
 
 - name: Bedroom 1 Night Lights
