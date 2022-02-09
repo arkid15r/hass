@@ -1,6 +1,6 @@
 binary_sensor.backyard_motion: &backyard_motion
   friendly_name: Backyard
-  icon: &icon_motion mdi:run
+  icon: &icon_motion mdi:motion-sensor
 
 binary_sensor.backyard_motion_group: *backyard_motion
 
@@ -9,11 +9,11 @@ binary_sensor.bathroom_1_motion: &bathroom_1_motion
   icon: *icon_motion
 
 binary_sensor.bathroom_1_motion_15m:
-  friendly_name: Bathroom 1 Last 15 Minutes
+  friendly_name: Bathroom 1 Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.bathroom_1_motion_5m:
-  friendly_name: Bathroom 1 Last 5 Minutes
+  friendly_name: Bathroom 1 Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.bathroom_1_motion_group: *bathroom_1_motion
@@ -23,11 +23,11 @@ binary_sensor.bathroom_2_motion: &bathroom_2_motion
   icon: *icon_motion
 
 binary_sensor.bathroom_2_motion_15m:
-  friendly_name: Bathroom 2 Last 15 Minutes
+  friendly_name: Bathroom 2 Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.bathroom_2_motion_5m:
-  friendly_name: Bathroom 2 Last 5 Minutes
+  friendly_name: Bathroom 2 Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.bathroom_2_motion_group: *bathroom_2_motion
@@ -37,11 +37,11 @@ binary_sensor.bedroom_1_motion: &bedroom_1_motion
   icon: *icon_motion
 
 binary_sensor.bedroom_1_motion_15m:
-  friendly_name: Bedroom 1 Last 15 Minutes
+  friendly_name: Bedroom 1 Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.bedroom_1_motion_5m:
-  friendly_name: Bedroom 1 Last 5 Minutes
+  friendly_name: Bedroom 1 Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.bedroom_1_motion_group: *bedroom_1_motion
@@ -51,11 +51,11 @@ binary_sensor.corridor_motion: &corridor_motion
   icon: *icon_motion
 
 binary_sensor.corridor_motion_15m:
-  friendly_name: Corridor Last 15 Minutes
+  friendly_name: Corridor Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.corridor_motion_5m:
-  friendly_name: Corridor Last 5 Minutes
+  friendly_name: Corridor Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.corridor_motion_group: *corridor_motion
@@ -71,11 +71,11 @@ binary_sensor.garage_motion: &garage_motion
   icon: *icon_motion
 
 binary_sensor.garage_motion_15m:
-  friendly_name: Garage Last 15 Minutes
+  friendly_name: Garage Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.garage_motion_5m:
-  friendly_name: Garage Last 5 Minutes
+  friendly_name: Garage Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.garage_motion_group: *garage_motion
@@ -85,11 +85,11 @@ binary_sensor.hallway_motion: &hallway_motion
   icon: *icon_motion
 
 binary_sensor.hallway_motion_15m:
-  friendly_name: Hallway Last 15 Minutes
+  friendly_name: Hallway Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.hallway_motion_5m:
-  friendly_name: Hallway Last 5 Minutes
+  friendly_name: Hallway Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.hallway_motion_group: *hallway_motion
@@ -99,11 +99,11 @@ binary_sensor.kitchen_motion: &kitchen_motion
   icon: *icon_motion
 
 binary_sensor.kitchen_motion_15m:
-  friendly_name: Kitchen Last 15 Minutes
+  friendly_name: Kitchen Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.kitchen_motion_5m:
-  friendly_name: Kitchen Last 5 Minutes
+  friendly_name: Kitchen Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.kitchen_motion_group: *kitchen_motion
@@ -113,11 +113,11 @@ binary_sensor.laundry_room_motion: &laundry_room_motion
   icon: *icon_motion
 
 binary_sensor.laundry_room_motion_15m:
-  friendly_name: Laundry Room Last 15 Minutes
+  friendly_name: Laundry Room Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.laundry_room_motion_5m:
-  friendly_name: Laundry Room Last 5 Minutes
+  friendly_name: Laundry Room Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.laundry_room_motion_group: *laundry_room_motion
@@ -127,11 +127,11 @@ binary_sensor.living_room_motion: &living_room_motion
   icon: *icon_motion
 
 binary_sensor.living_room_motion_15m:
-  friendly_name: Living Room Last 15 Minutes
+  friendly_name: Living Room Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.living_room_motion_5m:
-  friendly_name: Living Room Last 5 Minutes
+  friendly_name: Living Room Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.living_room_motion_group: *living_room_motion
@@ -141,11 +141,11 @@ binary_sensor.storage_room_motion: &storage_room_motion
   icon: *icon_motion
 
 binary_sensor.storage_room_motion_15m:
-  friendly_name: Storage Room Last 15 Minutes
+  friendly_name: Storage Room Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.storage_room_motion_5m:
-  friendly_name: Storage Room Last 5 Minutes
+  friendly_name: Storage Room Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.storage_room_motion_group: *storage_room_motion
@@ -155,11 +155,11 @@ binary_sensor.wardrobe_motion: &wardrobe_motion
   icon: *icon_motion
 
 binary_sensor.wardrobe_motion_15m:
-  friendly_name: Wardrobe Last 15 Minutes
+  friendly_name: Wardrobe Motion Last 15 Minutes
   icon: *icon_motion
 
 binary_sensor.wardrobe_motion_5m:
-  friendly_name: Wardrobe Last 5 Minutes
+  friendly_name: Wardrobe Motion Last 5 Minutes
   icon: *icon_motion
 
 binary_sensor.wardrobe_motion_group: *wardrobe_motion
