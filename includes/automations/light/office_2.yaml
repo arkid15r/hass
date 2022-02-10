@@ -22,7 +22,7 @@
 - id: turn_off_idle_office_2_lights
   alias: '[Turn Off Idle Office 2 Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       scene: scene.office_2_no_lights
       target: binary_sensor.office_2_lights

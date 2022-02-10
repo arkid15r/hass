@@ -17,7 +17,7 @@
 - id: turn_off_idle_corridor_lights
   alias: '[Turn Off Idle Corridor Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
       scene: scene.corridor_no_lights

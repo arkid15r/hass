@@ -20,7 +20,7 @@
 - id: turn_off_idle_bathroom_1_vent
   alias: '[Turn Off Idle Bathroom 1 Vent]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
       run_if: binary_sensor.bathroom_1_mode_lock

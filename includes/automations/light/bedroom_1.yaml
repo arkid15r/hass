@@ -19,7 +19,7 @@
 - id: turn_off_idle_bedroom_1_lights
   alias: '[Turn Off Idle Bedroom 1 Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       check_frequency_minutes: /1
       run_if: binary_sensor.bedroom_1_mode_lock

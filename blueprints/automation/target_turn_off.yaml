@@ -107,7 +107,7 @@ condition:
       - '{{ watcher == none }}'
       - >
         {{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >=
-             watcher_inactive_time_seconds|float
+            watcher_inactive_time_seconds | float
         }}
 
   - condition: state

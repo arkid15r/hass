@@ -14,7 +14,7 @@
 - id: turn_off_idle_wardrobe_lights
   alias: '[Turn Off Idle Wardrobe Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
       scene: scene.wardrobe_no_lights

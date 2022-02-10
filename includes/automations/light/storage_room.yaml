@@ -27,7 +27,7 @@
 - id: turn_off_idle_storage_room_lights
   alias: '[Turn Off Idle Storage Room Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       scene: scene.storage_room_no_lights
       target: binary_sensor.storage_room_lights

@@ -19,7 +19,7 @@
 - id: turn_off_idle_bathroom_1_lights
   alias: '[Bathroom 1 Turn Off Idle Lights]'
   use_blueprint:
-    path: idle_target_turn_off.yaml
+    path: target_turn_off.yaml
     input:
       run_if: binary_sensor.bathroom_1_mode_lock
       run_if_state: 'off'
