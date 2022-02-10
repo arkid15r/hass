@@ -21,6 +21,8 @@ blueprint:
       - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
       - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be to run the automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
 
+  source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/tts_state.yaml
+
   domain: automation
   input:
     state_change_entity:

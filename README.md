@@ -1,6 +1,6 @@
 # Home Assistant Configuration
 
-[Home Assistant](https://www.home-assistant.io/) related stuff. Scripts,
+[Home Assistant](https://www.home-assistant.io/) scripts,
 blueprints, automations, scenes, sensors, configs.
 
 #### Description
@@ -39,40 +39,49 @@ From /config/includes/binary_sensors.yaml
       name: AM
       icon: mdi:clock-time-twelve-outline
       state: >
-        {{ now().strftime('%p')|lower == 'am' }}
+        {{ now().strftime('%p') | lower == 'am' }}
 ```
 
 From /config/includes/templates/motion.yaml
 
 ```yaml
 - binary_sensor:
-    - unique_id: motion_bathroom_1_15m
-      name: Motion Bathroom 1 15m
+    - name: Bedroom 1 Motion
+      unique_id: bedroom_1_motion
+      state: >
+        {{ is_state('binary_sensor.bedroom_1_motion_group', 'on') }}
+
+    - name: Bedroom 1 Motion 15m
+      unique_id: bedroom_1_motion_15m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-             states.group.motion_bathroom_1.last_changed) < 900
+            states.binary_sensor.bedroom_1_motion_group.last_changed) < 900
         }}
 
-    - unique_id: motion_bathroom_1_5m
-      name: Motion Bathroom 1 5m
+    - name: Bedroom 1 Motion 5m
+      unique_id: bedroom_1_motion_5m
       state: >
         {{ as_timestamp(now()) - as_timestamp(
-             states.group.motion_bathroom_1.last_changed) < 300
+            states.binary_sensor.bedroom_1_motion_group.last_changed) < 300
         }}
 ```
 
-from /config/includes/groups/motion.yaml
+from /config/includes/binary_sensors/motion.yaml
 
 ```yaml
-motion_front_yard:
-  name: Front Yard Motion
+- name: Front Yard Motion Group
+  device_class: motion
+  platform: group
+  unique_id: front_yard_motion_group
   entities:
     - binary_sensor.doorbell_motion
     - binary_sensor.front_yard_camera_1_motion
     - binary_sensor.front_yard_camera_2_motion
 
-motion_garage:
-  name: Garage Motion
+- name: Garage Motion Group
+  device_class: motion
+  platform: group
+  unique_id: garage_motion_group
   entities:
     - binary_sensor.garage_motion_sensor_1_motion
     - binary_sensor.garage_motion_sensor_2_motion
@@ -82,8 +91,8 @@ motion_garage:
 from /config/configuration.yaml
 
 ```yaml
-binary_sensor: !include includes/binary_sensors.yaml
-group: !include_dir_merge_named includes/groups
+binary_sensor: !include_dir_merge_list includes/binary_sensors
+group: !include includes/groups.yaml
 template: !include_dir_merge_list includes/templates
 ```
 
@@ -122,31 +131,39 @@ Each area behavior is configured in AppDaemon apps.yaml.
 
 ```yaml
 env:
-  quite_time: binary_sensor.quite_time
-  rules:
-    bathroom_1:
+  play_always:
+    normal_time: []
+    quite_time:
+      - bedroom_1
+  play_default:
+    normal_time:
+      - corridor
+    quite_time: []
+quite_time: binary_sensor.quite_time
+rules:
+  bathroom_1:
+    if_not:
       conditions:
-        - binary_sensor.motion_bathroom_1_5m
-        - group.light_bathroom_1
-      target: media_player.bathroom_1_echo
-      if_not:
-        conditions:
-          - binary_sensor.bathroom_1_door
-        target: media_player.bedroom_1_echo
-    bathroom_2:
+        - binary_sensor.bathroom_1_door
+      target: media_player.bedroom_1_echo
+    conditions:
+      - binary_sensor.bathroom_1_lights
+      - binary_sensor.bathroom_1_motion_5m
+    target: media_player.bathroom_1_echo
+  bathroom_2:
+    if_not:
       conditions:
-        - binary_sensor.motion_bathroom_2_5m
-        - group.light_bathroom_2
-      target: media_player.bathroom_2_echo
-      if_not:
-        conditions:
-          - binary_sensor.bathroom_2_door
-        target: media_player.living_room_echo
-    garage:
-      conditions:
-        - binary_sensor.motion_garage_5m
-        - group.light_garage
-      target: media_player.garage_echo
+        - binary_sensor.bathroom_2_door
+      target: media_player.living_room_echo
+    conditions:
+      - binary_sensor.bathroom_2_lights
+      - binary_sensor.bathroom_2_motion_5m
+    target: media_player.bathroom_2_echo
+  garage:
+    conditions:
+      - binary_sensor.garage_lights
+      - binary_sensor.garage_motion_5m
+    target: media_player.garage_echo
 ```
 
 ### - mp_volume.py
@@ -169,7 +186,7 @@ AREAS = (
 
 ## Blueprints
 
-### - idle_target_turn_off.yaml
+### - target_turn_off.yaml
 
 The automation periodically checks the target area and loads a specific scene to
 turn off the target if no activity has been detected for a specified amount of
@@ -189,3 +206,8 @@ Plays TTS message upon entity state change event.
 The automation uses
 [tts.py](https://github.com/arkid15r/home-assistant-config/blob/main/appdaemon/apps/tts.py)
 to play TTS messages.
+
+### - wake_up_lighting.yaml
+
+Imitates sunrise lighting using a light device with brightness and color
+temperature control capability.

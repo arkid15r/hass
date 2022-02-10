@@ -21,6 +21,8 @@ blueprint:
       - **Duration** (*default*: 30, *unit*: minutes): an imitation transition process duration in minutes.
       - **Turn Off Delay** (*default*: 20, *unit*: minutes): a delay after the imitation process completion. This is how long the `Light Entity` stays in `End Brightness` / `End Color Temperature` state before it's turned off.
 
+  source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/wake_up_lighting.yaml
+
   domain: automation
   input:
     light_entity:
@@ -116,7 +118,7 @@ blueprint:
           mode: slider
 
 variables:
-  day_of_week: '{{ as_timestamp(now()) | timestamp_custom("%a") | lower }}'
+  day_of_week: '{{ now().strftime("%a") | lower }}'
   duration_minutes: !input duration_minutes
   duration_seconds: '{{ duration_minutes * 60 }}'
   run_on_days_of_week: !input run_on_days_of_week

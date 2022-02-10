@@ -25,6 +25,8 @@ blueprint:
       - **Scene #3 Start Time** (*optional*): `Scene #3` time range start.
       - **Scene #3 End Time** (*optional*): `Scene #3` time range end.
 
+  source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/scene_automation.yaml
+
   domain: automation
   input:
     watcher:
