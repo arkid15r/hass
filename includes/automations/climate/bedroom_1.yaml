@@ -11,6 +11,9 @@
     - condition: state
       entity_id: binary_sensor.bedroom_1_window
       state: 'off'
+    - condition: time
+      after: input_datetime.night_lights_start_time
+      before: input_datetime.morning_lights_end_time
   action:
     - choose:
         - conditions:
