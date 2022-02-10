@@ -2,7 +2,7 @@
   entities:
     light.corridor_2:
       brightness: 2
-      color_temp: 425
+      color_temp: 400
       state: 'on'
 
 - name: Corridor Night Lights
