@@ -5,6 +5,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.temperature') |
+            reject('eq', undefined) |
             map('float') |
             list |
             average |
@@ -16,7 +17,9 @@
       unit_of_measurement: °F
       state: >
         {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast.0.temperature') |
+            map(attribute='attributes.forecast') |
+            reject('eq', undefined) |
+            map(attribute='0.temperature') |
             map('float') |
             list |
             average |
@@ -29,6 +32,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.humidity') |
+            reject('eq', undefined) |
             map('float') |
             list |
             average |
@@ -40,7 +44,9 @@
       unit_of_measurement: °F
       state: >
         {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast.0.templow') |
+            map(attribute='attributes.forecast') |
+            reject('eq', undefined) |
+            map(attribute='0.templow') |
             map('float') |
             list |
             average |
@@ -72,6 +78,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.wind_speed') |
+            reject('eq', undefined) |
             map('float') |
             list |
             average |
@@ -83,7 +90,9 @@
       unit_of_measurement: mph
       state: >
         {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast.0.wind_speed') |
+            map(attribute='attributes.forecast') |
+            reject('eq', undefined) |
+            map(attribute='0.wind_speed') |
             map('float') |
             list |
             average |
