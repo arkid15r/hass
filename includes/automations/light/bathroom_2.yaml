@@ -6,13 +6,13 @@
       default_scene_on: scene.bathroom_2_lights
       default_scene_off: scene.bathroom_2_no_lights
       scene_1: scene.bathroom_2_faded_lights
-      scene_1_start_time: '07:00:00'
-      scene_1_end_time: '08:00:00'
+      scene_1_time_on: '07:00:00'
+      scene_1_time_off: '08:00:00'
       scene_2: scene.bathroom_2_faded_lights
-      scene_2_start_time: '20:00:00'
-      scene_2_end_time: '22:30:00'
-      scene_3_start_time: '22:30:00'
-      scene_3_end_time: '07:00:00'
+      scene_2_time_on: '20:00:00'
+      scene_2_time_off: '22:30:00'
+      scene_3_time_on: '22:30:00'
+      scene_3_time_off: '07:00:00'
       scene_3: scene.bathroom_2_night_lights
       watcher: binary_sensor.bathroom_2_motion
       watcher_inactive_time_seconds: 180

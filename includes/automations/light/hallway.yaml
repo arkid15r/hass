@@ -6,11 +6,11 @@
       default_scene_on: scene.hallway_faded_lights
       default_scene_off: scene.hallway_no_lights
       scene_1: scene.hallway_no_lights
-      scene_1_start_time: input_datetime.morning_lights_end_time
-      scene_1_end_time: input_datetime.night_lights_start_time
+      scene_1_time_on: input_datetime.morning_lights_time_off
+      scene_1_time_off: input_datetime.night_lights_time_on
       scene_2: scene.hallway_night_lights
-      scene_2_start_time: '22:00:00'
-      scene_2_end_time: '06:30:00'
+      scene_2_time_on: '22:00:00'
+      scene_2_time_off: '06:30:00'
       run_if: binary_sensor.hallway_mode_lock
       run_if_state: 'off'
       watcher:

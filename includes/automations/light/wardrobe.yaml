@@ -6,8 +6,8 @@
       default_scene_off: scene.wardrobe_no_lights
       default_scene_on: scene.wardrobe_lights
       scene_1: scene.wardrobe_night_lights
-      scene_1_start_time: '22:00:00'
-      scene_1_end_time: '07:30:00'
+      scene_1_time_on: '22:00:00'
+      scene_1_time_off: '07:30:00'
       watcher: binary_sensor.wardrobe_motion
       watcher_inactive_time_seconds: 90
 

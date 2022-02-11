@@ -8,14 +8,14 @@
       run_if: binary_sensor.office_1_mode_lock
       run_if_state: 'off'
       scene_1: scene.office_1_lights
-      scene_1_start_time: input_datetime.night_lights_start_time
-      scene_1_end_time: '20:00:00'
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_1_time_off: '20:00:00'
       scene_2: scene.office_1_faded_lights
-      scene_2_start_time: '20:00:00'
-      scene_2_end_time: '21:00:00'
+      scene_2_time_on: '20:00:00'
+      scene_2_time_off: '21:00:00'
       scene_3: scene.office_1_night_lights
-      scene_3_start_time: '21:00:00'
-      scene_3_end_time: '22:00:00'
+      scene_3_time_on: '21:00:00'
+      scene_3_time_off: '22:00:00'
       watcher: binary_sensor.office_1_motion
       watcher_inactive_time_seconds: 600
 

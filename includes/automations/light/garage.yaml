@@ -39,8 +39,8 @@
               entity_id: binary_sensor.garage_gate
               state: 'on'
             - condition: time
-              after: input_datetime.morning_lights_end_time
-              before: input_datetime.night_lights_start_time
+              after: input_datetime.morning_lights_time_off
+              before: input_datetime.night_lights_time_on
           sequence:
             - scene: scene.garage_no_lights
 

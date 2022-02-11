@@ -1,0 +1,69 @@
+- id: living_room_new_year_lights
+  alias: '[Living Room New Year Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.living_room_new_year_no_lights
+      default_scene_on: scene.living_room_new_year_no_lights
+      run_if: binary_sensor.kitchen_mode_lock
+      run_if_state: 'off'
+      scene_1: scene.living_room_new_year_night_lights
+      scene_1_time_on: '18:30:00'
+      scene_1_time_off: '22:30:00'
+      scene_2: scene.living_room_new_year_no_lights
+      scene_2_time_on: '22:30:00'
+      scene_2_time_off: '06:30:00'
+      watcher: binary_sensor.living_room_new_year_lights_mode
+      watcher_inactive_time_seconds: 300
+
+- id: turn_off_idle_living_room_new_year_lights
+  alias: '[Turn Off Idle Living Room New Year Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.living_room_new_year_lights_mode
+      run_if_state: 'off'
+      watcher_inactive_time_seconds: 600
+      watcher: binary_sensor.living_room_new_year_lights_mode
+      scene: scene.living_room_new_year_no_lights
+      target: group.living_room_new_year_lights
+
+- id: turn_off_living_room_movie_night_lights
+  alias: 'Turn Off: Living Room Movie Night Lights'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_motion
+      from: 'on'
+      to: 'off'
+      for:
+        minutes: 2
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_tv
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.mode_bar
+      state: 'off'
+    - condition: state
+      entity_id: light.living_room_lamp
+      state: 'on'
+  action:
+    - scene: scene.living_room_no_lights
+
+- id: turn_on_living_room_movie_night_lights_on_motion
+  alias: Turn On Living Room Movie Night Lights On Motion
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_motion
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_tv
+      state: 'on'
+    - condition: time
+      after: input_datetime.movie_night_time_on
+      before: input_datetime.movie_night_time_off
+  action:
+    - scene: scene.living_room_movie_night_lights

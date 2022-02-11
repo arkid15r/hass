@@ -15,15 +15,15 @@ blueprint:
       - **Watcher Inactive Time** (*default*: 60, *unit*: seconds): an amount of time `Watcher` required to stay in 'off' state in order to get the `Default Off Scene` activated.
       - **Default On Scene**: a scene to activate after the `Watcher` switches to 'on' state.
       - **Default Off Scene** (*optional*): an optional scene to activate after the `Watcher` switches to 'off' state and stays in it for at least `Watcher Inactive Time`.
-      - **Scene #1** (*optional*): a scene that should be activated within `Scene #1 Start Time` - `Scene #1 End Time` time range.
-      - **Scene #1 Start Time** (*optional*): `Scene #1` time range start.
-      - **Scene #1 End Time** (*optional*): `Scene #1` time range end.
-      - **Scene #2** (*optional*): a scene that should be activated within `Scene #2 Start Time` - `Scene #2 End Time` time range.
-      - **Scene #2 Start Time** (*optional*): `Scene #2` time range start.
-      - **Scene #2 End Time** (*optional*): `Scene #2` time range end.
-      - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Start Time` - `Scene #3 End Time` time range.
-      - **Scene #3 Start Time** (*optional*): `Scene #3` time range start.
-      - **Scene #3 End Time** (*optional*): `Scene #3` time range end.
+      - **Scene #1** (*optional*): a scene that should be activated within `Scene #1 Time On` - `Scene #1 Time Off` time range.
+      - **Scene #1 Time On** (*optional*): `Scene #1` time range start.
+      - **Scene #1 Time Off** (*optional*): `Scene #1` time range end.
+      - **Scene #2** (*optional*): a scene that should be activated within `Scene #2 Time On` - `Scene #2 Time Off` time range.
+      - **Scene #2 Time On** (*optional*): `Scene #2` time range start.
+      - **Scene #2 Time Off** (*optional*): `Scene #2` time range end.
+      - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Time On` - `Scene #3 Time Off` time range.
+      - **Scene #3 Time On** (*optional*): `Scene #3` time range start.
+      - **Scene #3 Time Off** (*optional*): `Scene #3` time range end.
 
   source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/scene_automation.yaml
 
@@ -72,17 +72,17 @@ blueprint:
         entity:
           domain: scene
 
-    scene_1_start_time:
-      name: 'Scene #1 Start Time (optional)'
-      description: 'A start time for the Scene #1'
+    scene_1_time_on:
+      name: 'Scene #1 Time On (optional)'
+      description: 'A Time On for the Scene #1'
       default: '00:00:00'
       selector:
         entity:
           domain: input_datetime
 
-    scene_1_end_time:
-      name: 'Scene #1 End Time (optional)'
-      description: 'An end time for the Scene #1'
+    scene_1_time_off:
+      name: 'Scene #1 Time Off (optional)'
+      description: 'An Time Off for the Scene #1'
       default: '00:00:00'
       selector:
         entity:
@@ -96,17 +96,17 @@ blueprint:
         entity:
           domain: scene
 
-    scene_2_start_time:
-      name: 'Scene #2 Start Time (optional)'
-      description: 'A start time for the Scene #2'
+    scene_2_time_on:
+      name: 'Scene #2 Time On (optional)'
+      description: 'A Time On for the Scene #2'
       default: '00:00:00'
       selector:
         entity:
           domain: input_datetime
 
-    scene_2_end_time:
-      name: 'Scene #2 End Time (optional)'
-      description: 'An end time for the Scene #2'
+    scene_2_time_off:
+      name: 'Scene #2 Time Off (optional)'
+      description: 'An Time Off for the Scene #2'
       default: '00:00:00'
       selector:
         entity:
@@ -120,17 +120,17 @@ blueprint:
         entity:
           domain: scene
 
-    scene_3_start_time:
-      name: 'Scene #3 Start Time (optional)'
-      description: 'A start time for the Scene #3'
+    scene_3_time_on:
+      name: 'Scene #3 Time On (optional)'
+      description: 'A Time On for the Scene #3'
       default: '00:00:00'
       selector:
         entity:
           domain: input_datetime
 
-    scene_3_end_time:
-      name: 'Scene #3 End Time (optional)'
-      description: 'An end time for the Scene #3'
+    scene_3_time_off:
+      name: 'Scene #3 Time Off (optional)'
+      description: 'An Time Off for the Scene #3'
       default: '00:00:00'
       selector:
         entity:
@@ -199,8 +199,8 @@ action:
               - conditions:
                   - "{{ scene_1 != 'scene.none' }}"
                   - condition: time
-                    after: !input scene_1_start_time
-                    before: !input scene_1_end_time
+                    after: !input scene_1_time_on
+                    before: !input scene_1_time_off
                 sequence:
                   - service: scene.turn_on
                     target:
@@ -209,8 +209,8 @@ action:
               - conditions:
                   - "{{ scene_2 != 'scene.none' }}"
                   - condition: time
-                    after: !input scene_2_start_time
-                    before: !input scene_2_end_time
+                    after: !input scene_2_time_on
+                    before: !input scene_2_time_off
                 sequence:
                   - service: scene.turn_on
                     target:
@@ -219,8 +219,8 @@ action:
               - conditions:
                   - "{{ scene_3 != 'scene.none' }}"
                   - condition: time
-                    after: !input scene_3_start_time
-                    before: !input scene_3_end_time
+                    after: !input scene_3_time_on
+                    before: !input scene_3_time_off
                 sequence:
                   - service: scene.turn_on
                     target:

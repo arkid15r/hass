@@ -1,4 +1,4 @@
-- id: set_night_lights_start_time
+- id: set_night_lights_time_on
   alias: Set Night Lights Start Time
   trigger:
     - platform: time
@@ -7,14 +7,14 @@
   action:
     - service: input_datetime.set_datetime
       target:
-        entity_id: input_datetime.night_lights_start_time
+        entity_id: input_datetime.night_lights_time_on
       data:
         time: >
           {{ (as_timestamp(state_attr('sun.sun', 'next_setting')) |
               int - 15 * 60) | timestamp_custom('%H:%M')
           }}
 
-- id: set_morning_lights_end_time
+- id: set_morning_lights_time_off
   alias: Set Morning Lights End Time
   trigger:
     - platform: time
@@ -23,7 +23,7 @@
   action:
     - service: input_datetime.set_datetime
       target:
-        entity_id: input_datetime.morning_lights_end_time
+        entity_id: input_datetime.morning_lights_time_off
       data:
         time: >
           {{ (as_timestamp(state_attr('sun.sun', 'next_rising')) |
