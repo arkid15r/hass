@@ -50,6 +50,18 @@ input_datetime.dining_area_morning_lights_time_on:
   friendly_name: Dining Area Morning Lights On
   icon: mdi:clock-time-seven-outline
 
+input_datetime.hvac_morning_mode_time_off:
+  friendly_name: HVAC Morning Mode Time Off
+
+input_datetime.hvac_morning_mode_time_on:
+  friendly_name: HVAC Morning Mode Time On
+
+input_datetime.hvac_night_mode_time_off:
+  friendly_name: HVAC Night Mode Time Off
+
+input_datetime.hvac_night_mode_time_on:
+  friendly_name: HVAC Night Mode Time On
+
 input_datetime.indoor_garden_time_off:
   friendly_name: Indoor Garden Turn Off Time
   icon: mdi:clock-time-ten-outline
@@ -58,23 +70,23 @@ input_datetime.indoor_garden_time_on:
   friendly_name: Indoor Garden Turn On Time
   icon: mdi:clock-time-seven-outline
 
-input_datetime.morning_lights_end_time:
+input_datetime.morning_lights_time_off:
   friendly_name: Morning Lights End Time
   icon: mdi:lightbulb-off
 
-input_datetime.movie_night_end_time:
+input_datetime.movie_night_time_off:
   friendly_name: Movie Night End Time
   icon: mdi:television-off
 
-input_datetime.movie_night_start_time:
+input_datetime.movie_night_time_on:
   friendly_name: Movie Night Start Time
   icon: mdi:television
 
-input_datetime.night_lights_start_time:
+input_datetime.night_lights_time_on:
   friendly_name: Night Lights Start Time
   icon: mdi:lightbulb-on
 
-input_datetime.wake_up_lighting_start_time:
+input_datetime.wake_up_lighting_time_on:
   friendly_name: Wake Up Lighting Start Time
   icon: mdi:alarm
 
@@ -87,6 +99,16 @@ input_number.bedroom_1_humidity_low:
   friendly_name: Bedroom 1 Humidity Low
   icon: *icon_humidity
   unit_of_measurement: '%'
+
+input_number.bedroom_1_temperature_high:
+  friendly_name: Bedroom 1 Temperature High
+  icon: &icon_temperature_high mdi:thermometer-plus
+  unit_of_measurement: °F
+
+input_number.bedroom_1_temperature_low:
+  friendly_name: Bedroom 1 Temperature Low
+  icon: &icon_temperature_low mdi:thermometer-minus
+  unit_of_measurement: °F
 
 input_number.indoor_garden_humidity_high:
   friendly_name: Indoor Garden Humidity High
@@ -108,6 +130,11 @@ input_number.office_1_humidity_low:
   icon: *icon_humidity
   unit_of_measurement: '%'
 
+input_number.office_1_temperature_low:
+  friendly_name: Office 1 Temperature Low
+  icon: *icon_temperature_low
+  unit_of_measurement: °F
+
 input_number.office_2_humidity_high:
   friendly_name: Office 2 Humidity High
   icon: *icon_humidity
@@ -117,6 +144,11 @@ input_number.office_2_humidity_low:
   friendly_name: Office 2 Humidity Low
   icon: *icon_humidity
   unit_of_measurement: '%'
+
+input_number.office_2_temperature_low:
+  friendly_name: Office 2 Temperature Low
+  icon: *icon_temperature_low
+  unit_of_measurement: °F
 
 input_text.weather_sensor:
   friendly_name: Weather Sensor

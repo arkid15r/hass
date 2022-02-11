@@ -14,6 +14,22 @@ dining_area_morning_lights_time_on:
   has_date: false
   has_time: true
 
+hvac_morning_mode_time_off:
+  has_date: false
+  has_time: true
+
+hvac_morning_mode_time_on:
+  has_date: false
+  has_time: true
+
+hvac_night_mode_time_off:
+  has_date: false
+  has_time: true
+
+hvac_night_mode_time_on:
+  has_date: false
+  has_time: true
+
 indoor_garden_time_off:
   has_date: false
   has_time: true
@@ -22,22 +38,22 @@ indoor_garden_time_on:
   has_date: false
   has_time: true
 
-morning_lights_end_time:
+morning_lights_time_off:
   has_date: false
   has_time: true
 
-movie_night_end_time:
+movie_night_time_off:
   has_date: false
   has_time: true
 
-movie_night_start_time:
+movie_night_time_on:
   has_date: false
   has_time: true
 
-night_lights_start_time:
+night_lights_time_on:
   has_date: false
   has_time: true
 
-wake_up_lighting_start_time:
+wake_up_lighting_time_on:
   has_date: false
   has_time: true
