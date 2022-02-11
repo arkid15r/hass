@@ -61,7 +61,7 @@
       state: 'off'
     - condition: time
       after: input_datetime.hvac_night_mode_time_on
-      before: input_datetime.hvac_morning_mode_time_on
+      before: input_datetime.hvac_night_mode_time_off
   action:
     - choose:
         - conditions:
