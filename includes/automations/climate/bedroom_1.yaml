@@ -42,6 +42,9 @@
             - condition: state
               entity_id: binary_sensor.bedroom_1_window
               state: 'off'
+            - condition: time
+              after: input_datetime.night_lights_time_on
+              before: input_datetime.morning_lights_time_off
           sequence:
             - scene: scene.bedroom_1_humidifier_on
         - conditions:
