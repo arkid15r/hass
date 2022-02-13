@@ -97,6 +97,12 @@
                 entity_id: climate.thermostat
                 preset_mode: Up
       default:
+        - condition: numeric_state
+          entity_id: sensor.bedroom_1_temperature
+          above: input_number.bedroom_1_temperature_low
+        - condition: numeric_state
+          entity_id: sensor.bedroom_1_temperature
+          below: input_number.bedroom_1_temperature_high
         - condition: template
           value_template: >
             {{ not is_state('sensor.hvac_preset_mode', 'Sleep') }}
