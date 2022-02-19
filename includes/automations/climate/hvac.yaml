@@ -120,6 +120,7 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.thermal_perimeter
+      from: ['off', 'on']
       to: ['off', 'on']
       for:
         seconds: 30
