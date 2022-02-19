@@ -76,3 +76,15 @@
                 seconds: 10
           sequence:
             - scene: scene.office_1_humidifier_on
+
+- id: turn_off_idle_office_1_heating_mat
+  alias: '[Turn Off Idle Office 1 Heating Mat]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      scene: scene.office_1_heating_mat_off
+      target: switch.office_1_heating_mat
+      target_active_time_seconds: 900
+      watcher: binary_sensor.office_1_motion
+      watcher_inactive_time_seconds: 300
