@@ -3,10 +3,10 @@
   use_blueprint:
     path: scene_automation.yaml
     input:
-      run_if: binary_sensor.kitchen_mode_lock
-      run_if_state: 'off'
       default_scene_on: scene.kitchen_max_lights
       default_scene_off: scene.kitchen_no_lights
+      run_if: binary_sensor.kitchen_mode_lock
+      run_if_state: 'off'
       scene_1: scene.kitchen_faded_lights
       scene_1_time_on: '20:30:00'
       scene_1_time_off: '22:00:00'
