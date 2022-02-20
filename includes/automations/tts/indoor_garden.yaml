@@ -5,6 +5,9 @@
       at: '20:00:00'
   condition:
     - condition: state
+      entity_id: binary_sensor.indoor_garden
+      state: 'on'
+    - condition: state
       entity_id: input_boolean.play_tts_messages
       state: 'on'
   action:
