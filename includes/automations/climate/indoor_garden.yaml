@@ -95,6 +95,11 @@
             - scene: scene.indoor_garden_humidifier_off
             - scene: scene.indoor_garden_off
             - scene: scene.indoor_garden_vent_off
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.indoor_garden
+                  state: 'off'
             - event: tts
               event_data:
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle was out of schedule. Please make sure it's in an expected state as soon as possible. It's important. Thank you!
@@ -110,6 +115,11 @@
           sequence:
             - scene: scene.indoor_garden_heater_on
             - scene: scene.indoor_garden_on
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.indoor_garden
+                  state: 'on'
             - event: tts
               event_data:
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle was out of schedule. Please make sure it's in an expected state as soon as possible. It's important. Thank you!
@@ -121,7 +131,7 @@
           conditions:
             - condition: state
               entity_id: switch.indoor_garden
-              state: 'unavailable'
+              state: ['off', 'on']
         - event: tts
           event_data:
             text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle is out of schedule. Please fix the issue as soon as possible. It's important. Thank you!
