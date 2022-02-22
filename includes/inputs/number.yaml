@@ -57,3 +57,8 @@ office_2_temperature_low:
   max: 80
   min: 50
   mode: box
+
+scene_reload_delay:
+  max: 10
+  min: 1
+  mode: box

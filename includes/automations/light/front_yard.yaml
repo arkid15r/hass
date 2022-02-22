@@ -25,19 +25,31 @@
             - condition: sun
               after: sunset
           sequence:
-            - scene: scene.front_yard_night_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.front_yard_night_lights
+            - delay: input_number.scene_reload_delay
+            - service: scene.turn_on
+              target:
+                entity_id: scene.front_yard_night_lights
         - conditions:
             - condition: sun
               before: sunrise
           sequence:
-            - scene: scene.front_yard_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.front_yard_no_lights
+            - delay: input_number.scene_reload_delay
+            - service: scene.turn_on
+              target:
+                entity_id: scene.front_yard_no_lights
 
 - id: front_yard_lights_on_switch_state_on
   alias: Front Yard Lights On Switch State On
   use_blueprint:
     path: scene_automation.yaml
     input:
-      watcher: binary_sensor.front_yard_lights
-      watcher_inactive_time_seconds: 0
       default_scene_on: scene.front_yard_night_lights
       default_scene_off: scene.front_yard_no_lights
+      watcher: binary_sensor.front_yard_lights
+      watcher_inactive_time_seconds: 0

@@ -189,15 +189,19 @@ action:
           - service: scene.turn_on
             target:
               entity_id: !input default_scene_off
+          - delay: input_number.scene_reload_delay
+          - service: scene.turn_on
+            target:
+              entity_id: !input default_scene_off
 
       # The `Watcher` goes 'on'.
       - conditions:
           - condition: template
-            value_template: "{{ trigger.to_state.state == 'on' }}"
+            value_template: '{{ trigger.to_state.state == "on" }}'
         sequence:
           - choose:
               - conditions:
-                  - "{{ scene_1 != 'scene.none' }}"
+                  - '{{ scene_1 != "scene.none" }}'
                   - condition: time
                     after: !input scene_1_time_on
                     before: !input scene_1_time_off
@@ -205,9 +209,13 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_1
+                  - delay: input_number.scene_reload_delay
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_1
 
               - conditions:
-                  - "{{ scene_2 != 'scene.none' }}"
+                  - '{{ scene_2 != "scene.none" }}'
                   - condition: time
                     after: !input scene_2_time_on
                     before: !input scene_2_time_off
@@ -215,9 +223,13 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_2
+                  - delay: input_number.scene_reload_delay
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_2
 
               - conditions:
-                  - "{{ scene_3 != 'scene.none' }}"
+                  - '{{ scene_3 != "scene.none" }}'
                   - condition: time
                     after: !input scene_3_time_on
                     before: !input scene_3_time_off
@@ -225,8 +237,16 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_3
+                  - delay: input_number.scene_reload_delay
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_3
 
             default:
+              - service: scene.turn_on
+                target:
+                  entity_id: !input default_scene_on
+              - delay: input_number.scene_reload_delay
               - service: scene.turn_on
                 target:
                   entity_id: !input default_scene_on

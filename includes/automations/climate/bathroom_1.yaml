@@ -15,7 +15,9 @@
       entity_id: switch.bathroom_1_vent
       state: 'on'
   action:
-    - scene: scene.bathroom_1_vent_off
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bathroom_1_vent_off
 
 - id: turn_off_idle_bathroom_1_vent
   alias: '[Turn Off Idle Bathroom 1 Vent]'
@@ -51,7 +53,9 @@
       entity_id: binary_sensor.bathroom_1_mode_lock
       state: 'off'
   action:
-    - scene: scene.bathroom_1_vent_on
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bathroom_1_vent_on
 
 - id: turn_on_bathroom_1_vent_on_motion
   alias: Turn On Bathroom 1 Vent On Motion
@@ -74,4 +78,6 @@
       after: '07:30:00'
       before: '22:30:00'
   action:
-    - scene: scene.bathroom_1_vent_on
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bathroom_1_vent_on

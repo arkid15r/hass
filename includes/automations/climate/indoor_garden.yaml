@@ -18,12 +18,16 @@
             - condition: template
               value_template: '{{ humidity > humidity_low + 5 }}'
           sequence:
-            - scene: scene.indoor_garden_humidifier_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_humidifier_off
         - conditions:
             - condition: template
               value_template: '{{ humidity < humidity_low }}'
           sequence:
-            - scene: scene.indoor_garden_humidifier_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_humidifier_on
 
 - id: indoor_garden_schedule
   alias: Indoor Garden Schedule
@@ -39,17 +43,29 @@
               after: input_datetime.indoor_garden_time_on
               before: input_datetime.indoor_garden_time_off
           sequence:
-            - scene: scene.indoor_garden_heater_on
-            - scene: scene.indoor_garden_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_heater_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_on
         - conditions:
             - condition: time
               after: input_datetime.indoor_garden_time_off
               before: input_datetime.indoor_garden_time_on
           sequence:
-            - scene: scene.indoor_garden_heater_off
-            - scene: scene.indoor_garden_humidifier_off
-            - scene: scene.indoor_garden_off
-            - scene: scene.indoor_garden_vent_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_heater_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_humidifier_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_vent_off
 
 - id: indoor_garden_schedule_enforcement
   alias: Indoor Garden Schedule Enforcement
@@ -91,10 +107,18 @@
               after: input_datetime.indoor_garden_time_off
               before: input_datetime.indoor_garden_time_on
           sequence:
-            - scene: scene.indoor_garden_heater_off
-            - scene: scene.indoor_garden_humidifier_off
-            - scene: scene.indoor_garden_off
-            - scene: scene.indoor_garden_vent_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_heater_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_humidifier_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_vent_off
             - delay: 5
             - condition: not
               conditions:
@@ -114,8 +138,12 @@
               after: input_datetime.indoor_garden_time_on
               before: input_datetime.indoor_garden_time_off
           sequence:
-            - scene: scene.indoor_garden_heater_on
-            - scene: scene.indoor_garden_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_heater_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_on
             - delay: 5
             - condition: not
               conditions:
@@ -158,9 +186,13 @@
             - condition: template
               value_template: '{{ humidity > humidity_high }}'
           sequence:
-            - scene: scene.indoor_garden_vent_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_vent_on
         - conditions:
             - condition: template
               value_template: '{{ humidity < humidity_high - 5 }}'
           sequence:
-            - scene: scene.indoor_garden_vent_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_vent_off

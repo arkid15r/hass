@@ -16,13 +16,17 @@
               entity_id: binary_sensor.office_1_motion_15m
               state: 'on'
           sequence:
-            - scene: scene.office_1_heating_mat_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_heating_mat_on
         - conditions:
             - condition: state
               entity_id: binary_sensor.office_1_motion_15m
               state: 'off'
           sequence:
-            - scene: scene.office_1_heating_mat_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_heating_mat_off
 
 - id: office_1_humidifier
   alias: Office 1 Humidifier
@@ -47,13 +51,17 @@
               entity_id: sensor.office_1_humidity
               above: input_number.office_1_humidity_high
           sequence:
-            - scene: scene.office_1_humidifier_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_off
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_1_humidity
               below: input_number.office_1_humidity_low
           sequence:
-            - scene: scene.office_1_humidifier_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_on
 
 - id: office_1_humidifier_on_windows_state
   alias: Office 1 Humidifier On Windows State
@@ -67,7 +75,9 @@
               entity_id: binary_sensor.office_1_windows
               state: 'on'
           sequence:
-            - scene: scene.office_1_humidifier_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_off
         - conditions:
             - condition: state
               entity_id: binary_sensor.office_1_windows
@@ -75,7 +85,9 @@
               for:
                 seconds: 10
           sequence:
-            - scene: scene.office_1_humidifier_on
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_on
 
 - id: turn_off_idle_office_1_heating_mat
   alias: '[Turn Off Idle Office 1 Heating Mat]'

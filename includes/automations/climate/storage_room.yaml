@@ -11,7 +11,9 @@
       entity_id: switch.storage_room_fan
       state: 'on'
   action:
-    - scene: scene.storage_room_fan_off
+    - service: scene.turn_on
+      target:
+        entity_id: scene.storage_room_fan_off
 
 - id: turn_on_storage_room_fan
   alias: Turn On Storage Room Fan
@@ -27,4 +29,6 @@
       after: input_datetime.alarm_time_off
       before: input_datetime.alarm_time_on
   action:
-    - scene: scene.storage_room_fan_on
+    - service: scene.turn_on
+      target:
+        entity_id: scene.storage_room_fan_on

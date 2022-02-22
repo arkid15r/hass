@@ -150,6 +150,10 @@ input_number.office_2_temperature_low:
   icon: *icon_temperature_low
   unit_of_measurement: °F
 
+input_number.scene_reload_delay:
+  friendly_name: Scene Reload Delay
+  unit_of_measurement: s
+
 input_text.weather_sensor:
   friendly_name: Weather Sensor
   icon: mdi:weather-pouring

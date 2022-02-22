@@ -10,18 +10,29 @@
               entity_id: input_boolean.mode_bar
               state: 'off'
           sequence:
-            - scene: scene.hallway_night_lights
-            - scene: scene.kitchen_night_lights
-            - scene: scene.bar_no_lights
-            - scene: scene.living_room_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bar_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.living_room_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.hallway_night_lights
         - conditions:
             - condition: state
               entity_id: input_boolean.mode_bar
               state: 'on'
           sequence:
-            - scene: scene.kitchen_no_lights
-            - scene: scene.hallway_no_lights
-            - scene: scene.bar_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.kitchen_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.hallway_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bar_lights
 
 - id: mode_kitchen_tv
   alias: Kitchen TV Mode
@@ -35,8 +46,12 @@
               entity_id: input_boolean.mode_kitchen_tv
               state: 'off'
           sequence:
-            - scene: scene.kitchen_faded_lights
-            - scene: scene.hallway_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.kitchen_faded_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.hallway_no_lights
             - service: remote.turn_off
               entity_id: remote.kitchen_tv_remote
         - conditions:
@@ -44,7 +59,9 @@
               entity_id: input_boolean.mode_kitchen_tv
               state: 'on'
           sequence:
-            - scene: scene.kitchen_tv_mode_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.kitchen_tv_mode_lights
             - condition: state
               entity_id: binary_sensor.kitchen_tv
               state: 'off'
@@ -78,7 +95,9 @@
               entity_id: input_boolean.mode_office_1_tv
               state: 'off'
           sequence:
-            - scene: scene.office_1_faded_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_faded_lights
             - service: remote.turn_off
               entity_id: remote.office_1_tv_remote
         - conditions:
@@ -86,7 +105,9 @@
               entity_id: input_boolean.mode_office_1_tv
               state: 'on'
           sequence:
-            - scene: scene.office_1_movie_night_mode_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_movie_night_mode_lights
             - service: remote.turn_on
               entity_id: remote.office_1_tv_remote
 
@@ -102,10 +123,14 @@
               entity_id: input_boolean.mode_office_2_lights
               state: 'on'
           sequence:
-            - scene: scene.office_2_max_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_2_max_lights
         - conditions:
             - condition: state
               entity_id: input_boolean.mode_office_2_lights
               state: 'off'
           sequence:
-            - scene: scene.office_2_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_2_no_lights

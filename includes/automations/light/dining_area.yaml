@@ -5,12 +5,18 @@
       entity_id: binary_sensor.dining_area_lights
       to: 'on'
       for:
-        hours: 1
+        minutes: 45
   condition:
     - condition: time
-      after: input_datetime.dining_area_morning_lights_time_off
+      after: input_datetime.dining_area_morning_lights_time_on
   action:
-    - scene: scene.dining_area_no_lights
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dining_area_no_lights
+    - delay: input_number.scene_reload_delay
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dining_area_no_lights
 
 - id: turn_on_dining_area_morning_lights
   alias: Turn On Dining Area Morning Lights
@@ -42,4 +48,10 @@
           entity_id: binary_sensor.kitchen_motion_5m
           state: 'on'
   action:
-    - scene: scene.dining_area_faded_lights
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dining_area_faded_lights
+    - delay: input_number.scene_reload_delay
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dining_area_faded_lights

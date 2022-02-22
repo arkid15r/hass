@@ -33,7 +33,9 @@
               entity_id: binary_sensor.garage_gate
               state: 'off'
           sequence:
-            - scene: scene.garage_max_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.garage_max_lights
         - conditions:
             - condition: state
               entity_id: binary_sensor.garage_gate
@@ -42,7 +44,9 @@
               after: input_datetime.morning_lights_time_off
               before: input_datetime.night_lights_time_on
           sequence:
-            - scene: scene.garage_no_lights
+            - service: scene.turn_on
+              target:
+                entity_id: scene.garage_no_lights
 
 - id: turn_off_idle_garage_lights
   alias: '[Turn Off Idle Garage Lights]'
