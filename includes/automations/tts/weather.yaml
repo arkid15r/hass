@@ -18,8 +18,8 @@
   alias: 'TTS State: Weather Changed'
   trigger:
     - platform: state
-      entity_id: input_text.weather_sensor
-      to:
+      entity_id: input_text.weather_service
+      from: &weather_conditions
         - exceptional
         - hail
         - lightning
@@ -29,6 +29,7 @@
         - snowy
         - snowy-rainy
         - windy
+      to: *weather_conditions
   condition:
     - condition: state
       entity_id: input_boolean.play_tts_messages

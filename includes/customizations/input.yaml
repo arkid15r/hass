@@ -154,6 +154,6 @@ input_number.scene_reload_delay:
   friendly_name: Scene Reload Delay
   unit_of_measurement: s
 
-input_text.weather_sensor:
-  friendly_name: Weather Sensor
+input_text.weather_service:
+  friendly_name: Weather Service
   icon: mdi:weather-pouring

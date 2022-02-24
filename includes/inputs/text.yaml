@@ -1,4 +1,3 @@
-weather_sensor:
-  name: Weather Sensor
-  initial: weather.thermostat
+weather_service:
+  name: Weather Service
   pattern: 'weather\.[a-z]{2,}'
