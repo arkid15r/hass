@@ -18,7 +18,7 @@
   alias: 'TTS State: Weather Changed'
   trigger:
     - platform: state
-      entity_id: input_text.weather_service
+      entity_id: sensor.weather_state
       from: &weather_conditions
         - exceptional
         - hail

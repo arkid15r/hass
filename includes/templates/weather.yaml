@@ -72,6 +72,11 @@
           fine
         {% endif %}
 
+    - name: Weather State
+      unique_id: weather_state
+      state: >
+        {{ states(states('input_text.weather_service')) | lower }}
+
     - name: Wind Speed
       unique_id: wind_speed
       unit_of_measurement: mph
