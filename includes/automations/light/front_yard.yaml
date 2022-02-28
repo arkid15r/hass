@@ -19,6 +19,9 @@
     - platform: sun
       event: sunrise
       offset: -00:30:00
+  variables:
+    scene_reload_delay_seconds: >
+      {{ states('input_number.scene_reload_delay') | float }}
   action:
     - choose:
         - conditions:
@@ -28,7 +31,9 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.front_yard_night_lights
-            - delay: input_number.scene_reload_delay
+            - delay:
+                seconds: >
+                  {{ scene_reload_delay_seconds }}
             - service: scene.turn_on
               target:
                 entity_id: scene.front_yard_night_lights
@@ -39,7 +44,9 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.front_yard_no_lights
-            - delay: input_number.scene_reload_delay
+            - delay:
+                seconds: >
+                  {{ scene_reload_delay_seconds }}
             - service: scene.turn_on
               target:
                 entity_id: scene.front_yard_no_lights
