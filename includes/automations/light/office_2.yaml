@@ -24,6 +24,8 @@
   use_blueprint:
     path: target_turn_off.yaml
     input:
+      run_if: binary_sensor.office_2_mode_lock
+      run_if_state: 'off'
       scene: scene.office_2_no_lights
       target: binary_sensor.office_2_lights
       watcher: binary_sensor.office_2_motion
