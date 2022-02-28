@@ -1,3 +1,7 @@
+input_boolean.indoor_garden_enabled:
+  friendly_name: Indoor Garden Enabled
+  icon: mdi:sprout
+
 input_boolean.mode_bar:
   friendly_name: Bar Mode
   icon: mdi:glass-cocktail
