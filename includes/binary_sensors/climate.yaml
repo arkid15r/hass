@@ -1,5 +1,5 @@
-- name: Thermal Perimeter
-  platform: group
+- platform: group
+  name: Thermal Perimeter
   unique_id: thermal_perimeter
   entities:
     - binary_sensor.bathroom_1_window
@@ -12,3 +12,35 @@
     - binary_sensor.office_1_window_2
     - binary_sensor.office_2_window
     - binary_sensor.storage_room_window
+
+- platform: trend
+  sensors:
+    indoor_garden_humidity_falling:
+      # 1% drop in 10 minutes range.
+      entity_id: sensor.indoor_garden_humidity
+      friendly_name: Indoor Humidity Falling
+      max_samples: 10
+      min_gradient: -0.0016
+      sample_duration: 600
+
+    indoor_garden_humidity_rising:
+      # 1% raise in 10 minutes range.
+      entity_id: sensor.indoor_garden_humidity
+      friendly_name: Indoor Humidity Rising
+      max_samples: 10
+      min_gradient: 0.0016
+      sample_duration: 600
+
+    indoor_garden_temperature_falling:
+      # 1°F drop in 10 minutes range.
+      entity_id: sensor.indoor_garden_temperature
+      max_samples: 10
+      min_gradient: -0.0016
+      sample_duration: 600
+
+    indoor_garden_temperature_rising:
+      # 1°F raise in 10 minutes range.
+      entity_id: sensor.indoor_garden_temperature
+      max_samples: 12
+      min_gradient: 0.0016
+      sample_duration: 3600

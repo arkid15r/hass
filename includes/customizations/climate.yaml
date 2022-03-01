@@ -1,3 +1,15 @@
+binary_sensor.indoor_garden_humidity_falling:
+  icon: &trending_down mdi:trending-down
+
+binary_sensor.indoor_garden_humidity_rising:
+  icon: &trending_up mdi:trending-up
+
+binary_sensor.indoor_garden_temperature_falling:
+  icon: *trending_down
+
+binary_sensor.indoor_garden_temperature_rising:
+  icon: *trending_up
+
 binary_sensor.hvac_is_cooling:
   icon: mdi:thermometer-minus
 
