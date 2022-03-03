@@ -19,7 +19,7 @@
   trigger:
     - platform: state
       entity_id: sensor.weather_state
-      from: &weather_conditions
+      from: &weather_states
         - exceptional
         - hail
         - lightning
@@ -29,7 +29,9 @@
         - snowy
         - snowy-rainy
         - windy
-      to: *weather_conditions
+    - platform: state
+      entity_id: sensor.weather_state
+      to: *weather_states
   condition:
     - condition: state
       entity_id: input_boolean.play_tts_messages
