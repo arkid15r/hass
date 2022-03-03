@@ -5,9 +5,6 @@
       at: '20:00:00'
   condition:
     - condition: state
-      entity_id: binary_sensor.indoor_garden
-      state: 'on'
-    - condition: state
       entity_id: input_boolean.indoor_garden_enabled
       state: 'on'
     - condition: state
@@ -24,6 +21,9 @@
     - platform: time_pattern
       minutes: /10
   condition:
+    - condition: state
+      entity_id: input_boolean.indoor_garden_enabled
+      state: 'on'
     - condition: state
       entity_id: binary_sensor.indoor_garden_heater
       state: 'off'
