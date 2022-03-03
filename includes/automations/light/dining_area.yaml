@@ -34,6 +34,9 @@
       to: 'on'
     - platform: time
       at: input_datetime.dining_area_morning_lights_time_on
+  variables:
+    scene_reload_delay_seconds: >
+      {{ states('input_number.scene_reload_delay') | float }}
   condition:
     - condition: state
       entity_id: binary_sensor.dining_area_lights
