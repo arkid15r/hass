@@ -7,18 +7,7 @@
     - name: DND
       unique_id: dnd
       state: >
-        {%- macro is_in_range(value, time_from, time_to) %}
-          {%- if time_from < time_to %}
-            {{- time_from <= value < time_to }}
-          {%- else %}
-            {{- value >= time_from or value < time_to }}
-          {%- endif %}
-        {%- endmacro %}
-
-        {{ is_in_range(
-            now().strftime('%H:%M:%S'),
-            states('input_datetime.alarm_time_on'),
-            states('input_datetime.alarm_time_off')) or
+        {{ is_state('binary_sensor.quite_time', 'on') or
            is_state('input_boolean.mode_nap', 'on')
         }}
 
@@ -30,6 +19,16 @@
     - name: Quite Time
       unique_id: quite_time
       state: >
-        {{ now().strftime('%-H') | int < 7 or
-           now().strftime('%-H') | int > 21
+        {%- macro is_in_range(value, time_from, time_to) %}
+          {%- if time_from < time_to %}
+            {{- time_from <= value < time_to }}
+          {%- else %}
+            {{- value >= time_from or value < time_to }}
+          {%- endif %}
+        {%- endmacro %}
+
+        {{ is_in_range(
+            now().strftime('%H:%M:%S'),
+            states('input_datetime.alarm_time_on'),
+            states('input_datetime.alarm_time_off'))
         }}
