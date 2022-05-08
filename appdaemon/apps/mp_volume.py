@@ -12,11 +12,11 @@ class AmazonEcho(hass.Hass):
       'bathroom_1',
       'bathroom_2',
       'bedroom_1',
-      'corridor',
       'garage',
-      'living_room',
+      'great_room',
       'office_1',
       'office_2',
+      'stairway',
   )
   EVENT_NAME = 'mp_volume'
 

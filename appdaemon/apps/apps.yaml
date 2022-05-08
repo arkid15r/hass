@@ -13,54 +13,51 @@ tts:
         - bedroom_1
     play_default:
       normal_time:
-        - corridor
+        - stairway
       quite_time: []
   quite_time: binary_sensor.quite_time
   rules:
     bathroom_1:
-      if_not:
-        conditions:
-          - binary_sensor.bathroom_1_door
       conditions:
         - binary_sensor.bathroom_1_lights
         - binary_sensor.bathroom_1_motion_5m
-      target: media_player.bathroom_1_echo
-    bathroom_2:
       if_not:
         conditions:
-          - binary_sensor.bathroom_2_door
-        target: media_player.living_room_echo
+          - binary_sensor.bathroom_1_door
+      target: media_player.bathroom_1_echo
+    bathroom_2:
       conditions:
         - binary_sensor.bathroom_2_lights
         - binary_sensor.bathroom_2_motion_5m
+      if_not:
+        conditions:
+          - binary_sensor.bathroom_2_door
       target: media_player.bathroom_2_echo
     bedroom_1:
+      conditions:
+        - binary_sensor.bedroom_1_lights
+        - binary_sensor.bedroom_1_motion_5m
       if_not:
         conditions:
           - binary_sensor.bathroom_1_mode_lock
         target: media_player.bathroom_1_echo
-      conditions:
-        - binary_sensor.bedroom_1_lights
-        - binary_sensor.bedroom_1_motion_5m
       target: media_player.bedroom_1_echo
     garage:
       conditions:
         - binary_sensor.garage_lights
         - binary_sensor.garage_motion_5m
       target: media_player.garage_echo
-    living_room:
+    great_room:
       conditions:
         - binary_sensor.dining_area_lights
+        - binary_sensor.great_room_motion_5m
+        - binary_sensor.great_room_lights
+        - binary_sensor.great_room_tv
         - binary_sensor.hallway_motion # now vs last 5m
         - binary_sensor.kitchen_lights
         - binary_sensor.kitchen_tv
-        - binary_sensor.living_room_motion_5m
-        - binary_sensor.living_room_lights
-        - binary_sensor.living_room_tv
-      target: media_player.living_room_echo
+      target: media_player.great_room_echo
     office_1:
-      if_not:
-        target: media_player.living_room_echo
       conditions:
         - binary_sensor.office_1_lights
         - binary_sensor.office_1_motion_5m

@@ -33,8 +33,8 @@ class TestBase(unittest.TestCase):
   BEDROOM_1_ECHO = 'media_player.bedroom_1_echo'
   BEDROOM_1_MOTION = 'binary_sensor.bedroom_1_motion_5m'
 
-  CORRIDOR = 'corridor'
-  CORRIDOR_ECHO = 'media_player.corridor_echo'
+  STAIRWAY = 'stairway'
+  STAIRWAY_ECHO = 'media_player.stairway_echo'
 
   DINING_AREA_LIGHT = 'binary_sensor.dining_area_lights'
 
@@ -43,17 +43,17 @@ class TestBase(unittest.TestCase):
   GARAGE_ECHO = 'media_player.garage_echo'
   GARAGE_MOTION = 'binary_sensor.garage_motion_5m'
 
+  GREAT_ROOM = 'great_room'
+  GREAT_ROOM_LIGHT = 'binary_sensor.great_room_lights'
+  GREAT_ROOM_ECHO = 'media_player.great_room_echo'
+  GREAT_ROOM_MOTION = 'binary_sensor.great_room_motion_5m'
+  GREAT_ROOM_TV = 'binary_sensor.great_room_tv'
+
   HALLWAY_MOTION = 'binary_sensors.hallway_motion'
 
   KITCHEN_LIGHT = 'binary_sensor.kitchen_lights'
   KITCHEN_MOTION = 'binary_sensor.kitchen_motion_5m'
   KITCHEN_TV = 'media_player.kitchen_tv'
-
-  LIVING_ROOM = 'living_room'
-  LIVING_ROOM_LIGHT = 'binary_sensor.living_room_lights'
-  LIVING_ROOM_ECHO = 'media_player.living_room_echo'
-  LIVING_ROOM_MOTION = 'binary_sensor.living_room_motion_5m'
-  LIVING_ROOM_TV = 'binary_sensor.living_room_tv'
 
   OFFICE_1 = 'office_1'
   OFFICE_1_LIGHT = 'binary_sensor.office_1_light'
@@ -137,14 +137,14 @@ class TestArgs(TestBase):
         "the same time", str(ctx.exception))
 
   def test_area_off_wildcard_play_always(self):
-    env_patch = {'play_always': {'normal_time': [TestBase.CORRIDOR]}}
+    env_patch = {'play_always': {'normal_time': [TestBase.STAIRWAY]}}
 
     with mock.patch.dict(self.amazon_echo.env, env_patch):
       expected_targets = self.amazon_echo.tts(text=self.text, areas_off='*')
       self.assertListEqual(expected_targets, [])
 
   def test_area_off_wildcard_play_default(self):
-    env_patch = {'play_default': {'normal_time': [TestBase.LIVING_ROOM]}}
+    env_patch = {'play_default': {'normal_time': [TestBase.GREAT_ROOM]}}
 
     with mock.patch.dict(self.amazon_echo.env, env_patch):
       expected_targets = self.amazon_echo.tts(text=self.text, areas_off='*')
@@ -258,13 +258,13 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
       super()._test_not_played((), areas_off=self.play_default)
 
       self.amazon_echo.get_state.side_effect = lambda sensor: {
-          TestBase.LIVING_ROOM_MOTION: tts.AmazonEcho.STATE_ON
+          TestBase.GREAT_ROOM_MOTION: tts.AmazonEcho.STATE_ON
       }.get(sensor, tts.AmazonEcho.STATE_OFF)
       super()._test_not_played(
-          set(self.play_always).union((TestBase.LIVING_ROOM,)))
-      super()._test_not_played((TestBase.LIVING_ROOM,),
+          set(self.play_always).union((TestBase.GREAT_ROOM,)))
+      super()._test_not_played((TestBase.GREAT_ROOM,),
                                areas_off=self.play_always)
-      super()._test_not_played((TestBase.LIVING_ROOM,))
+      super()._test_not_played((TestBase.GREAT_ROOM,))
 
     # Quite time.
     with mock.patch.dict(self.amazon_echo.env, self.env_patch_quite_time):
@@ -277,7 +277,7 @@ class TestPlayAlwaysAndPlayDefaultTargets(TestTargetAreaBase):
 
       self.amazon_echo.get_state.side_effect = lambda sensor: {
           self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON,
-          TestBase.LIVING_ROOM_MOTION: tts.AmazonEcho.STATE_ON
+          TestBase.GREAT_ROOM_MOTION: tts.AmazonEcho.STATE_ON
       }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
       super()._test_not_played(set(self.play_always))
@@ -402,7 +402,7 @@ class TestTargetConditionBase(TestBase):
 
   env_patch = {
       'play_default': {
-          'normal_time': [TestBase.CORRIDOR],
+          'normal_time': [TestBase.STAIRWAY],
           'quite_time': [],
       }
   }
@@ -493,7 +493,7 @@ class TestTargetConditionBase(TestBase):
     self.assertNotIn(
         target,
         targets,
-        f"Should not play in the {area} when {if_not['description']}.",
+        f'Should not play in the {area} when {if_not["description"]}.',
     )
     self._assert_hass_called_with(self.text, targets)
 
@@ -571,15 +571,6 @@ class TestBathroom2(TestTargetConditionBase):
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.BATHROOM_2)
 
-  def test_played_if_not(self):
-    if_not = {
-        'conditions': (TestBase.BATHROOM_2_DOOR, TestBase.LIVING_ROOM_LIGHT),
-        'description':
-            f'playing in {TestBase.LIVING_ROOM} and {TestBase.BATHROOM_2} door is open'
-    }
-
-    super()._test_played_if_not(TestBase.BATHROOM_2, self.conditions, if_not)
-
 
 class TestBedroom1(TestTargetConditionBase):
   """Bedroom 1 tests."""
@@ -623,37 +614,30 @@ class TestGarage(TestTargetConditionBase):
     super()._test_played_quite_time(TestBase.GARAGE)
 
 
-class TestLivingRoom(TestTargetConditionBase):
-  """Living room tests."""
+class TestGreatRoom(TestTargetConditionBase):
+  """Great room tests."""
 
   conditions = {
-      TestBase.DINING_AREA_LIGHT:
-          'the dining area light is on',
-      TestBase.HALLWAY_MOTION:
-          'there was a recent motion in the hallway',
-      TestBase.KITCHEN_LIGHT:
-          'the kitchen light is on',
-      TestBase.KITCHEN_MOTION:
-          'there was a recent motion in the kitchen',
-      TestBase.LIVING_ROOM_LIGHT:
-          'the living room light is on',
-      TestBase.LIVING_ROOM_MOTION:
-          'there was a recent motion in the living room',
-      TestBase.LIVING_ROOM_TV:
-          'the living room TV is on',
+      TestBase.DINING_AREA_LIGHT: 'the dining area light is on',
+      TestBase.GREAT_ROOM_LIGHT: 'the great room light is on',
+      TestBase.GREAT_ROOM_MOTION: 'there was a recent motion in the great room',
+      TestBase.GREAT_ROOM_TV: 'the great room TV is on',
+      TestBase.HALLWAY_MOTION: 'there was a recent motion in the hallway',
+      TestBase.KITCHEN_LIGHT: 'the kitchen light is on',
+      TestBase.KITCHEN_MOTION: 'there was a recent motion in the kitchen',
   }
 
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(TestBase.LIVING_ROOM, self.conditions)
+    super()._test_not_played_normal_time(TestBase.GREAT_ROOM, self.conditions)
 
   def test_not_played_quite_time(self):
-    super()._test_not_played_quite_time(TestBase.LIVING_ROOM, self.conditions)
+    super()._test_not_played_quite_time(TestBase.GREAT_ROOM, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(TestBase.LIVING_ROOM, self.conditions)
+    super()._test_played_normal_time(TestBase.GREAT_ROOM, self.conditions)
 
   def test_played_quite_time(self):
-    super()._test_played_quite_time(TestBase.LIVING_ROOM)
+    super()._test_played_quite_time(TestBase.GREAT_ROOM)
 
 
 class TestOffice1(TestTargetConditionBase):
@@ -677,14 +661,14 @@ class TestOffice1(TestTargetConditionBase):
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.OFFICE_1)
 
-  def test_played_if_not(self):
-    if_not = {
-        'conditions': (TestBase.DINING_AREA_LIGHT, TestBase.KITCHEN_LIGHT,
-                       TestBase.LIVING_ROOM_LIGHT, TestBase.LIVING_ROOM_TV),
-        'description': f'playing in {TestBase.LIVING_ROOM}'
-    }
+  # def test_played_if_not(self):
+  #   if_not = {
+  #       'conditions': (TestBase.DINING_AREA_LIGHT, TestBase.KITCHEN_LIGHT,
+  #                      TestBase.GREAT_ROOM_LIGHT, TestBase.GREAT_ROOM_TV),
+  #       'description': f'playing in {TestBase.GREAT_ROOM}'
+  #   }
 
-    super()._test_played_if_not(TestBase.OFFICE_1, self.conditions, if_not)
+  #   super()._test_played_if_not(TestBase.OFFICE_1, self.conditions, if_not)
 
 
 class TestOffice2(TestTargetConditionBase):
