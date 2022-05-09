@@ -75,7 +75,12 @@
     - name: Weather State
       unique_id: weather_state
       state: >
-        {{ states(states('input_text.weather_service')) | lower }}
+        {% set weather = states(states('input_text.weather_service')) | lower %}
+        {% if weather == 'partlycloudy' %}
+          partly cloudy
+        {% else %}
+          {{ weather }}
+        {% endif %}
 
     - name: Wind Speed
       unique_id: wind_speed
