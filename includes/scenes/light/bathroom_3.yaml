@@ -1,0 +1,25 @@
+- name: Bathroom 3 Faded Lights
+  entities:
+    light.bathroom_3_1: &b3fl_state
+      brightness: 50
+      state: 'on'
+    light.bathroom_3_2: *b3fl_state
+
+- name: Bathroom 3 Lights
+  entities:
+    light.bathroom_3_1: &b3l_state
+      brightness: 254
+      state: 'on'
+    light.bathroom_3_2: *b3l_state
+
+- name: Bathroom 3 Night Lights
+  entities:
+    light.bathroom_3_1: &b3nl_state
+      brightness: 2
+      state: 'on'
+    light.bathroom_3_2: *b3nl_state
+
+- name: Bathroom 3 No Lights
+  entities:
+    light.bathroom_3_1: 'off'
+    light.bathroom_3_2: 'off'

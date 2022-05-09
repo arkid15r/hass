@@ -1,0 +1,15 @@
+- name: Tech Corner Lights
+  entities:
+    light.tech_corner_1:
+      brightness: 190
+      state: 'on'
+
+- name: Tech Corner Night Lights
+  entities:
+    light.tech_corner_1:
+      brightness: 1
+      state: 'on'
+
+- name: Tech Corner No Lights
+  entities:
+    light.tech_corner_1: 'off'

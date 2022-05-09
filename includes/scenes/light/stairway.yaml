@@ -1,0 +1,17 @@
+- name: Stairway Faded Lights
+  entities:
+    light.stairway_1:
+      brightness: 25
+      color_temp: 400
+      state: 'on'
+
+- name: Stairway Night Lights
+  entities:
+    light.stairway_1:
+      brightness: 5
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Stairway No Lights
+  entities:
+    light.stairway_1: 'off'

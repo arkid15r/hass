@@ -1,29 +1,29 @@
-- id: turn_off_storage_room_fan
-  alias: Turn Off Storage Room Fan
+- id: turn_off_tech_corner_fan
+  alias: Turn Off Tech Corner Fan
   trigger:
     - platform: numeric_state
-      entity_id: sensor.indoor_temperature
+      entity_id: sensor.tech_corner_temperature
       below: 70
     - platform: time
       at: input_datetime.alarm_time_on
   condition:
     - condition: state
-      entity_id: switch.storage_room_fan
+      entity_id: switch.tech_corner_fan
       state: 'on'
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.storage_room_fan_off
+        entity_id: scene.tech_corner_fan_off
 
-- id: turn_on_storage_room_fan
-  alias: Turn On Storage Room Fan
+- id: turn_on_tech_corner_fan
+  alias: Turn On Tech Corner Fan
   trigger:
     - platform: numeric_state
-      entity_id: sensor.indoor_temperature
+      entity_id: sensor.tech_corner_temperature
       above: 80
   condition:
     - condition: state
-      entity_id: switch.storage_room_fan
+      entity_id: switch.tech_corner_fan
       state: 'off'
     - condition: time
       after: input_datetime.alarm_time_off
@@ -31,4 +31,4 @@
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.storage_room_fan_on
+        entity_id: scene.tech_corner_fan_on

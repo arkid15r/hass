@@ -1,0 +1,26 @@
+- id: stairway_lights
+  alias: '[Stairway Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.stairway_faded_lights
+      default_scene_off: scene.stairway_no_lights
+      scene_1: scene.stairway_no_lights
+      scene_1_time_on: input_datetime.morning_lights_time_off
+      scene_1_time_off: input_datetime.night_lights_time_on
+      scene_2: scene.stairway_night_lights
+      scene_2_time_on: '22:00:00'
+      scene_2_time_off: '06:30:00'
+      watcher: binary_sensor.stairway_motion
+      watcher_inactive_time_seconds: 30
+
+- id: turn_off_idle_stairway_lights
+  alias: '[Turn Off Idle stairway Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      scene: scene.stairway_no_lights
+      target: light.stairway_2
+      watcher: binary_sensor.stairway_motion
+      watcher_inactive_time_seconds: 300

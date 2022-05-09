@@ -1,7 +1,0 @@
-- name: Storage Room Fan Off
-  entities:
-    switch.storage_room_fan: 'off'
-
-- name: Storage Room Fan On
-  entities:
-    switch.storage_room_fan: 'on'

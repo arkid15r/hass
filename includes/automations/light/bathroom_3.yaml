@@ -1,0 +1,29 @@
+- id: bathroom_3_lights
+  alias: '[Bathroom 3 Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.bathroom_3_lights
+      default_scene_off: scene.bathroom_3_no_lights
+      scene_1: scene.bathroom_3_faded_lights
+      scene_1_time_on: '07:00:00'
+      scene_1_time_off: '08:00:00'
+      scene_2: scene.bathroom_3_faded_lights
+      scene_2_time_on: '20:00:00'
+      scene_2_time_off: '22:30:00'
+      scene_3_time_on: '22:30:00'
+      scene_3_time_off: '07:00:00'
+      scene_3: scene.bathroom_3_night_lights
+      watcher: binary_sensor.bathroom_3_motion
+      watcher_inactive_time_seconds: 180
+
+- id: turn_off_idle_bathroom_3_lights
+  alias: '[Turn Off Idle Bathroom 3 Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.bathroom_3_no_lights
+      target: binary_sensor.bathroom_3_lights
+      watcher: binary_sensor.bathroom_3_motion
+      watcher_inactive_time_seconds: 300

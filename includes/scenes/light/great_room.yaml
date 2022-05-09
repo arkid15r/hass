@@ -1,0 +1,37 @@
+- name: Great Room Movie Night Lights
+  entities:
+    light.great_room_lamp_1: &grmnl
+      brightness: 190
+      rgb_color: [145, 145, 255]
+      state: 'on'
+    light.great_room_lamp_2: *grmnl
+
+- name: Great Room New Year Day Lights
+  entities:
+    light.great_room_lamp: 'off'
+    switch.great_room_1: 'on'
+    switch.great_room_2: 'on'
+
+- name: Great Room New Year Night Lights
+  entities:
+    light.great_room_lamp:
+      brightness: 190
+      rgb_color: [255, 0, 65]
+      state: 'on'
+    switch.great_room_1: 'on'
+    switch.great_room_2: 'on'
+
+- name: Great Room New Year No Lights
+  entities:
+    light.great_room_lamp: 'off'
+    switch.great_room_1: 'off'
+    switch.great_room_2: 'off'
+
+- name: Great Room No Lights
+  entities:
+    light.great_room_1: 'off'
+    light.great_room_2: 'off'
+    light.great_room_3: 'off'
+    light.great_room_4: 'off'
+    light.great_room_lamp_1: 'off'
+    light.great_room_lamp_2: 'off'

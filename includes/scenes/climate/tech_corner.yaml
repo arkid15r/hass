@@ -1,0 +1,7 @@
+- name: Tech Corner Fan Off
+  entities:
+    switch.tech_corner_fan: 'off'
+
+- name: Tech Corner Fan On
+  entities:
+    switch.tech_corner_fan: 'on'

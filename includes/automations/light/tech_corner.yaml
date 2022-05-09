@@ -1,0 +1,20 @@
+- id: tech_corner_lights
+  alias: '[Tech Corner Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.tech_corner_no_lights
+      default_scene_on: scene.tech_corner_lights
+      watcher: binary_sensor.tech_corner_motion
+      watcher_inactive_time_seconds: 300
+
+- id: turn_off_idle_tech_corner_lights
+  alias: '[Turn Off Idle Tech Corner Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      scene: scene.tech_corner_no_lights
+      target: binary_sensor.tech_corner_lights
+      target_active_time_seconds: 60
+      watcher: binary_sensor.tech_corner_motion
+      watcher_inactive_time_seconds: 300
