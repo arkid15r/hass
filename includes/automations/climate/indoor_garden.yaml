@@ -52,18 +52,12 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_heater_on
-            - service: scene.turn_on
-              target:
                 entity_id: scene.indoor_garden_on
         - conditions:
             - condition: time
               after: input_datetime.indoor_garden_time_off
               before: input_datetime.indoor_garden_time_on
           sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.indoor_garden_heater_off
             - service: scene.turn_on
               target:
                 entity_id: scene.indoor_garden_humidifier_off
@@ -119,9 +113,6 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_heater_off
-            - service: scene.turn_on
-              target:
                 entity_id: scene.indoor_garden_humidifier_off
             - service: scene.turn_on
               target:
@@ -149,9 +140,6 @@
               after: input_datetime.indoor_garden_time_on
               before: input_datetime.indoor_garden_time_off
           sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.indoor_garden_heater_on
             - service: scene.turn_on
               target:
                 entity_id: scene.indoor_garden_on

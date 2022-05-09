@@ -7,11 +7,6 @@
            states('sensor.indoor_garden_input') | int > 1
         }}
 
-    - name: Indoor Garden Heater
-      unique_id: indoor_garden_heater
-      state: >
-        {{ states('sensor.indoor_garden_heater_input') | int > 5 }}
-
     - name: Office 2 PC
       unique_id: office_2_pc
       state: >

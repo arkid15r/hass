@@ -1,11 +1,3 @@
-- name: Indoor Garden Heater On
-  entities:
-    switch.indoor_garden_heater: 'on'
-
-- name: Indoor Garden Heater Off
-  entities:
-    switch.indoor_garden_heater: 'off'
-
 - name: Indoor Garden Humidifier Off
   entities:
     switch.indoor_garden_humidifier: 'off'
