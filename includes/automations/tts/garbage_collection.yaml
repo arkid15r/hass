@@ -1,0 +1,33 @@
+- id: tts_garbage_collection_today_reminder
+  alias: 'TTS: Garbage Collection Today Reminder'
+  trigger:
+    - platform: time
+      at: '08:15:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.garbage_collection_today
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that today is the garbage collection day. Please make sure your trash bins are ready for the pickup.
+
+- id: tts_garbage_collection_tomorrow_reminder
+  alias: 'TTS: Garbage Collection Tomorrow Reminder'
+  trigger:
+    - platform: time
+      at: '19:30:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.garbage_collection_tomorrow
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that tomorrow is a garbage collection day. Please get your trash bins ready.

@@ -8,7 +8,21 @@
       unique_id: dnd
       state: >
         {{ is_state('binary_sensor.quite_time', 'on') or
-           is_state('input_boolean.mode_nap', 'on')
+            is_state('input_boolean.mode_nap', 'on')
+        }}
+
+    - name: Garbage Collection Today
+      unique_id: garbage_collection_today
+      state: >
+        {{ now().strftime('%a') | lower ==
+            states('input_select.gc_today_reminder_day') | lower
+        }}
+
+    - name: Garbage Collection Tomorrow
+      unique_id: garbage_collection_tomorrow
+      state: >
+        {{ now().strftime('%a') | lower ==
+            states('input_select.gc_tomorrow_reminder_day') | lower
         }}
 
     - name: PM
