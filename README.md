@@ -154,7 +154,6 @@ rules:
     if_not:
       conditions:
         - binary_sensor.bathroom_2_door
-      target: media_player.living_room_echo
     conditions:
       - binary_sensor.bathroom_2_lights
       - binary_sensor.bathroom_2_motion_5m
@@ -180,7 +179,7 @@ AREAS = (
     "bathroom_2"
     "bedroom_1"
     "garage",
-    "living_room",
+    "great_room",
 )
 ```
 

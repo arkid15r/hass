@@ -1,0 +1,17 @@
+gc_today_reminder_day:
+  name: Garbage Collection Today Reminder Day
+  options:
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+
+gc_tomorrow_reminder_day:
+  name: Garbage Collection Tomorrow Reminder Day
+  options:
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri

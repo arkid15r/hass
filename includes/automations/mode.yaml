@@ -15,7 +15,7 @@
                 entity_id: scene.bar_no_lights
             - service: scene.turn_on
               target:
-                entity_id: scene.living_room_no_lights
+                entity_id: scene.great_room_no_lights
             - service: scene.turn_on
               target:
                 entity_id: scene.hallway_night_lights

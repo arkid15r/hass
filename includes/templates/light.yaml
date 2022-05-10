@@ -9,6 +9,11 @@
       state: >
         {{ is_state('light.bathroom_1_light_group', 'on') }}
 
+    - name: Bathroom 1a Lights
+      unique_id: bathroom_1a_lights
+      state: >
+        {{ is_state('light.bathroom_1a_light_group', 'on') }}
+
     - name: Bathroom 2 Lights
       unique_id: bathroom_2_lights
       state: >
@@ -26,11 +31,6 @@
       state: >
         {{ is_state('light.bedroom_1_light_group', 'on') }}
 
-    - name: Corridor Lights
-      unique_id: corridor_lights
-      state: >
-        {{ is_state('light.corridor_light_group', 'on') }}
-
     - name: Dining Area Lights
       unique_id: dining_area_lights
       state: >
@@ -46,6 +46,11 @@
       state: >
         {{ is_state('light.garage_light_group', 'on') }}
 
+    - name: Great Room Lights
+      unique_id: great_room_lights
+      state: >
+        {{ is_state('light.great_room_light_group', 'on') }}
+
     - name: Hallway Lights
       unique_id: hallway_lights
       state: >
@@ -55,16 +60,6 @@
       unique_id: kitchen_lights
       state: >
         {{ is_state('light.kitchen_light_group', 'on') }}
-
-    - name: Laundry Room Lights
-      unique_id: laundry_room_lights
-      state: >
-        {{ is_state('light.laundry_room_light_group', 'on') }}
-
-    - name: Living Room Lights
-      unique_id: living_room_lights
-      state: >
-        {{ is_state('light.living_room_light_group', 'on') }}
 
     - name: Office 1 Lights
       unique_id: office_1_lights
@@ -76,12 +71,12 @@
       state: >
         {{ is_state('light.office_2_light_group', 'on') }}
 
-    - name: Storage Room Lights
-      unique_id: storage_room_lights
+    - name: Pantry Lights
+      unique_id: pantry_lights
       state: >
-        {{ is_state('light.storage_room_light_group', 'on') }}
+        {{ is_state('light.pantry_light_group', 'on') }}
 
-    - name: Wardrobe Lights
-      unique_id: wardrobe_lights
+    - name: Stairway Lights
+      unique_id: stairway_lights
       state: >
-        {{ is_state('light.wardrobe_light_group', 'on') }}
+        {{ is_state('light.stairway_light_group', 'on') }}
