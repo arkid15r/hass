@@ -1,18 +1,18 @@
+great_room_new_year_lights:
+  name: Great Room New Year Lights
+  entities:
+    - light.great_room_lamp_1
+    - light.great_room_lamp_2
+    - switch.great_room_1
+    - switch.great_room_2
+
 indoor_temperature:
   name: Indoor Temperature
   entities:
     - sensor.bedroom_1_temperature
-    - sensor.corridor_temperature
-    - sensor.dining_area_temperature
     - sensor.office_1_temperature
     - sensor.office_2_temperature
-
-living_room_new_year_lights:
-  name: Living Room New Year Lights
-  entities:
-    - light.living_room_lamp
-    - switch.living_room_1
-    - switch.living_room_2
+    - sensor.stairway_temperature
 
 weather_services:
   name: Weather Services
