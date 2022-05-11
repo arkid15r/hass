@@ -13,6 +13,13 @@
   entities:
     - binary_sensor.bathroom_1_motion_sensor_1_motion
 
+- name: Bathroom 1a Motion Group
+  device_class: motion
+  platform: group
+  unique_id: bathroom_1a_motion_group
+  entities:
+    - binary_sensor.bathroom_1_motion_sensor_2_motion
+
 - name: Bathroom 2 Motion Group
   device_class: motion
   platform: group
@@ -20,20 +27,20 @@
   entities:
     - binary_sensor.bathroom_2_motion_sensor_1_motion
 
+- name: Bathroom 3 Motion Group
+  device_class: motion
+  platform: group
+  unique_id: bathroom_3_motion_group
+  entities:
+    - binary_sensor.bathroom_3_motion_sensor_1_motion
+
 - name: Bedroom 1 Motion Group
   device_class: motion
   platform: group
   unique_id: bedroom_1_motion_group
   entities:
     - binary_sensor.bedroom_1_motion_sensor_1_motion
-
-- name: Corridor Motion Group
-  device_class: motion
-  platform: group
-  unique_id: corridor_motion_group
-  entities:
-    - binary_sensor.corridor_motion_sensor_1_motion
-    - binary_sensor.hallway_motion_sensor_2_motion
+    - binary_sensor.bedroom_1_motion_sensor_2_motion
 
 - name: Front Yard Motion Group
   device_class: motion
@@ -53,13 +60,19 @@
     - binary_sensor.garage_motion_sensor_2_motion
     - binary_sensor.garage_motion_sensor_3_motion
 
+- name: Great Room Motion Group
+  device_class: motion
+  platform: group
+  unique_id: great_room_motion_group
+  entities:
+    - binary_sensor.great_room_motion_sensor_1_motion
+
 - name: Hallway Motion Group
   device_class: motion
   platform: group
   unique_id: hallway_motion_group
   entities:
     - binary_sensor.hallway_motion_sensor_1_motion
-    - binary_sensor.hallway_motion_sensor_2_motion
 
 - name: Kitchen Motion Group
   device_class: motion
@@ -75,13 +88,6 @@
   entities:
     - binary_sensor.laundry_room_motion_sensor_1_motion
 
-- name: Living Room Motion Group
-  device_class: motion
-  platform: group
-  unique_id: living_room_motion_group
-  entities:
-    - binary_sensor.living_room_motion_sensor_1_motion
-
 - name: Office 1 Motion Group
   device_class: motion
   platform: group
@@ -95,13 +101,22 @@
   unique_id: office_2_motion_group
   entities:
     - binary_sensor.office_2_motion_sensor_1_motion
+    - binary_sensor.office_2_motion_sensor_2_motion
 
-- name: Storage Room Motion Group
+- name: Stairway Motion Group
   device_class: motion
   platform: group
-  unique_id: storage_room_motion_group
+  unique_id: stairway_motion_group
   entities:
-    - binary_sensor.storage_room_motion_sensor_1_motion
+    - binary_sensor.stairway_motion_sensor_1_motion
+    - binary_sensor.stairway_motion_sensor_2_motion
+
+- name: Tech Corner Motion Group
+  device_class: motion
+  platform: group
+  unique_id: tech_corner_motion_group
+  entities:
+    - binary_sensor.tech_corner_motion_sensor_1_motion
 
 - name: Wardrobe Motion Group
   device_class: motion
