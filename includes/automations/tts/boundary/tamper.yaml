@@ -3,19 +3,19 @@
   trigger:
     - platform: state
       entity_id: &sensors
-        - binary_sensor.bathroom_1_window_tamper
+        - binary_sensor.bathroom_1_window_1_tamper
+        - binary_sensor.bathroom_1_window_2_tamper
         - binary_sensor.bedroom_1_window_tamper
+        - binary_sensor.bedroom_2_window_tamper
+        - binary_sensor.den_window_tamper
         - binary_sensor.front_door_tamper
-        - binary_sensor.front_yard_gate_1_tamper
-        - binary_sensor.front_yard_gate_2_tamper
         - binary_sensor.garage_door_tamper
         - binary_sensor.garage_gate_tamper
-        - binary_sensor.living_room_door_tamper
-        - binary_sensor.living_room_window_tamper
-        - binary_sensor.office_1_window_1_tamper
-        - binary_sensor.office_1_window_2_tamper
+        - binary_sensor.garage_side_door_tamper
+        - binary_sensor.great_room_door_tamper
+        - binary_sensor.great_room_window_tamper
+        - binary_sensor.office_1_window_tamper
         - binary_sensor.office_2_window_tamper
-        - binary_sensor.storage_room_window_tamper
       from: 'on'
       to: 'off'
   action:

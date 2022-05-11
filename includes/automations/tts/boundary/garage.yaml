@@ -3,6 +3,8 @@
   use_blueprint:
     path: tts_state.yaml
     input:
+      areas_off:
+        - garage
       state_change_entity: binary_sensor.garage_door
       state_change_for_time_seconds: 60
       state_change_from: 'off'
@@ -14,6 +16,8 @@
   use_blueprint:
     path: tts_state.yaml
     input:
+      areas_off:
+        - garage
       state_change_entity: binary_sensor.garage_door
       state_change_for_time_seconds: 120
       state_change_from: 'off'
@@ -34,8 +38,8 @@
       run_if: alarm_control_panel.home_alarm
       run_if_state: armed_home
 
-- id: tts_state_garage_gate_open_5m
-  alias: '[TTS State: Garage Gate Open 5m]'
+- id: tts_state_garage_entry_open_5m
+  alias: '[TTS State: Garage Entry Open 5m]'
   use_blueprint:
     path: tts_state.yaml
     input:
@@ -43,14 +47,16 @@
         - garage
       run_if: binary_sensor.garage_motion
       run_if_state: 'off'
-      state_change_entity: binary_sensor.garage_gate
+      state_change_entity:
+        - binary_sensor.garage_gate
+        - binary_sensor.garage_side_door
       state_change_for_time_seconds: 300
       state_change_from: 'off'
       state_change_to: 'on'
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garage gate is still open.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open.
 
-- id: tts_state_garage_gate_open_10m
-  alias: '[TTS State: Garage Gate Open 10m]'
+- id: tts_state_garage_entry_open_10m
+  alias: '[TTS State: Garage Entry Open 10m]'
   use_blueprint:
     path: tts_state.yaml
     input:
@@ -58,8 +64,10 @@
         - garage
       run_if: binary_sensor.garage_motion_5m
       run_if_state: 'off'
-      state_change_entity: binary_sensor.garage_gate
+      state_change_entity:
+        - binary_sensor.garage_gate
+        - binary_sensor.garage_side_door
       state_change_for_time_seconds: 600
       state_change_from: 'off'
       state_change_to: 'on'
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The garage gate is still open. <break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The {{ state_attr(trigger.entity_id, 'friendly_name') }} is still open. <break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>
