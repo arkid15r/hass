@@ -1,15 +1,15 @@
 - binary_sensor:
-    - name: Kitchen TV
-      unique_id: kitchen_tv
+    - name: Bedroom 1 TV
+      unique_id: bedroom_1_tv
       state: >
-        {{ is_state('media_player.kitchen_tv', 'on') }}
+        {{ is_state('remote.bedroom_1_tv', 'on') }}
 
-    - name: Living Room TV
-      unique_id: living_room_tv
+    - name: Den TV
+      unique_id: den_tv
       state: >
-        {{ states('sensor.living_room_tv_input') | int > 1 }}
+        {{ is_state('media_player.den_tv', 'on') }}
 
-    - name: Office 1 TV
-      unique_id: office_1_tv
+    - name: Great Room TV
+      unique_id: great_room_tv
       state: >
-        {{ is_state('remote.office_1_tv', 'on') }}
+        {{ states('sensor.great_room_tv_input') | int > 1 }}

@@ -9,10 +9,10 @@
       state: >
         {{ is_state('binary_sensor.garage_gate', 'off') }}
 
-    - name: Living Room Door Closed
-      unique_id: living_room_door_closed
+    - name: Great Room Door Closed
+      unique_id: great_room_door_closed
       state: >
-        {{ is_state('binary_sensor.living_room_door', 'off') }}
+        {{ is_state('binary_sensor.great_room_door', 'off') }}
 
 - sensor:
     - name: Security Perimeter Breached
