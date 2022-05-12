@@ -45,7 +45,7 @@
   action:
     - event: tts
       event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('sensor.weather_state') | replace('-', ' ') }}. The temperature is {{ states('sensor.outdoor_temperature') }} degrees with relative humidity around {{ states('sensor.outdoor_humidity') }} percents. The wind speed is {{ states('sensor.wind_speed') }} miles per hour. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('sensor.weather_state') }}. The temperature is {{ states('sensor.outdoor_temperature') }} degrees with relative humidity around {{ states('sensor.outdoor_humidity') }} percents. The wind speed is {{ states('sensor.wind_speed') }} miles per hour. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_weather_forecast
   alias: 'TTS: Weather Forecast'
