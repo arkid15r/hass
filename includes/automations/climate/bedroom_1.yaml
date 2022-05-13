@@ -7,6 +7,8 @@
     - platform: numeric_state
       entity_id: sensor.bedroom_1_humidity
       below: input_number.bedroom_1_humidity_low
+    - platform: time_pattern
+      minutes: /5
   condition:
     - condition: state
       entity_id: binary_sensor.bedroom_1_window
