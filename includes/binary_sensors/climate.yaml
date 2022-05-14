@@ -2,16 +2,18 @@
   name: Thermal Perimeter
   unique_id: thermal_perimeter
   entities:
-    - binary_sensor.bathroom_1_window
+    - binary_sensor.bathroom_1_window_1
+    - binary_sensor.bathroom_1_window_2
     - binary_sensor.bedroom_1_window
+    - binary_sensor.bedroom_2_window
+    - binary_sensor.den_window
     - binary_sensor.front_door
     - binary_sensor.garage_door
-    - binary_sensor.living_room_door
-    - binary_sensor.living_room_window
-    - binary_sensor.office_1_window_1
-    - binary_sensor.office_1_window_2
+    - binary_sensor.great_room_door
+    - binary_sensor.great_room_window
+    - binary_sensor.kitchen_window
+    - binary_sensor.office_1_window
     - binary_sensor.office_2_window
-    - binary_sensor.storage_room_window
 
 - platform: trend
   sensors:

@@ -14,25 +14,10 @@
       state: >
         {{ is_state('input_boolean.mode_gym', 'on') }}
 
-    - name: Mode Hallway Photo
-      unique_id: mode_hallway_photo
-      state: >
-        {{ is_state('input_boolean.mode_hallway_photo', 'on') }}
-
-    - name: Mode Kitchen TV
-      unique_id: mode_kitchen_tv
-      state: >
-        {{ is_state('input_boolean.mode_kitchen_tv', 'on') }}
-
     - name: Mode Nap
       unique_id: mode_nap
       state: >
         {{ is_state('input_boolean.mode_nap', 'on') }}
-
-    - name: Mode Office 1 TV
-      unique_id: mode_office_1_tv
-      state: >
-        {{ is_state('input_boolean.mode_office_1_tv', 'on') }}
 
     - name: Mode Office 2 Lights
       unique_id: mode_office_2_lights

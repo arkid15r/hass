@@ -22,10 +22,10 @@ binary_sensor.hvac_is_running:
 binary_sensor.thermal_perimeter_breached:
   icon: mdi:dots-square
 
-sensor.corridor_temperature:
+sensor.indoor_temperature:
   icon: mdi:thermometer
   unit_of_measurement: °F
 
-sensor.indoor_temperature:
+sensor.stairway_temperature:
   icon: mdi:thermometer
   unit_of_measurement: °F

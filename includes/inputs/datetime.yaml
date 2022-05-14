@@ -6,6 +6,14 @@ alarm_time_on:
   has_date: false
   has_time: true
 
+dining_area_day_lights_time_off:
+  has_date: false
+  has_time: true
+
+dining_area_day_lights_time_on:
+  has_date: false
+  has_time: true
+
 dining_area_morning_lights_time_off:
   has_date: false
   has_time: true

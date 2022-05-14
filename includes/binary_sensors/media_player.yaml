@@ -2,6 +2,6 @@
   platform: group
   unique_id: tvs
   entities:
-    - binary_sensor.kitchen_tv
-    - binary_sensor.living_room_tv
-    - binary_sensor.office_1_tv
+    - binary_sensor.bedroom_1_tv
+    - binary_sensor.den_tv
+    - binary_sensor.great_room_tv

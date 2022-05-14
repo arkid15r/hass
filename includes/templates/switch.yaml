@@ -3,7 +3,7 @@
       unique_id: indoor_garden
       state: >
         {{ is_state('switch.indoor_garden', 'on') and
-           states('sensor.indoor_garden_illuminance') | int > 500 and
+           states('sensor.indoor_garden_illuminance') | int > 1000 and
            states('sensor.indoor_garden_input') | int > 1
         }}
 

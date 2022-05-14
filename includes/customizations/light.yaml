@@ -14,10 +14,6 @@ binary_sensor.bedroom_1_lights: &bedroom_1_lights
   friendly_name: Bedroom Lights
   icon: *icon_lightbulb_group
 
-binary_sensor.corridor_lights: &corridor_lights
-  friendly_name: Corridor Lights
-  icon: *icon_lightbulb_group
-
 binary_sensor.dining_area_lights: &dining_area_lights
   friendly_name: Dining Area Lights
   icon: *icon_lightbulb_group
@@ -28,6 +24,10 @@ binary_sensor.front_yard_lights: &front_yard_lights
 
 binary_sensor.garage_lights: &garage_lights
   friendly_name: Garage Lights
+  icon: *icon_lightbulb_group
+
+binary_sensor.great_room_lights: &great_room_lights
+  friendly_name: Great Room Lights
   icon: *icon_lightbulb_group
 
 binary_sensor.hallway_lights: &hallway_lights
@@ -42,12 +42,8 @@ binary_sensor.laundry_room_lights: &laundry_room_lights
   friendly_name: Laundry Room Lights
   icon: *icon_lightbulb_group
 
-binary_sensor.living_room_lights: &living_room_lights
-  friendly_name: Living Room Lights
-  icon: *icon_lightbulb_group
-
-binary_sensor.storage_room_lights: &storage_room_lights
-  friendly_name: Storage Room Lights
+binary_sensor.stairway_lights: &stairway_lights
+  friendly_name: Stairway Lights
   icon: *icon_lightbulb_group
 
 binary_sensor.wardrobe_lights: &wardrobe_lights
@@ -62,13 +58,13 @@ light.bathroom_2_light_group: *bathroom_2_lights
 
 light.bedroom_1_light_group: *bedroom_1_lights
 
-light.corridor_light_group: *corridor_lights
-
 light.dining_area_light_group: *dining_area_lights
 
 light.front_yard_light_group: *front_yard_lights
 
 light.garage_light_group: *garage_lights
+
+light.great_room_light_group: *great_room_lights
 
 light.hallway_light_group: *hallway_lights
 
@@ -76,8 +72,6 @@ light.kitchen_light_group: *kitchen_lights
 
 light.laundry_room_light_group: *laundry_room_lights
 
-light.living_room_light_group: *living_room_lights
-
-light.storage_room_light_group: *storage_room_lights
+light.stairway_light_group: *stairway_lights
 
 light.wardrobe_light_group: *wardrobe_lights
