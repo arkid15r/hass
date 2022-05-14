@@ -99,6 +99,20 @@
             states.binary_sensor.bedroom_1_motion_group.last_changed) < 300
         }}
 
+    - name: Dining Area Motion 15m
+      unique_id: dining_area_motion_15m
+      state: >
+        {{ as_timestamp(now()) - as_timestamp(
+            states.binary_sensor.dining_area_motion_group.last_changed) < 900
+        }}
+
+    - name: Dining Area Motion 5m
+      unique_id: dining_area_motion_5m
+      state: >
+        {{ as_timestamp(now()) - as_timestamp(
+            states.binary_sensor.dining_area_motion_group.last_changed) < 300
+        }}
+
     - name: Front Yard Motion
       unique_id: front_yard_motion
       state: >

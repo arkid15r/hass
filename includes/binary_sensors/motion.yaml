@@ -42,6 +42,13 @@
     - binary_sensor.bedroom_1_motion_sensor_1_motion
     - binary_sensor.bedroom_1_motion_sensor_2_motion
 
+- name: Dining Area Motion Group
+  device_class: motion
+  platform: group
+  unique_id: dining_area_motion_group
+  entities:
+    - binary_sensor.dining_area_motion_sensor_1_motion
+
 - name: Front Yard Motion Group
   device_class: motion
   platform: group

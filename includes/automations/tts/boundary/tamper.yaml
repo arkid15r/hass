@@ -14,6 +14,7 @@
         - binary_sensor.garage_side_door_tamper
         - binary_sensor.great_room_door_tamper
         - binary_sensor.great_room_window_tamper
+        - binary_sensor.kitchen_window_tamper
         - binary_sensor.office_1_window_tamper
         - binary_sensor.office_2_window_tamper
       from: 'on'
