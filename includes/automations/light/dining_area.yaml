@@ -1,67 +1,29 @@
-- id: turn_off_dining_area_morning_lights
-  alias: Turn Off Dining Area Morning Lights
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.dining_area_lights
-      to: 'on'
-      for:
-        minutes: 45
-  condition:
-    - condition: time
-      after: input_datetime.dining_area_morning_lights_time_on
-  variables:
-    scene_reload_delay_seconds: >
-      {{ states('input_number.scene_reload_delay') | float }}
-  action:
-    - service: scene.turn_on
-      target:
-        entity_id: scene.dining_area_no_lights
-    - delay:
-        seconds: >
-          {{ scene_reload_delay_seconds }}
-    - service: scene.turn_on
-      target:
-        entity_id: scene.dining_area_no_lights
-
-- id: turn_on_dining_area_morning_lights
-  alias: Turn On Dining Area Morning Lights
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.corridor_motion
+- id: dining_area_lights
+  alias: '[Dining Area Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.dining_area_no_lights
+      default_scene_off: scene.dining_area_no_lights
+      scene_1: scene.dining_area_faded_lights
+      scene_1_time_on: input_datetime.dining_area_morning_lights_time_on
+      scene_1_time_off: input_datetime.dining_area_morning_lights_time_off
+      scene_2: scene.dining_area_faded_lights
+      scene_2_time_on: input_datetime.dining_area_day_lights_time_on
+      scene_2_time_off: input_datetime.dining_area_day_lights_time_off
+      watcher:
+        - binary_sensor.dining_area_motion
         - binary_sensor.kitchen_motion
-      from: 'off'
-      to: 'on'
-    - platform: time
-      at: input_datetime.dining_area_morning_lights_time_on
-  variables:
-    scene_reload_delay_seconds: >
-      {{ states('input_number.scene_reload_delay') | float }}
-  condition:
-    - condition: state
-      entity_id: binary_sensor.dining_area_lights
-      state: 'off'
-    - condition: time
-      after: input_datetime.dining_area_morning_lights_time_on
-      before: input_datetime.dining_area_morning_lights_time_off
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.corridor_motion_5m
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.hallway_motion_5m
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.kitchen_motion_5m
-          state: 'on'
-  action:
-    - service: scene.turn_on
-      target:
-        entity_id: scene.dining_area_faded_lights
-    - delay:
-        seconds: >
-          {{ scene_reload_delay_seconds }}
-    - service: scene.turn_on
-      target:
-        entity_id: scene.dining_area_faded_lights
+        - binary_sensor.stairway_motion_sensor_1_motion
+      watcher_inactive_time_seconds: 300
+
+- id: turn_off_idle_dining_area_lights
+  alias: '[Turn Off Idle Dining Area Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.dining_area_no_lights
+      target: binary_sensor.dining_area_lights
+      watcher: binary_sensor.dining_area_motion
+      watcher_inactive_time_seconds: 600

@@ -1,61 +1,25 @@
 - name: Dining Area Lights
   entities:
-    light.dining_area_1:
-      brightness: &dal_brightness 65
+    light.dining_area_1: &dal
+      brightness: 50
       state: 'on'
-    light.dining_area_2:
-      brightness: *dal_brightness
-      state: 'on'
-    light.dining_area_3:
-      brightness: *dal_brightness
-      state: 'on'
-    light.dining_area_4:
-      brightness: *dal_brightness
-      state: 'on'
-    light.dining_area_5:
-      brightness: *dal_brightness
-      state: 'on'
+    light.dining_area_2: *dal
 
 - name: Dining Area Faded Lights
   entities:
-    light.dining_area_1:
-      brightness: &dafl_brightness 25
+    light.dining_area_1: &dafl
+      brightness: 5
       state: 'on'
-    light.dining_area_2:
-      brightness: *dafl_brightness
-      state: 'on'
-    light.dining_area_3:
-      brightness: *dafl_brightness
-      state: 'on'
-    light.dining_area_4:
-      brightness: *dafl_brightness
-      state: 'on'
-    light.dining_area_5:
-      brightness: *dafl_brightness
-      state: 'on'
+    light.dining_area_2: *dafl
 
 - name: Dining Area Max Lights
   entities:
-    light.dining_area_1:
-      brightness: &daml_brightness 254
+    light.dining_area_1: &daml
+      brightness: 254
       state: 'on'
-    light.dining_area_2:
-      brightness: *daml_brightness
-      state: 'on'
-    light.dining_area_3:
-      brightness: *daml_brightness
-      state: 'on'
-    light.dining_area_4:
-      brightness: *daml_brightness
-      state: 'on'
-    light.dining_area_5:
-      brightness: *daml_brightness
-      state: 'on'
+    light.dining_area_2: *daml
 
 - name: Dining Area No Lights
   entities:
     light.dining_area_1: 'off'
     light.dining_area_2: 'off'
-    light.dining_area_3: 'off'
-    light.dining_area_4: 'off'
-    light.dining_area_5: 'off'
