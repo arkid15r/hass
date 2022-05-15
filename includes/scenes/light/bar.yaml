@@ -12,10 +12,11 @@
     light.kitchen_4: 'off'
     light.hallway_4: *blspd_state_1
     light.hallway_5: *blspd_state_1
-    light.living_room_lamp:
+    light.great_room_lamp_1: &blspdl1
       brightness: 254
       rgb_color: *blspd_rgb_color_1
       state: 'on'
+    light.great_room_lamp_2: *blspdl1
 
 - name: Bar Lights
   entities:
@@ -32,9 +33,11 @@
       rgb_color: &bl_rgb_color_1 [255, 0, 190]
       state: 'on'
     light.kitchen_4: 'off'
-    light.hallway_4: *bl_state_2
-    light.hallway_5: *bl_state_1
-    light.living_room_lamp:
+    light.great_room_lamp_1:
+      brightness: 254
+      rgb_color: *bl_rgb_color_1
+      state: 'on'
+    light.great_room_lamp_2:
       brightness: 254
       rgb_color: *bl_rgb_color_1
       state: 'on'
@@ -47,4 +50,5 @@
     light.kitchen_2: 'off'
     light.kitchen_3: 'off'
     light.kitchen_4: 'off'
-    light.living_room_lamp: 'off'
+    light.great_room_lamp_1: 'off'
+    light.great_room_lamp_2: 'off'

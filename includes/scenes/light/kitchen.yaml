@@ -37,18 +37,12 @@
     light.kitchen_3: 'off'
     light.kitchen_4: 'off'
 
-- name: Kitchen TV Mode Lights
+- name: Pantry Lights
   entities:
-    light.kitchen_1: &ktml_state
-      brightness: 40
-      color_temp: 370
-      rgb_color: [255, 165, 85]
+    light.pantry_1: &pl_state
+      brightness: 254
       state: 'on'
-    light.kitchen_2: *ktml_state
-    light.kitchen_3: 'off'
-    light.kitchen_4: 'off'
-    light.hallway_1: 'off'
-    light.hallway_2: 'off'
-    light.hallway_3: 'off'
-    light.hallway_4: *ktml_state
-    light.hallway_5: *ktml_state
+
+- name: Pantry No Lights
+  entities:
+    light.pantry_1: 'off'

@@ -16,6 +16,16 @@
       watcher: binary_sensor.kitchen_motion
       watcher_inactive_time_seconds: 180
 
+- id: pantry_lights_on_door_state
+  alias: '[Pantry Lights On Door State]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.pantry_lights
+      default_scene_off: scene.pantry_no_lights
+      watcher: binary_sensor.pantry_door
+      watcher_inactive_time_seconds: 0
+
 - id: turn_off_idle_kitchen_lights
   alias: '[Turn Off Idle Kitchen Lights]'
   use_blueprint:
@@ -29,3 +39,15 @@
       target_active_time_seconds: 300
       watcher: binary_sensor.kitchen_motion
       watcher_inactive_time_seconds: 1800
+
+- id: turn_off_idle_pantry_lights
+  alias: '[Turn Off Idle Pantry Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.pantry_no_lights
+      target: binary_sensor.pantry_lights
+      target_active_time_seconds: 60
+      watcher: binary_sensor.kitchen_motion
+      watcher_inactive_time_seconds: 300
