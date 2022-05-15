@@ -26,9 +26,10 @@
   unique_id: great_room_new_year_lights_mode
   platform: group
   entities:
+    - binary_sensor.dining_area_lights
+    - binary_sensor.dining_area_motion
     - binary_sensor.kitchen_lights
     - binary_sensor.kitchen_motion
-    - binary_sensor.kitchen_tv
     - binary_sensor.great_room_motion
     - binary_sensor.great_room_tv
 
@@ -59,13 +60,6 @@
   unique_id: kitchen_mode_lock
   entities:
     - binary_sensor.mode_bar
-    - binary_sensor.mode_kitchen_tv
-
-- name: Office 1 Mode Lock
-  platform: group
-  unique_id: office_1_mode_lock
-  entities:
-    - binary_sensor.mode_office_1_tv
 
 - name: Office 2 Mode Lock
   platform: group
