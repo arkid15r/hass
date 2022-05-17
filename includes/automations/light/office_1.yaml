@@ -5,8 +5,6 @@
     input:
       default_scene_off: scene.office_1_no_lights
       default_scene_on: scene.office_1_no_lights
-      run_if: binary_sensor.office_1_mode_lock
-      run_if_state: 'off'
       scene_1: scene.office_1_lights
       scene_1_time_on: input_datetime.night_lights_time_on
       scene_1_time_off: '21:30:00'
@@ -25,8 +23,6 @@
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /1
-      run_if: binary_sensor.office_1_mode_lock
-      run_if_state: 'off'
       scene: scene.office_1_no_lights
       target: binary_sensor.office_1_lights
       watcher: binary_sensor.office_1_motion
