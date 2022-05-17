@@ -34,14 +34,6 @@
       state: 'on'
     light.office_1_2: *o1ml_state
 
-- name: Office 1 Movie Night Lights
-  entities:
-    light.office_1_1: &o1mnl_state
-      brightness: 65
-      rgb_color: [145, 145, 255]
-      state: 'on'
-    light.office_1_2: *o1mnl_state
-
 - name: Office 1 Night Lights
   entities:
     light.office_1_1: &o1nl_state
