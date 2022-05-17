@@ -99,6 +99,11 @@
             states.binary_sensor.bedroom_1_motion_group.last_changed) < 300
         }}
 
+    - name: Dining Area Motion
+      unique_id: dining_area_motion
+      state: >
+        {{ is_state('binary_sensor.dining_area_motion_group', 'on') }}
+
     - name: Dining Area Motion 15m
       unique_id: dining_area_motion_15m
       state: >
