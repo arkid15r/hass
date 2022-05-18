@@ -1,27 +1,32 @@
 - name: Office 2 Faded Lights
   entities:
-    light.office_2_1:
+    light.office_2_1: &o2fl
       brightness: 35
       state: 'on'
+    light.office_2_2: *o2fl
 
 - name: Office 2 Lights
   entities:
-    light.office_2_1:
+    light.office_2_1: &of2
       brightness: 128
       state: 'on'
+    light.office_2_2: *of2
 
 - name: Office 2 Max Lights
   entities:
-    light.office_2_1:
+    light.office_2_1: &o2ml
       brightness: 254
       state: 'on'
+    light.office_2_2: *o2ml
 
 - name: Office 2 Night Lights
   entities:
-    light.office_2_1:
+    light.office_2_1: &o2nl
       brightness: 2
       state: 'on'
+    light.office_2_2: *o2nl
 
 - name: Office 2 No Lights
   entities:
     light.office_2_1: 'off'
+    light.office_2_2: 'off'
