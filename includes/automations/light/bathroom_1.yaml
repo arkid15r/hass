@@ -3,16 +3,19 @@
   use_blueprint:
     path: scene_automation.yaml
     input:
-      default_scene_on: scene.bathroom_1_lights
+      default_scene_on: scene.bathroom_1_no_lights
       default_scene_off: scene.bathroom_1_no_lights
       run_if: binary_sensor.bathroom_1_mode_lock
       run_if_state: 'off'
       scene_1: scene.bathroom_1_faded_lights
-      scene_1_time_on: '20:30:00'
+      scene_1_time_on: input_datetime.night_lights_time_on
       scene_1_time_off: '22:30:00'
       scene_2: scene.bathroom_1_night_lights
       scene_2_time_on: '22:30:00'
-      scene_2_time_off: '07:30:00'
+      scene_2_time_off: input_datetime.morning_lights_time_off
+      scene_3: scene.bathroom_1_lights
+      scene_3_time_on: input_datetime.morning_lights_time_off
+      scene_3_time_off: '08:30:00'
       watcher: binary_sensor.bathroom_1_motion
       watcher_inactive_time_seconds: 210
 
@@ -26,4 +29,30 @@
       scene: scene.bathroom_1_no_lights
       target: binary_sensor.bathroom_1_lights
       watcher: binary_sensor.bathroom_1_motion
+      watcher_inactive_time_seconds: 900
+
+- id: bathroom_1a_lights
+  alias: '[Bathroom 1a Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_on: scene.bathroom_1a_no_lights
+      default_scene_off: scene.bathroom_1a_no_lights
+      scene_1: scene.bathroom_1a_faded_lights
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_1_time_off: '22:30:00'
+      scene_2: scene.bathroom_1a_night_lights
+      scene_2_time_on: '22:30:00'
+      scene_2_time_off: input_datetime.morning_lights_time_off
+      watcher: binary_sensor.bathroom_1a_motion
+      watcher_inactive_time_seconds: 210
+
+- id: turn_off_idle_bathroom_1a_lights
+  alias: '[Bathroom 1a Turn Off Idle Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      scene: scene.bathroom_1a_no_lights
+      target: binary_sensor.bathroom_1a_lights
+      watcher: binary_sensor.bathroom_1a_motion
       watcher_inactive_time_seconds: 900
