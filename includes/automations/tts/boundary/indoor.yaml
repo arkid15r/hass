@@ -6,8 +6,8 @@
       areas_off:
         - '{{ area_id(trigger.entity_id) }}'
       state_change_entity: &indoor_perimeter
-        - binary_sensor.bathroom_1_window_1
-        - binary_sensor.bathroom_1_window_2
+        - binary_sensor.bathroom_1_window
+        - binary_sensor.bathroom_1a_window
         - binary_sensor.bedroom_1_window
         - binary_sensor.bedroom_2_window
         - binary_sensor.den_window
