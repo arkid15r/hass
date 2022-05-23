@@ -118,13 +118,6 @@
     - binary_sensor.stairway_motion_sensor_1_motion
     - binary_sensor.stairway_motion_sensor_2_motion
 
-- name: Tech Corner Motion Group
-  device_class: motion
-  platform: group
-  unique_id: tech_corner_motion_group
-  entities:
-    - binary_sensor.tech_corner_motion_sensor_1_motion
-
 - name: Wardrobe Motion Group
   device_class: motion
   platform: group
