@@ -26,7 +26,6 @@
         - binary_sensor.office_1_motion
         - binary_sensor.office_2_motion
         - binary_sensor.stairway_motion
-        - binary_sensor.tech_corner_motion
         - binary_sensor.wardrobe_motion
       from: 'off'
       to: 'on'
