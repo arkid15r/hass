@@ -24,7 +24,6 @@
       default_scene_on: scene.pantry_lights
       default_scene_off: scene.pantry_no_lights
       watcher: binary_sensor.pantry_door
-      watcher_inactive_time_seconds: 0
 
 - id: turn_off_idle_kitchen_lights
   alias: '[Turn Off Idle Kitchen Lights]'
