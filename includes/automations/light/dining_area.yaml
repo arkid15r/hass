@@ -11,10 +11,7 @@
       scene_2: scene.dining_area_faded_lights
       scene_2_time_on: input_datetime.dining_area_day_lights_time_on
       scene_2_time_off: input_datetime.dining_area_day_lights_time_off
-      watcher:
-        - binary_sensor.dining_area_motion
-        - binary_sensor.kitchen_motion
-        - binary_sensor.stairway_motion_sensor_1_motion
+      watcher: binary_sensor.dining_area_lights_mode
       watcher_inactive_time_seconds: 300
 
 - id: turn_off_idle_dining_area_lights
@@ -25,5 +22,5 @@
       check_frequency_minutes: /1
       scene: scene.dining_area_no_lights
       target: binary_sensor.dining_area_lights
-      watcher: binary_sensor.dining_area_motion
+      watcher: binary_sensor.dining_area_lights_mode
       watcher_inactive_time_seconds: 600

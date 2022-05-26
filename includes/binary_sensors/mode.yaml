@@ -22,6 +22,14 @@
     - binary_sensor.mode_red
     - binary_sensor.mode_wake_up_lighting
 
+- name: Dining Area Lights Mode
+  unique_id: dining_area_lights_mode
+  platform: group
+  entities:
+    - binary_sensor.dining_area_motion
+    - binary_sensor.kitchen_motion
+    - binary_sensor.stairway_motion_sensor_1_motion
+
 - name: Great Room New Year Lights Mode
   unique_id: great_room_new_year_lights_mode
   platform: group
