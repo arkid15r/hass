@@ -37,6 +37,11 @@
     - platform: numeric_state
       entity_id: sensor.office_1_humidity
       below: input_number.office_1_humidity_low
+    - platform: state
+      entity_id: sensor.office_1_humidity
+      to: 'unavailable'
+      for:
+        minutes: 5
     - platform: time_pattern
       minutes: /5
   condition:
@@ -61,6 +66,14 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.office_1_humidifier_on
+        - conditions:
+            - condition: state
+              entity_id: sensor.office_1_humidity
+              state: 'unavailable'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_off
 
 - id: office_1_humidifier_on_windows_state
   alias: Office 1 Humidifier On Windows State
