@@ -1,7 +1,7 @@
 - name: Office 2 Faded Lights
   entities:
     light.office_2_1: &o2fl
-      brightness: 35
+      brightness: 15
       state: 'on'
     light.office_2_2: *o2fl
 

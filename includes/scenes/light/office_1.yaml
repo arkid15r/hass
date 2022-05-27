@@ -10,7 +10,7 @@
 - name: Office 1 Faded Lights
   entities:
     light.office_1_1: &o1fl_state
-      brightness: 25
+      brightness: 5
       color_temp: 370
       rgb_color: [255, 165, 85]
       state: 'on'
