@@ -19,6 +19,24 @@
       target:
         entity_id: scene.bathroom_1_vent_off
 
+- id: turn_off_bathroom_1a_vent
+  alias: Turn Off Bathroom 1a Vent
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_1a_vent
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 15
+  condition:
+    - condition: state
+      entity_id: switch.bathroom_1a_vent
+      state: 'on'
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bathroom_1a_vent_off
+
 - id: turn_off_idle_bathroom_1_vent
   alias: '[Turn Off Idle Bathroom 1 Vent]'
   use_blueprint:
@@ -38,10 +56,6 @@
     - platform: numeric_state
       entity_id: sensor.bathroom_1_humidity
       above: 65
-    - platform: state
-      entity_id: binary_sensor.bathroom_1_door
-      from: 'on'
-      to: 'off'
   condition:
     - condition: time
       after: '07:30:00'
@@ -56,28 +70,21 @@
     - service: scene.turn_on
       target:
         entity_id: scene.bathroom_1_vent_on
-
-- id: turn_on_bathroom_1_vent_on_motion
-  alias: Turn On Bathroom 1 Vent On Motion
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.bathroom_1_motion
-      from: 'off'
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.bathroom_1_door
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.bathroom_1_mode_lock
-      state: 'off'
-    - condition: state
-      entity_id: switch.bathroom_1_vent
-      state: 'off'
-    - condition: time
-      after: '07:30:00'
-      before: '22:30:00'
-  action:
-    - service: scene.turn_on
-      target:
-        entity_id: scene.bathroom_1_vent_on
+# - id: turn_on_bathroom_1a_vent
+#   alias: Turn On Bathroom 1a Vent
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.bathroom_1a_door
+#       from: 'on'
+#       to: 'off'
+#   condition:
+#     - condition: time
+#       after: '07:30:00'
+#       before: '22:30:00'
+#     - condition: state
+#       entity_id: switch.bathroom_1a_vent
+#       state: 'off'
+#   action:
+#     - service: scene.turn_on
+#       target:
+#         entity_id: scene.bathroom_1a_vent_on
