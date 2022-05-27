@@ -46,6 +46,20 @@ binary_sensor.bedroom_1_motion_5m:
 
 binary_sensor.bedroom_1_motion_group: *bedroom_1_motion
 
+binary_sensor.dining_area_motion: &dining_area_motion
+  friendly_name: Dining Area
+  icon: *icon_motion
+
+binary_sensor.dining_area_motion_15m:
+  friendly_name: Dining Area Motion Last 15 Minutes
+  icon: *icon_motion
+
+binary_sensor.dining_area_motion_5m:
+  friendly_name: Dining Area Motion Last 5 Minutes
+  icon: *icon_motion
+
+binary_sensor.dining_area_motion_group: *dining_area_motion
+
 binary_sensor.front_yard_motion: &front_yard_motion
   friendly_name: Front Yard
   icon: *icon_motion
