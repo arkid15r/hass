@@ -50,6 +50,22 @@
       target:
         entity_id: scene.great_room_lamps_no_lights
 
+- id: turn_on_great_room_movie_night_lights
+  alias: Turn On Great Room Movie Night Lights
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.great_room_tv
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: time
+      after: input_datetime.movie_night_time_on
+      before: input_datetime.movie_night_time_off
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.great_room_movie_night_lights
+
 - id: turn_on_great_room_movie_night_lights_on_motion
   alias: Turn On Great Room Movie Night Lights On Motion
   trigger:
