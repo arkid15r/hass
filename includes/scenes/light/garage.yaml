@@ -1,4 +1,4 @@
-- name: Garage Max Lights
+- name: Garage Lights
   entities:
     light.garage_1: 'on'
 

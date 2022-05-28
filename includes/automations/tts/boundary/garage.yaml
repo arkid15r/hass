@@ -6,7 +6,7 @@
       areas_off:
         - garage
       state_change_entity: binary_sensor.garage_door
-      state_change_for_time_seconds: 60
+      state_change_for_time_seconds: 90
       state_change_from: 'off'
       state_change_to: 'on'
       text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garage door is still open.
@@ -19,7 +19,7 @@
       areas_off:
         - garage
       state_change_entity: binary_sensor.garage_door
-      state_change_for_time_seconds: 120
+      state_change_for_time_seconds: 150
       state_change_from: 'off'
       state_change_to: 'on'
       text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The garage door is still open. <break time="350ms"/><prosody pitch="x-low">I'm just saying</prosody>.

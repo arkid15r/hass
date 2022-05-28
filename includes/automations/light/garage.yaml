@@ -4,7 +4,7 @@
     path: scene_automation.yaml
     input:
       default_scene_off: scene.garage_no_lights
-      default_scene_on: scene.garage_max_lights
+      default_scene_on: scene.garage_lights
       run_if: binary_sensor.garage_mode_lock
       run_if_state: 'off'
       watcher: binary_sensor.garage_motion
@@ -15,7 +15,7 @@
   use_blueprint:
     path: scene_automation.yaml
     input:
-      default_scene_on: scene.garage_max_lights
+      default_scene_on: scene.garage_lights
       watcher: binary_sensor.garage_door
       watcher_inactive_time_seconds: 90
 
@@ -35,7 +35,7 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.garage_max_lights
+                entity_id: scene.garage_lights
         - conditions:
             - condition: state
               entity_id: binary_sensor.garage_gate
