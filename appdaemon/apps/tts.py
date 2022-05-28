@@ -113,6 +113,13 @@ class AmazonEcho(hass.Hass):
         list: A list of target devices the message to be played on.
       """
 
+    def in_dnd_mode(media_player):
+      """
+      Return True if media player device is in the "Do Not Disturb" mode.
+      Return False otherwise.
+      """
+      return is_on(f'switch.{media_player.split(".")[1]}_do_not_disturb_switch')
+
     def is_on(sensor):
       """Return True if sensor's state is 'on' otherwise returns False."""
       return self.get_state(sensor) == self.STATE_ON
@@ -195,7 +202,7 @@ class AmazonEcho(hass.Hass):
     if not targets and targets_play_default:
       targets.update(set(targets_play_default).difference(targets_off))
 
-    targets = sorted(targets)
+    targets = sorted((target for target in targets if not in_dnd_mode(target)))
     if targets:
       self.call_service('notify/alexa_media',
                         data={'type': 'tts'},

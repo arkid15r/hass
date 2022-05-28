@@ -58,6 +58,7 @@ class TestBase(unittest.TestCase):
   OFFICE_1 = 'office_1'
   OFFICE_1_LIGHT = 'binary_sensor.office_1_light'
   OFFICE_1_ECHO = 'media_player.office_1_echo'
+  OFFICE_1_ECHO_DND_MODE = 'media_player.office_1_echo_do_not_disturb_switch'
   OFFICE_1_MOTION = 'binary_sensor.office_1_motion_5m'
   OFFICE_1_TV = 'remote.office_1_tv'
 
@@ -646,7 +647,6 @@ class TestOffice1(TestTargetConditionBase):
   conditions = {
       TestBase.OFFICE_1_LIGHT: 'the light is on',
       TestBase.OFFICE_1_MOTION: 'there was a recent motion',
-      TestBase.OFFICE_1_TV: 'the TV is on',
   }
 
   def test_not_played_normal_time(self):
@@ -661,14 +661,11 @@ class TestOffice1(TestTargetConditionBase):
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.OFFICE_1)
 
-  # def test_played_if_not(self):
-  #   if_not = {
-  #       'conditions': (TestBase.DINING_AREA_LIGHT, TestBase.KITCHEN_LIGHT,
-  #                      TestBase.GREAT_ROOM_LIGHT, TestBase.GREAT_ROOM_TV),
-  #       'description': f'playing in {TestBase.GREAT_ROOM}'
-  #   }
-
-  #   super()._test_played_if_not(TestBase.OFFICE_1, self.conditions, if_not)
+  def test_not_played_in_dnd_mode(self):
+    conditions = {
+        TestBase.OFFICE_1_ECHO_DND_MODE: 'office_1 echo in DND mode',
+    }
+    super()._test_not_played_normal_time(TestBase.OFFICE_1, conditions)
 
 
 class TestOffice2(TestTargetConditionBase):

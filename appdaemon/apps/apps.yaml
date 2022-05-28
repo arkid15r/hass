@@ -65,7 +65,6 @@ tts:
       conditions:
         - binary_sensor.office_1_lights
         - binary_sensor.office_1_motion_5m
-        - remote.office_1_tv_remote
       target: media_player.office_1_echo
     office_2:
       conditions:
