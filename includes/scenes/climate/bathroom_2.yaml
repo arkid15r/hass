@@ -1,0 +1,7 @@
+- name: Bathroom 2 Fan Off
+  entities:
+    fan.bathroom_2: 'off'
+
+- name: Bathroom 2 Fan On
+  entities:
+    fan.bathroom_2: 'on'
