@@ -1,15 +1,15 @@
-- name: Bathroom 1 Vent Off
+- name: Bathroom 1 Fan Off
   entities:
-    switch.bathroom_1_vent: 'off'
+    fan.bathroom_1: 'off'
 
-- name: Bathroom 1 Vent On
+- name: Bathroom 1 Fan On
   entities:
-    switch.bathroom_1_vent: 'on'
+    fan.bathroom_1: 'on'
 
-- name: Bathroom 1a Vent Off
+- name: Bathroom 1a Fan Off
   entities:
-    switch.bathroom_1a_vent: 'off'
+    fan.bathroom_1a: 'off'
 
-- name: Bathroom 1a Vent On
+- name: Bathroom 1a Fan On
   entities:
-    switch.bathroom_1a_vent: 'on'
+    fan.bathroom_1a: 'on'

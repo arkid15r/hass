@@ -66,7 +66,7 @@
                 entity_id: scene.indoor_garden_off
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_vent_off
+                entity_id: scene.indoor_garden_fan_off
 
 - id: indoor_garden_schedule_enforcement
   alias: Indoor Garden Schedule Enforcement
@@ -119,7 +119,7 @@
                 entity_id: scene.indoor_garden_off
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_vent_off
+                entity_id: scene.indoor_garden_fan_off
             - delay:
                 minutes: 1
             - condition: not
@@ -166,8 +166,8 @@
           event_data:
             text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle is out of schedule. Please fix the issue as soon as possible. It's important. Thank you!
 
-- id: indoor_garden_vent
-  alias: Indoor Garden Vent
+- id: indoor_garden_fan
+  alias: Indoor Garden Fan
   trigger:
     - platform: time_pattern
       minutes: /1
@@ -191,11 +191,11 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_vent_on
+                entity_id: scene.indoor_garden_fan_on
         - conditions:
             - condition: template
               value_template: '{{ humidity < humidity_high - 5 }}'
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_vent_off
+                entity_id: scene.indoor_garden_fan_off

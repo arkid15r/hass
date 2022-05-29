@@ -14,10 +14,10 @@
   entities:
     switch.indoor_garden: 'on'
 
-- name: Indoor Garden Vent Off
+- name: Indoor Garden Fan Off
   entities:
-    switch.indoor_garden_vent: 'off'
+    fan.indoor_garden: 'off'
 
-- name: Indoor Garden Vent On
+- name: Indoor Garden Fan On
   entities:
-    switch.indoor_garden_vent: 'on'
+    fan.indoor_garden: 'on'

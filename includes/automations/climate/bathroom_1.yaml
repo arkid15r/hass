@@ -1,57 +1,57 @@
-- id: turn_off_bathroom_1_vent
-  alias: Turn Off Bathroom 1 Vent
+- id: turn_off_bathroom_1_fan
+  alias: Turn Off Bathroom 1 Fan
   trigger:
     - platform: numeric_state
       entity_id: sensor.bathroom_1_humidity
       below: 50
     - platform: state
-      entity_id: switch.bathroom_1_vent
+      entity_id: fan.bathroom_1
       from: 'off'
       to: 'on'
       for:
         minutes: 15
   condition:
     - condition: state
-      entity_id: switch.bathroom_1_vent
+      entity_id: fan.bathroom_1
       state: 'on'
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.bathroom_1_vent_off
+        entity_id: scene.bathroom_1_fan_off
 
-- id: turn_off_bathroom_1a_vent
-  alias: Turn Off Bathroom 1a Vent
+- id: turn_off_bathroom_1a_fan
+  alias: Turn Off Bathroom 1a Fan
   trigger:
     - platform: state
-      entity_id: switch.bathroom_1a_vent
+      entity_id: fan.bathroom_1a
       from: 'off'
       to: 'on'
       for:
         minutes: 15
   condition:
     - condition: state
-      entity_id: switch.bathroom_1a_vent
+      entity_id: fan.bathroom_1a
       state: 'on'
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.bathroom_1a_vent_off
+        entity_id: scene.bathroom_1a_fan_off
 
-- id: turn_off_idle_bathroom_1_vent
-  alias: '[Turn Off Idle Bathroom 1 Vent]'
+- id: turn_off_idle_bathroom_1_fan
+  alias: '[Turn Off Idle Bathroom 1 Fan]'
   use_blueprint:
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
       run_if: binary_sensor.bathroom_1_mode_lock
       run_if_state: 'off'
-      scene: scene.bathroom_1_vent_off
-      target: switch.bathroom_1_vent
+      scene: scene.bathroom_1_fan_off
+      target: fan.bathroom_1
       target_active_time_seconds: 900
       watcher: binary_sensor.bathroom_1_motion
 
-- id: turn_on_bathroom_1_vent
-  alias: Turn On Bathroom 1 Vent
+- id: turn_on_bathroom_1_fan
+  alias: Turn On Bathroom 1 Fan
   trigger:
     - platform: numeric_state
       entity_id: sensor.bathroom_1_humidity
@@ -61,7 +61,7 @@
       after: '07:30:00'
       before: '22:30:00'
     - condition: state
-      entity_id: switch.bathroom_1_vent
+      entity_id: fan.bathroom_1
       state: 'off'
     - condition: state
       entity_id: binary_sensor.bathroom_1_mode_lock
@@ -69,22 +69,23 @@
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.bathroom_1_vent_on
-# - id: turn_on_bathroom_1a_vent
-#   alias: Turn On Bathroom 1a Vent
-#   trigger:
-#     - platform: state
-#       entity_id: binary_sensor.bathroom_1a_door
-#       from: 'on'
-#       to: 'off'
-#   condition:
-#     - condition: time
-#       after: '07:30:00'
-#       before: '22:30:00'
-#     - condition: state
-#       entity_id: switch.bathroom_1a_vent
-#       state: 'off'
-#   action:
-#     - service: scene.turn_on
-#       target:
-#         entity_id: scene.bathroom_1a_vent_on
+        entity_id: scene.bathroom_1_fan_on
+
+- id: turn_on_bathroom_1a_fan
+  alias: Turn On Bathroom 1a Fan
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_1a_door
+      from: 'on'
+      to: 'off'
+  condition:
+    - condition: time
+      after: '07:30:00'
+      before: '22:30:00'
+    - condition: state
+      entity_id: fan.bathroom_1a
+      state: 'off'
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bathroom_1a_fan_on
