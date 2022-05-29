@@ -1,5 +1,5 @@
-- id: tts_state_garage_door_open_1m
-  alias: '[TTS State Garage Door Open 1m]'
+- id: tts_state_garage_door_open_warning_1
+  alias: '[TTS State Garage Door Open Warning 1]'
   use_blueprint:
     path: tts_state.yaml
     input:
@@ -11,8 +11,8 @@
       state_change_to: 'on'
       text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garage door is still open.
 
-- id: tts_state_garage_door_open_2m
-  alias: '[TTS State: Garage Door Open 2m]'
+- id: tts_state_garage_door_open_warning_2
+  alias: '[TTS State: Garage Door Open Warning 2]'
   use_blueprint:
     path: tts_state.yaml
     input:
