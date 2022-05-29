@@ -1,4 +1,5 @@
 binary_sensor.backyard_motion: &backyard_motion
+  device_class: motion
   friendly_name: Backyard
   icon: &icon_motion mdi:motion-sensor
 
@@ -19,6 +20,7 @@ binary_sensor.bathroom_1_motion_5m:
 binary_sensor.bathroom_1_motion_group: *bathroom_1_motion
 
 binary_sensor.bathroom_2_motion: &bathroom_2_motion
+  device_class: motion
   friendly_name: Bathroom 2
   icon: *icon_motion
 
@@ -32,7 +34,23 @@ binary_sensor.bathroom_2_motion_5m:
 
 binary_sensor.bathroom_2_motion_group: *bathroom_2_motion
 
+binary_sensor.bathroom_3_motion: &bathroom_3_motion
+  device_class: motion
+  friendly_name: Bathroom 3
+  icon: *icon_motion
+
+binary_sensor.bathroom_3_motion_15m:
+  friendly_name: Bathroom 3 Motion Last 15 Minutes
+  icon: *icon_motion
+
+binary_sensor.bathroom_3_motion_5m:
+  friendly_name: Bathroom 3 Motion Last 5 Minutes
+  icon: *icon_motion
+
+binary_sensor.bathroom_3_motion_group: *bathroom_3_motion
+
 binary_sensor.bedroom_1_motion: &bedroom_1_motion
+  device_class: motion
   friendly_name: Bedroom 1
   icon: *icon_motion
 
@@ -47,6 +65,7 @@ binary_sensor.bedroom_1_motion_5m:
 binary_sensor.bedroom_1_motion_group: *bedroom_1_motion
 
 binary_sensor.dining_area_motion: &dining_area_motion
+  device_class: motion
   friendly_name: Dining Area
   icon: *icon_motion
 
@@ -61,12 +80,14 @@ binary_sensor.dining_area_motion_5m:
 binary_sensor.dining_area_motion_group: *dining_area_motion
 
 binary_sensor.front_yard_motion: &front_yard_motion
+  device_class: motion
   friendly_name: Front Yard
   icon: *icon_motion
 
 binary_sensor.front_yard_motion_group: *front_yard_motion
 
 binary_sensor.garage_motion: &garage_motion
+  device_class: motion
   friendly_name: Garage
   icon: *icon_motion
 
@@ -81,6 +102,7 @@ binary_sensor.garage_motion_5m:
 binary_sensor.garage_motion_group: *garage_motion
 
 binary_sensor.great_room_motion: &great_room_motion
+  device_class: motion
   friendly_name: Great Room
   icon: *icon_motion
 
@@ -95,6 +117,7 @@ binary_sensor.great_room_motion_5m:
 binary_sensor.great_room_motion_group: *great_room_motion
 
 binary_sensor.hallway_motion: &hallway_motion
+  device_class: motion
   friendly_name: Hallway
   icon: *icon_motion
 
@@ -109,6 +132,7 @@ binary_sensor.hallway_motion_5m:
 binary_sensor.hallway_motion_group: *hallway_motion
 
 binary_sensor.kitchen_motion: &kitchen_motion
+  device_class: motion
   friendly_name: Kitchen
   icon: *icon_motion
 
@@ -123,6 +147,7 @@ binary_sensor.kitchen_motion_5m:
 binary_sensor.kitchen_motion_group: *kitchen_motion
 
 binary_sensor.laundry_room_motion: &laundry_room_motion
+  device_class: motion
   friendly_name: Laundry Room
   icon: *icon_motion
 
@@ -137,6 +162,7 @@ binary_sensor.laundry_room_motion_5m:
 binary_sensor.laundry_room_motion_group: *laundry_room_motion
 
 binary_sensor.stairway_motion: &stairway_motion
+  device_class: motion
   friendly_name: Stairway
   icon: *icon_motion
 
@@ -151,6 +177,7 @@ binary_sensor.stairway_motion_5m:
 binary_sensor.stairway_motion_group: *stairway_motion
 
 binary_sensor.wardrobe_motion: &wardrobe_motion
+  device_class: motion
   friendly_name: Wardrobe
   icon: *icon_motion
 
