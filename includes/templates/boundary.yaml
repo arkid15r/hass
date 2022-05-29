@@ -1,4 +1,9 @@
 - binary_sensor:
+    - name: Bathroom 1a Door Closed
+      unique_id: bathroom_1a_door_closed
+      state: >
+        {{ is_state('binary_sensor.bathroom_1a_door', 'off') }}
+
     - name: Front Door Closed
       unique_id: front_door_closed
       state: >
@@ -8,6 +13,11 @@
       unique_id: garage_gate_closed
       state: >
         {{ is_state('binary_sensor.garage_gate', 'off') }}
+
+    - name: Garage Side Door Closed
+      unique_id: garage_side_door_closed
+      state: >
+        {{ is_state('binary_sensor.garage_side_door', 'off') }}
 
     - name: Great Room Door Closed
       unique_id: great_room_door_closed
