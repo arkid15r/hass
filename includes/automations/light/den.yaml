@@ -1,0 +1,26 @@
+- id: den_lights
+  alias: '[Den Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.den_no_lights
+      default_scene_on: scene.den_no_lights
+      scene_1: scene.den_lights
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_1_time_off: '21:30:00'
+      scene_2: scene.den_faded_lights
+      scene_2_time_on: '21:30:00'
+      scene_2_time_off: '22:30:00'
+      watcher: binary_sensor.den_motion
+      watcher_inactive_time_seconds: 300
+
+- id: turn_off_idle_den_lights
+  alias: '[Turn Off Idle Den Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      scene: scene.den_no_lights
+      target: binary_sensor.den_lights
+      watcher: binary_sensor.den_motion
+      watcher_inactive_time_seconds: 600

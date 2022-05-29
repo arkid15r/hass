@@ -36,6 +36,11 @@
       state: >
         {{ is_state('light.bedroom_1_light_group', 'on') }}
 
+    - name: Den Lights
+      unique_id: den_lights
+      state: >
+        {{ is_state('light.den_light_group', 'on') }}
+
     - name: Dining Area Lights
       unique_id: dining_area_lights
       state: >

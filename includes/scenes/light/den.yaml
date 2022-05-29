@@ -1,0 +1,19 @@
+- name: Den Faded Lights
+  entities:
+    light.den_1: &dfl_state
+      brightness: 40
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Den Lights
+  entities:
+    light.den_1: &dl_state
+      brightness: 254
+      color_temp: 370
+      rgb_color: [255, 165, 85]
+      state: 'on'
+
+- name: Den No Lights
+  entities:
+    light.den_1: 'off'

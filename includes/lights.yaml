@@ -38,6 +38,12 @@
   entities:
     - light.bedroom_1_1
 
+- name: Den Light Group
+  platform: group
+  unique_id: den_light_group
+  entities:
+    - light.den_1
+
 - name: Front Yard Light Group
   platform: group
   unique_id: front_yard_light_group

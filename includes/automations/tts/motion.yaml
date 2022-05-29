@@ -18,6 +18,7 @@
       entity_id: &indoor_motion_sensors
         - binary_sensor.bathroom_2_motion
         - binary_sensor.bathroom_3_motion
+        - binary_sensor.den_motion
         - binary_sensor.garage_motion
         - binary_sensor.great_room_motion
         - binary_sensor.hallway_motion
