@@ -11,7 +11,7 @@
       data:
         time: >
           {{ (as_timestamp(state_attr('sun.sun', 'next_setting')) |
-              int - 15 * 60) | timestamp_custom('%H:%M')
+              int - 60 * 60) | timestamp_custom('%H:%M')
           }}
 
 - id: set_morning_lights_time_off
@@ -27,5 +27,5 @@
       data:
         time: >
           {{ (as_timestamp(state_attr('sun.sun', 'next_rising')) |
-              int + 15 * 60) | timestamp_custom('%H:%M')
+              int + 30 * 60) | timestamp_custom('%H:%M')
           }}
