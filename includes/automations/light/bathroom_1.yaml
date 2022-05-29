@@ -44,8 +44,7 @@
       scene_2: scene.bathroom_1a_night_lights
       scene_2_time_on: '22:30:00'
       scene_2_time_off: input_datetime.morning_lights_time_off
-      watcher: binary_sensor.bathroom_1a_motion
-      watcher_inactive_time_seconds: 210
+      watcher: binary_sensor.bathroom_1a_door_closed
 
 - id: turn_off_idle_bathroom_1a_lights
   alias: '[Bathroom 1a Turn Off Idle Lights]'

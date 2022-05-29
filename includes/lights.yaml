@@ -17,7 +17,7 @@
   platform: group
   unique_id: bathroom_1a_light_group
   entities:
-    - light.bathroom_1_5
+    - light.bathroom_1a
 
 - name: Bathroom 2 Light Group
   platform: group
@@ -37,6 +37,14 @@
   unique_id: bedroom_1_light_group
   entities:
     - light.bedroom_1_1
+
+- name: Front Yard Light Group
+  platform: group
+  unique_id: front_yard_light_group
+  entities:
+    - light.front_yard_1
+    - light.front_yard_2
+    - light.front_yard_3
 
 - name: Garage Light Group
   platform: group
@@ -61,20 +69,6 @@
     - light.great_room_4
     - light.great_room_lamp_1
     - light.great_room_lamp_2
-
-- name: Front Yard Light Group
-  platform: group
-  unique_id: front_yard_light_group
-  entities:
-    - light.front_yard_1
-    - light.front_yard_2
-    - light.front_yard_3
-
-- name: Garage Light Group
-  platform: group
-  unique_id: garage_light_group
-  entities:
-    - light.garage_1
 
 - name: Hallway Light Group
   platform: group
@@ -124,3 +118,9 @@
   unique_id: tech_corner_light_group
   entities:
     - light.tech_corner_1
+
+- name: Wardrobe Light Group
+  platform: group
+  unique_id: wardrobe_light_group
+  entities:
+    - light.wardrobe_1

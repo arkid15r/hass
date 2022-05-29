@@ -58,7 +58,7 @@
 
 - name: Bathroom 1a Lights
   entities:
-    light.bathroom_1_5:
+    light.bathroom_1a:
       brightness: 254
       color_temp: 370
       rgb_color: [255, 165, 85]
@@ -66,7 +66,7 @@
 
 - name: Bathroom 1a Faded Lights
   entities:
-    light.bathroom_1_5:
+    light.bathroom_1a:
       brightness: 15
       color_temp: 370
       rgb_color: [255, 165, 85]
@@ -74,11 +74,11 @@
 
 - name: Bathroom 1a Night Lights
   entities:
-    light.bathroom_1_5:
+    light.bathroom_1a:
       brightness: 2
       rgb_color: [255, 0, 0]
       state: 'on'
 
 - name: Bathroom 1a No Lights
   entities:
-    light.bathroom_1_5: 'off'
+    light.bathroom_1a: 'off'

@@ -1,0 +1,7 @@
+- name: Wardrobe Lights
+  entities:
+    light.wardrobe_1: 'on'
+
+- name: Wardrobe No Lights
+  entities:
+    light.wardrobe_1: 'off'

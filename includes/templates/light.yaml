@@ -85,3 +85,8 @@
       unique_id: stairway_lights
       state: >
         {{ is_state('light.stairway_light_group', 'on') }}
+
+    - name: Wardrobe Lights
+      unique_id: wardrobe_lights
+      state: >
+        {{ is_state('light.wardrobe_light_group', 'on') }}
