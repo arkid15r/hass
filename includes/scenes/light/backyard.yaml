@@ -1,8 +1,9 @@
 - name: Backyard Max Lights
   entities:
-    light.backyard_1:
+    light.backyard_1: &byml
       brightness: 254
       state: 'on'
+    light.backyard_left_side_1: *byml
 
 - name: Backyard Night Lights
   entities:
@@ -13,3 +14,4 @@
 - name: Backyard No Lights
   entities:
     light.backyard_1: 'off'
+    light.backyard_left_side_1: 'off'
