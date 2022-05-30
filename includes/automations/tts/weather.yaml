@@ -36,6 +36,12 @@
     - condition: state
       entity_id: input_boolean.play_tts_messages
       state: 'on'
+    - condition: template
+      value_template: >
+        {{ trigger.from_state.state != 'unavailable' }}
+    - condition: template
+      value_template: >
+        {{ trigger.to_state.state != 'unavailable' }}
     - condition: time
       after: input_datetime.alarm_time_off
       before: input_datetime.alarm_time_on
