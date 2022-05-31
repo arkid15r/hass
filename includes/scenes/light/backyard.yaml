@@ -10,6 +10,7 @@
     light.backyard_1:
       brightness: 1
       state: 'on'
+    light.backyard_left_side_1: 'off'
 
 - name: Backyard No Lights
   entities:
