@@ -53,5 +53,5 @@
     input:
       scene: scene.bathroom_1a_no_lights
       target: binary_sensor.bathroom_1a_lights
-      watcher: binary_sensor.bathroom_1a_motion
+      watcher: binary_sensor.bathroom_1a_lights
       watcher_inactive_time_seconds: 900
