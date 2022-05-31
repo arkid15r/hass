@@ -14,9 +14,9 @@ input_boolean.mode_gym:
   friendly_name: Gym Mode
   icon: mdi:dumbbell
 
-input_boolean.mode_kitchen_tv:
-  friendly_name: Kitchen TV Mode
-  icon: mdi:television-play
+input_boolean.mode_office_1_dnd:
+  friendly_name: Office 1 DND Mode
+  icon: mdi:alarm-light-outline
 
 input_boolean.mode_spa:
   friendly_name: Spa Mode

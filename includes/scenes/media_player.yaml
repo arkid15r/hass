@@ -1,0 +1,7 @@
+- name: Office 1 DND Mode On
+  entities:
+    switch.office_1_echo_do_not_disturb_switch: 'on'
+
+- name: Office 1 DND Mode Off
+  entities:
+    switch.office_1_echo_do_not_disturb_switch: 'off'

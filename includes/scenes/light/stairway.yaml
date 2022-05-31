@@ -1,3 +1,14 @@
+- name: Office 1 DND Mode Indicator On
+  entities:
+    light.stairway_2:
+      brightness: 2
+      rgb_color: [255, 0, 0]
+      state: 'on'
+
+- name: Office 1 DND Mode Indicator Off
+  entities:
+    light.stairway_2: 'off'
+
 - name: Stairway Faded Lights
   entities:
     light.stairway_1:

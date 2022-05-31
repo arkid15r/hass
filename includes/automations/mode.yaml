@@ -34,82 +34,45 @@
               target:
                 entity_id: scene.bar_lights
 
-- id: mode_kitchen_tv
-  alias: Kitchen TV Mode
+- id: mode_office_1_dnd
+  alias: Office 1 DND Mode
   trigger:
     - platform: state
-      entity_id: input_boolean.mode_kitchen_tv
+      entity_id: input_boolean.mode_office_1_dnd
   action:
     - choose:
         - conditions:
             - condition: state
-              entity_id: input_boolean.mode_kitchen_tv
+              entity_id: input_boolean.mode_office_1_dnd
               state: 'off'
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.kitchen_faded_lights
+                entity_id: scene.office_1_dnd_mode_off
             - service: scene.turn_on
               target:
-                entity_id: scene.hallway_no_lights
-            - service: remote.turn_off
-              entity_id: remote.kitchen_tv_remote
+                entity_id: scene.office_1_dnd_mode_indicator_off
+            - event: tts
+              event_data:
+                areas_off:
+                  - office_1
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s do not disturb mode has been turned off.
         - conditions:
             - condition: state
-              entity_id: input_boolean.mode_kitchen_tv
+              entity_id: input_boolean.mode_office_1_dnd
               state: 'on'
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.kitchen_tv_mode_lights
-            - condition: state
-              entity_id: binary_sensor.kitchen_tv
-              state: 'off'
-            - service: remote.turn_on
-              entity_id: remote.kitchen_tv_remote
-
-- id: mode_kitchen_tv_on_kitchen_tv_state
-  alias: Kitchen TV Mode On Kitchen TV State
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.kitchen_tv
-      to: 'off'
-  condition:
-    - condition: state
-      entity_id: input_boolean.mode_kitchen_tv
-      state: 'on'
-  action:
-    - service: input_boolean.turn_off
-      target:
-        entity_id: input_boolean.mode_kitchen_tv
-
-- id: mode_office_1_tv
-  alias: Office 1 TV Mode
-  trigger:
-    - platform: state
-      entity_id: input_boolean.mode_office_1_tv
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.mode_office_1_tv
-              state: 'off'
-          sequence:
+                entity_id: scene.office_1_dnd_mode_on
             - service: scene.turn_on
               target:
-                entity_id: scene.office_1_faded_lights
-            - service: remote.turn_off
-              entity_id: remote.office_1_tv_remote
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.mode_office_1_tv
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_1_movie_night_mode_lights
-            - service: remote.turn_on
-              entity_id: remote.office_1_tv_remote
+                entity_id: scene.office_1_dnd_mode_indicator_on
+            - event: tts
+              event_data:
+                areas_off:
+                  - office_1
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s do not disturb mode has been turned on.
 
 - id: mode_office_2_lights
   alias: Office 2 Lights Mode

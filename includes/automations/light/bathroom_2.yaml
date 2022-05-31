@@ -17,33 +17,6 @@
       watcher: binary_sensor.bathroom_2_motion
       watcher_inactive_time_seconds: 180
 
-- id: bathroom_2_occupancy_indicator
-  alias: Bathroom 2 Occupancy Indicator
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.bathroom_2_door
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.bathroom_2_door
-              state: 'off'
-            - condition: state
-              entity_id: binary_sensor.bathroom_2_lights
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bathroom_2_occupied
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.bathroom_2_door
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bathroom_2_unoccupied
-
 - id: turn_off_idle_bathroom_2_lights
   alias: '[Turn Off Idle Bathroom 2 Lights]'
   use_blueprint:
@@ -54,14 +27,3 @@
       target: binary_sensor.bathroom_2_lights
       watcher: binary_sensor.bathroom_2_motion
       watcher_inactive_time_seconds: 300
-
-- id: turn_off_idle_bathroom_2_occupancy_indicator
-  alias: '[Turn Off Idle Bathroom 2 Occupancy Indicator]'
-  use_blueprint:
-    path: target_turn_off.yaml
-    input:
-      check_frequency_minutes: /1
-      scene: scene.bathroom_2_unoccupied
-      target: light.stairway_2
-      watcher: binary_sensor.bathroom_2_motion
-      watcher_inactive_time_seconds: 150
