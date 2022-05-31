@@ -48,7 +48,7 @@
   action:
     - service: scene.turn_on
       target:
-        entity_id: scene.great_room_lamps_no_lights
+        entity_id: scene.great_room_movie_night_no_lights
 
 - id: turn_on_great_room_movie_night_lights
   alias: Turn On Great Room Movie Night Lights
