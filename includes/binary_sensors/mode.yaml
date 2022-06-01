@@ -4,6 +4,7 @@
   unique_id: backyard_lights_mode
   entities:
     - binary_sensor.backyard_lights
+    - binary_sensor.garage_side_door_closed
     - binary_sensor.great_room_door_closed
 
 - name: Bathroom 1 Mode Lock

@@ -64,6 +64,21 @@ binary_sensor.bedroom_1_motion_5m:
 
 binary_sensor.bedroom_1_motion_group: *bedroom_1_motion
 
+binary_sensor.den_motion: &den_motion
+  device_class: motion
+  friendly_name: Den
+  icon: *icon_motion
+
+binary_sensor.den_motion_15m:
+  friendly_name: Den Motion Last 15 Minutes
+  icon: *icon_motion
+
+binary_sensor.den_motion_5m:
+  friendly_name: Den Motion Last 5 Minutes
+  icon: *icon_motion
+
+binary_sensor.den_motion_group: *den_motion
+
 binary_sensor.dining_area_motion: &dining_area_motion
   device_class: motion
   friendly_name: Dining Area

@@ -11,12 +11,6 @@
   entities:
     - binary_sensor.bathroom_1_motion_sensor_1_motion
 
-- name: Bathroom 1a Motion Group
-  platform: group
-  unique_id: bathroom_1a_motion_group
-  entities:
-    - binary_sensor.bathroom_1_motion_sensor_2_motion
-
 - name: Bathroom 2 Motion Group
   platform: group
   unique_id: bathroom_2_motion_group

@@ -23,25 +23,6 @@
             states.binary_sensor.bathroom_1_motion_group.last_changed) < 300
         }}
 
-    - name: Bathroom 1a Motion
-      unique_id: bathroom_1a_motion
-      state: >
-        {{ is_state('binary_sensor.bathroom_1a_motion_group', 'on') }}
-
-    - name: Bathroom 1a Motion 15m
-      unique_id: bathroom_1a_motion_15m
-      state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.binary_sensor.bathroom_1a_motion_group.last_changed) < 900
-        }}
-
-    - name: Bathroom 1a Motion 5m
-      unique_id: bathroom_1a_motion_5m
-      state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.binary_sensor.bathroom_1a_motion_group.last_changed) < 300
-        }}
-
     - name: Bathroom 2 Motion
       unique_id: bathroom_2_motion
       state: >
