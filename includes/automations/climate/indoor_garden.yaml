@@ -152,7 +152,7 @@
                   state: 'on'
             - event: tts
               event_data:
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle was out of schedule. Please make sure it's in an expected state as soon as possible. It's important. Thank you!
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle is out of schedule. Please make sure it's in the expected state as soon as possible. It's important. Thank you!
       default:
         - condition: time
           after: input_datetime.alarm_time_off
