@@ -24,6 +24,9 @@ blueprint:
       - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Time On` - `Scene #3 Time Off` time range.
       - **Scene #3 Time On** (*optional*): `Scene #3` time range start.
       - **Scene #3 Time Off** (*optional*): `Scene #3` time range end.
+      - **Reload Scene Again After a Custom Delay (*default*: `true`): if true the blueprint loads a scene again after a custom delay to make sure it's applied correctly.
+      - **Run If** (*optional*): an entity to check for `Run If State` match.
+      - **Run If State** (*optional*): a state in which the `Run If` entity should be in order to run the automation.
 
   source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/scene_automation.yaml
 
@@ -136,6 +139,13 @@ blueprint:
         entity:
           domain: input_datetime
 
+    reload_scene:
+      name: 'Reload Scene Again After a Custom Delay'
+      description: 'Make Sure the Scene is Loaded'
+      default: true
+      selector:
+        boolean:
+
     run_if:
       name: Run If Only (optional)
       description: Don't run the automation if the entity
@@ -151,13 +161,14 @@ blueprint:
         text:
 
 variables:
+  reload_scene: !input reload_scene
+  reload_scene_delay_seconds: >
+    {{ states('input_number.scene_reload_delay') | float }}
   run_if: !input run_if
   run_if_state: !input run_if_state
   scene_1: !input scene_1
   scene_2: !input scene_2
   scene_3: !input scene_3
-  scene_reload_delay_seconds: >
-    {{ states('input_number.scene_reload_delay') | float }}
   watcher: !input watcher
   watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
 
@@ -191,9 +202,12 @@ action:
           - service: scene.turn_on
             target:
               entity_id: !input default_scene_off
+          - condition: template
+            value_template: >
+              {{ reload_scene == true }}
           - delay:
               seconds: >
-                {{ scene_reload_delay_seconds }}
+                {{ reload_scene_delay_seconds }}
           - service: scene.turn_on
             target:
               entity_id: !input default_scene_off
@@ -213,9 +227,12 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_1
+                  - condition: template
+                    value_template: >
+                      {{ reload_scene == true }}
                   - delay:
                       seconds: >
-                        {{ scene_reload_delay_seconds }}
+                        {{ reload_scene_delay_seconds }}
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_1
@@ -229,9 +246,12 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_2
+                  - condition: template
+                    value_template: >
+                      {{ reload_scene == true }}
                   - delay:
                       seconds: >
-                        {{ scene_reload_delay_seconds }}
+                        {{ reload_scene_delay_seconds }}
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_2
@@ -245,9 +265,12 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_3
+                  - condition: template
+                    value_template: >
+                      {{ reload_scene == true }}
                   - delay:
                       seconds: >
-                        {{ scene_reload_delay_seconds }}
+                        {{ reload_scene_delay_seconds }}
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_3
@@ -256,9 +279,12 @@ action:
               - service: scene.turn_on
                 target:
                   entity_id: !input default_scene_on
+              - condition: template
+                value_template: >
+                  {{ reload_scene == true }}
               - delay:
                   seconds: >
-                    {{ scene_reload_delay_seconds }}
+                    {{ reload_scene_delay_seconds }}
               - service: scene.turn_on
                 target:
                   entity_id: !input default_scene_on

@@ -16,8 +16,8 @@
       watcher: binary_sensor.kitchen_motion
       watcher_inactive_time_seconds: 180
 
-- id: kitchen_lights_on_garage_door_state
-  alias: '[Kitchen Lights On Garage Door State]'
+- id: kitchen_lights_on_door_state
+  alias: '[Kitchen Lights On Door State]'
   use_blueprint:
     path: scene_automation.yaml
     input:
@@ -30,7 +30,9 @@
       scene_2: scene.kitchen_night_lights
       scene_2_time_on: '22:00:00'
       scene_2_time_off: '06:30:00'
-      watcher: binary_sensor.garage_door
+      watcher:
+        - binary_sensor.garage_door
+        - binary_sensor.great_room_door
 
 - id: pantry_lights_on_door_state
   alias: '[Pantry Lights On Door State]'
@@ -39,6 +41,7 @@
     input:
       default_scene_on: scene.pantry_lights
       default_scene_off: scene.pantry_no_lights
+      reload_scene: false
       watcher: binary_sensor.pantry_door
 
 - id: turn_off_idle_kitchen_lights

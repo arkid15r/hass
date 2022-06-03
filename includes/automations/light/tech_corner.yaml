@@ -5,6 +5,7 @@
     input:
       default_scene_on: scene.tech_corner_lights
       default_scene_off: scene.tech_corner_no_lights
+      reload_scene: false
       watcher: binary_sensor.tech_corner_door
 
 - id: turn_off_idle_tech_corner_lights
