@@ -8,7 +8,7 @@
 - name: Dining Area Faded Lights
   entities:
     light.dining_area_1: &dafl
-      brightness: 5
+      brightness: 10
       state: 'on'
     light.dining_area_2: *dafl
 

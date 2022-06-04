@@ -14,10 +14,10 @@
 
 - name: Bathroom 3 Night Lights
   entities:
-    light.bathroom_3_1: &b3nl_state
+    light.bathroom_3_1: 'off'
+    light.bathroom_3_2:
       brightness: 2
       state: 'on'
-    light.bathroom_3_2: *b3nl_state
 
 - name: Bathroom 3 No Lights
   entities:
