@@ -1,21 +1,5 @@
-- id: set_night_lights_time_on
-  alias: Set Night Lights Start Time
-  trigger:
-    - platform: time
-      at:
-        - '00:00:00'
-  action:
-    - service: input_datetime.set_datetime
-      target:
-        entity_id: input_datetime.night_lights_time_on
-      data:
-        time: >
-          {{ (as_timestamp(state_attr('sun.sun', 'next_setting')) |
-              int - 60 * 60) | timestamp_custom('%H:%M')
-          }}
-
 - id: set_morning_lights_time_off
-  alias: Set Morning Lights End Time
+  alias: Set Morning Lights Time Off
   trigger:
     - platform: time
       at:
@@ -26,6 +10,18 @@
         entity_id: input_datetime.morning_lights_time_off
       data:
         time: >
-          {{ (as_timestamp(state_attr('sun.sun', 'next_rising')) |
-              int + 30 * 60) | timestamp_custom('%H:%M')
-          }}
+          {{ states('sensor.morning_lights_time_off') }}
+
+- id: set_night_lights_time_on
+  alias: Set Night Lights Time On
+  trigger:
+    - platform: time
+      at:
+        - '00:00:00'
+  action:
+    - service: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.night_lights_time_on
+      data:
+        time: >
+          {{ states('sensor.night_lights_time_on') }}

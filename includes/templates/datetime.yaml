@@ -46,3 +46,18 @@
             states('input_datetime.alarm_time_on'),
             states('input_datetime.alarm_time_off'))
         }}
+
+- sensor:
+    - name: Morning Lights Time Off
+      unique_id: morning_lights_time_off
+      state: >
+        {{ (as_timestamp(state_attr('sun.sun', 'next_rising')) |
+              int + 30 * 45) | timestamp_custom('%H:%M')
+        }}
+
+    - name: Night Lights Time On
+      unique_id: night_lights_time_on
+      state: >
+        {{ (as_timestamp(state_attr('sun.sun', 'next_setting')) |
+              int - 60 * 45) | timestamp_custom('%H:%M')
+        }}
