@@ -1,3 +1,9 @@
+- name: Tech Corner Faded Lights
+  entities:
+    light.tech_corner_1:
+      brightness: 10
+      state: 'on'
+
 - name: Tech Corner Lights
   entities:
     light.tech_corner_1:
