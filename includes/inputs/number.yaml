@@ -62,3 +62,8 @@ scene_reload_delay:
   max: 10
   min: 1
   mode: box
+
+weather_extreme_temperature:
+  max: 125
+  min: 75
+  mode: box

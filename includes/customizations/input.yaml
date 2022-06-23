@@ -34,14 +34,6 @@ input_boolean.wake_up_lighting_enabled:
   friendly_name: Wake Up Lighting Enabled
   icon: mdi:alarm-snooze
 
-input_datetime.alarm_time_off:
-  friendly_name: Alarm Time Off
-  icon: mdi:alarm-light-off-outline
-
-input_datetime.alarm_time_on:
-  friendly_name: Alarm Time On
-  icon: mdi:alarm-light-outline
-
 input_datetime.dining_area_day_lights_time_off:
   friendly_name: Dining Area Day Lights Off
   icon: mdi:mdi:clock-time-one-outline
@@ -93,6 +85,38 @@ input_datetime.movie_night_time_on:
 input_datetime.night_lights_time_on:
   friendly_name: Night Lights Start Time
   icon: mdi:lightbulb-on
+
+input_datetime.pre_quite_time_range_1:
+  friendly_name: Pre Quite Time Range 1
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.pre_quite_time_range_2:
+  friendly_name: Pre Quite Time Range 2
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.pre_quite_time_range_3:
+  friendly_name: Pre Quite Time Range 3
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.post_quite_time_range_1:
+  friendly_name: Post Quite Time Range 1
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.post_quite_time_range_2:
+  friendly_name: Post Quite Time Range 2
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.post_quite_time_range_3:
+  friendly_name: Post Quite Time Range 3
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.quite_time_off:
+  friendly_name: Quite Time Off
+  icon: mdi:alarm-light-off-outline
+
+input_datetime.quite_time_on:
+  friendly_name: Quite Time On
+  icon: mdi:alarm-light-outline
 
 input_datetime.wake_up_lighting_time_on:
   friendly_name: Wake Up Lighting Start Time
@@ -161,6 +185,11 @@ input_number.office_2_temperature_low:
 input_number.scene_reload_delay:
   friendly_name: Scene Reload Delay
   unit_of_measurement: s
+
+input_number.weather_extreme_temperature:
+  friendly_name: Extreme Temperature Threshold
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
 
 input_text.weather_service:
   friendly_name: Weather Service
