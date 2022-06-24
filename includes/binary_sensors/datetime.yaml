@@ -1,13 +1,10 @@
 - platform: workday
-  add_holidays:
-    - 2021-04-02
-    - 2022-04-15
-    - 2023-04-07
-  country: US
-  name: US Work Day
+  country: !secret country
+  name: Work Day
 
 - platform: workday
-  country: US
+  country: !secret country
   excludes: [sun, holiday]
-  name: USPS Pickup Day
+  name: Pickup Day
+  province: !secret province
   workdays: [mon, tue, wed, thu, fri, sat]
