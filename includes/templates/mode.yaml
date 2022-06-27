@@ -4,6 +4,27 @@
       state: >
         {{ is_state('input_boolean.mode_bar', 'on') }}
 
+    - name: Mode Bedroom 1 Blackout
+      unique_id: mode_bedroom_1_blackout
+      state: >
+        {%- macro is_in_range(value, time_from, time_to) %}
+          {%- if time_from < time_to %}
+            {%- if time_from <= value < time_to %}
+              {{ time_from <= value < time_to }}
+            {%- endif %}
+          {%- elif value >= time_from or value < time_to %}
+            {{ value >= time_from or value < time_to }}
+          {%- endif %}
+        {%- endmacro %}
+
+        {{ is_in_range(
+              now().strftime('%H:%M:%S'),
+              states('input_datetime.post_quite_time_range_3'),
+              states('input_datetime.pre_quite_time_range_3')) and
+           is_state('binary_sensor.bedroom_1_blacked_out', 'on') and
+           is_state('binary_sensor.mode_nap', 'off')
+        }}
+
     - name: Mode Belle
       unique_id: mode_belle
       state: >

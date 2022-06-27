@@ -24,11 +24,11 @@
       state: >
         {{ is_state('light.bathroom_3_light_group', 'on') }}
 
-    - name: Bedroom 1 Blinds Open
-      unique_id: bedroom_1_blinds_open
+    - name: Bedroom 1 Blacked Out
+      unique_id: bedroom_1_blacked_out
       state: >
         {{ is_state('light.bedroom_1_light_group', 'off') and
-           states('sensor.bedroom_1_illuminance_sensor_illuminance') | int > 2
+           states('sensor.bedroom_1_illuminance') | int <= 2
         }}
 
     - name: Bedroom 1 Lights

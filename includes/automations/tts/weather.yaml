@@ -2,17 +2,18 @@
   alias: 'TTS: Porch Cooling Station Reminder'
   trigger:
     - platform: time
-      at: '11:30:00'
+      at: '10:50:00'
   condition:
     - condition: numeric_state
       entity_id: sensor.temperature_forecast
-      above: 99
-    - condition: time
-      weekday: [mon, tue, wed, thu, fri, sat]
+      above: input_number.weather_extreme_temperature
+    - condition: state
+      entity_id: binary_sensor.pickup_day
+      state: 'on'
   action:
     - event: tts
       event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. The porch cooling station would be very appreciated by the postal workers. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. A porch cooling station would be very appreciated by postal workers. Thank you!
 
 - id: tts_state_weather_changed
   alias: 'TTS State: Weather Changed'
@@ -34,6 +35,12 @@
       to: *weather_states
   condition:
     - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.mode_nap
+      state: 'off'
+    - condition: state
       entity_id: input_boolean.play_tts_messages
       state: 'on'
     - condition: template
@@ -42,12 +49,6 @@
     - condition: template
       value_template: >
         {{ trigger.to_state.state != 'unavailable' }}
-    - condition: time
-      after: input_datetime.alarm_time_off
-      before: input_datetime.alarm_time_on
-    - condition: state
-      entity_id: input_boolean.mode_nap
-      state: 'off'
   action:
     - event: tts
       event_data:
