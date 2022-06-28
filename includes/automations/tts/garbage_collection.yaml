@@ -2,7 +2,7 @@
   alias: 'TTS: Garbage Collection Today Reminder'
   trigger:
     - platform: time
-      at: '08:15:00'
+      at: '08:30:00'
   condition:
     - condition: state
       entity_id: input_boolean.play_tts_messages
