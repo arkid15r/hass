@@ -10,10 +10,10 @@
         {%- macro is_in_range(value, time_from, time_to) %}
           {%- if time_from < time_to %}
             {%- if time_from <= value < time_to %}
-              {{ time_from <= value < time_to }}
+              {{- time_from <= value < time_to }}
             {%- endif %}
           {%- elif value >= time_from or value < time_to %}
-            {{ value >= time_from or value < time_to }}
+            {{- value >= time_from or value < time_to }}
           {%- endif %}
         {%- endmacro %}
 
