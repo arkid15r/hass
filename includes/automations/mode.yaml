@@ -56,7 +56,7 @@
               event_data:
                 areas_off:
                   - office_1
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s do not disturb mode has been turned off.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s DND mode has been disabled.
         - conditions:
             - condition: state
               entity_id: input_boolean.mode_office_1_dnd
@@ -72,7 +72,7 @@
               event_data:
                 areas_off:
                   - office_1
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s do not disturb mode has been turned on.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s DND mode has been enabled.
 
 - id: mode_office_2_lights
   alias: Office 2 Lights Mode
