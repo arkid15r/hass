@@ -163,9 +163,9 @@
                 - condition: state
                   entity_id: binary_sensor.hvac_is_running
                   state: 'on'
-            - condition: time
-              after: input_datetime.alarm_time_off
-              before: input_datetime.alarm_time_on
+            - condition: state
+              entity_id: binary_sensor.quite_time
+              state: 'off'
             - event: tts
               event_data:
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The climate control system is going to be turned off. Please close {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} to turn it on again.

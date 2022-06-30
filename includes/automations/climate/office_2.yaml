@@ -11,9 +11,9 @@
     - condition: state
       entity_id: binary_sensor.office_2_window
       state: 'off'
-    - condition: time
-      after: input_datetime.alarm_time_off
-      before: input_datetime.alarm_time_on
+    - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'off'
   action:
     - choose:
         - conditions:

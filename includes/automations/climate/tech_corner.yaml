@@ -5,7 +5,7 @@
       entity_id: sensor.tech_corner_temperature
       below: 70
     - platform: time
-      at: input_datetime.alarm_time_on
+      at: input_datetime.quite_time_on
   condition:
     - condition: state
       entity_id: switch.tech_corner_fan
@@ -25,9 +25,9 @@
     - condition: state
       entity_id: switch.tech_corner_fan
       state: 'off'
-    - condition: time
-      after: input_datetime.alarm_time_off
-      before: input_datetime.alarm_time_on
+    - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'off'
   action:
     - service: scene.turn_on
       target:

@@ -154,9 +154,9 @@
               event_data:
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>It seems that the indoor garden cycle is out of schedule. Please make sure it's in the expected state as soon as possible. It's important. Thank you!
       default:
-        - condition: time
-          after: input_datetime.alarm_time_off
-          before: input_datetime.alarm_time_on
+        - condition: state
+          entity_id: binary_sensor.quite_time
+          state: 'off'
         - condition: not
           conditions:
             - condition: state
