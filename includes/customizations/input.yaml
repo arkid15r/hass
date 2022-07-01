@@ -122,9 +122,34 @@ input_datetime.wake_up_lighting_time_on:
   friendly_name: Wake Up Lighting Start Time
   icon: mdi:alarm
 
+input_number.bathroom_1_fan_turn_off_after:
+  friendly_name: Bathroom 1 Auto Turn Off
+  icon: &icon_fun_auto_turn_off mdi:clock-check-outline
+  unit_of_measurement: 'min'
+
+input_number.bathroom_1_humidity_high:
+  friendly_name: Bathroom 1 Humidity High
+  icon: &icon_humidity mdi:water-percent
+  unit_of_measurement: '%'
+
+input_number.bathroom_1_humidity_low:
+  friendly_name: Bathroom 1 Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.bathroom_2_fan_turn_off_after:
+  friendly_name: Bathroom 2 Auto Turn Off
+  icon: *icon_fun_auto_turn_off
+  unit_of_measurement: 'min'
+
+input_number.bathroom_3_fan_turn_off_after:
+  friendly_name: Bathroom 3 Auto Turn Off
+  icon: *icon_fun_auto_turn_off
+  unit_of_measurement: 'min'
+
 input_number.bedroom_1_humidity_high:
   friendly_name: Bedroom 1 Humidity High
-  icon: &icon_humidity mdi:water-percent
+  icon: *icon_humidity
   unit_of_measurement: '%'
 
 input_number.bedroom_1_humidity_low:

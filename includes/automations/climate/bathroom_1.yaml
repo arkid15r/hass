@@ -3,13 +3,13 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.bathroom_1_humidity
-      below: 50
+      below: input_number.bathroom_1_humidity_low
     - platform: state
       entity_id: fan.bathroom_1
       from: 'off'
       to: 'on'
       for:
-        minutes: 15
+        minutes: input_number.bathroom_1_fan_turn_off_after
   condition:
     - condition: state
       entity_id: fan.bathroom_1
@@ -27,7 +27,7 @@
       from: 'off'
       to: 'on'
       for:
-        minutes: 15
+        minutes: input_number.bathroom_1_fan_turn_off_after
   condition:
     - condition: state
       entity_id: fan.bathroom_1a
@@ -64,11 +64,11 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.bathroom_1_humidity
-      above: 65
+      above: input_number.bathroom_1_humidity_high
   condition:
     - condition: time
-      after: '07:30:00'
-      before: '22:30:00'
+      after: input_datetime.post_quite_time_range_2
+      before: input_datetime.pre_quite_time_range_1
     - condition: state
       entity_id: fan.bathroom_1
       state: 'off'
@@ -89,8 +89,8 @@
       to: 'off'
   condition:
     - condition: time
-      after: '07:30:00'
-      before: '22:30:00'
+      after: input_datetime.post_quite_time_range_2
+      before: input_datetime.pre_quite_time_range_1
     - condition: state
       entity_id: fan.bathroom_1a
       state: 'off'
