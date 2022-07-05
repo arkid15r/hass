@@ -21,8 +21,10 @@
               now().strftime('%H:%M:%S'),
               states('input_datetime.post_quite_time_range_3'),
               states('input_datetime.pre_quite_time_range_3')) and
-           is_state('binary_sensor.bedroom_1_blacked_out', 'on') and
-           is_state('binary_sensor.mode_nap', 'off')
+           is_state('binary_sensor.bedroom_1_tv', 'off') and
+           is_state('binary_sensor.mode_nap', 'off') and
+           (is_state('binary_sensor.bedroom_1_blackout', 'on') or
+            is_state('binary_sensor.bedroom_1_lights', 'on'))
         }}
 
     - name: Mode Belle
