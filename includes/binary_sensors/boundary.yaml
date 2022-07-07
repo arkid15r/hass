@@ -1,3 +1,19 @@
+- name: Airing Floor 1
+  all: true
+  platform: group
+  unique_id: airing_floor_1
+  entities:
+    - binary_sensor.great_room_door
+
+- name: Airing Floor 2
+  all: true
+  platform: group
+  unique_id: airing_floor_2
+  entities:
+    - binary_sensor.bedroom_1_window
+    - binary_sensor.office_1_window
+    - binary_sensor.office_2_window
+
 - name: Security Perimeter
   platform: group
   unique_id: security_perimeter
