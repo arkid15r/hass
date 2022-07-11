@@ -15,6 +15,7 @@
         sequence:
           - event: tts
             event_data:
+              areas_on: '*'
               text: <audio src="soundbank://soundlibrary/home/amzn_sfx_doorbell_chime_02"/>
           - delay:
               seconds: 1
