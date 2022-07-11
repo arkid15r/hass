@@ -121,7 +121,7 @@
               target:
                 entity_id: scene.indoor_garden_fan_off
             - delay:
-                minutes: 1
+                minutes: 2
             - condition: not
               conditions:
                 - condition: state
@@ -144,7 +144,7 @@
               target:
                 entity_id: scene.indoor_garden_on
             - delay:
-                minutes: 1
+                minutes: 2
             - condition: not
               conditions:
                 - condition: state
