@@ -26,7 +26,7 @@
   condition:
     - condition: time
       after: input_datetime.post_quite_time_range_2
-      before: input_datetime.pre_quite_time_range_1
+      before: input_datetime.pre_quite_time_range_2
     - condition: state
       entity_id: fan.bathroom_3
       state: 'off'
