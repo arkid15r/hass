@@ -1,3 +1,17 @@
+- id: tts_garden_extra_watering_reminder
+  alias: 'TTS: Garden Extra Watering Reminder'
+  trigger:
+    - platform: time
+      at: '13:55:00'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.outdoor_temperature
+      above: input_number.weather_high_temperature
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the outdoor temperature is extremely high. An additional watering would be quite helpful for your plants. Thank you!
+
 - id: tts_porch_cooling_station_reminder
   alias: 'TTS: Porch Cooling Station Reminder'
   trigger:
@@ -44,7 +58,7 @@
       entity_id: binary_sensor.hvac_is_cooling
       state: 'off'
     - condition: state
-      entity_id: binary_sensor.indoor_temperature_2_degree_higher
+      entity_id: binary_sensor.indoor_temperature_3_degree_higher
       state: 'on'
   action:
     - event: tts
@@ -105,7 +119,7 @@
       state: 'on'
       for: 00:15:00
     - condition: time
-      after: '11:00:00'
+      after: '10:00:00'
       before: '16:00:00'
   action:
     - choose:
@@ -120,7 +134,7 @@
                 text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside seems to be higher than inside. I suggest closing   {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} right now.
         - conditions:
             - condition: state
-              entity_id: binary_sensor.indoor_temperature_2_degree_higher
+              entity_id: binary_sensor.indoor_temperature_3_degree_higher
               state: 'off'
           sequence:
             - event: tts

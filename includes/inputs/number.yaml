@@ -92,3 +92,8 @@ weather_extreme_temperature:
   max: 125
   min: 75
   mode: box
+
+weather_high_temperature:
+  max: 125
+  min: 75
+  mode: box

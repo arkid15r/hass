@@ -44,6 +44,13 @@
             states('sensor.outdoor_temperature') | int + 2
         }}
 
+    - name: Indoor Temperature 3 Degree Higher
+      unique_id: indoor_temperature_3_degree_higher
+      state: >
+        {{ states('sensor.indoor_temperature') | int >
+            states('sensor.outdoor_temperature') | int + 3
+        }}
+
   sensor:
     - name: HVAC Preset Mode
       unique_id: hvac_preset_mode

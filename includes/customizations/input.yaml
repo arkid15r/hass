@@ -216,6 +216,11 @@ input_number.weather_extreme_temperature:
   icon: *icon_temperature_high
   unit_of_measurement: °F
 
+input_number.weather_high_temperature:
+  friendly_name: High Temperature Threshold
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
+
 input_text.weather_service:
   friendly_name: Weather Service
   icon: mdi:weather-pouring
