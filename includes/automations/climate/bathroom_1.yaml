@@ -23,15 +23,25 @@
   alias: Turn Off Bathroom 1a Fan
   trigger:
     - platform: state
+      entity_id: binary_sensor.bathroom_1a_door
+      from: 'off'
+      to: 'on'
+    - platform: state
       entity_id: fan.bathroom_1a
       from: 'off'
       to: 'on'
       for:
         minutes: input_number.bathroom_1_fan_turn_off_after
   condition:
-    - condition: state
-      entity_id: fan.bathroom_1a
-      state: 'on'
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: fan.bathroom_1a
+          state: 'on'
+          for:
+            # TODO(ark): replace with input_number.bathroom_1_fan_keep_on_after
+            # when it's supported.
+            minutes: 2
   action:
     - service: scene.turn_on
       target:

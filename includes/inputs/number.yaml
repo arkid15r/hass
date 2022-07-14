@@ -1,3 +1,18 @@
+bathroom_1_fan_keep_on_after:
+  max: 10
+  min: 1
+  mode: box
+
+bathroom_2_fan_keep_on_after:
+  max: 10
+  min: 1
+  mode: box
+
+bathroom_3_fan_keep_on_after:
+  max: 10
+  min: 1
+  mode: box
+
 bathroom_1_fan_turn_off_after:
   max: 60
   min: 1
