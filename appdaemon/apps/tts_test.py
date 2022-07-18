@@ -18,34 +18,36 @@ class TestBase(unittest.TestCase):
 
   BATHROOM_1 = 'bathroom_1'
   BATHROOM_1_DOOR = 'binary_sensor.bathroom_1_door'
-  BATHROOM_1_LIGHT = 'binary_sensor.bathroom_1_lights'
   BATHROOM_1_ECHO = 'media_player.bathroom_1_echo'
+  BATHROOM_1_LIGHT = 'binary_sensor.bathroom_1_lights'
   BATHROOM_1_MOTION = 'binary_sensor.bathroom_1_motion_5m'
 
   BATHROOM_2 = 'bathroom_2'
   BATHROOM_2_DOOR = 'binary_sensor.bathroom_2_door'
-  BATHROOM_2_LIGHT = 'binary_sensor.bathroom_2_lights'
   BATHROOM_2_ECHO = 'media_player.bathroom_2_echo'
+  BATHROOM_2_LIGHT = 'binary_sensor.bathroom_2_lights'
   BATHROOM_2_MOTION = 'binary_sensor.bathroom_2_motion_5m'
 
   BEDROOM_1 = 'bedroom_1'
-  BEDROOM_1_LIGHT = 'binary_sensor.bedroom_1_lights'
   BEDROOM_1_ECHO = 'media_player.bedroom_1_echo'
+  BEDROOM_1_LIGHT = 'binary_sensor.bedroom_1_lights'
   BEDROOM_1_MOTION = 'binary_sensor.bedroom_1_motion_5m'
 
-  STAIRWAY = 'stairway'
-  STAIRWAY_ECHO = 'media_player.stairway_echo'
+  DEN = 'den'
+  DEN_ECHO = 'media_player.den_echo'
+  DEN_LIGHT = 'binary_sensor.den_lights'
+  DEN_MOTION = 'binary_sensor.den_motion_5m'
 
   DINING_AREA_LIGHT = 'binary_sensor.dining_area_lights'
 
   GARAGE = 'garage'
-  GARAGE_LIGHT = 'binary_sensor.garage_lights'
   GARAGE_ECHO = 'media_player.garage_echo'
+  GARAGE_LIGHT = 'binary_sensor.garage_lights'
   GARAGE_MOTION = 'binary_sensor.garage_motion_5m'
 
   GREAT_ROOM = 'great_room'
-  GREAT_ROOM_LIGHT = 'binary_sensor.great_room_lights'
   GREAT_ROOM_ECHO = 'media_player.great_room_echo'
+  GREAT_ROOM_LIGHT = 'binary_sensor.great_room_lights'
   GREAT_ROOM_MOTION = 'binary_sensor.great_room_motion_5m'
   GREAT_ROOM_TV = 'binary_sensor.great_room_tv'
 
@@ -56,16 +58,19 @@ class TestBase(unittest.TestCase):
   KITCHEN_TV = 'media_player.kitchen_tv'
 
   OFFICE_1 = 'office_1'
-  OFFICE_1_LIGHT = 'binary_sensor.office_1_light'
   OFFICE_1_ECHO = 'media_player.office_1_echo'
   OFFICE_1_ECHO_DND_MODE = 'media_player.office_1_echo_do_not_disturb_switch'
+  OFFICE_1_LIGHT = 'binary_sensor.office_1_light'
   OFFICE_1_MOTION = 'binary_sensor.office_1_motion_5m'
   OFFICE_1_TV = 'remote.office_1_tv'
 
   OFFICE_2 = 'office_2'
-  OFFICE_2_LIGHT = 'binary_sensor.office_2_lights'
   OFFICE_2_ECHO = 'media_player.office_2_echo'
+  OFFICE_2_LIGHT = 'binary_sensor.office_2_lights'
   OFFICE_2_MOTION = 'binary_sensor.office_2_motion_5m'
+
+  STAIRWAY = 'stairway'
+  STAIRWAY_ECHO = 'media_player.stairway_echo'
 
   @classmethod
   def setUpClass(cls):
@@ -592,6 +597,27 @@ class TestBedroom1(TestTargetConditionBase):
 
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.BEDROOM_1)
+
+
+class TestDen(TestTargetConditionBase):
+  """Den tests."""
+
+  conditions = {
+      TestBase.DEN_LIGHT: 'the light is on',
+      TestBase.DEN_MOTION: 'there was a recent motion',
+  }
+
+  def test_not_played_normal_time(self):
+    super()._test_not_played_normal_time(TestBase.DEN, self.conditions)
+
+  def test_not_played_quite_time(self):
+    super()._test_not_played_quite_time(TestBase.DEN, self.conditions)
+
+  def test_played_normal_time(self):
+    super()._test_played_normal_time(TestBase.DEN, self.conditions)
+
+  def test_played_quite_time(self):
+    super()._test_played_quite_time(TestBase.DEN)
 
 
 class TestGarage(TestTargetConditionBase):

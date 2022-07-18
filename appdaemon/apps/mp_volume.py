@@ -12,6 +12,7 @@ class AmazonEcho(hass.Hass):
       'bathroom_1',
       'bathroom_2',
       'bedroom_1',
+      'den',
       'garage',
       'great_room',
       'office_1',

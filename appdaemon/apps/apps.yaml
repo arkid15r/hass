@@ -42,6 +42,11 @@ tts:
           - binary_sensor.bathroom_1_mode_lock
         target: media_player.bathroom_1_echo
       target: media_player.bedroom_1_echo
+    den:
+      conditions:
+        - binary_sensor.den_lights
+        - binary_sensor.den_motion_5m
+      target: media_player.den_echo
     garage:
       if_not:
         conditions:
