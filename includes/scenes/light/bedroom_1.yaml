@@ -12,6 +12,13 @@
       color_temp: 450
       state: 'on'
 
+- name: Bedroom 1 Max Lights
+  entities:
+    light.bedroom_1_1:
+      brightness: 255
+      color_temp: 250
+      state: 'on'
+
 - name: Bedroom 1 Night Lights
   entities:
     light.bedroom_1_1:
@@ -22,3 +29,11 @@
 - name: Bedroom 1 No Lights
   entities:
     light.bedroom_1_1: 'off'
+
+- name: Bedroom 1 Vanity Table Off
+  entities:
+    switch.bedroom_1_vanity_table: 'off'
+
+- name: Bedroom 1 Vanity Table On
+  entities:
+    switch.bedroom_1_vanity_table: 'on'
