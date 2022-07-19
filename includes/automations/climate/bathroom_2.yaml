@@ -35,9 +35,6 @@
     - condition: time
       after: input_datetime.post_quite_time_range_2
       before: input_datetime.pre_quite_time_range_2
-    - condition: state
-      entity_id: fan.bathroom_2
-      state: 'off'
   action:
     - service: scene.turn_on
       target:
