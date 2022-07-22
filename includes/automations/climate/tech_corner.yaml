@@ -1,33 +1,47 @@
 - id: turn_off_tech_corner_fan
   alias: Turn Off Tech Corner Fan
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.tech_corner_temperature
-      below: 70
     - platform: time
-      at: input_datetime.quite_time_on
+      at: input_datetime.pre_quite_time_range_2
+    - platform: time_pattern
+      minutes: /5
   condition:
     - condition: state
       entity_id: switch.tech_corner_fan
       state: 'on'
   action:
-    - service: scene.turn_on
-      target:
-        entity_id: scene.tech_corner_fan_off
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.den_temperature
+              below: 80
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.tech_corner_fan_off
+        - conditions:
+            - condition: time
+              after: input_datetime.pre_quite_time_range_2
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.tech_corner_fan_off
 
 - id: turn_on_tech_corner_fan
   alias: Turn On Tech Corner Fan
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.tech_corner_temperature
-      above: 80
+    - platform: time_pattern
+      minutes: /5
   condition:
+    - condition: numeric_state
+      entity_id: sensor.den_temperature
+      above: 85
     - condition: state
       entity_id: switch.tech_corner_fan
       state: 'off'
-    - condition: state
-      entity_id: binary_sensor.quite_time
-      state: 'off'
+    - condition: time
+      after: input_datetime.post_quite_time_range_2
+      before: input_datetime.pre_quite_time_range_2
   action:
     - service: scene.turn_on
       target:
