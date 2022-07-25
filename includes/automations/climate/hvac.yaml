@@ -64,6 +64,41 @@
       before: input_datetime.hvac_night_mode_time_off
   action:
     - choose:
+        # Turn off A/C after the bedroom_1 temperature is below the adjusted high.
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_temperature
+              below: sensor.bedroom_1_adjusted_temperature_high
+            - condition: template
+              value_template: >
+                {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
+          sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
+            - service: climate.set_preset_mode
+              data:
+                entity_id: climate.thermostat
+                preset_mode: Sleep
+        # Turn off A/C after the bedroom_1 temperature is above the adjusted low.
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_temperature
+              below: sensor.bedroom_1_adjusted_temperature_low
+            - condition: template
+              value_template: >
+                {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
+          sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
+            - service: climate.set_preset_mode
+              data:
+                entity_id: climate.thermostat
+                preset_mode: Sleep
+        # Turn on A/C if bedroom_1 temperature is too high.
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
@@ -80,6 +115,7 @@
               data:
                 entity_id: climate.thermostat
                 preset_mode: Down
+        # Turn on A/C if bedroom_1 temperature is too low.
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
@@ -96,13 +132,14 @@
               data:
                 entity_id: climate.thermostat
                 preset_mode: Up
+      # Set Sleep preset by default.
       default:
         - condition: numeric_state
           entity_id: sensor.bedroom_1_temperature
-          above: input_number.bedroom_1_temperature_low
+          above: sensor.bedroom_1_adjusted_temperature_low
         - condition: numeric_state
           entity_id: sensor.bedroom_1_temperature
-          below: input_number.bedroom_1_temperature_high
+          below: sensor.bedroom_1_adjusted_temperature_high
         - condition: template
           value_template: >
             {{ not is_state('sensor.hvac_preset_mode', 'Sleep') }}
@@ -123,7 +160,7 @@
       from: ['off', 'on']
       to: ['off', 'on']
       for:
-        seconds: 30
+        minutes: 1
     - platform: state
       entity_id: climate.thermostat
       from: 'off'
