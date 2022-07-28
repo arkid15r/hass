@@ -33,6 +33,14 @@ tts:
         conditions:
           - binary_sensor.bathroom_2_door
       target: media_player.bathroom_2_echo
+    bathroom_3:
+      conditions:
+        - binary_sensor.bathroom_3_lights
+        - binary_sensor.bathroom_3_motion_5m
+      if_not:
+        conditions:
+          - binary_sensor.bathroom_3_door
+      target: media_player.bathroom_2_echo
     bedroom_1:
       conditions:
         - binary_sensor.bedroom_1_lights

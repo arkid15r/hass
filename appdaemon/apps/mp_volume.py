@@ -11,6 +11,7 @@ class AmazonEcho(hass.Hass):
   AREAS = (
       'bathroom_1',
       'bathroom_2',
+      'bathroom_3',
       'bedroom_1',
       'den',
       'garage',

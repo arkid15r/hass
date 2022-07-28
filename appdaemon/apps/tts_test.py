@@ -28,6 +28,12 @@ class TestBase(unittest.TestCase):
   BATHROOM_2_LIGHT = 'binary_sensor.bathroom_2_lights'
   BATHROOM_2_MOTION = 'binary_sensor.bathroom_2_motion_5m'
 
+  BATHROOM_3 = 'bathroom_3'
+  BATHROOM_3_DOOR = 'binary_sensor.bathroom_3_door'
+  BATHROOM_3_ECHO = 'media_player.bathroom_3_echo'
+  BATHROOM_3_LIGHT = 'binary_sensor.bathroom_3_lights'
+  BATHROOM_3_MOTION = 'binary_sensor.bathroom_3_motion_5m'
+
   BEDROOM_1 = 'bedroom_1'
   BEDROOM_1_ECHO = 'media_player.bedroom_1_echo'
   BEDROOM_1_LIGHT = 'binary_sensor.bedroom_1_lights'
@@ -576,6 +582,30 @@ class TestBathroom2(TestTargetConditionBase):
 
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.BATHROOM_2)
+
+
+class TestBathroom3(TestTargetConditionBase):
+  """Bathroom 3 tests."""
+
+  conditions = {
+      TestBase.BATHROOM_3_LIGHT: 'the light is on',
+      TestBase.BATHROOM_3_MOTION: 'there was a recent motion',
+  }
+
+  def test_not_played_normal_time(self):
+    super()._test_not_played_normal_time(TestBase.BATHROOM_3, self.conditions)
+
+  def test_not_played_quite_time(self):
+    super()._test_not_played_quite_time(TestBase.BATHROOM_3, self.conditions)
+
+  def test_played_normal_time(self):
+    super()._test_played_normal_time(
+        TestBase.BATHROOM_3,
+        self.conditions,
+    )
+
+  def test_played_quite_time(self):
+    super()._test_played_quite_time(TestBase.BATHROOM_3)
 
 
 class TestBedroom1(TestTargetConditionBase):
