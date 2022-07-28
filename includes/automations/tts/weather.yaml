@@ -115,7 +115,7 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
-      above: 77
+      above: 75
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'on'
