@@ -121,8 +121,8 @@
       state: 'on'
       for: 00:15:00
     - condition: time
-      after: '09:00:00'
-      before: '18:00:00'
+      after: '08:00:00'
+      before: '20:00:00'
   action:
     - choose:
         - conditions:
@@ -136,7 +136,7 @@
                 text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside seems to be higher than inside. I suggest closing   {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} right now.
         - conditions:
             - condition: state
-              entity_id: binary_sensor.indoor_temperature_2_degree_higher
+              entity_id: binary_sensor.indoor_temperature_3_degree_higher
               state: 'off'
           sequence:
             - event: tts
