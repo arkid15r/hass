@@ -10,7 +10,7 @@
       from: 'off'
       to: 'on'
       for:
-        minutes: input_number.bathroom_2_fan_turn_off_after
+        minutes: 2
   condition:
     - condition: not
       conditions:
