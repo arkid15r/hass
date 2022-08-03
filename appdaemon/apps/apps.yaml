@@ -8,7 +8,8 @@ tts:
   class: AmazonEcho
   env:
     play_always:
-      normal_time: []
+      normal_time:
+        - office_1
       quite_time:
         - bedroom_1
     play_default:
