@@ -122,7 +122,7 @@
       for: 00:15:00
     - condition: time
       after: '08:00:00'
-      before: '20:00:00'
+      before: '19:00:00'
   action:
     - choose:
         - conditions:
