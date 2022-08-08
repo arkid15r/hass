@@ -166,13 +166,16 @@ class TestArgs(TestBase):
 class TestTargetAreaBase(TestBase):
   """Target area test base."""
 
-  def _test_not_played(self, expected_areas, areas_off=None, areas_on=None):
+  def _test_not_played(self, expected_areas, areas_off=(), areas_on=()):
     """Assert was not played on the targets."""
 
     expected_targets = self.amazon_echo.tts(text=self.text,
                                             areas_off=areas_off,
                                             areas_on=areas_on)
-    for area in areas_off or ():
+    for area in areas_off:
+      if area in areas_on:
+        continue
+
       target = self.amazon_echo.get_target(area)
       self.assertNotIn(
           target,

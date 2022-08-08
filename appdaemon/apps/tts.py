@@ -184,8 +184,9 @@ class AmazonEcho(hass.Hass):
           targets.remove(rule_target)
 
     # Update targets based on areas_off/areas_on values.
-    targets.update(targets_on)
     targets = targets.difference(targets_off)
+    # Override areas_off with areas_on.
+    targets.update(targets_on)
 
     targets_play_always = None
     targets_play_default = None
