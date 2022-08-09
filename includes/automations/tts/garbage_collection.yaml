@@ -13,6 +13,7 @@
   action:
     - event: tts
       event_data:
+        duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that today is the garbage collection day. Please make sure your trash bins are ready for the pickup.
 
 - id: tts_garbage_collection_tomorrow_reminder
@@ -30,4 +31,5 @@
   action:
     - event: tts
       event_data:
+        duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that tomorrow is a garbage collection day. Please get your trash bins ready.
