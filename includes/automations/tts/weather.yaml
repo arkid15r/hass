@@ -3,16 +3,32 @@
   trigger:
     - platform: time
       at:
-        - '11:55:00'
-        - '14:55:00'
-  condition:
-    - condition: numeric_state
-      entity_id: sensor.outdoor_temperature
-      above: input_number.weather_high_temperature
+        - '07:50:00'
+        - '11:50:00'
+        - '14:50:00'
+        - '17:50:00'
   action:
-    - event: tts
-      event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the outdoor temperature is quite high. An additional watering might be very helpful for your garden. Thank you!
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.outdoor_temperature
+              above: input_number.weather_extreme_temperature
+          sequence:
+            - event: tts
+              event_data:
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the outdoor temperature is extremely high. I strongly recommend an additional watering of your garden. Thank you!
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.outdoor_temperature
+              above: input_number.weather_high_temperature
+          sequence:
+            - event: tts
+              event_data:
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the outdoor temperature is quite high. I recommend an additional watering of your garden. Thank you!
+      default:
+        - event: tts
+          event_data:
+            text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garden watering is starting in 10 minutes. Please make sure that all irrigation valves are in expected states. Thank you!
 
 - id: tts_porch_cooling_station_reminder
   alias: 'TTS: Porch Cooling Station Reminder'
