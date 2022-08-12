@@ -6,7 +6,10 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.outdoor_temperature
-      above: 75
+      above: 77
+    - condition: numeric_state
+      entity_id: sensor.temperature_forecast
+      above: input_number.weather_high_temperature
     - condition: state
       entity_id: binary_sensor.bedroom_1_blackout
       state: 'off'

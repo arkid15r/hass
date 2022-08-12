@@ -55,12 +55,12 @@
     - name: Bedroom 1 Adjusted Temperature Low
       unique_id: bedroom_1_adjusted_temperature_low
       state: >
-        {{ states('input_number.bedroom_1_temperature_low') | int + 3 }}
+        {{ states('input_number.bedroom_1_temperature_low') | int + 2 }}
 
     - name: Bedroom 1 Adjusted Temperature High
       unique_id: bedroom_1_adjusted_temperature_high
       state: >
-        {{ states('input_number.bedroom_1_temperature_high') | int - 3 }}
+        {{ states('input_number.bedroom_1_temperature_high') | int - 2 }}
 
     - name: HVAC Preset Mode
       unique_id: hvac_preset_mode
