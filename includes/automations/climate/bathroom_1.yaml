@@ -9,7 +9,7 @@
       from: 'off'
       to: 'on'
       for:
-        minutes: 2
+        minutes: 20
   condition:
     - condition: state
       entity_id: fan.bathroom_1
@@ -31,7 +31,7 @@
       from: 'off'
       to: 'on'
       for:
-        minutes: 2
+        minutes: 20
   condition:
     - condition: not
       conditions:
