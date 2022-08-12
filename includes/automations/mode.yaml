@@ -48,31 +48,33 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.office_1_dnd_mode_off
+                entity_id: scene.office_1_dnd_mode_indicator_off
             - service: scene.turn_on
               target:
-                entity_id: scene.office_1_dnd_mode_indicator_off
+                entity_id: scene.office_1_dnd_mode_off
             - event: tts
               event_data:
-                areas_off:
+                areas_off: '*'
+                areas_on:
                   - office_1
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s DND mode has been disabled.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>DND mode is off.
         - conditions:
             - condition: state
               entity_id: input_boolean.mode_office_1_dnd
               state: 'on'
           sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_1_dnd_mode_on
+            - event: tts
+              event_data:
+                areas_off: '*'
+                areas_on:
+                  - office_1
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>DND mode is on.
             - service: scene.turn_on
               target:
                 entity_id: scene.office_1_dnd_mode_indicator_on
-            - event: tts
-              event_data:
-                areas_off:
-                  - office_1
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, {{ area_name(trigger.entity_id) }}'s DND mode has been enabled.
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_dnd_mode_on
 
 - id: mode_office_2_lights
   alias: Office 2 Lights Mode
