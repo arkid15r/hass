@@ -26,12 +26,6 @@
       entity_id: binary_sensor.bathroom_1a_door
       from: 'off'
       to: 'on'
-    - platform: state
-      entity_id: fan.bathroom_1a
-      from: 'off'
-      to: 'on'
-      for:
-        minutes: 20
   condition:
     - condition: not
       conditions:
@@ -55,7 +49,7 @@
       check_frequency_minutes: /5
       scene: scene.bathroom_1_fan_off
       target: fan.bathroom_1
-      target_active_time_seconds: 900
+      target_active_time_seconds: 1200
       watcher: fan.bathroom_1
 
 - id: turn_off_idle_bathroom_1a_fan
@@ -66,7 +60,7 @@
       check_frequency_minutes: /5
       scene: scene.bathroom_1a_fan_off
       target: fan.bathroom_1a
-      target_active_time_seconds: 900
+      target_active_time_seconds: 1200
       watcher: fan.bathroom_1a
 
 - id: turn_on_bathroom_1_fan

@@ -5,12 +5,6 @@
       entity_id: binary_sensor.bathroom_2_door
       from: 'off'
       to: 'on'
-    - platform: state
-      entity_id: fan.bathroom_2
-      from: 'off'
-      to: 'on'
-      for:
-        minutes: 20
   condition:
     - condition: not
       conditions:
@@ -23,6 +17,17 @@
     - service: scene.turn_on
       target:
         entity_id: scene.bathroom_2_fan_off
+
+- id: turn_off_idle_bathroom_2_fan
+  alias: '[Turn Off Idle Bathroom 2 Fan]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      scene: scene.bathroom_2_fan_off
+      target: fan.bathroom_2
+      target_active_time_seconds: 1200
+      watcher: fan.bathroom_2
 
 - id: turn_on_bathroom_2_fan
   alias: Turn On Bathroom 2 Fan
