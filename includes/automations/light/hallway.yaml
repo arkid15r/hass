@@ -9,8 +9,8 @@
       scene_1_time_on: input_datetime.morning_lights_time_off
       scene_1_time_off: input_datetime.night_lights_time_on
       scene_2: scene.hallway_night_lights
-      scene_2_time_on: '22:00:00'
-      scene_2_time_off: '06:30:00'
+      scene_2_time_on: input_datetime.pre_quite_time_range_1
+      scene_2_time_off: input_datetime.quite_time_off
       watcher:
         - binary_sensor.front_door
         - binary_sensor.hallway_motion

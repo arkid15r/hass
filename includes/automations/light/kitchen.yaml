@@ -8,11 +8,11 @@
       run_if: binary_sensor.kitchen_mode_lock
       run_if_state: 'off'
       scene_1: scene.kitchen_faded_lights
-      scene_1_time_on: '20:30:00'
-      scene_1_time_off: '22:00:00'
+      scene_1_time_on: input_datetime.pre_quite_time_range_2
+      scene_1_time_off: input_datetime.quite_time_on
       scene_2: scene.kitchen_night_lights
-      scene_2_time_on: '22:00:00'
-      scene_2_time_off: '06:30:00'
+      scene_2_time_on: input_datetime.quite_time_on
+      scene_2_time_off: input_datetime.quite_time_off
       watcher: binary_sensor.kitchen_motion
       watcher_inactive_time_seconds: 180
 
@@ -24,15 +24,20 @@
       default_scene_on: scene.kitchen_no_lights
       run_if: binary_sensor.kitchen_lights
       run_if_state: 'off'
-      scene_1: scene.kitchen_faded_lights
-      scene_1_time_on: '20:30:00'
-      scene_1_time_off: '22:00:00'
-      scene_2: scene.kitchen_night_lights
-      scene_2_time_on: '22:00:00'
-      scene_2_time_off: '06:30:00'
+      scene_1: scene.kitchen_max_lights
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_1_time_off: input_datetime.pre_quite_time_range_2
+      scene_2: scene.kitchen_faded_lights
+      scene_2_time_on: input_datetime.pre_quite_time_range_2
+      scene_2_time_off: input_datetime.quite_time_on
+      scene_3: scene.kitchen_night_lights
+      scene_3_time_on: input_datetime.quite_time_on
+      scene_3_time_off: input_datetime.quite_time_off
       watcher:
         - binary_sensor.garage_door
         - binary_sensor.great_room_door
+        - binary_sensor.great_room_door_closed
+      watcher_inactive_time_seconds: 180
 
 - id: pantry_lights_on_door_state
   alias: '[Pantry Lights On Door State]'

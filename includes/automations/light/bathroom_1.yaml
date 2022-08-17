@@ -9,13 +9,13 @@
       run_if_state: 'off'
       scene_1: scene.bathroom_1_faded_lights
       scene_1_time_on: input_datetime.night_lights_time_on
-      scene_1_time_off: '22:30:00'
+      scene_1_time_off: input_datetime.quite_time_on
       scene_2: scene.bathroom_1_night_lights
-      scene_2_time_on: '22:30:00'
+      scene_2_time_on: input_datetime.quite_time_on
       scene_2_time_off: input_datetime.morning_lights_time_off
       scene_3: scene.bathroom_1_lights
       scene_3_time_on: input_datetime.morning_lights_time_off
-      scene_3_time_off: '08:30:00'
+      scene_3_time_off: input_datetime.post_quite_time_range_3
       watcher: binary_sensor.bathroom_1_motion
       watcher_inactive_time_seconds: 210
 
@@ -40,10 +40,10 @@
       default_scene_off: scene.bathroom_1a_no_lights
       scene_1: scene.bathroom_1a_faded_lights
       scene_1_time_on: input_datetime.night_lights_time_on
-      scene_1_time_off: '22:30:00'
-      scene_2: scene.bathroom_1a_night_lights
-      scene_2_time_on: '22:30:00'
-      scene_2_time_off: input_datetime.morning_lights_time_off
+      scene_1_time_off: input_datetime.quite_time_on
+      # scene_2: scene.bathroom_1a_night_lights
+      # scene_2_time_on: input_datetime.quite_time_on
+      # scene_2_time_off: input_datetime.morning_lights_time_off
       watcher: binary_sensor.bathroom_1a_door_closed
 
 - id: turn_off_idle_bathroom_1a_lights

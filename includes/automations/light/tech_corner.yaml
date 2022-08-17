@@ -7,11 +7,11 @@
       default_scene_off: scene.tech_corner_no_lights
       reload_scene: false
       scene_1: scene.tech_corner_faded_lights
-      scene_1_time_on: '21:30:00'
-      scene_1_time_off: '22:30:00'
+      scene_1_time_on: input_datetime.pre_quite_time_range_2
+      scene_1_time_off: input_datetime.quite_time_on
       scene_2: scene.tech_corner_night_lights
-      scene_2_time_on: '22:30:00'
-      scene_2_time_off: '06:30:00'
+      scene_2_time_on: input_datetime.quite_time_on
+      scene_2_time_off: input_datetime.quite_time_off
       watcher: binary_sensor.tech_corner_door
 
 - id: turn_off_idle_tech_corner_lights
