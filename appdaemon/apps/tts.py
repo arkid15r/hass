@@ -118,7 +118,7 @@ class AmazonEcho(hass.Hass):
       Return True if media player device is in the "Do Not Disturb" mode.
       Return False otherwise.
       """
-      return is_on(f'switch.{media_player.split(".")[1]}_do_not_disturb_switch')
+      return is_on(f'switch.{media_player.split(".")[1]}_do_not_disturb')
 
     def is_on(sensor):
       """Return True if sensor's state is 'on' otherwise returns False."""
