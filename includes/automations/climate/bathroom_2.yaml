@@ -43,4 +43,7 @@
   action:
     - service: scene.turn_on
       target:
+        entity_id: scene.bathroom_1a_fan_off
+    - service: scene.turn_on
+      target:
         entity_id: scene.bathroom_2_fan_on
