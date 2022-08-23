@@ -19,6 +19,7 @@
   platform: group
   unique_id: bedroom_1_mode_lock
   entities:
+    - binary_sensor.bedroom_1_tv
     - binary_sensor.mode_bedroom_1_blackout
     - binary_sensor.mode_nap
     - binary_sensor.mode_red
