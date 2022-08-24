@@ -46,6 +46,7 @@ tts:
       conditions:
         - binary_sensor.bedroom_1_lights
         - binary_sensor.bedroom_1_motion_5m
+        - binary_sensor.bedroom_1_tv
       if_not:
         conditions:
           - binary_sensor.bathroom_1_mode_lock
