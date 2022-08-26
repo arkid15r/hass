@@ -1,3 +1,15 @@
+- id: dim_idle_front_yard_lights
+  alias: '[Dim Idle Front Yard Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      run_if: binary_sensor.front_yard_lights
+      scene: scene.front_yard_night_lights
+      target: binary_sensor.front_yard_lights
+      target_active_time_seconds: 90
+      watcher: group.front_yard_motion
+      watcher_inactive_time_seconds: 120
+
 - id: front_yard_lights_mode
   alias: Front Yard Lights Mode
   use_blueprint:

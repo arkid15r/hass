@@ -118,3 +118,15 @@
     - service: light.turn_on
       target:
         entity_id: light.backyard_right_1
+
+- id: dim_idle_backyard_lights
+  alias: '[Dim Idle Backyard Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      run_if: binary_sensor.backyard_lights
+      scene: scene.backyard_night_lights
+      target: binary_sensor.backyard_lights
+      target_active_time_seconds: 90
+      watcher: group.backyard_motion
+      watcher_inactive_time_seconds: 120
