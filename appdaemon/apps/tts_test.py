@@ -95,6 +95,7 @@ class TestBase(unittest.TestCase):
         }
     })
     cls.rules = config['rules']
+    cls.throttle = config['throttle']
     cls.quite_time = config['quite_time']
 
   def setUp(self):
@@ -104,6 +105,7 @@ class TestBase(unittest.TestCase):
         'env': self.env,
         'quite_time': self.quite_time,
         'rules': self.rules,
+        'throttle': self.throttle,
     }
     self.amazon_echo = tts.AmazonEcho(mock.Mock(), mock.Mock(),
                                       mock.MagicMock(), args, mock.Mock(),
@@ -132,14 +134,10 @@ class TestArgs(TestBase):
 
   def test_no_text_raises_value_error(self):
     """Test no text handler."""
-
-    with self.assertRaises(ValueError) as ctx:
-      self.amazon_echo.tts()
-    self.assertIn('Text is required', str(ctx.exception))
-
-    with self.assertRaises(ValueError) as ctx:
-      self.amazon_echo.tts(text='')
-    self.assertIn("Text mustn't be empty", str(ctx.exception))
+    for text in (None, ''):
+      with self.assertRaises(ValueError) as ctx:
+        self.amazon_echo.tts(text)
+      self.assertIn('Text field is required', str(ctx.exception))
 
   def test_areas_off_areas_on_wildcard_conflict(self):
     with self.assertRaises(ValueError) as ctx:

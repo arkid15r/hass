@@ -11,8 +11,10 @@ __author__ = 'Ark (ark@cho.red)'
 # pylint: disable=import-error
 # pylint: disable=too-many-instance-attributes
 
+import hashlib
 import sys
 import time
+from collections import defaultdict
 from queue import Queue
 from threading import Thread
 
@@ -25,44 +27,59 @@ class AmazonEcho(hass.Hass):
   EVENT_NAME = 'tts'
   STATE_OFF = 'off'
   STATE_ON = 'on'
+  THROTTLED_ENTITY_TIME_DEFAULT_SECONDS = 60
   TTS_DURATION_DEFAULT_SECONDS = 7
 
   def initialize(self):
     """Initialize event listener."""
 
     self.env = self.args['env']
+    self.play_always_normal_time = list()
+    self.play_always_quite_time = list()
+    self.play_default_normal_time = list()
+    self.play_default_quite_time = list()
     self.rules = self.args['rules']
     self.quite_time = self.args['quite_time']
+    self.throttle = self.args['throttle']
+    self.throttled_entity_time_mapping = defaultdict(
+        lambda: self.THROTTLED_ENTITY_TIME_DEFAULT_SECONDS)
+    self.throttled_events = dict()
+
+    self.configure_throttling()
 
     self.messages = Queue(maxsize=5)
-
-    self.play_always_normal_time = []
-    self.play_always_quite_time = []
-    self.play_default_normal_time = []
-    self.play_default_quite_time = []
-
     thread = Thread(target=self.worker)
     thread.daemon = True
     thread.start()
 
     self.listen_event(self.handle_event, self.EVENT_NAME)
 
-  # pylint: disable=unused-argument
-  def handle_event(self, event, data, kwargs):
-    """Put new message to the queue."""
-
-    self.messages.put({
-        'areas_off': data.get('areas_off'),
-        'areas_on': data.get('areas_on'),
-        'duration': data.get('duration', self.TTS_DURATION_DEFAULT_SECONDS),
-        'text': data.get('text'),
-    })
-
   @staticmethod
   def get_target(area):
     """Return media player target ID for an area."""
 
     return f'media_player.{area}_echo'
+
+  def configure_throttling(self):
+    """Populates throttle rules from config values."""
+    self.throttled_entity_time_mapping.update({
+        entity_id: throttle_time for throttle_mapping in self.throttle
+        for entity_id, throttle_time in throttle_mapping.items()
+    })
+
+  # pylint: disable=unused-argument
+  def handle_event(self, event, data, kwargs):
+    """Put new message to the queue."""
+    entity_id = data.get('entity_id')
+    text = data.get('text')
+
+    if not self.is_throttled(entity_id, text):
+      self.messages.put({
+          'areas_off': data.get('areas_off'),
+          'areas_on': data.get('areas_on'),
+          'duration': data.get('duration', self.TTS_DURATION_DEFAULT_SECONDS),
+          'text': text,
+      })
 
   def set_environment(self):
     """Add play always and play default area targets."""
@@ -99,8 +116,25 @@ class AmazonEcho(hass.Hass):
     except KeyError:
       pass
 
+  def is_throttled(self, entity_id, text):
+    """Determines whether the `entity_id` event has to be throttled."""
+    if not entity_id or not text:
+      return False
+
+    event_key = hashlib.blake2b(f'{entity_id}_{text}'.encode()).hexdigest()
+    event_time = self.throttled_events.get(event_key)
+    now = time.time()
+    is_throttled = (
+        event_time
+        and now - event_time < self.throttled_entity_time_mapping[entity_id])
+
+    if not is_throttled:
+      self.throttled_events[event_key] = now
+
+    return is_throttled
+
   # pylint: disable=too-many-branches
-  def tts(self, text=None, areas_off=None, areas_on=None):
+  def tts(self, text, areas_off=None, areas_on=None):
     """
       Check targets and generate text to speech API request.
 
@@ -125,13 +159,10 @@ class AmazonEcho(hass.Hass):
       return self.get_state(sensor) == self.STATE_ON
 
     # tts()
-    if text is None:
-      raise ValueError('Text is required.')
-
     if not text:
-      raise ValueError("Text mustn't be empty.")
+      raise ValueError("Text field is required.")
 
-    if areas_off and areas_off == '*' and areas_on and areas_on == '*':
+    if areas_off == '*' and areas_on == '*':
       raise ValueError(
           "You can't use wildcard targets for both areas_off and areas_on at "
           "the same time.")

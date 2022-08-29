@@ -115,4 +115,5 @@ action:
     event_data:
       areas_off: !input areas_off
       areas_on: !input areas_on
+      entity_id: '{{ trigger.entity_id }}'
       text: !input text
