@@ -5,6 +5,9 @@
       minutes: /10
   condition:
     - condition: numeric_state
+      entity_id: sensor.indoor_temperature
+      above: 77
+    - condition: numeric_state
       entity_id: sensor.outdoor_temperature
       above: 77
     - condition: numeric_state
