@@ -5,7 +5,7 @@
     input:
       default_scene_off: scene.wardrobe_no_lights
       default_scene_on: scene.wardrobe_lights
-      watcher: binary_sensor.wardrobe_motion
+      watcher: group.wardrobe_motion
       watcher_inactive_time_seconds: 90
 
 - id: turn_off_idle_wardrobe_lights
@@ -16,5 +16,5 @@
       check_frequency_minutes: /5
       scene: scene.wardrobe_no_lights
       target: binary_sensor.wardrobe_lights
-      watcher: binary_sensor.wardrobe_motion
+      watcher: group.wardrobe_motion
       watcher_inactive_time_seconds: 120

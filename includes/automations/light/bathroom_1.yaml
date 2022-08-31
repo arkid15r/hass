@@ -16,7 +16,7 @@
       scene_3: scene.bathroom_1_lights
       scene_3_time_on: input_datetime.morning_lights_time_off
       scene_3_time_off: input_datetime.post_quite_time_range_3
-      watcher: binary_sensor.bathroom_1_motion
+      watcher: group.bathroom_1_motion
       watcher_inactive_time_seconds: 210
 
 - id: turn_off_idle_bathroom_1_lights
@@ -28,7 +28,7 @@
       run_if_state: 'off'
       scene: scene.bathroom_1_no_lights
       target: binary_sensor.bathroom_1_lights
-      watcher: binary_sensor.bathroom_1_motion
+      watcher: group.bathroom_1_motion
       watcher_inactive_time_seconds: 900
 
 - id: bathroom_1a_lights

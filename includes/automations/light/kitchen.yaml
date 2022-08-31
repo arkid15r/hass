@@ -13,7 +13,7 @@
       scene_2: scene.kitchen_night_lights
       scene_2_time_on: input_datetime.quite_time_on
       scene_2_time_off: input_datetime.quite_time_off
-      watcher: binary_sensor.kitchen_motion
+      watcher: group.kitchen_motion
       watcher_inactive_time_seconds: 180
 
 - id: kitchen_lights_on_door_state
@@ -60,7 +60,7 @@
       scene: scene.kitchen_no_lights
       target: binary_sensor.kitchen_lights
       target_active_time_seconds: 300
-      watcher: binary_sensor.kitchen_motion
+      watcher: group.kitchen_motion
       watcher_inactive_time_seconds: 1800
 
 - id: turn_off_idle_pantry_lights
@@ -72,5 +72,5 @@
       scene: scene.pantry_no_lights
       target: binary_sensor.pantry_lights
       target_active_time_seconds: 60
-      watcher: binary_sensor.kitchen_motion
+      watcher: group.kitchen_motion
       watcher_inactive_time_seconds: 300

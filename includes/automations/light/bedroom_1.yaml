@@ -13,7 +13,7 @@
       scene_2_time_off: input_datetime.quite_time_on
       run_if: binary_sensor.bedroom_1_mode_lock
       run_if_state: 'off'
-      watcher: binary_sensor.bedroom_1_motion
+      watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 180
 
 - id: bedroom_1_blackout_lights
@@ -25,7 +25,7 @@
       default_scene_on: scene.bedroom_1_faded_lights
       run_if: binary_sensor.mode_bedroom_1_blackout
       run_if_state: 'on'
-      watcher: binary_sensor.bedroom_1_motion
+      watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 180
 
 - id: bedroom_1_blackout_lights_auto_on_off
@@ -64,7 +64,7 @@
       run_if_state: 'off'
       scene: scene.bedroom_1_no_lights
       target: binary_sensor.bedroom_1_lights
-      watcher: binary_sensor.bedroom_1_motion
+      watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 900
 
 - id: wake_up_lighting_bedroom_1

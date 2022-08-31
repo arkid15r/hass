@@ -10,7 +10,7 @@
       scene_1: scene.laundry_room_night_lights
       scene_1_time_on: input_datetime.pre_quite_time_range_1
       scene_1_time_off: input_datetime.pre_quite_time_range_1
-      watcher: binary_sensor.laundry_room_motion
+      watcher: group.laundry_room_motion
       watcher_inactive_time_seconds: 120
 
 - id: turn_off_idle_laundry_room_lights
@@ -22,5 +22,5 @@
       scene: scene.laundry_room_no_lights
       target: binary_sensor.laundry_room_lights
       target_active_time_seconds: 120
-      watcher: binary_sensor.laundry_room_motion
+      watcher: group.laundry_room_motion
       watcher_inactive_time_seconds: 90

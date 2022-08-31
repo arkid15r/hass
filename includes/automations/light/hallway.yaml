@@ -13,8 +13,8 @@
       scene_2_time_off: input_datetime.quite_time_off
       watcher:
         - binary_sensor.front_door
-        - binary_sensor.hallway_motion
-        - binary_sensor.stairway_motion_sensor_1_motion
+        - group.hallway_motion
+        - group.stairway_motion_sensor_1_motion
       watcher_inactive_time_seconds: 30
 
 - id: turn_off_idle_hallway_lights
@@ -27,5 +27,5 @@
       run_if_state: 'off'
       scene: scene.hallway_no_lights
       target: binary_sensor.hallway_lights
-      watcher: binary_sensor.hallway_motion
+      watcher: group.hallway_motion
       watcher_inactive_time_seconds: 300

@@ -14,7 +14,7 @@
       scene_3_time_on: input_datetime.quite_time_on
       scene_3_time_off: input_datetime.post_quite_time_range_1
       scene_3: scene.bathroom_3_night_lights
-      watcher: binary_sensor.bathroom_3_motion
+      watcher: group.bathroom_3_motion
       watcher_inactive_time_seconds: 180
 
 - id: turn_off_idle_bathroom_3_lights
@@ -25,5 +25,5 @@
       check_frequency_minutes: /1
       scene: scene.bathroom_3_no_lights
       target: binary_sensor.bathroom_3_lights
-      watcher: binary_sensor.bathroom_3_motion
+      watcher: group.bathroom_3_motion
       watcher_inactive_time_seconds: 300

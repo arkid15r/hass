@@ -16,7 +16,7 @@
       scene_3: scene.office_2_night_lights
       scene_3_time_on: input_datetime.quite_time_on
       scene_3_time_off: input_datetime.quite_time_off
-      watcher: binary_sensor.office_2_motion
+      watcher: group.office_2_motion
       watcher_inactive_time_seconds: 600
 
 - id: turn_off_idle_office_2_lights
@@ -28,5 +28,5 @@
       run_if_state: 'off'
       scene: scene.office_2_no_lights
       target: binary_sensor.office_2_lights
-      watcher: binary_sensor.office_2_motion
+      watcher: group.office_2_motion
       watcher_inactive_time_seconds: 900
