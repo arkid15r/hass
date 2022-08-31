@@ -50,6 +50,7 @@
   action:
     - event: tts
       event_data:
+        duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. A porch cooling station would be very appreciated by postal workers. Thank you!
 
 - id: tts_start_airing_reminder
