@@ -202,6 +202,11 @@ input_number.office_1_humidity_low:
   icon: *icon_humidity
   unit_of_measurement: '%'
 
+input_number.office_1_temperature_high:
+  friendly_name: Office 1 Temperature High
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
+
 input_number.office_1_temperature_low:
   friendly_name: Office 1 Temperature Low
   icon: *icon_temperature_low
@@ -216,6 +221,11 @@ input_number.office_2_humidity_low:
   friendly_name: Office 2 Humidity Low
   icon: *icon_humidity
   unit_of_measurement: '%'
+
+input_number.office_2_temperature_high:
+  friendly_name: Office 2 Temperature High
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
 
 input_number.office_2_temperature_low:
   friendly_name: Office 2 Temperature Low

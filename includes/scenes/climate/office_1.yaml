@@ -1,3 +1,16 @@
+- name: Office 1 Fan Off
+  entities:
+    fan.office_1: 'off'
+
+- name: Office 1 Fan On
+  entities:
+    fan.office_1:
+      oscillating: true
+      percentage: 50
+      preset_mode: Nature
+      state: 'on'
+    number.office_1_fan_oscillation_angle: '90'
+
 - name: Office 1 Heating Mat Off
   entities:
     switch.office_1_heating_mat: 'off'
