@@ -1,0 +1,45 @@
+amcrest:
+  - name: !secret amcrest_camera_1_name
+    host: !secret amcrest_camera_1_host
+    username: !secret amcrest_camera_1_username
+    password: !secret amcrest_camera_1_password
+
+api:
+automation manual: !include_dir_merge_list includes/automations
+automation ui: !include automations.yaml
+binary_sensor: !include_dir_merge_list includes/binary_sensors
+
+default_config:
+
+frontend:
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js
+
+group: !include includes/groups.yaml
+history: !include includes/history/configuration.yaml
+
+homeassistant:
+  customize: !include_dir_merge_named includes/customizations
+
+homekit: !include homekit.yaml
+
+http:
+  trusted_proxies: !secret http_trusted_proxies
+  use_x_forwarded_for: true
+
+input_boolean: !include includes/inputs/boolean.yaml
+input_datetime: !include includes/inputs/datetime.yaml
+input_number: !include includes/inputs/number.yaml
+input_select: !include includes/inputs/select.yaml
+input_text: !include includes/inputs/text.yaml
+
+light: !include includes/lights.yaml
+
+logger:
+  default: error
+
+scene manual: !include_dir_merge_list includes/scenes
+scene ui: !include scenes.yaml
+script: !include scripts.yaml
+sensor: !include includes/sensors.yaml
+template: !include_dir_merge_list includes/templates
