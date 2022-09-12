@@ -14,7 +14,7 @@
       run_if: binary_sensor.bedroom_1_mode_lock
       run_if_state: 'off'
       watcher: group.bedroom_1_motion
-      watcher_inactive_time_seconds: 180
+      watcher_inactive_time_seconds: 90
 
 - id: bedroom_1_blackout_lights
   alias: '[Bedroom 1 Blackout Lights]'
@@ -26,7 +26,7 @@
       run_if: binary_sensor.mode_bedroom_1_blackout
       run_if_state: 'on'
       watcher: group.bedroom_1_motion
-      watcher_inactive_time_seconds: 180
+      watcher_inactive_time_seconds: 90
 
 - id: bedroom_1_blackout_lights_auto_on_off
   alias: '[Bedroom 1 Blackout Lights Auto On/Off]'
@@ -65,7 +65,7 @@
       scene: scene.bedroom_1_no_lights
       target: binary_sensor.bedroom_1_lights
       watcher: group.bedroom_1_motion
-      watcher_inactive_time_seconds: 900
+      watcher_inactive_time_seconds: 300
 
 - id: wake_up_lighting_bedroom_1
   alias: '[Wake Up Lighting]: Bedroom 1'
