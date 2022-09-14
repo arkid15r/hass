@@ -27,6 +27,8 @@ blueprint:
       - **Reload Scene Again After a Custom Delay (*default*: `true`): if true the blueprint loads a scene again after a custom delay to make sure it's applied correctly.
       - **Run If** (*optional*): an entity to check for `Run If State` match.
       - **Run If State** (*optional*): a state in which the `Run If` entity should be in order to run the automation.
+      - **Run If Watcher Off** (*optional*): treat Run If condition as `True` when `Watcher` goes to `off` state.
+      - **Run If Watcher On** (*optional*): treat Run If condition as `True` when `Watcher` goes to `on` state.
 
   source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/scene_automation.yaml
 
@@ -147,18 +149,32 @@ blueprint:
         boolean:
 
     run_if:
-      name: Run If Only (optional)
-      description: Don't run the automation if the entity
+      name: Run If (optional)
+      description: Run the automation if the entity
       default:
       selector:
         entity: {}
 
     run_if_state:
-      name: Run If Only State (optional)
-      description: Is not in this state
+      name: Run If State (optional)
+      description: Is in this state only
       default:
       selector:
         text:
+
+    run_if_watcher_off:
+      name: Evaluate Run If Condition To `True` When Trigger State (optional)
+      description: Goes to "Off"
+      default: false
+      selector:
+        boolean:
+
+    run_if_watcher_on:
+      name: Evaluate Run If Condition To `True` When Trigger State (optional)
+      description: Goes to "On"
+      default: false
+      selector:
+        boolean:
 
 variables:
   reload_scene: !input reload_scene
@@ -166,6 +182,8 @@ variables:
     {{ states('input_number.scene_reload_delay') | float }}
   run_if: !input run_if
   run_if_state: !input run_if_state
+  run_if_watcher_off: !input run_if_watcher_off
+  run_if_watcher_on: !input run_if_watcher_on
   scene_1: !input scene_1
   scene_2: !input scene_2
   scene_3: !input scene_3
@@ -183,12 +201,6 @@ trigger:
     to: 'off'
     for: !input watcher_inactive_time_seconds
 
-condition:
-  - condition: or
-    conditions:
-      - '{{ not run_if or not run_if_state }}'
-      - '{{ states[run_if].state == run_if_state }}'
-
 action:
   - choose:
       # The `Watcher` goes 'off'.
@@ -198,6 +210,11 @@ action:
               {{ trigger.to_state.state == 'off' and
                  default_scene_off != 'scene.none'
               }}
+          - condition: or
+            conditions:
+              - '{{ run_if_watcher_off == true }}'
+              - '{{ not run_if or not run_if_state }}'
+              - '{{ states[run_if].state == run_if_state }}'
         sequence:
           - service: scene.turn_on
             target:
@@ -215,7 +232,13 @@ action:
       # The `Watcher` goes 'on'.
       - conditions:
           - condition: template
-            value_template: '{{ trigger.to_state.state == "on" }}'
+            value_template: >
+              {{ trigger.to_state.state == 'on' }}
+          - condition: or
+            conditions:
+              - '{{ run_if_watcher_on == true }}'
+              - '{{ not run_if or not run_if_state }}'
+              - '{{ states[run_if].state == run_if_state }}'
         sequence:
           - choose:
               - conditions:
