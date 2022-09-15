@@ -5,19 +5,18 @@
       entity_id: binary_sensor.office_1_motion
     - platform: state
       entity_id: binary_sensor.office_1_motion_15m
-  condition:
-    - condition: numeric_state
-      entity_id: sensor.office_1_temperature
-      above: input_number.office_1_temperature_high
-    - condition: state
-      entity_id: binary_sensor.quite_time
-      state: 'off'
   action:
     - choose:
         - conditions:
+            - condition: numeric_state
+              entity_id: sensor.office_1_temperature
+              above: input_number.office_1_temperature_high
             - condition: state
               entity_id: binary_sensor.office_1_motion_15m
               state: 'on'
+            - condition: state
+              entity_id: binary_sensor.quite_time
+              state: 'off'
           sequence:
             - service: scene.turn_on
               target:

@@ -5,3 +5,16 @@
 - name: Bedroom 1 Humidifier On
   entities:
     switch.bedroom_1_humidifier: 'on'
+
+- name: Bedroom 1 Fan Off
+  entities:
+    fan.portable_1: 'off'
+
+- name: Bedroom 1 Fan On
+  entities:
+    fan.portable_1:
+      oscillating: true
+      percentage: 15
+      preset_mode: Nature
+      state: 'on'
+    number.portable_fan_1_oscillation_angle: '90'

@@ -1,3 +1,30 @@
+- id: bedroom_1_fan
+  alias: Bedroom 1 Fan
+  trigger:
+    - platform: time_pattern
+      minutes: /5
+  condition:
+    - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'on'
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_temperature
+              above: input_number.bedroom_1_temperature_low
+            - condition: state
+              entity_id: fan.portable_1
+              state: 'off'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_fan_on
+      default:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.bedroom_1_fan_off
+
 - id: bedroom_1_humidifier
   alias: Bedroom 1 Humidifier
   trigger:

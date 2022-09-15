@@ -1,3 +1,16 @@
+- name: Office 2 Fan Off
+  entities:
+    fan.portable_1: 'off'
+
+- name: Office 2 Fan On
+  entities:
+    fan.portable_1:
+      oscillating: true
+      percentage: 50
+      preset_mode: Nature
+      state: 'on'
+    number.portable_fan_1_oscillation_angle: '90'
+
 - name: Office 2 Humidifier Off
   entities:
     switch.office_2_humidifier: 'off'
