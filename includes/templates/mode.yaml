@@ -4,6 +4,11 @@
       state: >
         {{ is_state('input_boolean.mode_bar', 'on') }}
 
+    - name: Mode Bathroom 2 Lights
+      unique_id: mode_bathroom_2_lights
+      state: >
+        {{ is_state('input_boolean.mode_bathroom_2_lights', 'on') }}
+
     - name: Mode Bedroom 1 Blackout
       unique_id: mode_bedroom_1_blackout
       state: >

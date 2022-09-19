@@ -15,6 +15,12 @@
     - binary_sensor.mode_belle
     - binary_sensor.mode_spa
 
+- name: Bathroom 2 Mode Lock
+  platform: group
+  unique_id: bathroom_2_mode_lock
+  entities:
+    - binary_sensor.mode_bathroom_2_lights
+
 - name: Bedroom 1 Mode Lock
   platform: group
   unique_id: bedroom_1_mode_lock

@@ -5,6 +5,8 @@
     input:
       default_scene_on: scene.bathroom_2_lights
       default_scene_off: scene.bathroom_2_no_lights
+      run_if: binary_sensor.bathroom_2_mode_lock
+      run_if_state: 'off'
       scene_1: scene.bathroom_2_faded_lights
       scene_1_time_on: input_datetime.post_quite_time_range_1
       scene_1_time_off: input_datetime.post_quite_time_range_2
