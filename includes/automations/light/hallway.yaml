@@ -39,8 +39,6 @@
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /1
-      run_if: binary_sensor.hallway_mode_lock
-      run_if_state: 'off'
       scene: scene.hallway_no_lights
       target: binary_sensor.hallway_lights
       watcher: group.hallway_motion
