@@ -10,7 +10,27 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_2_temperature
-              above: input_number.office_2_temperature_high
+              below: sensor.office_2_desired_temperature
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_2_fan_off
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.office_2_motion_15m
+              state: 'off'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_2_fan_off
+
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.office_2_temperature
+              above: sensor.office_2_desired_temperature
+            - condition: numeric_state
+              entity_id: sensor.outdoor_temperature
+              above: sensor.office_2_temperature
             - condition: state
               entity_id: binary_sensor.office_2_motion_15m
               state: 'on'
@@ -21,24 +41,16 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.office_2_fan_on
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.office_2_motion_15m
-              state: 'off'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_2_fan_off
 
 - id: office_2_humidifier
   alias: Office 2 Humidifier
   trigger:
     - platform: numeric_state
       entity_id: sensor.office_2_humidity
-      above: input_number.office_1_humidity_high
+      above: input_number.office_2_humidity_high
     - platform: numeric_state
       entity_id: sensor.office_2_humidity
-      below: input_number.office_1_humidity_low
+      below: input_number.office_2_humidity_low
   condition:
     - condition: state
       entity_id: binary_sensor.office_2_window
@@ -51,7 +63,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_2_humidity
-              above: input_number.office_1_humidity_high
+              above: input_number.office_2_humidity_high
           sequence:
             - service: scene.turn_on
               target:
@@ -59,7 +71,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_2_humidity
-              below: input_number.office_1_humidity_low
+              below: input_number.office_2_humidity_low
           sequence:
             - service: scene.turn_on
               target:

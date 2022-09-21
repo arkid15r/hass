@@ -12,7 +12,10 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
-              above: input_number.bedroom_1_temperature_low
+              above: sensor.bedroom_1_desired_temperature
+            - condition: numeric_state
+              entity_id: sensor.outdoor_temperature
+              above: sensor.bedroom_1_temperature
             - condition: state
               entity_id: fan.portable_1
               state: 'off'
