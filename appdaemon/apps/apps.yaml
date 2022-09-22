@@ -57,6 +57,7 @@ tts:
       conditions:
         - binary_sensor.den_lights
         - binary_sensor.den_motion_5m
+        - binary_sensor.den_tv
       target: media_player.den_echo
     garage:
       if_not:
