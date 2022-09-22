@@ -56,15 +56,15 @@
     - name: Weather Forecast Summary
       unique_id: weather_forecast_summary
       state: >
-        {% if states('sensor.temperature_low_forecast') | int < 35 or
-            states('sensor.wind_speed_forecast') | int > 25
-        %}
-          extremely concerning
-        {% elif states('sensor.temperature_low_forecast') | int < 45 or
+        {% if states('sensor.temperature_low_forecast') | int < 40 or
             states('sensor.wind_speed_forecast') | int > 15
         %}
+          extremely concerning
+        {% elif states('sensor.temperature_low_forecast') | int < 50 or
+            states('sensor.wind_speed_forecast') | int > 10
+        %}
           very concerning
-        {% elif states('sensor.temperature_low_forecast') | int < 55 or
+        {% elif states('sensor.temperature_low_forecast') | int < 60 or
             states('sensor.wind_speed_forecast') | int > 5
         %}
           a bit concerning

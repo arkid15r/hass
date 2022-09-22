@@ -175,24 +175,19 @@
     - platform: time
       at: '19:00:00'
   condition:
-    - condition: numeric_state
-      entity_id: sensor.temperature_low_forecast
-      below: 60
     - condition: state
       entity_id: input_boolean.play_tts_messages
       state: 'on'
   action:
     - choose:
         - conditions:
-            - condition: state
-              entity_id: sensor.weather_forecast_summary
-              state: fine
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: sensor.weather_forecast_summary
+                  state: fine
           sequence:
             - event: tts
               event_data:
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks fine! Have a good night!
-      default:
-        - event: tts
-          event_data:
-            duration: 15
-            text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+                duration: 15
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
