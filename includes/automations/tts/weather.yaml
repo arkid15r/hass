@@ -56,9 +56,16 @@
 - id: tts_start_airing_reminder
   alias: 'TTS: Start Airing Reminder'
   trigger:
+    - platform: state
+      entity_id: binary_sensor.thermal_perimeter
+      from: ['off', 'on']
+      to: ['off', 'on']
     - platform: time_pattern
       minutes: /10
   condition:
+    - condition: state
+      entity_id: binary_sensor.air_is_healthy
+      state: 'on'
     - condition: or
       conditions:
         - condition: time
@@ -77,7 +84,7 @@
           state: 'off'
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
-      above: 77
+      above: 75
     - condition: state
       entity_id: binary_sensor.hvac_is_cooling
       state: 'off'
@@ -137,17 +144,17 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
-      above: 77
+      above: 80
     - condition: numeric_state
       entity_id: sensor.outdoor_temperature
-      above: 77
+      above: 80
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'on'
       for: 00:15:00
     - condition: time
       after: '08:00:00'
-      before: '19:00:00'
+      before: '18:00:00'
   action:
     - choose:
         - conditions:

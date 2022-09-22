@@ -1,4 +1,30 @@
+- binary_sensor:
+    - name: Air Is Healthy
+      unique_id: air_is_healthy
+      state: >
+        {{ states('sensor.air_quality_index') <=
+            states('input_number.air_quality_healthy_threshold')
+        }}
+
 - sensor:
+    - name: Air Quality Index
+      unique_id: air_quality_index
+      state: >
+        {{ states('sensor.airnow_aqi') | int }}
+
+    - name: Outdoor Humidity
+      unique_id: outdoor_humidity
+      unit_of_measurement: '%'
+      state: >
+        {{ expand('group.weather_services') |
+            map(attribute='attributes.humidity') |
+            reject('eq', undefined) |
+            map('float') |
+            list |
+            average |
+            round
+        }}
+
     - name: Outdoor Temperature
       unique_id: outdoor_temperature
       unit_of_measurement: °F
@@ -20,19 +46,6 @@
             map(attribute='attributes.forecast') |
             reject('eq', undefined) |
             map(attribute='0.temperature') |
-            map('float') |
-            list |
-            average |
-            round
-        }}
-
-    - name: Outdoor Humidity
-      unique_id: outdoor_humidity
-      unit_of_measurement: '%'
-      state: >
-        {{ expand('group.weather_services') |
-            map(attribute='attributes.humidity') |
-            reject('eq', undefined) |
             map('float') |
             list |
             average |
