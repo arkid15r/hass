@@ -26,10 +26,20 @@
               now().strftime('%H:%M:%S'),
               states('input_datetime.post_quite_time_range_3'),
               states('input_datetime.pre_quite_time_range_3')) and
-           is_state('binary_sensor.bedroom_1_tv', 'off') and
-           is_state('binary_sensor.mode_nap', 'off') and
-           (is_state('binary_sensor.bedroom_1_blackout', 'on') or
-            is_state('binary_sensor.bedroom_1_lights', 'on'))
+            is_state('binary_sensor.bedroom_1_tv', 'off') and
+            is_state('binary_sensor.mode_nap', 'off') and
+            (is_state('binary_sensor.bedroom_1_blackout', 'on') or
+             is_state('binary_sensor.bedroom_1_lights', 'on'))
+        }}
+
+    - name: Mode Bedroom 1 Blackout Lights
+      unique_id: mode_bedroom_1_blackout_lights
+      state: >
+        {{ as_timestamp(now()) - as_timestamp(
+              states.binary_sensor.bathroom_1_door.last_changed) >= 150 and
+            is_state('binary_sensor.bathroom_1_door', 'on') and
+            is_state('binary_sensor.bedroom_1_tv', 'off') and
+            is_state('binary_sensor.mode_bedroom_1_blackout', 'on')
         }}
 
     - name: Mode Belle

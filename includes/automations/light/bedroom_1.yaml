@@ -23,8 +23,9 @@
     input:
       default_scene_off: scene.bedroom_1_no_lights
       default_scene_on: scene.bedroom_1_faded_lights
-      run_if: binary_sensor.mode_bedroom_1_blackout
+      run_if: binary_sensor.mode_bedroom_1_blackout_lights
       run_if_state: 'on'
+      run_if_watcher_off: true
       watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 90
 
@@ -49,6 +50,9 @@
             - condition: state
               entity_id: binary_sensor.mode_bedroom_1_blackout
               state: 'on'
+            - condition: state
+              entity_id: binary_sensor.mode_bedroom_1_blackout_lights
+              state: 'on'
           sequence:
             - service: scene.turn_on
               target:
@@ -65,7 +69,7 @@
       scene: scene.bedroom_1_no_lights
       target: binary_sensor.bedroom_1_lights
       watcher: group.bedroom_1_motion
-      watcher_inactive_time_seconds: 300
+      watcher_inactive_time_seconds: 180
 
 - id: wake_up_lighting_bedroom_1
   alias: '[Wake Up Lighting]: Bedroom 1'
