@@ -1,12 +1,19 @@
-- binary_sensor:
-    - name: Air Is Healthy
-      unique_id: air_is_healthy
-      state: >
-        {{ states('sensor.air_quality_index') <=
-            states('input_number.air_quality_healthy_threshold')
-        }}
-
 - sensor:
+    - name: Air Quality
+      unique_id: air_quality
+      state: >
+        {% if states('sensor.air_quality_index') | int > 300 %}
+          hazardous
+        {% elif states('sensor.air_quality_index') | int > 200 %}
+          very unhealthy
+        {% elif states('sensor.air_quality_index') | int > 100 %}
+          unhealthy
+        {% elif states('sensor.air_quality_index') | int > 50 %}
+          moderate
+        {% else %}
+          good
+        {% endif %}
+
     - name: Air Quality Index
       unique_id: air_quality_index
       state: >

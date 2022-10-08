@@ -122,10 +122,6 @@ input_datetime.wake_up_lighting_time_on:
   friendly_name: Wake Up Lighting Start Time
   icon: mdi:alarm
 
-input_number.air_quality_healthy_threshold:
-  friendly_name: Air Quality Healthy Threshold
-  icon: &icon_air_quality mdi:air-filter
-
 input_number.bathroom_1_fan_keep_on_after:
   friendly_name: Bathroom 1 Keep On Presence Time
   icon: &icon_fan_keep_on mdi:clock-check
