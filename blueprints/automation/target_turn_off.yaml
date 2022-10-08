@@ -101,8 +101,9 @@ trigger:
 condition:
   - condition: or
     conditions:
-      - '{{ run_if == none }}'
+      - '{{ run_if == none or run_if_state == none }}'
       - '{{ states[run_if].state == run_if_state }}'
+      - '{{ states[run_if].state == "unknown" }}'
 
   - condition: or
     conditions:

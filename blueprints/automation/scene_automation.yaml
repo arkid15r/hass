@@ -212,9 +212,10 @@ action:
               }}
           - condition: or
             conditions:
+              - '{{ run_if == none or run_if_state == none }}'
               - '{{ run_if_watcher_off == true }}'
-              - '{{ not run_if or not run_if_state }}'
               - '{{ states[run_if].state == run_if_state }}'
+              - '{{ states[run_if].state == "unknown" }}'
         sequence:
           - service: scene.turn_on
             target:
@@ -236,9 +237,10 @@ action:
               {{ trigger.to_state.state == 'on' }}
           - condition: or
             conditions:
+              - '{{ run_if == none or run_if_state == none }}'
               - '{{ run_if_watcher_on == true }}'
-              - '{{ not run_if or not run_if_state }}'
               - '{{ states[run_if].state == run_if_state }}'
+              - '{{ states[run_if].state == "unknown" }}'
         sequence:
           - choose:
               - conditions:
