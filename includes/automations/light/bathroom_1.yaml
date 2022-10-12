@@ -41,9 +41,6 @@
       scene_1: scene.bathroom_1a_faded_lights
       scene_1_time_on: input_datetime.night_lights_time_on
       scene_1_time_off: input_datetime.quite_time_on
-      # scene_2: scene.bathroom_1a_night_lights
-      # scene_2_time_on: input_datetime.quite_time_on
-      # scene_2_time_off: input_datetime.morning_lights_time_off
       watcher: binary_sensor.bathroom_1a_door_closed
 
 - id: turn_off_idle_bathroom_1a_lights
