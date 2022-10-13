@@ -25,9 +25,10 @@
         {{ is_in_range(
               now().strftime('%H:%M:%S'),
               states('input_datetime.post_quite_time_range_3'),
-              states('input_datetime.pre_quite_time_range_3')) and
+              states('input_datetime.night_lights_time_on')) and
             is_state('binary_sensor.bedroom_1_tv', 'off') and
             is_state('binary_sensor.mode_nap', 'off') and
+            is_state('binary_sensor.mode_red', 'off') and
             (is_state('binary_sensor.bedroom_1_blackout', 'on') or
              is_state('binary_sensor.bedroom_1_lights', 'on'))
         }}
