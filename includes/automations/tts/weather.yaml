@@ -64,8 +64,8 @@
       minutes: /10
   condition:
     - condition: state
-      entity_id: binary_sensor.air_is_healthy
-      state: 'on'
+      entity_id: sensor.air_quality
+      state: ['good', 'moderate']
     - condition: or
       conditions:
         - condition: time
@@ -85,6 +85,9 @@
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
       above: 75
+    - condition: numeric_state
+      entity_id: sensor.outdoor_temperature
+      above: 75
     - condition: state
       entity_id: binary_sensor.hvac_is_cooling
       state: 'off'
@@ -96,6 +99,33 @@
       event_data:
         duration: 10
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is lower at the moment. I suggest opening windows and doors right now.
+
+- id: tts_state_air_quality_changed
+  alias: 'TTS State: Air Quality Changed'
+  trigger:
+    - platform: state
+      entity_id: sensor.air_quality
+      to: ['moderate', 'unhealthy']
+  condition:
+    - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.mode_nap
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: template
+      value_template: >
+        {{ trigger.from_state.state != 'unavailable' }}
+    - condition: template
+      value_template: >
+        {{ trigger.to_state.state != 'unavailable' }}
+  action:
+    - event: tts
+      event_data:
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The air quality changed to {{ states('sensor.air_quality') }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_state_weather_changed
   alias: 'TTS State: Weather Changed'
@@ -144,10 +174,10 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
-      above: 80
+      above: 82
     - condition: numeric_state
       entity_id: sensor.outdoor_temperature
-      above: 80
+      above: 82
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'on'
