@@ -40,7 +40,7 @@
       scene: scene.great_room_no_lights
       target: binary_sensor.great_room_lights
       watcher: group.great_room_motion
-      watcher_inactive_time_seconds: 1800
+      watcher_inactive_time_seconds: 900
 
 - id: turn_off_great_room_movie_night_lights
   alias: 'Turn Off: Great Room Movie Night Lights'
