@@ -16,6 +16,8 @@
   use_blueprint:
     path: tts_state.yaml
     input:
+      areas_on:
+        - bedroom_1
       state_change_entity: alarm_control_panel.home_alarm
       state_change_from:
         - armed_away
@@ -28,6 +30,8 @@
   use_blueprint:
     path: tts_state.yaml
     input:
+      areas_on:
+        - bedroom_1
       state_change_entity: alarm_control_panel.home_alarm
       state_change_from:
         - armed_away
