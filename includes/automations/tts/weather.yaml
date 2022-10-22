@@ -6,6 +6,10 @@
         - '09:50:00'
         - '13:50:00'
         - '17:50:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.garden_season
+      state: 'on'
   action:
     - choose:
         - conditions:
@@ -217,6 +221,15 @@
       state: 'on'
   action:
     - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.garden_season
+              state: 'off'
+          sequence:
+            - event: tts
+              event_data:
+                duration: 15
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is the weather forecast for tomorrow. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
         - conditions:
             - condition: not
               conditions:

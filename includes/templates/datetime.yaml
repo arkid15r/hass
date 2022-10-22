@@ -25,6 +25,14 @@
             states('input_select.gc_tomorrow_reminder_day') | lower
         }}
 
+    - name: Garden Season
+      unique_id: garden_season
+      state: >
+        {{ as_timestamp(states('input_datetime.garden_season_start_date')) <=
+            as_timestamp(now()) <=
+            as_timestamp(states('input_datetime.garden_season_end_date'))
+        }}
+
     - name: PM
       unique_id: pm
       state: >
@@ -34,19 +42,31 @@
       unique_id: quite_time
       state: >
         {%- macro is_in_range(value, time_from, time_to) %}
-          {%- if time_from < time_to %}
-            {%- if time_from <= value < time_to %}
-              {{- time_from <= value < time_to }}
-            {%- endif %}
-          {%- elif value >= time_from or value < time_to %}
-            {{- value >= time_from or value < time_to }}
-          {%- endif %}
-        {%- endmacro %}
+          {%- if time_from < time_to and time_from <= value < time_to -%}
+            on
+          {%- elif time_from >= time_to and
+                (value >= time_from or value < time_to) -%}
+            on
+          {%- else -%}
+            off
+          {%- endif -%}
+        {%- endmacro -%}
 
         {{ is_in_range(
             now().strftime('%H:%M:%S'),
             states('input_datetime.quite_time_on'),
-            states('input_datetime.quite_time_off'))
+            states('input_datetime.quite_time_off')) == 'on'
+        }}
+
+    - name: Winter Holidays Season
+      unique_id: winter_holidays_season
+      state: >
+        {{ as_timestamp(
+                states('input_datetime.winter_holidays_season_start_date')) <=
+            as_timestamp(
+                now()) <=
+            as_timestamp(
+                states('input_datetime.winter_holidays_season_end_date'))
         }}
 
 - sensor:

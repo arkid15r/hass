@@ -50,6 +50,14 @@ input_datetime.dining_area_morning_lights_time_on:
   friendly_name: Dining Area Morning Lights On
   icon: mdi:clock-time-seven-outline
 
+input_datetime.garden_season_end_date:
+  friendly_name: Garden Season End Date
+  icon: &calendar-end mdi:calendar-end
+
+input_datetime.garden_season_start_date:
+  friendly_name: Garden Season Start Date
+  icon: &calendar-start mdi:calendar-start
+
 input_datetime.hvac_morning_mode_time_off:
   friendly_name: HVAC Morning Mode Time Off
 
@@ -121,6 +129,14 @@ input_datetime.quite_time_on:
 input_datetime.wake_up_lighting_time_on:
   friendly_name: Wake Up Lighting Start Time
   icon: mdi:alarm
+
+input_datetime.winter_holidays_season_end_date:
+  friendly_name: Winter Holidays Season End Date
+  icon: *calendar-end
+
+input_datetime.winter_holidays_season_start_date:
+  friendly_name: Winter Holidays Season Start Date
+  icon: *calendar-start
 
 input_number.bathroom_1_fan_keep_on_after:
   friendly_name: Bathroom 1 Keep On Presence Time
