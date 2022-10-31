@@ -24,6 +24,9 @@ blueprint:
       - **Scene #3** (*optional*): a scene that should be activated within `Scene #3 Time On` - `Scene #3 Time Off` time range.
       - **Scene #3 Time On** (*optional*): `Scene #3` time range start.
       - **Scene #3 Time Off** (*optional*): `Scene #3` time range end.
+      - **Scene #4** (*optional*): a scene that should be activated within `Scene #4 Time On` - `Scene #4 Time Off` time range.
+      - **Scene #4 Time On** (*optional*): `Scene #4` time range start.
+      - **Scene #4 Time Off** (*optional*): `Scene #4` time range end.
       - **Reload Scene Again After a Custom Delay (*default*: `true`): if true the blueprint loads a scene again after a custom delay to make sure it's applied correctly.
       - **Run If** (*optional*): an entity to check for `Run If State` match.
       - **Run If State** (*optional*): a state in which the `Run If` entity should be in order to run the automation.
@@ -141,6 +144,30 @@ blueprint:
         entity:
           domain: input_datetime
 
+    scene_4:
+      name: 'Scene #4 (optional)'
+      description: 'A scene #4'
+      default: scene.none
+      selector:
+        entity:
+          domain: scene
+
+    scene_4_time_on:
+      name: 'Scene #4 Time On (optional)'
+      description: 'A Time On for the Scene #4'
+      default: '00:00:00'
+      selector:
+        entity:
+          domain: input_datetime
+
+    scene_4_time_off:
+      name: 'Scene #4 Time Off (optional)'
+      description: 'An Time Off for the Scene #4'
+      default: '00:00:00'
+      selector:
+        entity:
+          domain: input_datetime
+
     reload_scene:
       name: 'Reload Scene Again After a Custom Delay'
       description: 'Make Sure the Scene is Loaded'
@@ -187,6 +214,7 @@ variables:
   scene_1: !input scene_1
   scene_2: !input scene_2
   scene_3: !input scene_3
+  scene_4: !input scene_4
   watcher: !input watcher
   watcher_inactive_time_seconds: !input watcher_inactive_time_seconds
 
@@ -299,6 +327,25 @@ action:
                   - service: scene.turn_on
                     target:
                       entity_id: !input scene_3
+
+              - conditions:
+                  - '{{ scene_4 != "scene.none" }}'
+                  - condition: time
+                    after: !input scene_4_time_on
+                    before: !input scene_4_time_off
+                sequence:
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_4
+                  - condition: template
+                    value_template: >
+                      {{ reload_scene == true }}
+                  - delay:
+                      seconds: >
+                        {{ reload_scene_delay_seconds }}
+                  - service: scene.turn_on
+                    target:
+                      entity_id: !input scene_4
 
             default:
               - service: scene.turn_on
