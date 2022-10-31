@@ -7,10 +7,10 @@
       default_scene_on: scene.bedroom_1_no_lights
       scene_1: scene.bedroom_1_faded_lights
       scene_1_time_on: input_datetime.night_lights_time_on
-      scene_1_time_off: input_datetime.pre_quite_time_range_2
+      scene_1_time_off: input_datetime.pre_quite_time_range_1
       scene_2: scene.bedroom_1_night_lights
-      scene_2_time_on: input_datetime.pre_quite_time_range_2
-      scene_2_time_off: input_datetime.pre_quite_time_range_1
+      scene_2_time_on: input_datetime.pre_quite_time_range_1
+      scene_2_time_off: input_datetime.quite_time_on
       run_if: binary_sensor.bedroom_1_mode_lock
       run_if_state: 'off'
       watcher: group.bedroom_1_motion
@@ -23,7 +23,7 @@
     input:
       default_scene_off: scene.bedroom_1_no_lights
       default_scene_on: scene.bedroom_1_faded_lights
-      run_if: binary_sensor.mode_bedroom_1_blackout
+      run_if: binary_sensor.mode_bedroom_1_blackout_lights
       run_if_state: 'on'
       watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 90
@@ -46,9 +46,6 @@
               target:
                 entity_id: scene.bedroom_1_no_lights
         - conditions:
-            - condition: state
-              entity_id: binary_sensor.mode_bedroom_1_blackout
-              state: 'on'
             - condition: state
               entity_id: binary_sensor.mode_bedroom_1_blackout_lights
               state: 'on'
