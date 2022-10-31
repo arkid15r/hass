@@ -13,22 +13,21 @@
       unique_id: mode_bedroom_1_blackout
       state: >
         {%- macro is_in_range(value, time_from, time_to) %}
-          {%- if time_from < time_to %}
-            {%- if time_from <= value < time_to %}
-              {{- time_from <= value < time_to }}
-            {%- endif %}
-          {%- elif value >= time_from or value < time_to %}
-            {{- value >= time_from or value < time_to }}
-          {%- endif %}
-        {%- endmacro %}
+          {%- if time_from < time_to and time_from <= value < time_to -%}
+            on
+          {%- elif time_from >= time_to and
+                (value >= time_from or value < time_to) -%}
+            on
+          {%- else -%}
+            off
+          {%- endif -%}
+        {%- endmacro -%}
 
         {{ is_in_range(
               now().strftime('%H:%M:%S'),
               states('input_datetime.post_quite_time_range_3'),
-              states('input_datetime.night_lights_time_on')) and
-            is_state('binary_sensor.bedroom_1_tv', 'off') and
-            is_state('binary_sensor.mode_nap', 'off') and
-            is_state('binary_sensor.mode_red', 'off') and
+              states('input_datetime.night_lights_time_on')) == 'on' and
+            is_state('binary_sensor.bedroom_1_mode_lock_group', 'off') and
             (is_state('binary_sensor.bedroom_1_blackout', 'on') or
              is_state('binary_sensor.bedroom_1_lights', 'on'))
         }}
@@ -47,6 +46,11 @@
       unique_id: mode_belle
       state: >
         {{ is_state('input_boolean.mode_belle', 'on') }}
+
+    - name: Mode Dining Area Lights
+      unique_id: mode_dining_area_lights
+      state: >
+        {{ is_state('input_boolean.mode_dining_area_lights', 'on') }}
 
     - name: Mode Gym
       unique_id: mode_gym

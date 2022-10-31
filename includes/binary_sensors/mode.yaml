@@ -25,8 +25,13 @@
   platform: group
   unique_id: bedroom_1_mode_lock
   entities:
-    - binary_sensor.bedroom_1_tv
+    - binary_sensor.bedroom_1_mode_lock_group
     - binary_sensor.mode_bedroom_1_blackout
+
+- name: Bedroom 1 Mode Lock Group
+  platform: group
+  unique_id: bedroom_1_mode_lock_group
+  entities:
     - binary_sensor.mode_nap
     - binary_sensor.mode_red
     - binary_sensor.mode_wake_up_lighting
@@ -38,6 +43,12 @@
     - binary_sensor.dining_area_motion
     - binary_sensor.kitchen_motion
     - binary_sensor.stairway_motion_sensor_1_motion
+
+- name: Dining Area Mode Lock
+  unique_id: dining_area_mode_lock
+  platform: group
+  entities:
+    - binary_sensor.mode_dining_area_lights
 
 - name: Great Room New Year Lights Mode
   unique_id: great_room_new_year_lights_mode
