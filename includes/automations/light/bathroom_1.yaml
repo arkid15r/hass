@@ -12,9 +12,9 @@
       scene_1_time_off: input_datetime.quite_time_on
       scene_2: scene.bathroom_1_night_lights
       scene_2_time_on: input_datetime.quite_time_on
-      scene_2_time_off: input_datetime.morning_lights_time_off
+      scene_2_time_off: input_datetime.post_quite_time_range_2
       scene_3: scene.bathroom_1_lights
-      scene_3_time_on: input_datetime.morning_lights_time_off
+      scene_3_time_on: input_datetime.post_quite_time_range_2
       scene_3_time_off: input_datetime.post_quite_time_range_3
       watcher: group.bathroom_1_motion
       watcher_inactive_time_seconds: 210
