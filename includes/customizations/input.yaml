@@ -138,16 +138,6 @@ input_datetime.winter_holidays_season_start_date:
   friendly_name: Winter Holidays Season Start Date
   icon: *calendar-start
 
-input_number.bathroom_1_fan_keep_on_after:
-  friendly_name: Bathroom 1 Keep On Presence Time
-  icon: &icon_fan_keep_on mdi:clock-check
-  unit_of_measurement: 'min'
-
-input_number.bathroom_1_fan_turn_off_after:
-  friendly_name: Bathroom 1 Auto Turn Off
-  icon: &icon_fan_auto_turn_off mdi:clock-check-outline
-  unit_of_measurement: 'min'
-
 input_number.bathroom_1_humidity_high:
   friendly_name: Bathroom 1 Humidity High
   icon: &icon_humidity mdi:water-percent
@@ -157,26 +147,6 @@ input_number.bathroom_1_humidity_low:
   friendly_name: Bathroom 1 Humidity Low
   icon: *icon_humidity
   unit_of_measurement: '%'
-
-input_number.bathroom_2_fan_keep_on_after:
-  friendly_name: Bathroom 2 Keep On Presence Time
-  icon: *icon_fan_keep_on
-  unit_of_measurement: 'min'
-
-input_number.bathroom_2_fan_turn_off_after:
-  friendly_name: Bathroom 2 Auto Turn Off
-  icon: *icon_fan_auto_turn_off
-  unit_of_measurement: 'min'
-
-input_number.bathroom_3_fan_keep_on_after:
-  friendly_name: Bathroom 3 Keep On Presence Time
-  icon: *icon_fan_keep_on
-  unit_of_measurement: 'min'
-
-input_number.bathroom_3_fan_turn_off_after:
-  friendly_name: Bathroom 3 Auto Turn Off
-  icon: *icon_fan_auto_turn_off
-  unit_of_measurement: 'min'
 
 input_number.bedroom_1_humidity_high:
   friendly_name: Bedroom 1 Humidity High
