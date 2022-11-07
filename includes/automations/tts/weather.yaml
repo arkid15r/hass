@@ -229,7 +229,7 @@
             - event: tts
               event_data:
                 duration: 15
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is the weather forecast for tomorrow. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is your weather forecast for tomorrow. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Up to {{ states('sensor.temperature_forecast') }} degrees is expected during the day. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
         - conditions:
             - condition: not
               conditions:
