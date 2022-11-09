@@ -13,12 +13,12 @@
       scene_2: scene.office_2_faded_lights
       scene_2_time_on: input_datetime.pre_quite_time_range_2
       scene_2_time_off: input_datetime.quite_time_on
-      scene_3: scene.office_2_night_lights
-      scene_3_time_on: input_datetime.quite_time_on
-      scene_3_time_off: input_datetime.quite_time_off
-      scene_4: scene.office_2_lights
-      scene_4_time_on: input_datetime.morning_lights_time_off
-      scene_4_time_off: input_datetime.post_quite_time_range_3
+      scene_3: scene.office_2_max_lights
+      scene_3_time_on: input_datetime.pre_quite_time_range_3
+      scene_3_time_off: input_datetime.quite_time_on
+      scene_4: scene.office_2_night_lights
+      scene_4_time_on: input_datetime.quite_time_on
+      scene_4_time_off: input_datetime.quite_time_off
       watcher: group.office_2_motion
       watcher_inactive_time_seconds: 600
 
