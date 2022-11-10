@@ -1,0 +1,48 @@
+- id: turn_off_idle_office_1_workspace
+  alias: '[Turn Off Idle Office 1 Workspace]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.office_1_monitor
+      run_if_state: 'off'
+      scene: scene.office_1_workspace_off
+      target: switch.office_1_pc
+      target_active_time_seconds: 60
+      watcher: binary_sensor.office_1_monitor
+      watcher_inactive_time_seconds: 120
+
+- id: turn_on_office_1_workspace_on_motion
+  alias: '[Turn On Office 1 Workspace On Motion]'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.office_1_motion
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.quite_time
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.office_1_workspace
+      state: 'off'
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.office_1_workspace_on
+
+- id: turn_on_office_1_workspace_on_presence
+  alias: '[Turn On Office 1 Workspace On Presence]'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.office_1_monitor
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.office_1_workspace
+      state: 'off'
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.office_1_workspace_on

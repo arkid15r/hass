@@ -1,0 +1,7 @@
+- name: Office 1 Workspace Off
+  entities:
+    switch.office_1_pc: 'off'
+
+- name: Office 1 Workspace On
+  entities:
+    switch.office_1_pc: 'on'

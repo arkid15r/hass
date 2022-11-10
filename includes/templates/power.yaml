@@ -7,6 +7,21 @@
            states('sensor.indoor_garden_input') | int > 1
         }}
 
+    - name: Office 1 Monitor
+      unique_id: office_1_monitor
+      state: >
+        {{ states('sensor.office_1_monitor_input') | int > 25 }}
+
+    - name: Office 1 PC
+      unique_id: office_1_pc
+      state: >
+        {{ is_state('switch.office_1_pc', 'on') }}
+
+    - name: Office 1 Workspace
+      unique_id: office_1_workspace
+      state: >
+        {{ is_state('binary_sensor.office_1_pc', 'on') }}
+
     - name: Office 2 PC
       unique_id: office_2_pc
       state: >
