@@ -28,6 +28,11 @@ bedroom_1_temperature_low:
   min: 50
   mode: box
 
+bedroom_1_temperature_desired:
+  max: 80
+  min: 50
+  mode: box
+
 indoor_garden_humidity_high:
   max: 75
   min: 25
@@ -58,6 +63,11 @@ office_1_temperature_low:
   min: 50
   mode: box
 
+office_1_temperature_desired:
+  max: 80
+  min: 50
+  mode: box
+
 office_2_humidity_high:
   max: 75
   min: 25
@@ -74,6 +84,11 @@ office_2_temperature_high:
   mode: box
 
 office_2_temperature_low:
+  max: 80
+  min: 50
+  mode: box
+
+office_2_temperature_desired:
   max: 80
   min: 50
   mode: box

@@ -33,8 +33,6 @@
           entity_id: fan.bathroom_1a
           state: 'on'
           for:
-            # TODO(ark): replace with input_number.bathroom_1_fan_keep_on_after
-            # when it's supported.
             minutes: 2
   action:
     - service: scene.turn_on

@@ -168,6 +168,11 @@ input_number.bedroom_1_temperature_low:
   icon: &icon_temperature_low mdi:thermometer-minus
   unit_of_measurement: °F
 
+input_number.bedroom_1_temperature_desired:
+  friendly_name: Bedroom 1 Desired Temperature
+  icon: &icon_temperature mdi:thermometer
+  unit_of_measurement: °F
+
 input_number.indoor_garden_humidity_high:
   friendly_name: Indoor Garden Humidity High
   icon: *icon_humidity
@@ -198,6 +203,11 @@ input_number.office_1_temperature_low:
   icon: *icon_temperature_low
   unit_of_measurement: °F
 
+input_number.office_1_temperature_desired:
+  friendly_name: Office 1 Desired Temperature
+  icon: *icon_temperature
+  unit_of_measurement: °F
+
 input_number.office_2_humidity_high:
   friendly_name: Office 2 Humidity High
   icon: *icon_humidity
@@ -216,6 +226,11 @@ input_number.office_2_temperature_high:
 input_number.office_2_temperature_low:
   friendly_name: Office 2 Temperature Low
   icon: *icon_temperature_low
+  unit_of_measurement: °F
+
+input_number.office_2_temperature_desired:
+  friendly_name: Office 2 Desired Temperature
+  icon: *icon_temperature
   unit_of_measurement: °F
 
 input_number.scene_reload_delay:

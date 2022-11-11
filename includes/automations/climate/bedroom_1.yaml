@@ -12,7 +12,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
-              above: sensor.bedroom_1_desired_temperature
+              above: input_number.bedroom_1_temperature_desired
             - condition: numeric_state
               entity_id: sensor.outdoor_temperature
               above: sensor.bedroom_1_temperature

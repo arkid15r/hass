@@ -10,7 +10,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_2_temperature
-              below: sensor.office_2_desired_temperature
+              below: input_number.office_2_temperature_desired
           sequence:
             - service: scene.turn_on
               target:
@@ -27,7 +27,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.office_2_temperature
-              above: sensor.office_2_desired_temperature
+              above: input_number.office_2_temperature_desired
             - condition: numeric_state
               entity_id: sensor.outdoor_temperature
               above: sensor.office_2_temperature
