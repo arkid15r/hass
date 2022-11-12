@@ -52,23 +52,6 @@
         }}
 
   sensor:
-    - name: Bedroom 1 Adjusted Temperature Low
-      unique_id: bedroom_1_adjusted_temperature_low
-      state: >
-        {{ states('input_number.bedroom_1_temperature_low') | int + 2 }}
-
-    - name: Bedroom 1 Adjusted Temperature High
-      unique_id: bedroom_1_adjusted_temperature_high
-      state: >
-        {{ states('input_number.bedroom_1_temperature_high') | int - 2 }}
-
-    - name: Bedroom 1 Desired Temperature
-      unique_id: bedroom_1_desired_temperature
-      state: >
-        {{ (states('input_number.bedroom_1_temperature_high') | int +
-            states('input_number.bedroom_1_temperature_low') | int) / 2 + 1
-        }}
-
     - name: HVAC Preset Mode
       unique_id: hvac_preset_mode
       state: >
@@ -83,20 +66,6 @@
             map('float') |
             average |
             round
-        }}
-
-    - name: Office 1 Desired Temperature
-      unique_id: office_1_desired_temperature
-      state: >
-        {{ (states('input_number.office_1_temperature_high') | int +
-            states('input_number.office_1_temperature_low') | int) / 2 + 1
-        }}
-
-    - name: Office 2 Desired Temperature
-      unique_id: office_2_desired_temperature
-      state: >
-        {{ (states('input_number.office_2_temperature_high') | int +
-            states('input_number.office_2_temperature_low') | int) / 2 + 1
         }}
 
     - name: Stairway Temperature
