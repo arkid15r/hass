@@ -26,6 +26,7 @@
   unique_id: bedroom_1_mode_lock
   entities:
     - binary_sensor.bedroom_1_mode_lock_group
+    - binary_sensor.bedroom_1_tv
     - binary_sensor.mode_bedroom_1_blackout
 
 - name: Bedroom 1 Mode Lock Group
