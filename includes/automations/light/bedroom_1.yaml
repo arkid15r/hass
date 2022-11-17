@@ -74,3 +74,15 @@
     input:
       light_entity: light.bedroom_1_1
       start_time: input_datetime.wake_up_lighting_time_on
+
+- id: bedroom_1_lights_turn_off_on_state
+  alias: '[Bedroom 1 Light Turn Off On State]'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_1_tv
+      from: ['off']
+      to: ['on']
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bedroom_1_no_lights
