@@ -49,7 +49,7 @@
       entity_id: sensor.temperature_forecast
       above: input_number.weather_extreme_temperature
     - condition: state
-      entity_id: binary_sensor.pickup_day
+      entity_id: binary_sensor.pickup_day_today
       state: 'on'
   action:
     - event: tts

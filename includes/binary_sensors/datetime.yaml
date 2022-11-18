@@ -1,10 +1,18 @@
 - platform: workday
-  country: !secret country
   name: Work Day
+  country: !secret country
 
 - platform: workday
+  name: Pickup Day Today
   country: !secret country
-  excludes: [sun, holiday]
-  name: Pickup Day
   province: !secret province
+  excludes: [sun, holiday]
+  workdays: [mon, tue, wed, thu, fri, sat]
+
+- platform: workday
+  name: Pickup Day Tomorrow
+  country: !secret country
+  province: !secret province
+  days_offset: 1
+  excludes: [sun, holiday]
   workdays: [mon, tue, wed, thu, fri, sat]
