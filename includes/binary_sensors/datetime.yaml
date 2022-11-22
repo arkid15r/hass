@@ -1,6 +1,8 @@
 - platform: workday
-  name: Work Day
+  name: Workday
   country: !secret country
+  excludes: [sat, sun, holiday]
+  workdays: [mon, tue, wed, thu, fri]
 
 - platform: workday
   name: Pickup Day Today
