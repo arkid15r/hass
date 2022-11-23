@@ -38,8 +38,6 @@
       entity_id: sensor.bedroom_1_humidity
       below: input_number.bedroom_1_humidity_low
     - platform: state
-      entity_id: binary_sensor.bedroom_1_window
-    - platform: state
       entity_id: sensor.bedroom_1_humidity
       to: 'unavailable'
       for:
@@ -48,36 +46,6 @@
       minutes: /5
   action:
     - choose:
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_humidity
-              above: input_number.bedroom_1_humidity_high
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_off
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_humidity
-              below: input_number.bedroom_1_humidity_low
-            - condition: time
-              after: input_datetime.night_lights_time_on
-              before: input_datetime.morning_lights_time_off
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_on
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_humidity
-              below: input_number.bedroom_1_humidity_low
-            - condition: state
-              entity_id: binary_sensor.quite_time
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_on
         - conditions:
             - condition: state
               entity_id: binary_sensor.bedroom_1_window
@@ -97,3 +65,30 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.bedroom_1_humidifier_off
+        - conditions:
+            - condition: time
+              after: input_datetime.post_quite_time_range_1
+              before: input_datetime.pre_quite_time_range_3
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_humidity
+              above: input_number.bedroom_1_humidity_high
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_off
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_1_humidity
+              below: input_number.bedroom_1_humidity_low
+            - condition: time
+              after: input_datetime.pre_quite_time_range_3
+              before: input_datetime.post_quite_time_range_1
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_on
