@@ -1,6 +1,6 @@
 - sensor:
-    - name: Air Quality
-      unique_id: air_quality
+    - name: Air Pollution Level
+      unique_id: air_pollution_level
       state: >
         {% if states('sensor.air_quality_index') | int > 300 %}
           hazardous
@@ -25,7 +25,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.humidity') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
@@ -38,7 +38,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.temperature') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
@@ -51,7 +51,7 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.forecast') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map(attribute='0.temperature') |
             map('float') |
             list |
@@ -65,13 +65,29 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.forecast') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map(attribute='0.templow') |
             map('float') |
             list |
             average |
             round
         }}
+
+    - name: Weather Forecast Details
+      unique_id: weather_forecast_details
+      state: >
+        {%- macro pluralize(count, name, plural) -%}
+          {{- name -}}
+          {%- if count | int != 1 -%}
+            {{- plural -}}
+          {%- endif -%}
+        {%- endmacro -%}
+
+        {% set temperature_high = states('sensor.temperature_forecast') -%}
+        {% set temperature_low = states('sensor.temperature_low_forecast') -%}
+        {% set wind_speed = states('sensor.wind_speed_forecast') -%}
+
+        The lowest forecasted temperature is around {{ temperature_low }} {{ pluralize(temperature_low, 'degree', 's') }}. The highest forecasted wind speed is {{ wind_speed }} {{ pluralize(wind_speed, 'mile', 's') }} per hour. Up to {{ temperature_high }} {{ pluralize(temperature_high, 'degree', 's') }} is expected during the day.
 
     - name: Weather Forecast Summary
       unique_id: weather_forecast_summary
@@ -102,13 +118,29 @@
           {{ weather }}
         {% endif %}
 
+    - name: Weather State Details
+      unique_id: weather_state_details
+      state: >
+        {%- macro pluralize(count, name, plural) -%}
+          {{- name -}}
+          {%- if count | int != 1 -%}
+            {{- plural -}}
+          {%- endif -%}
+        {%- endmacro -%}
+
+        {% set humidity = states('sensor.outdoor_humidity') -%}
+        {% set temperature = states('sensor.outdoor_temperature') -%}
+        {% set wind_speed = states('sensor.wind_speed') -%}
+
+        The temperature is {{ temperature }} {{ pluralize(temperature, 'degree', 's') }} with relative humidity around {{ humidity }} {{ pluralize(humidity, 'percent', 's') }}. The wind speed is {{ wind_speed }} {{ pluralize(wind_speed, 'mile', 's') }} per hour. The air pollution level is {{ states('sensor.air_pollution_level') }}
+
     - name: Wind Speed
       unique_id: wind_speed
       unit_of_measurement: mph
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.wind_speed') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
@@ -121,10 +153,10 @@
       state: >
         {{ expand('group.weather_services') |
             map(attribute='attributes.forecast') |
-            reject('eq', undefined) |
+            reject('eq', 'undefined') |
             map(attribute='0.wind_speed') |
             map('float') |
             list |
-            average |
+            max |
             round
         }}

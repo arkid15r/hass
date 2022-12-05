@@ -68,7 +68,7 @@
       minutes: /10
   condition:
     - condition: state
-      entity_id: sensor.air_quality
+      entity_id: sensor.air_pollution_level
       state: ['good', 'moderate']
     - condition: or
       conditions:
@@ -108,8 +108,8 @@
   alias: 'TTS State: Air Quality Changed'
   trigger:
     - platform: state
-      entity_id: sensor.air_quality
-      to: ['moderate', 'unhealthy']
+      entity_id: sensor.air_pollution_level
+      to: ['moderate', 'unhealthy', 'very unhealthy', 'hazardous']
   condition:
     - condition: state
       entity_id: binary_sensor.quite_time
@@ -129,7 +129,7 @@
   action:
     - event: tts
       event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The air quality changed to {{ states('sensor.air_quality') }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The air quality changed from {{ trigger.from_state }} to {{ trigger.to_state }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_state_weather_changed
   alias: 'TTS State: Weather Changed'
@@ -168,7 +168,8 @@
   action:
     - event: tts
       event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('sensor.weather_state') }}. The temperature is {{ states('sensor.outdoor_temperature') }} degrees with relative humidity around {{ states('sensor.outdoor_humidity') }} percents. The wind speed is {{ states('sensor.wind_speed') }} miles per hour. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+        text: >
+          <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('sensor.weather_state') }}. {{ states('sensor.weather_state_details') }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_stop_airing_reminder
   alias: 'TTS: Stop Airing Reminder'
@@ -229,7 +230,7 @@
             - event: tts
               event_data:
                 duration: 15
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is your weather forecast for tomorrow. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Up to {{ states('sensor.temperature_forecast') }} degrees is expected during the day. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is your weather forecast for tomorrow. {{ states('sensor.weather_forecast_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
         - conditions:
             - condition: not
               conditions:
@@ -240,4 +241,29 @@
             - event: tts
               event_data:
                 duration: 15
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. The lowest forecasted temperature is around {{ states('sensor.temperature_low_forecast') }} degrees. The highest forecasted wind speed is {{ states('sensor.wind_speed_forecast') }} miles per hour. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. {{ states('sensor.weather_forecast_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+
+- id: tts_weather_morning_summary
+  alias: 'TTS: Weather Morning Summary'
+  trigger:
+    - platform: time
+      at: '07:00:00'
+  condition:
+    - condition: state
+      entity_id: input_boolean.play_tts_messages
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.bedroom_1_blackout
+      state: 'on'
+  action:
+    - event: tts
+      event_data:
+        areas_off: '*'
+        areas_on:
+          - bedroom_1
+        duration: 15
+        text: >
+          <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Good morning! {{ states('sensor.weather_state_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
