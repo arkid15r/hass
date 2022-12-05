@@ -71,6 +71,6 @@
       check_frequency_minutes: /1
       scene: scene.pantry_no_lights
       target: binary_sensor.pantry_lights
-      target_active_time_seconds: 60
+      target_active_time_seconds: 90
       watcher: group.kitchen_motion
       watcher_inactive_time_seconds: 300
