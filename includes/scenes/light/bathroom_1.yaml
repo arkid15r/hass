@@ -45,15 +45,15 @@
       state: 'on'
     light.bathroom_1_2:
       brightness: *b1ts_brightness
-      rgb_color: [255, 165, 70]
+      rgb_color: [255, 0, 0]
       state: 'on'
     light.bathroom_1_3:
       brightness: *b1ts_brightness
-      rgb_color: [255, 125, 0]
+      rgb_color: [255, 0, 0]
       state: 'on'
     light.bathroom_1_4:
       brightness: *b1ts_brightness
-      rgb_color: [255, 255, 0]
+      rgb_color: [190, 255, 0]
       state: 'on'
 
 - name: Bathroom 1a Lights
