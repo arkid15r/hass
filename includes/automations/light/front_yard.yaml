@@ -69,6 +69,4 @@
     path: scene_automation.yaml
     input:
       default_scene_on: scene.front_yard_night_lights
-      default_scene_off: scene.front_yard_no_lights
       watcher: binary_sensor.front_yard_lights
-      watcher_inactive_time_seconds: 0

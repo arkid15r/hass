@@ -96,7 +96,6 @@
     path: scene_automation.yaml
     input:
       watcher: binary_sensor.backyard_lights
-      watcher_inactive_time_seconds: 0
       default_scene_on: scene.backyard_night_lights
 
 - id: backyard_right_light_1_on_state
