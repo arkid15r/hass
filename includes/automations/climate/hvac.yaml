@@ -1,32 +1,47 @@
-- id: hvac_special_mode_lock
-  alias: HVAC Special Mode Lock
+- id: hvac_day_temperature
+  alias: HVAC Day Temperature
   trigger:
     - platform: state
-      entity_id: sensor.hvac_preset_mode
-  condition:
-    - condition: state
-      entity_id: binary_sensor.hvac_mode_lock
-      state: 'on'
-  action:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.thermostat
-        preset_mode: Special
-
-- id: hvac_morning_temperature
-  alias: HVAC Morning Temperature
-  trigger:
+      entity_id: binary_sensor.thermal_perimeter
+      from: ['off', 'on']
+      to: ['off', 'on']
+      for:
+        minutes: 1
     - platform: time_pattern
-      minutes: /5
+      minutes: /1
   condition:
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'off'
     - condition: time
-      after: input_datetime.hvac_morning_mode_time_on
-      before: input_datetime.hvac_morning_mode_time_off
+      after: input_datetime.quite_time_off
+      before: input_datetime.pre_quite_time_range_3
   action:
     - choose:
+        # Cool down if temperature is too high.
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: numeric_state
+                  entity_id: sensor.office_1_temperature
+                  above: input_number.office_1_temperature_high
+                - condition: numeric_state
+                  entity_id: sensor.office_2_temperature
+                  above: input_number.office_2_temperature_high
+            - condition: template
+              value_template: >
+                {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
+          sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
+            - service: climate.set_preset_mode
+              data:
+                entity_id: climate.thermostat
+                preset_mode: Down
+
+        # Heat up if temperature is too low.
         - conditions:
             - condition: or
               conditions:
@@ -40,65 +55,77 @@
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
           sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
             - service: climate.set_preset_mode
               data:
                 entity_id: climate.thermostat
                 preset_mode: Up
-      default:
-        - service: climate.set_preset_mode
-          data:
-            entity_id: climate.thermostat
-            preset_mode: Home
+            # Turn on the humidifier.
+            - service: scene.turn_on
+              target:
+                entity_id: scene.office_1_humidifier_on
+
+        # Otherwise set default preset (Home).
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: and
+                  conditions:
+                    - condition: template
+                      value_template: >
+                        {{ is_state('sensor.hvac_preset_mode', 'Down') }}
+                    - condition: numeric_state
+                      entity_id: sensor.office_1_temperature
+                      below: input_number.office_1_temperature_desired
+                    - condition: numeric_state
+                      entity_id: sensor.office_2_temperature
+                      below: input_number.office_2_temperature_desired
+
+                - condition: and
+                  conditions:
+                    - condition: template
+                      value_template: >
+                        {{ is_state('sensor.hvac_preset_mode', 'Up') }}
+                    - condition: numeric_state
+                      entity_id: sensor.office_1_temperature
+                      above: input_number.office_1_temperature_desired
+                    - condition: numeric_state
+                      entity_id: sensor.office_2_temperature
+                      above: input_number.office_2_temperature_desired
+          sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
+            - service: climate.set_preset_mode
+              data:
+                entity_id: climate.thermostat
+                preset_mode: Home
 
 - id: hvac_night_temperature
   alias: HVAC Night Temperature
   trigger:
+    - platform: state
+      entity_id: binary_sensor.thermal_perimeter
+      from: ['off', 'on']
+      to: ['off', 'on']
+      for:
+        minutes: 1
     - platform: time_pattern
-      minutes: /5
+      minutes: /1
   condition:
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'off'
     - condition: time
-      after: input_datetime.hvac_night_mode_time_on
-      before: input_datetime.hvac_night_mode_time_off
+      after: input_datetime.pre_quite_time_range_3
+      before: input_datetime.quite_time_off
   action:
     - choose:
-        # Turn off A/C after the bedroom_1 temperature is below the adjusted high.
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_temperature
-              below: sensor.bedroom_1_adjusted_temperature_high
-            - condition: template
-              value_template: >
-                {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
-          sequence:
-            - service: climate.set_hvac_mode
-              data:
-                entity_id: climate.thermostat
-                hvac_mode: heat_cool
-            - service: climate.set_preset_mode
-              data:
-                entity_id: climate.thermostat
-                preset_mode: Sleep
-        # Turn off A/C after the bedroom_1 temperature is above the adjusted low.
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_temperature
-              below: sensor.bedroom_1_adjusted_temperature_low
-            - condition: template
-              value_template: >
-                {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
-          sequence:
-            - service: climate.set_hvac_mode
-              data:
-                entity_id: climate.thermostat
-                hvac_mode: heat_cool
-            - service: climate.set_preset_mode
-              data:
-                entity_id: climate.thermostat
-                preset_mode: Sleep
-        # Turn on A/C if bedroom_1 temperature is too high.
+        # Cool down if temperature is too high.
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
@@ -115,7 +142,8 @@
               data:
                 entity_id: climate.thermostat
                 preset_mode: Down
-        # Turn on A/C if bedroom_1 temperature is too low.
+
+        # Heat up if temperature is too low.
         - conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_1_temperature
@@ -132,25 +160,40 @@
               data:
                 entity_id: climate.thermostat
                 preset_mode: Up
-      # Set Sleep preset by default.
-      default:
-        - condition: numeric_state
-          entity_id: sensor.bedroom_1_temperature
-          above: sensor.bedroom_1_adjusted_temperature_low
-        - condition: numeric_state
-          entity_id: sensor.bedroom_1_temperature
-          below: sensor.bedroom_1_adjusted_temperature_high
-        - condition: template
-          value_template: >
-            {{ not is_state('sensor.hvac_preset_mode', 'Sleep') }}
-        - service: climate.set_hvac_mode
-          data:
-            entity_id: climate.thermostat
-            hvac_mode: heat_cool
-        - service: climate.set_preset_mode
-          data:
-            entity_id: climate.thermostat
-            preset_mode: Sleep
+            # Turn on the humidifier.
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_on
+
+        # Otherwise set default preset (Sleep).
+        - conditions:
+            condition: or
+            conditions:
+              - condition: and
+                conditions:
+                  - condition: template
+                    value_template: >
+                      {{ is_state('sensor.hvac_preset_mode', 'Down') }}
+                  - condition: numeric_state
+                    entity_id: sensor.bedroom_1_temperature
+                    below: input_number.bedroom_1_temperature_desired
+              - condition: and
+                conditions:
+                  - condition: template
+                    value_template: >
+                      {{ is_state('sensor.hvac_preset_mode', 'Up') }}
+                  - condition: numeric_state
+                    entity_id: sensor.bedroom_1_temperature
+                    above: input_number.bedroom_1_temperature_desired
+          sequence:
+            - service: climate.set_hvac_mode
+              data:
+                entity_id: climate.thermostat
+                hvac_mode: heat_cool
+            - service: climate.set_preset_mode
+              data:
+                entity_id: climate.thermostat
+                preset_mode: Sleep
 
 - id: hvac_on_thermal_perimeter_state
   alias: HVAC On Thermal Perimeter State
@@ -183,6 +226,7 @@
               data:
                 entity_id: climate.thermostat
                 preset_mode: Home
+
         - conditions:
             - condition: state
               entity_id: binary_sensor.thermal_perimeter
@@ -206,3 +250,18 @@
             - event: tts
               event_data:
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The climate control system is going to be turned off. Please close {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} to turn it on again.
+
+- id: hvac_special_mode_lock
+  alias: HVAC Special Mode Lock
+  trigger:
+    - platform: state
+      entity_id: sensor.hvac_preset_mode
+  condition:
+    - condition: state
+      entity_id: binary_sensor.hvac_mode_lock
+      state: 'on'
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.thermostat
+        preset_mode: Special
