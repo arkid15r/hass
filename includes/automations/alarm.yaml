@@ -6,6 +6,7 @@
         - input_datetime.quite_time_off
         - input_datetime.quite_time_on
   action:
+    - delay: 1
     - choose:
         - conditions:
             - condition: state
