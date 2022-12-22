@@ -12,7 +12,6 @@
   unique_id: bathroom_1_mode_lock
   entities:
     - binary_sensor.mode_bath
-    - binary_sensor.mode_belle
     - binary_sensor.mode_spa
 
 - name: Bathroom 2 Mode Lock
@@ -33,6 +32,7 @@
   platform: group
   unique_id: bedroom_1_mode_lock_group
   entities:
+    - binary_sensor.mode_belle
     - binary_sensor.mode_nap
     - binary_sensor.mode_red
     - binary_sensor.mode_wake_up_lighting
@@ -57,10 +57,11 @@
   entities:
     - binary_sensor.dining_area_lights
     - binary_sensor.dining_area_motion
+    - binary_sensor.hallway_motion
     - binary_sensor.kitchen_lights
     - binary_sensor.kitchen_motion
     - binary_sensor.great_room_motion
-    - binary_sensor.great_room_tv
+    - binary_sensor.stairway_motion_sensor_1_motion
 
 - name: Front Yard Lights Mode
   all: true

@@ -1,33 +1,36 @@
-# - id: great_room_new_year_lights
-#   alias: '[Great Room New Year Lights]'
-#   use_blueprint:
-#     path: scene_automation.yaml
-#     input:
-#       default_scene_off: scene.great_room_new_year_no_lights
-#       default_scene_on: scene.great_room_new_year_no_lights
-#       run_if: binary_sensor.kitchen_mode_lock
-#       run_if_state: 'off'
-#       scene_1: scene.great_room_new_year_night_lights
-#       scene_1_time_on: '18:30:00'
-#       scene_1_time_off: input_datetime.quite_time_on
-#       scene_2: scene.great_room_new_year_no_lights
-#       scene_2_time_on: input_datetime.quite_time_on
-#       scene_2_time_off: input_datetime.quite_time_off
-#       watcher: binary_sensor.great_room_new_year_lights_mode
-#       watcher_inactive_time_seconds: 300
+- id: great_room_new_year_lights
+  alias: '[Great Room New Year Lights]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.great_room_new_year_no_lights
+      default_scene_on: scene.great_room_new_year_no_lights
+      run_if: binary_sensor.mode_great_room_new_year_lights
+      run_if_state: 'on'
+      scene_1: scene.great_room_new_year_night_lights
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_1_time_off: input_datetime.quite_time_on
+      scene_2: scene.great_room_new_year_night_lights
+      scene_2_time_on: input_datetime.quite_time_off
+      scene_2_time_off: input_datetime.post_quite_time_range_3
+      scene_3: scene.great_room_new_year_day_lights
+      scene_3_time_on: input_datetime.post_quite_time_range_3
+      scene_3_time_off: input_datetime.night_lights_time_on
+      watcher: binary_sensor.great_room_new_year_lights_mode
+      watcher_inactive_time_seconds: 300
 
-# - id: turn_off_idle_great_room_new_year_lights
-#   alias: '[Turn Off Idle Great Room New Year Lights]'
-#   use_blueprint:
-#     path: target_turn_off.yaml
-#     input:
-#       check_frequency_minutes: /1
-#       run_if: binary_sensor.great_room_new_year_lights_mode
-#       run_if_state: 'off'
-#       watcher_inactive_time_seconds: 600
-#       watcher: binary_sensor.great_room_new_year_lights_mode
-#       scene: scene.great_room_new_year_no_lights
-#       target: group.great_room_new_year_lights
+- id: turn_off_idle_great_room_new_year_lights
+  alias: '[Turn Off Idle Great Room New Year Lights]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.great_room_new_year_lights_mode
+      run_if_state: 'off'
+      watcher_inactive_time_seconds: 600
+      watcher: binary_sensor.great_room_new_year_lights_mode
+      scene: scene.great_room_new_year_no_lights
+      target: group.great_room_new_year_lights
 
 - id: turn_off_idle_great_room_lights
   alias: '[Turn Off Idle Great Room Lights]'

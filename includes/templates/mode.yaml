@@ -52,6 +52,13 @@
       state: >
         {{ is_state('input_boolean.mode_dining_area_lights', 'on') }}
 
+    - name: Mode Great Room New Year Lights
+      unique_id: mode_great_room_new_year_lights
+      state: >
+        {{ is_state('binary_sensor.great_room_tv', 'off') and
+            is_state('binary_sensor.winter_holidays_season', 'on')
+        }}
+
     - name: Mode Gym
       unique_id: mode_gym
       state: >
