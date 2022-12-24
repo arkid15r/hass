@@ -129,15 +129,14 @@
   action:
     - event: tts
       event_data:
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The air quality changed from {{ trigger.from_state }} to {{ trigger.to_state }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The air pollution level changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_state_weather_changed
   alias: 'TTS State: Weather Changed'
   trigger:
     - platform: state
       entity_id: sensor.weather_state
-      from: &weather_states
-        - exceptional
+      to:
         - hail
         - lightning
         - lightning-rainy
@@ -146,9 +145,6 @@
         - snowy
         - snowy-rainy
         - windy
-    - platform: state
-      entity_id: sensor.weather_state
-      to: *weather_states
   condition:
     - condition: state
       entity_id: binary_sensor.quite_time

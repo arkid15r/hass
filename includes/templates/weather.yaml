@@ -87,7 +87,7 @@
         {% set temperature_low = states('sensor.temperature_low_forecast') -%}
         {% set wind_speed = states('sensor.wind_speed_forecast') -%}
 
-        The lowest forecasted temperature is around {{ temperature_low }} {{ pluralize(temperature_low, 'degree', 's') }}. The highest forecasted wind speed is {{ wind_speed }} {{ pluralize(wind_speed, 'mile', 's') }} per hour. Up to {{ temperature_high }} {{ pluralize(temperature_high, 'degree', 's') }} is expected during the day.
+        The lowest forecasted temperature is around {{ temperature_low }} {{ pluralize(temperature_low, 'degree', 's') }}. The highest forecasted wind speed is {{ wind_speed }} {{ pluralize(wind_speed, 'mile', 's') }} per hour. Up to {{ temperature_high }} {{ pluralize(temperature_high, 'degree', 's') }} is expected during the day
 
     - name: Weather Forecast Summary
       unique_id: weather_forecast_summary
