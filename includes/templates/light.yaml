@@ -28,7 +28,7 @@
       unique_id: bedroom_1_blackout
       state: >
         {{ is_state('binary_sensor.bedroom_1_lights', 'off') and
-            states('sensor.bedroom_1_illuminance') | int < 5
+            states('sensor.bedroom_1_illuminance') | int < 3
         }}
 
     - name: Bedroom 1 Lights
