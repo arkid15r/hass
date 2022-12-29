@@ -56,6 +56,9 @@
         minutes: 2
   condition:
     - condition: state
+      entity_id: binary_sensor.great_room_new_year_lights_mode
+      state: 'off'
+    - condition: state
       entity_id: binary_sensor.great_room_tv
       state: 'off'
     - condition: state
