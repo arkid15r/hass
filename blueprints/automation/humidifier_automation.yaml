@@ -1,0 +1,173 @@
+# Humidifier Automation Blueprint.
+#
+# Author: Arkadii Yakovets (ark@cho.red)
+
+blueprint:
+  name: '[Humidifier Automation]: '
+  description: |
+    Controls humidity level in a certain area.
+
+    The automation periodically checks the humidity level in a target area and loads a specific scene in order to get the humidity level within the desired range.
+
+    Inputs:
+      - **Area**: an area to control humidity in.
+      - **Humidifier**: a humidifier device.
+      - **Humidity sensor**: a humidity sensor.
+      - **Humidifier Scene On**: a scene that activates the `Humidifier`.
+      - **Humidifier Scene Off**: a scene that deactivates the `Humidifier`.
+      - **Check Frequency** (*default*: /1, *unit*: minutes): how often to perform the check.
+      - **Check Start Time** (*optional*): run the automation after this and before `Check End Time` only.
+      - **Check End Time** (*optional*): run the automation before this and after `Check Start Time` only.
+      - **Run If Only** (*optional*): run the automation if the entity is in a required state (see the `Run If Only State`) only.
+      - **Run If Only State** (*default: off*): a state ('on'/'off') in which the `Run If Only` entity must be to run the automation. If no `Run If Only` entity provided the `Run If Only State` is ignored.
+
+  source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/humidity_control.yaml
+
+  domain: automation
+  input:
+    area:
+      name: Area
+      description: Select the area
+      selector:
+        area:
+          entity:
+            domain:
+              - switch
+
+    humidifier:
+      name: Humidifier
+      description: Select the area humidifier device
+      default:
+      selector:
+        entity:
+          domain: switch
+
+    humidity_sensor:
+      name: Humidity Sensor
+      description: Select the area humidity sensor
+      default:
+      selector:
+        entity:
+
+    humidifier_scene_on:
+      name: Humidifier On Scene
+      description: A scene to turn the humidifier on
+      default:
+      selector:
+        entity:
+          domain: scene
+
+    humidifier_scene_off:
+      name: Humidifier Off Scene
+      description: A scene to turn the humidifier off
+      default:
+      selector:
+        entity:
+          domain: scene
+
+    check_frequency_minutes:
+      name: Check Frequency
+      description: Run every
+      default: /5
+      selector:
+        text:
+
+    check_time_start:
+      name: 'Check Start Time (optional)'
+      description: 'A Start Time Of The Check'
+      default: none
+      selector:
+        entity:
+          domain: input_datetime
+
+    check_time_end:
+      name: 'Check End Time (optional)'
+      description: 'An End Time Of The Check'
+      default: none
+      selector:
+        entity:
+          domain: input_datetime
+
+    run_if:
+      name: Run If Only (optional)
+      description: Don't run the automation if the entity
+      default:
+      selector:
+        entity: {}
+
+    run_if_state:
+      name: Run If Only State (optional)
+      description: Is not in this state
+      default:
+      selector:
+        text:
+
+variables:
+  area: !input area
+  check_time_start: !input check_time_start
+  check_time_end: !input check_time_end
+  humidifier: !input humidifier
+  humidity_sensor: !input humidity_sensor
+  humidity: >
+    {{ states(humidity_sensor) }}
+  humidity_high: >
+    {{ states('input_number.' + area + '_humidity_high') | float }}
+  humidity_low: >
+    {{ states('input_number.' + area + '_humidity_low') | float }}
+  run_if: !input run_if
+  run_if_state: !input run_if_state
+
+trigger:
+  - platform: state
+    entity_id: !input humidity_sensor
+    to: 'unavailable'
+    for:
+      minutes: 5
+  - platform: time_pattern
+    minutes: !input check_frequency_minutes
+
+condition:
+  - condition: or
+    conditions:
+      - '{{ run_if == none or run_if_state == none }}'
+      - '{{ states[run_if].state == run_if_state }}'
+      - '{{ states[run_if].state == "unknown" }}'
+
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ humidity == 'unavailable' or
+                 humidity >= humidity_high
+              }}
+        sequence:
+          - service: scene.turn_on
+            target:
+              entity_id: !input humidifier_scene_off
+      - conditions:
+          - condition: template
+            value_template: >
+              {%- macro is_in_range(value, time_from, time_to) %}
+                {%- if time_from < time_to and time_from <= value < time_to -%}
+                  on
+                {%- elif time_from >= time_to and
+                      (value >= time_from or value < time_to) -%}
+                  on
+                {%- else -%}
+                  off
+                {%- endif -%}
+              {%- endmacro -%}
+
+              {{ (check_time_start == none or
+                  check_time_end == none or
+                  is_in_range(
+                    now().strftime('%H:%M:%S'),
+                    states(check_time_start),
+                    states(check_time_end)) == 'on') and
+                  humidity < humidity_low
+              }}
+        sequence:
+          - service: scene.turn_on
+            target:
+              entity_id: !input humidifier_scene_on

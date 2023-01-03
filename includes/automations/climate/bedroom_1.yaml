@@ -29,66 +29,16 @@
             entity_id: scene.bedroom_1_fan_off
 
 - id: bedroom_1_humidifier
-  alias: Bedroom 1 Humidifier
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.bedroom_1_humidity
-      above: input_number.bedroom_1_humidity_high
-    - platform: numeric_state
-      entity_id: sensor.bedroom_1_humidity
-      below: input_number.bedroom_1_humidity_low
-    - platform: state
-      entity_id: sensor.bedroom_1_humidity
-      to: 'unavailable'
-      for:
-        minutes: 5
-    - platform: time_pattern
-      minutes: /5
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.bedroom_1_window
-              state: 'on'
-            - condition: state
-              entity_id: binary_sensor.quite_time
-              state: 'off'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_off
-        - conditions:
-            - condition: state
-              entity_id: sensor.bedroom_1_humidity
-              state: 'unavailable'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_off
-        - conditions:
-            - condition: time
-              after: input_datetime.post_quite_time_range_1
-              before: input_datetime.pre_quite_time_range_3
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_off
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_humidity
-              above: input_number.bedroom_1_humidity_high
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_off
-        - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_humidity
-              below: input_number.bedroom_1_humidity_low
-            - condition: time
-              after: input_datetime.pre_quite_time_range_3
-              before: input_datetime.post_quite_time_range_1
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_humidifier_on
+  alias: '[Humidifier Automation]: Bedroom 1'
+  use_blueprint:
+    path: humidifier_automation.yaml
+    input:
+      area: bedroom_1
+      humidifier: switch.bedroom_1_humidifier
+      humidity_sensor: sensor.bedroom_1_humidity
+      humidifier_scene_on: scene.bedroom_1_humidifier_on
+      humidifier_scene_off: scene.bedroom_1_humidifier_off
+      check_time_start: input_datetime.pre_quite_time_range_3
+      check_time_end: input_datetime.post_quite_time_range_1
+      run_if: binary_sensor.bedroom_1_window
+      run_if_state: 'off'
