@@ -1,0 +1,12 @@
+- id: den_humidifier
+  alias: '[Humidifier Automation]: Den'
+  use_blueprint:
+    path: humidifier_automation.yaml
+    input:
+      area: den
+      humidifier: switch.den_humidifier
+      humidity_sensor: sensor.den_humidity
+      humidifier_scene_on: scene.den_humidifier_on
+      humidifier_scene_off: scene.den_humidifier_off
+      run_if: binary_sensor.den_window
+      run_if_state: 'off'

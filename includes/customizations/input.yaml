@@ -173,6 +173,16 @@ input_number.bedroom_1_temperature_desired:
   icon: &icon_temperature mdi:thermometer
   unit_of_measurement: °F
 
+input_number.den_humidity_high:
+  friendly_name: Den Humidity High
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
+input_number.den_humidity_low:
+  friendly_name: Den Humidity Low
+  icon: *icon_humidity
+  unit_of_measurement: '%'
+
 input_number.indoor_garden_humidity_high:
   friendly_name: Indoor Garden Humidity High
   icon: *icon_humidity

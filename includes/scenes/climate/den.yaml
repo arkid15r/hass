@@ -1,0 +1,7 @@
+- name: Den Humidifier Off
+  entities:
+    switch.den_humidifier: 'off'
+
+- name: Den Humidifier On
+  entities:
+    switch.den_humidifier: 'on'
