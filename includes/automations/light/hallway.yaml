@@ -8,16 +8,11 @@
       run_if: binary_sensor.hallway_lights
       run_if_state: 'off'
       run_if_watcher_off: true
-      scene_1: scene.hallway_no_lights
-      scene_1_time_on: input_datetime.morning_lights_time_off
-      scene_1_time_off: input_datetime.night_lights_time_on
-      scene_2: scene.hallway_night_lights
-      scene_2_time_on: input_datetime.pre_quite_time_range_1
-      scene_2_time_off: input_datetime.quite_time_off
-      watcher:
-        - binary_sensor.stairway_motion_sensor_1_motion
-        - group.hallway_motion
-      watcher_inactive_time_seconds: 60
+      scene_1: scene.hallway_night_lights
+      scene_1_time_on: input_datetime.pre_quite_time_range_1
+      scene_1_time_off: input_datetime.quite_time_off
+      watcher: group.hallway_stairway_motion
+      watcher_inactive_time_seconds: 30
 
 - id: hallway_lights_on_door_state
   alias: '[Hallway Lights On Door State]'
@@ -29,8 +24,7 @@
       scene_1: scene.hallway_lights
       scene_1_time_on: input_datetime.morning_lights_time_off
       scene_1_time_off: input_datetime.night_lights_time_on
-      watcher:
-        - binary_sensor.front_door
+      watcher: binary_sensor.front_door
       watcher_inactive_time_seconds: 30
 
 - id: turn_off_idle_hallway_lights
