@@ -28,32 +28,6 @@
       watcher: group.bedroom_1_motion
       watcher_inactive_time_seconds: 90
 
-- id: bedroom_1_blackout_lights_auto_on_off
-  alias: '[Bedroom 1 Blackout Lights Auto On/Off]'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.mode_bedroom_1_blackout
-      from: ['off', 'on']
-      to: ['off', 'on']
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.mode_bedroom_1_blackout
-              state: 'off'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_no_lights
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.mode_bedroom_1_blackout_lights
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.bedroom_1_faded_lights
-
 - id: turn_off_idle_bedroom_1_lights
   alias: '[Turn Off Idle Bedroom 1 Lights]'
   use_blueprint:
