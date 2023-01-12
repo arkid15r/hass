@@ -17,7 +17,7 @@
       scene_3_time_on: input_datetime.post_quite_time_range_2
       scene_3_time_off: input_datetime.post_quite_time_range_3
       watcher: group.bathroom_1_motion
-      watcher_inactive_time_seconds: 210
+      watcher_inactive_time_seconds: 300
 
 - id: turn_off_idle_bathroom_1_lights
   alias: '[Bathroom 1 Turn Off Idle Lights]'
