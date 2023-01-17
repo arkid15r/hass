@@ -1,34 +1,39 @@
 - name: Bedroom 1 Faded Lights
   entities:
-    light.bedroom_1_1:
+    light.bedroom_1_1: &b1fl_state
       brightness: 55
       color_temp: 450
       state: 'on'
+    light.bedroom_1_2: *b1fl_state
 
 - name: Bedroom 1 Lights
   entities:
-    light.bedroom_1_1:
+    light.bedroom_1_1: &b1l_state
       brightness: 125
       color_temp: 450
       state: 'on'
+    light.bedroom_1_2: *b1l_state
 
 - name: Bedroom 1 Max Lights
   entities:
-    light.bedroom_1_1:
+    light.bedroom_1_1: &b1ml_state
       brightness: 255
       color_temp: 250
       state: 'on'
+    light.bedroom_1_2: *b1ml_state
 
 - name: Bedroom 1 Night Lights
   entities:
-    light.bedroom_1_1:
+    light.bedroom_1_1: &b1nl_state
       brightness: 40
       rgb_color: [255, 0, 0]
       state: 'on'
+    light.bedroom_1_2: *b1nl_state
 
 - name: Bedroom 1 No Lights
   entities:
     light.bedroom_1_1: 'off'
+    light.bedroom_1_2: 'off'
 
 - name: Bedroom 1 Vanity Table Off
   entities:

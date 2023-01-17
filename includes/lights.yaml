@@ -37,12 +37,14 @@
   unique_id: bedroom_1_light_group
   entities:
     - light.bedroom_1_1
+    - light.bedroom_1_2
 
 - name: Den Light Group
   platform: group
   unique_id: den_light_group
   entities:
     - light.den_1
+    - light.den_lamp_1
 
 - name: Front Yard Light Group
   platform: group

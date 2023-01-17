@@ -46,8 +46,9 @@
   use_blueprint:
     path: wake_up_lighting.yaml
     input:
-      light_entity: light.bedroom_1_1
-      start_time: input_datetime.wake_up_lighting_time_on
+      light_entity: light.bedroom_1_light_group
+      start_time: input_datetime.bedroom_1_wake_up_lighting_time_on
+      wake_up_lighting_flag_entity: input_boolean.mode_bedroom_1_wake_up_lighting
 
 - id: bedroom_1_lights_turn_off_on_tv_state
   alias: '[Bedroom 1 Light Turn Off On TV State]'
