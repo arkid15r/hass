@@ -10,7 +10,7 @@
     - name: Office 1 Monitor
       unique_id: office_1_monitor
       state: >
-        {{ states('sensor.office_1_monitor_input') | int > 25 }}
+        {{ states('sensor.office_1_monitor_input') | int > 10 }}
 
     - name: Office 1 PC
       unique_id: office_1_pc
