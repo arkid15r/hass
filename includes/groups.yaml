@@ -59,6 +59,12 @@ hallway_motion:
   entities:
     - binary_sensor.hallway_motion_sensor_1_motion
 
+hallway_stairway_motion:
+  name: Hallway + Stairway Motion Group
+  entities:
+    - binary_sensor.hallway_motion_sensor_1_motion
+    - binary_sensor.stairway_motion_sensor_1_motion
+
 kitchen_motion:
   name: Kitchen Motion Group
   entities:
