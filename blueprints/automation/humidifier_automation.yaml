@@ -136,9 +136,29 @@ condition:
 action:
   - choose:
       - conditions:
+          - condition: state
+            entity_id: !input humidifier
+            state: 'on'
           - condition: template
             value_template: >
-              {{ humidity == 'unavailable' or
+              {%- macro is_in_range(value, time_from, time_to) %}
+                {%- if time_from < time_to and time_from <= value < time_to -%}
+                  on
+                {%- elif time_from >= time_to and
+                      (value >= time_from or value < time_to) -%}
+                  on
+                {%- else -%}
+                  off
+                {%- endif -%}
+              {%- endmacro -%}
+
+              {{ (check_time_start != none and
+                  check_time_end != none and
+                  is_in_range(
+                    now().strftime('%H:%M:%S'),
+                    states(check_time_start),
+                    states(check_time_end)) == 'off') or
+                 humidity == 'unavailable' or
                  humidity >= humidity_high
               }}
         sequence:
@@ -146,6 +166,9 @@ action:
             target:
               entity_id: !input humidifier_scene_off
       - conditions:
+          - condition: state
+            entity_id: !input humidifier
+            state: 'off'
           - condition: template
             value_template: >
               {%- macro is_in_range(value, time_from, time_to) %}
@@ -165,7 +188,7 @@ action:
                     now().strftime('%H:%M:%S'),
                     states(check_time_start),
                     states(check_time_end)) == 'on') and
-                  humidity < humidity_low
+                 humidity < humidity_low
               }}
         sequence:
           - service: scene.turn_on
