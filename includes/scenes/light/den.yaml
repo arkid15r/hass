@@ -6,6 +6,17 @@
       rgb_color: [255, 165, 85]
       state: 'on'
 
+- name: Den Lamp 1 Off
+  entities:
+    light.den_lamp_1: 'off'
+
+- name: Den Lamp 1 On
+  entities:
+    light.den_lamp_1:
+      brightness: 254
+      color_temp: 370
+      state: 'on'
+
 - name: Den Lights
   entities:
     light.den_1: &dl_state

@@ -1,7 +1,9 @@
 indoor_garden_enabled:
 mode_bar:
 mode_bathroom_2_lights:
+mode_bedroom_1_wake_up_lighting:
 mode_belle:
+mode_den_wake_up_lighting:
 mode_dining_area_lights:
 mode_gym:
 mode_kitchen_tv:
@@ -10,6 +12,5 @@ mode_office_1_dnd:
 mode_office_2_lights:
 mode_red:
 mode_spa:
-mode_wake_up_lighting:
 play_tts_messages:
 wake_up_lighting_enabled:

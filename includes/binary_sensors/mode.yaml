@@ -32,10 +32,17 @@
   platform: group
   unique_id: bedroom_1_mode_lock_group
   entities:
+    - binary_sensor.mode_bedroom_1_wake_up_lighting
     - binary_sensor.mode_belle
     - binary_sensor.mode_nap
     - binary_sensor.mode_red
-    - binary_sensor.mode_wake_up_lighting
+
+- name: Den Mode Lock
+  platform: group
+  unique_id: den_mode_lock
+  entities:
+    - binary_sensor.den_tv
+    - binary_sensor.mode_den_wake_up_lighting
 
 - name: Dining Area Lights Mode
   unique_id: dining_area_lights_mode

@@ -42,10 +42,20 @@
             is_state('binary_sensor.mode_bedroom_1_blackout', 'on')
         }}
 
+    - name: Mode Bedroom 1 Wake Up Lighting
+      unique_id: mode_bedroom_1_wake_up_lighting
+      state: >
+        {{ is_state('input_boolean.mode_bedroom_1_wake_up_lighting', 'on') }}
+
     - name: Mode Belle
       unique_id: mode_belle
       state: >
         {{ is_state('input_boolean.mode_belle', 'on') }}
+
+    - name: Mode Den Wake Up Lighting
+      unique_id: mode_den_wake_up_lighting
+      state: >
+        {{ is_state('input_boolean.mode_den_wake_up_lighting', 'on') }}
 
     - name: Mode Dining Area Lights
       unique_id: mode_dining_area_lights
@@ -88,8 +98,3 @@
       unique_id: mode_spa
       state: >
         {{ is_state('input_boolean.mode_spa', 'on') }}
-
-    - name: Mode Wake Up Lighting
-      unique_id: mode_wake_up_lighting
-      state: >
-        {{ is_state('input_boolean.mode_wake_up_lighting', 'on') }}

@@ -1,3 +1,31 @@
+- id: den_lamp_1
+  alias: '[Den Lamp 1]'
+  use_blueprint:
+    path: scene_automation.yaml
+    input:
+      default_scene_off: scene.den_lamp_1_off
+      default_scene_on: scene.den_lamp_1_off
+      run_if: binary_sensor.den_mode_lock
+      run_if_state: 'off'
+      scene_1: scene.den_lamp_1_on
+      scene_1_time_on: input_datetime.night_lights_time_on
+      scene_2_time_off: input_datetime.quite_time_on
+      watcher: group.den_motion
+      watcher_inactive_time_seconds: 3600
+
+- id: turn_off_idle_den_lamp_1
+  alias: '[Turn Off Idle Den Lamp 1]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /1
+      run_if: binary_sensor.den_mode_lock
+      run_if_state: 'off'
+      scene: scene.den_lamp_1_off
+      target: light.den_lamp_1
+      watcher: group.den_motion
+      watcher_inactive_time_seconds: 3600
+
 - id: den_lights
   alias: '[Den Lights]'
   use_blueprint:
@@ -5,6 +33,8 @@
     input:
       default_scene_off: scene.den_no_lights
       default_scene_on: scene.den_no_lights
+      run_if: binary_sensor.den_mode_lock
+      run_if_state: 'off'
       scene_1: scene.den_lights
       scene_1_time_on: input_datetime.night_lights_time_on
       scene_1_time_off: input_datetime.pre_quite_time_range_2
@@ -20,7 +50,18 @@
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /1
+      run_if: binary_sensor.den_mode_lock
+      run_if_state: 'off'
       scene: scene.den_no_lights
       target: binary_sensor.den_lights
       watcher: group.den_motion
       watcher_inactive_time_seconds: 600
+
+- id: wake_up_lighting_den
+  alias: '[Wake Up Lighting]: Den'
+  use_blueprint:
+    path: wake_up_lighting.yaml
+    input:
+      light_entity: light.den_1
+      start_time: input_datetime.den_wake_up_lighting_time_on
+      wake_up_lighting_flag_entity: input_boolean.mode_den_wake_up_lighting

@@ -1,3 +1,11 @@
+input_boolean.bedroom_1_wake_up_lighting_enabled:
+  friendly_name: Bedroom 1 Wake Up Lighting Enabled
+  icon: mdi:alarm-snooze
+
+input_boolean.den_wake_up_lighting_enabled:
+  friendly_name: Den Wake Up Lighting Enabled
+  icon: mdi:alarm-snooze
+
 input_boolean.indoor_garden_enabled:
   friendly_name: Indoor Garden Enabled
   icon: mdi:sprout
@@ -6,9 +14,17 @@ input_boolean.mode_bar:
   friendly_name: Bar Mode
   icon: mdi:glass-cocktail
 
+input_boolean.mode_bedroom_1_wake_up_lighting:
+  friendly_name: Bedroom 1 Wake Up Lighting Mode
+  icon: mdi:lightbulb-on-outline
+
 input_boolean.mode_belle:
   friendly_name: Belle Mode
   icon: mdi:leaf
+
+input_boolean.mode_den_wake_up_lighting:
+  friendly_name: Den Wake Up Lighting Mode
+  icon: mdi:lightbulb-on-outline
 
 input_boolean.mode_gym:
   friendly_name: Gym Mode
@@ -22,17 +38,17 @@ input_boolean.mode_spa:
   friendly_name: Spa Mode
   icon: mdi:hot-tub
 
-input_boolean.mode_wake_up_lighting:
-  friendly_name: Wake Up Lighting Mode
-  icon: mdi:lightbulb-on-outline
-
 input_boolean.play_tts_messages:
   friendly_name: Play TTS Messages
   icon: mdi:bullhorn-outline
 
-input_boolean.wake_up_lighting_enabled:
-  friendly_name: Wake Up Lighting Enabled
-  icon: mdi:alarm-snooze
+input_datetime.bedroom_1_wake_up_lighting_time_on:
+  friendly_name: Bedroom 1 Wake Up Lighting Start Time
+  icon: mdi:alarm
+
+input_datetime.den_wake_up_lighting_time_on:
+  friendly_name: Den Wake Up Lighting Start Time
+  icon: mdi:alarm
 
 input_datetime.dining_area_day_lights_time_off:
   friendly_name: Dining Area Day Lights Off
@@ -126,10 +142,6 @@ input_datetime.quite_time_on:
   friendly_name: Quite Time On
   icon: mdi:alarm-light-outline
 
-input_datetime.wake_up_lighting_time_on:
-  friendly_name: Wake Up Lighting Start Time
-  icon: mdi:alarm
-
 input_datetime.winter_holidays_season_end_date:
   friendly_name: Winter Holidays Season End Date
   icon: *calendar-end
@@ -158,6 +170,11 @@ input_number.bedroom_1_humidity_low:
   icon: *icon_humidity
   unit_of_measurement: '%'
 
+input_number.bedroom_1_temperature_desired:
+  friendly_name: Bedroom 1 Desired Temperature
+  icon: &icon_temperature mdi:thermometer
+  unit_of_measurement: °F
+
 input_number.bedroom_1_temperature_high:
   friendly_name: Bedroom 1 Temperature High
   icon: &icon_temperature_high mdi:thermometer-plus
@@ -166,11 +183,6 @@ input_number.bedroom_1_temperature_high:
 input_number.bedroom_1_temperature_low:
   friendly_name: Bedroom 1 Temperature Low
   icon: &icon_temperature_low mdi:thermometer-minus
-  unit_of_measurement: °F
-
-input_number.bedroom_1_temperature_desired:
-  friendly_name: Bedroom 1 Desired Temperature
-  icon: &icon_temperature mdi:thermometer
   unit_of_measurement: °F
 
 input_number.den_humidity_high:
@@ -182,6 +194,21 @@ input_number.den_humidity_low:
   friendly_name: Den Humidity Low
   icon: *icon_humidity
   unit_of_measurement: '%'
+
+input_number.den_temperature_desired:
+  friendly_name: Den Desired Temperature
+  icon: *icon_temperature
+  unit_of_measurement: °F
+
+input_number.den_temperature_high:
+  friendly_name: Den Temperature High
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
+
+input_number.den_temperature_low:
+  friendly_name: Den Temperature Low
+  icon: *icon_temperature_low
+  unit_of_measurement: °F
 
 input_number.indoor_garden_humidity_high:
   friendly_name: Indoor Garden Humidity High
@@ -203,6 +230,11 @@ input_number.office_1_humidity_low:
   icon: *icon_humidity
   unit_of_measurement: '%'
 
+input_number.office_1_temperature_desired:
+  friendly_name: Office 1 Desired Temperature
+  icon: *icon_temperature
+  unit_of_measurement: °F
+
 input_number.office_1_temperature_high:
   friendly_name: Office 1 Temperature High
   icon: *icon_temperature_high
@@ -211,11 +243,6 @@ input_number.office_1_temperature_high:
 input_number.office_1_temperature_low:
   friendly_name: Office 1 Temperature Low
   icon: *icon_temperature_low
-  unit_of_measurement: °F
-
-input_number.office_1_temperature_desired:
-  friendly_name: Office 1 Desired Temperature
-  icon: *icon_temperature
   unit_of_measurement: °F
 
 input_number.office_2_humidity_high:
@@ -228,6 +255,11 @@ input_number.office_2_humidity_low:
   icon: *icon_humidity
   unit_of_measurement: '%'
 
+input_number.office_2_temperature_desired:
+  friendly_name: Office 2 Desired Temperature
+  icon: *icon_temperature
+  unit_of_measurement: °F
+
 input_number.office_2_temperature_high:
   friendly_name: Office 2 Temperature High
   icon: *icon_temperature_high
@@ -236,11 +268,6 @@ input_number.office_2_temperature_high:
 input_number.office_2_temperature_low:
   friendly_name: Office 2 Temperature Low
   icon: *icon_temperature_low
-  unit_of_measurement: °F
-
-input_number.office_2_temperature_desired:
-  friendly_name: Office 2 Desired Temperature
-  icon: *icon_temperature
   unit_of_measurement: °F
 
 input_number.scene_reload_delay:

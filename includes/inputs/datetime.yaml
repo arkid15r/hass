@@ -1,3 +1,11 @@
+bedroom_1_wake_up_lighting_time_on:
+  has_date: false
+  has_time: true
+
+den_wake_up_lighting_time_on:
+  has_date: false
+  has_time: true
+
 dining_area_day_lights_time_off:
   has_date: false
   has_time: true
@@ -91,10 +99,6 @@ quite_time_off:
   has_time: true
 
 quite_time_on:
-  has_date: false
-  has_time: true
-
-wake_up_lighting_time_on:
   has_date: false
   has_time: true
 
