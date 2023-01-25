@@ -18,6 +18,11 @@ bedroom_1_humidity_low:
   min: 25
   mode: box
 
+bedroom_1_temperature_desired:
+  max: 80
+  min: 50
+  mode: box
+
 bedroom_1_temperature_high:
   max: 90
   min: 60
@@ -28,7 +33,27 @@ bedroom_1_temperature_low:
   min: 50
   mode: box
 
-bedroom_1_temperature_desired:
+den_humidity_high:
+  max: 75
+  min: 25
+  mode: box
+
+den_humidity_low:
+  max: 75
+  min: 25
+  mode: box
+
+den_temperature_desired:
+  max: 80
+  min: 50
+  mode: box
+
+den_temperature_high:
+  max: 90
+  min: 60
+  mode: box
+
+den_temperature_low:
   max: 80
   min: 50
   mode: box
