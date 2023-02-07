@@ -1,6 +1,6 @@
 # Scene Automation Blueprint.
 #
-# Author: Ark (ark@cho.red)
+# Author: Arkadii Yakovets (ark@cho.red)
 
 blueprint:
   name: '[Automate]: '
@@ -30,8 +30,8 @@ blueprint:
       - **Reload Scene Again After a Custom Delay (*default*: `true`): if true the blueprint loads a scene again after a custom delay to make sure it's applied correctly.
       - **Run If** (*optional*): an entity to check for `Run If State` match.
       - **Run If State** (*optional*): a state in which the `Run If` entity should be in order to run the automation.
-      - **Run If Watcher Off** (*optional*): treat Run If condition as `True` when `Watcher` goes to `off` state.
-      - **Run If Watcher On** (*optional*): treat Run If condition as `True` when `Watcher` goes to `on` state.
+      - **Run On Watcher Off** (*optional*): treat Run If condition as `True` when `Watcher` goes to `off` state.
+      - **Run On Watcher On** (*optional*): treat Run If condition as `True` when `Watcher` goes to `on` state.
 
   source_url: https://raw.githubusercontent.com/arkid15r/home-assistant-config/main/blueprints/automation/scene_automation.yaml
 
@@ -189,14 +189,14 @@ blueprint:
       selector:
         text:
 
-    run_if_watcher_off:
+    run_on_watcher_off:
       name: Evaluate Run If Condition To `True` When Trigger State (optional)
       description: Goes to "Off"
       default: false
       selector:
         boolean:
 
-    run_if_watcher_on:
+    run_on_watcher_on:
       name: Evaluate Run If Condition To `True` When Trigger State (optional)
       description: Goes to "On"
       default: false
@@ -209,8 +209,8 @@ variables:
     {{ states('input_number.scene_reload_delay') | float }}
   run_if: !input run_if
   run_if_state: !input run_if_state
-  run_if_watcher_off: !input run_if_watcher_off
-  run_if_watcher_on: !input run_if_watcher_on
+  run_on_watcher_off: !input run_on_watcher_off
+  run_on_watcher_on: !input run_on_watcher_on
   scene_1: !input scene_1
   scene_2: !input scene_2
   scene_3: !input scene_3
@@ -241,7 +241,7 @@ action:
           - condition: or
             conditions:
               - '{{ run_if == none or run_if_state == none }}'
-              - '{{ run_if_watcher_off == true }}'
+              - '{{ run_on_watcher_off == true }}'
               - '{{ states[run_if].state == run_if_state }}'
               - '{{ states[run_if].state == "unknown" }}'
         sequence:
@@ -266,7 +266,7 @@ action:
           - condition: or
             conditions:
               - '{{ run_if == none or run_if_state == none }}'
-              - '{{ run_if_watcher_on == true }}'
+              - '{{ run_on_watcher_on == true }}'
               - '{{ states[run_if].state == run_if_state }}'
               - '{{ states[run_if].state == "unknown" }}'
         sequence:
