@@ -5,9 +5,6 @@
     input:
       default_scene_on: scene.hallway_faded_lights
       default_scene_off: scene.hallway_no_lights
-      run_if: binary_sensor.hallway_lights
-      run_if_state: 'off'
-      run_if_watcher_off: true
       scene_1: scene.hallway_night_lights
       scene_1_time_on: input_datetime.pre_quite_time_range_1
       scene_1_time_off: input_datetime.quite_time_off
