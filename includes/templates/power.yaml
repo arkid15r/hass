@@ -4,13 +4,13 @@
       state: >
         {{ is_state('switch.indoor_garden', 'on') and
            states('sensor.indoor_garden_illuminance') | int > 500 and
-           states('sensor.indoor_garden_input') | int > 1
+           states('sensor.indoor_garden_power') | int > 1
         }}
 
     - name: Office 1 Monitor
       unique_id: office_1_monitor
       state: >
-        {{ states('sensor.office_1_monitor_input') | int > 10 }}
+        {{ states('sensor.office_1_monitor_power') | int > 10 }}
 
     - name: Office 1 PC
       unique_id: office_1_pc
@@ -25,4 +25,4 @@
     - name: Office 2 PC
       unique_id: office_2_pc
       state: >
-        {{ states('sensor.office_2_pc_input') | int > 5 }}
+        {{ states('sensor.office_2_pc_power') | int > 5 }}

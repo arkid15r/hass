@@ -12,4 +12,4 @@
     - name: Great Room TV
       unique_id: great_room_tv
       state: >
-        {{ states('sensor.great_room_tv_input') | int > 1 }}
+        {{ states('sensor.great_room_tv_power') | int > 1 }}
