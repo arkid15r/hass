@@ -81,6 +81,7 @@ tts:
     office_1:
       conditions:
         - binary_sensor.office_1_lights
+        - binary_sensor.office_1_monitor
         - binary_sensor.office_1_motion_5m
       target: media_player.office_1_echo
     office_2:
