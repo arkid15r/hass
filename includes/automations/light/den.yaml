@@ -44,6 +44,18 @@
       watcher: group.den_motion
       watcher_inactive_time_seconds: 300
 
+- id: den_lights_turn_off_on_tv_state
+  alias: '[Den Lights Turn Off On TV State]'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.den_tv
+      from: 'off'
+      to: 'on'
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.den_no_lights
+
 - id: turn_off_idle_den_lights
   alias: '[Turn Off Idle Den Lights]'
   use_blueprint:
