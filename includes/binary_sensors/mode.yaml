@@ -58,12 +58,13 @@
   entities:
     - binary_sensor.mode_dining_area_lights
 
-- name: Great Room New Year Lights Mode
-  unique_id: great_room_new_year_lights_mode
+- name: Great Room New Year Lights Mode Group
+  unique_id: great_room_new_year_lights_mode_group
   platform: group
   entities:
     - binary_sensor.dining_area_lights
     - binary_sensor.dining_area_motion
+    - binary_sensor.great_room_tv
     - binary_sensor.hallway_motion
     - binary_sensor.kitchen_lights
     - binary_sensor.kitchen_motion
