@@ -29,20 +29,3 @@
       event_data:
         duration: 15
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>The outside temperature is quite high today. I suggest closing the bedroom curtains right now.
-
-- id: tts_bedroom_1_humidifier_refill_reminder
-  alias: 'TTS: Bedroom 1 Humidifier Refill Reminder'
-  trigger:
-    - platform: time
-      at: input_datetime.pre_quite_time_range_1
-  condition:
-    - condition: state
-      entity_id: input_boolean.play_tts_messages
-      state: 'on'
-  action:
-    - event: tts
-      event_data:
-        areas_on:
-          - bedroom_1
-        duration: 15
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that the bedroom humidifier needs to be refilled on a daily basis. Thank you!
