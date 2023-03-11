@@ -1,5 +1,5 @@
-- id: tts_humidifiers_refill_reminder
-  alias: 'TTS: Humidifiers Refill Reminder'
+- id: tts_humidifier_refill_reminder
+  alias: 'TTS: Humidifier Refill Reminder'
   trigger:
     - platform: time
       at: input_datetime.pre_quite_time_range_1
@@ -14,4 +14,4 @@
           - bedroom_1
           - den
         duration: 15
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that the bedroom humidifiers need to be refilled on a daily basis. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that the bedroom humidifier need to be refilled on a daily basis. Thank you!
