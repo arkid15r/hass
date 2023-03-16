@@ -1,6 +1,6 @@
 # Idle Target Turn Off Automation Blueprint.
 #
-# Author: Ark (ark@cho.red)
+# Author: Arkadii Yakovets (ark@cho.red)
 
 blueprint:
   name: '[Turn Off Idle]: '
@@ -109,8 +109,13 @@ condition:
     conditions:
       - '{{ watcher == none }}'
       - >
-        {{ as_timestamp(now()) - as_timestamp(states[watcher].last_changed) >=
-            watcher_inactive_time_seconds | float
+        {% set last_updated_at = expand(watcher) |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ as_timestamp(now()) - as_timestamp(last_updated_at) >=
+            (watcher_inactive_time_seconds | float)
         }}
 
   - condition: state
