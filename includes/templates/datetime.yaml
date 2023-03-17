@@ -74,12 +74,12 @@
       unique_id: morning_lights_time_off
       state: >
         {{ (as_timestamp(state_attr('sun.sun', 'next_rising')) |
-              int + 30 * 45) | timestamp_custom('%H:%M')
+              int + 60 * 30) | timestamp_custom('%H:%M')
         }}
 
     - name: Night Lights Time On
       unique_id: night_lights_time_on
       state: >
         {{ (as_timestamp(state_attr('sun.sun', 'next_setting')) |
-              int - 60 * 45) | timestamp_custom('%H:%M')
+              int - 60 * 15) | timestamp_custom('%H:%M')
         }}
