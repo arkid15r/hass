@@ -21,11 +21,11 @@ tts:
     bathroom_1:
       conditions:
         - binary_sensor.bathroom_1_lights
-        - binary_sensor.bathroom_1_motion_5m
+        - binary_sensor.bathroom_1_motion_15m
       if_not:
         conditions:
           - binary_sensor.bathroom_1_door
-        target: media_player.bedroom_1_echo
+          - binary_sensor.mode_nap
       target: media_player.bathroom_1_echo
     bathroom_2:
       conditions:
