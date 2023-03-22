@@ -8,7 +8,7 @@
       for:
         minutes: 1
     - platform: time_pattern
-      minutes: /1
+      minutes: /5
   condition:
     - condition: not
       conditions:
@@ -129,7 +129,7 @@
       for:
         minutes: 1
     - platform: time_pattern
-      minutes: /1
+      minutes: /5
   condition:
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
