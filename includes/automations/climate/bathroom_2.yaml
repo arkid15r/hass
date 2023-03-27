@@ -26,7 +26,7 @@
       check_frequency_minutes: /5
       scene: scene.bathroom_2_fan_off
       target: fan.bathroom_2
-      target_active_time_seconds: 1200
+      target_active_time_seconds: 600
       watcher: fan.bathroom_2
 
 - id: turn_on_bathroom_2_fan
