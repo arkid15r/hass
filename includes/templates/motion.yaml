@@ -12,16 +12,22 @@
     - name: Bathroom 1 Motion 15m
       unique_id: bathroom_1_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_1_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.bathroom_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Bathroom 1 Motion 5m
       unique_id: bathroom_1_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_1_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.bathroom_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Bathroom 2 Motion
       unique_id: bathroom_2_motion
@@ -31,16 +37,22 @@
     - name: Bathroom 2 Motion 15m
       unique_id: bathroom_2_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_2_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.bathroom_2_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Bathroom 2 Motion 5m
       unique_id: bathroom_2_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_2_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.bathroom_2_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Bathroom 3 Motion
       unique_id: bathroom_3_motion
@@ -50,16 +62,22 @@
     - name: Bathroom 3 Motion 15m
       unique_id: bathroom_3_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_3_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.bathroom_3_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Bathroom 3 Motion 5m
       unique_id: bathroom_3_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bathroom_3_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.bathroom_3_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Bedroom 1 Motion
       unique_id: bedroom_1_motion
@@ -69,16 +87,22 @@
     - name: Bedroom 1 Motion 15m
       unique_id: bedroom_1_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bedroom_1_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.bedroom_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Bedroom 1 Motion 5m
       unique_id: bedroom_1_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.bedroom_1_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.bedroom_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Den Motion
       unique_id: den_motion
@@ -88,16 +112,22 @@
     - name: Den Motion 15m
       unique_id: den_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.den_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.den_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Den Motion 5m
       unique_id: den_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.den_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.den_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Dining Area Motion
       unique_id: dining_area_motion
@@ -107,16 +137,22 @@
     - name: Dining Area Motion 15m
       unique_id: dining_area_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.dining_area_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.dining_area_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Dining Area Motion 5m
       unique_id: dining_area_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.dining_area_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.dining_area_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Front Yard Motion
       unique_id: front_yard_motion
@@ -131,16 +167,22 @@
     - name: Garage Motion 15m
       unique_id: garage_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.garage_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.garage_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Garage Motion 5m
       unique_id: garage_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.garage_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.garage_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Great Room Motion
       unique_id: great_room_motion
@@ -150,16 +192,22 @@
     - name: Great Room Motion 15m
       unique_id: great_room_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.great_room_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.great_room_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Great Room Motion 5m
       unique_id: great_room_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.great_room_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.great_room_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Hallway Motion
       unique_id: hallway_motion
@@ -169,16 +217,22 @@
     - name: Hallway Motion 15m
       unique_id: hallway_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.hallway_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.hallway_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Hallway Motion 5m
       unique_id: hallway_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.hallway_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.hallway_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Kitchen Motion
       unique_id: kitchen_motion
@@ -188,16 +242,22 @@
     - name: Kitchen Motion 15m
       unique_id: kitchen_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.kitchen_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.kitchen_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Kitchen Motion 5m
       unique_id: kitchen_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.kitchen_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.kitchen_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Laundry Room Motion
       unique_id: laundry_room_motion
@@ -207,16 +267,22 @@
     - name: Laundry Room Motion 15m
       unique_id: laundry_room_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.laundry_room_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.laundry_room_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Laundry Room Motion 5m
       unique_id: laundry_room_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.laundry_room_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.laundry_room_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Office 1 Motion
       unique_id: office_1_motion
@@ -226,16 +292,22 @@
     - name: Office 1 Motion 15m
       unique_id: office_1_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.office_1_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.office_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Office 1 Motion 5m
       unique_id: office_1_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.office_1_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.office_1_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Office 2 Motion
       unique_id: office_2_motion
@@ -245,16 +317,22 @@
     - name: Office 2 Motion 15m
       unique_id: office_2_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.office_2_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.office_2_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Office 2 Motion 5m
       unique_id: office_2_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.office_2_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.office_2_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Stairway Motion
       unique_id: stairway_motion
@@ -264,16 +342,22 @@
     - name: Stairway Motion 15m
       unique_id: stairway_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.stairway_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.stairway_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Stairway Motion 5m
       unique_id: stairway_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.stairway_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.stairway_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
 
     - name: Wardrobe Motion
       unique_id: wardrobe_motion
@@ -283,13 +367,19 @@
     - name: Wardrobe Motion 15m
       unique_id: wardrobe_motion_15m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.wardrobe_motion.last_changed) < 900
-        }}
+        {% set last_updated_at = expand("group.wardrobe_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 900 }}
 
     - name: Wardrobe Motion 5m
       unique_id: wardrobe_motion_5m
       state: >
-        {{ as_timestamp(now()) - as_timestamp(
-            states.group.wardrobe_motion.last_changed) < 300
-        }}
+        {% set last_updated_at = expand("group.wardrobe_motion") |
+              map('attr', 'last_updated') |
+              list |
+              max
+        %}
+        {{ (as_timestamp(now()) - as_timestamp(last_updated_at)) | int < 300 }}
