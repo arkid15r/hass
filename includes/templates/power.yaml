@@ -21,8 +21,3 @@
       unique_id: office_1_workspace
       state: >
         {{ is_state('binary_sensor.office_1_pc', 'on') }}
-
-    - name: Office 2 PC
-      unique_id: office_2_pc
-      state: >
-        {{ states('sensor.office_2_pc_power') | int > 5 }}
