@@ -14,4 +14,4 @@
           - bedroom_1
           - den
         duration: 15
-        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder that the bedroom humidifier need to be refilled on a daily basis. Thank you!
+        text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a friendly reminder to refill your humidifier if needed. Thank you!
