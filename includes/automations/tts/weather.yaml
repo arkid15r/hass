@@ -25,7 +25,7 @@
         - conditions:
             - condition: numeric_state
               entity_id: sensor.outdoor_temperature
-              above: input_number.weather_high_temperature
+              above: input_number.weather_extreme_temperature
           sequence:
             - event: tts
               event_data:
@@ -56,53 +56,6 @@
       event_data:
         duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. A porch cooling station would be very appreciated by postal workers. Thank you!
-
-- id: tts_start_airing_reminder
-  alias: 'TTS: Start Airing Reminder'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.thermal_perimeter
-      from: ['off', 'on']
-      to: ['off', 'on']
-    - platform: time_pattern
-      minutes: /10
-  condition:
-    - condition: state
-      entity_id: sensor.air_pollution_level
-      state: ['good', 'moderate']
-    - condition: or
-      conditions:
-        - condition: time
-          after: '08:00:00'
-          before: '11:00:00'
-        - condition: time
-          after: '18:00:00'
-          before: '21:00:00'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.airing_floor_1
-          state: 'off'
-        - condition: state
-          entity_id: binary_sensor.airing_floor_2
-          state: 'off'
-    - condition: numeric_state
-      entity_id: sensor.indoor_temperature
-      above: 75
-    - condition: numeric_state
-      entity_id: sensor.outdoor_temperature
-      above: 75
-    - condition: state
-      entity_id: binary_sensor.hvac_is_cooling
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.indoor_temperature_3_degree_higher
-      state: 'on'
-  action:
-    - event: tts
-      event_data:
-        duration: 10
-        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is lower at the moment. I suggest opening windows and doors right now.
 
 - id: tts_state_air_quality_changed
   alias: 'TTS State: Air Quality Changed'
@@ -166,46 +119,6 @@
       event_data:
         text: >
           <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The weather changed to {{ states('sensor.weather_state') }}. {{ states('sensor.weather_state_details') }}. Sincerely yours, <phoneme alphabet="ipa" ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
-
-- id: tts_stop_airing_reminder
-  alias: 'TTS: Stop Airing Reminder'
-  trigger:
-    - platform: time_pattern
-      minutes: /10
-  condition:
-    - condition: numeric_state
-      entity_id: sensor.indoor_temperature
-      above: 82
-    - condition: numeric_state
-      entity_id: sensor.outdoor_temperature
-      above: 82
-    - condition: state
-      entity_id: binary_sensor.thermal_perimeter
-      state: 'on'
-      for: 00:15:00
-    - condition: time
-      after: '08:00:00'
-      before: '18:00:00'
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.indoor_temperature_higher
-              state: 'off'
-          sequence:
-            - event: tts
-              event_data:
-                duration: 15
-                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside seems to be higher than inside. I suggest closing   {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} right now.
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.indoor_temperature_3_degree_higher
-              state: 'off'
-          sequence:
-            - event: tts
-              event_data:
-                duration: 15
-                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is going to be higher soon. I suggest closing       {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} right now.
 
 - id: tts_weather_forecast
   alias: 'TTS: Weather Forecast'

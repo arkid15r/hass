@@ -185,6 +185,16 @@ input_number.bedroom_1_temperature_low:
   icon: &icon_temperature_low mdi:thermometer-minus
   unit_of_measurement: °F
 
+input_number.climate_desired_temperature_high:
+  friendly_name: Desired Temperature High
+  icon: *icon_temperature_high
+  unit_of_measurement: °F
+
+input_number.climate_desired_temperature_low:
+  friendly_name: Desired Temperature Low
+  icon: *icon_temperature_low
+  unit_of_measurement: °F
+
 input_number.den_humidity_high:
   friendly_name: Den Humidity High
   icon: *icon_humidity
@@ -276,11 +286,6 @@ input_number.scene_reload_delay:
 
 input_number.weather_extreme_temperature:
   friendly_name: Extreme Temperature Threshold
-  icon: *icon_temperature_high
-  unit_of_measurement: °F
-
-input_number.weather_high_temperature:
-  friendly_name: High Temperature Threshold
   icon: *icon_temperature_high
   unit_of_measurement: °F
 

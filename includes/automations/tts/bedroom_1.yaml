@@ -6,10 +6,10 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
-      above: input_number.weather_high_temperature
+      above: input_number.climate_desired_temperature_high
     - condition: numeric_state
       entity_id: sensor.outdoor_temperature
-      above: input_number.weather_high_temperature
+      above: input_number.climate_desired_temperature_high
     - condition: numeric_state
       entity_id: sensor.temperature_forecast
       above: input_number.weather_extreme_temperature
