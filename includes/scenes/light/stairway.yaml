@@ -26,3 +26,4 @@
 - name: Stairway No Lights
   entities:
     light.stairway_1: 'off'
+    light.stairway_2: 'off'

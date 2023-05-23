@@ -20,6 +20,8 @@
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
+      run_if: binary_sensor.office_1_mode_lock
+      run_if_state: 'off'
       scene: scene.stairway_no_lights
       target: light.stairway_2
       watcher: group.stairway_motion

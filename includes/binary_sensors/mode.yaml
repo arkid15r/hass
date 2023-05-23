@@ -99,6 +99,12 @@
   entities:
     - binary_sensor.mode_bar
 
+- name: Office 1 Mode Lock
+  platform: group
+  unique_id: office_1_mode_lock
+  entities:
+    - binary_sensor.mode_office_1_dnd
+
 - name: Office 2 Mode Lock
   platform: group
   unique_id: office_2_mode_lock
