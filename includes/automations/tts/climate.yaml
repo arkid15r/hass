@@ -54,6 +54,12 @@
     - condition: state
       entity_id: binary_sensor.hvac_is_cooling
       state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.outdoor_temperature
+      below: sensor.indoor_temperature
+    - condition: numeric_state
+      entity_id: sensor.outdoor_temperature
+      below: input_number.climate_desired_temperature_high
     - condition: state
       entity_id: binary_sensor.indoor_temperature_3_degree_higher
       state: 'on'
