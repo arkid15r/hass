@@ -3,8 +3,8 @@
       unique_id: indoor_garden
       state: >
         {{ is_state('switch.indoor_garden', 'on') and
-           states('sensor.indoor_garden_illuminance') | int > 500 and
-           states('sensor.indoor_garden_power') | int > 1
+            states('sensor.indoor_garden_illuminance') | int > 500 and
+            states('sensor.indoor_garden_power') | int > 1
         }}
 
     - name: Office 1 Monitor
@@ -20,4 +20,23 @@
     - name: Office 1 Workspace
       unique_id: office_1_workspace
       state: >
-        {{ is_state('binary_sensor.office_1_pc', 'on') }}
+        {{ is_state('binary_sensor.office_1_pc', 'on') or
+            is_state('binary_sensor.office_1_monitor', 'on')
+        }}
+
+    - name: Office 2 PC
+      unique_id: office_2_pc
+      state: >
+        {{ is_state('switch.office_2_pc', 'on') }}
+
+    - name: Office 2 Monitor
+      unique_id: office_2_monitor
+      state: >
+        {{ states('sensor.office_2_pc_power') | int > 10 }}
+
+    - name: Office 2 Workspace
+      unique_id: office_2_workspace
+      state: >
+        {{ is_state('binary_sensor.office_2_pc', 'on') or
+            is_state('binary_sensor.office_2_monitor', 'on')
+        }}

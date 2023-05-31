@@ -1,0 +1,19 @@
+- binary_sensor:
+    - name: Office 1 Occupancy
+      unique_id: office_1_occupancy
+      icon: mdi:home
+      state: >
+        {{ is_state('binary_sensor.office_1_light', 'on') or
+            is_state('binary_sensor.office_1_motion_5m', 'on') or
+            is_state('binary_sensor.office_1_workspace', 'on')
+        }}
+
+- binary_sensor:
+    - name: Office 2 Occupancy
+      unique_id: office_2_occupancy
+      icon: mdi:home
+      state: >
+        {{ is_state('binary_sensor.office_2_light', 'on') or
+            is_state('binary_sensor.office_2_motion_5m', 'on') or
+            is_state('binary_sensor.office_2_workspace', 'on')
+        }}
