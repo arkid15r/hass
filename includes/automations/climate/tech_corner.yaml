@@ -13,8 +13,8 @@
     - choose:
         - conditions:
             - condition: numeric_state
-              entity_id: sensor.den_temperature
-              below: 80
+              entity_id: sensor.indoor_temperature
+              below: input_number.climate_desired_temperature_high
           sequence:
             - service: scene.turn_on
               target:
@@ -34,8 +34,8 @@
       minutes: /5
   condition:
     - condition: numeric_state
-      entity_id: sensor.den_temperature
-      above: 85
+      entity_id: sensor.indoor_temperature
+      above: input_number.climate_desired_temperature_high
     - condition: state
       entity_id: switch.tech_corner_fan
       state: 'off'
