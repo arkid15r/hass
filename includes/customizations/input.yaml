@@ -32,7 +32,15 @@ input_boolean.mode_gym:
 
 input_boolean.mode_office_1_dnd:
   friendly_name: Office 1 DND Mode
-  icon: mdi:alarm-light-outline
+  icon: mdi:cancel
+
+input_boolean.mode_office_1_lights:
+  friendly_name: Office 1 Lights Mode
+  icon: mdi:lightbulb-alert
+
+input_boolean.mode_office_2_lights:
+  friendly_name: Office 2 Lights Mode
+  icon: mdi:lightbulb-alert
 
 input_boolean.mode_spa:
   friendly_name: Spa Mode
