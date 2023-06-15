@@ -9,6 +9,9 @@
       above: input_number.climate_desired_temperature_high
     - condition: numeric_state
       entity_id: sensor.outdoor_temperature
+      above: sensor.indoor_temperature
+    - condition: numeric_state
+      entity_id: sensor.outdoor_temperature
       above: input_number.climate_desired_temperature_high
     - condition: numeric_state
       entity_id: sensor.temperature_forecast
