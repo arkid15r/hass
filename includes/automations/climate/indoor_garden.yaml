@@ -113,13 +113,13 @@
           sequence:
             - service: scene.turn_on
               target:
-                entity_id: scene.indoor_garden_humidifier_off
-            - service: scene.turn_on
-              target:
                 entity_id: scene.indoor_garden_off
             - service: scene.turn_on
               target:
                 entity_id: scene.indoor_garden_fan_off
+            - service: scene.turn_on
+              target:
+                entity_id: scene.indoor_garden_humidifier_off
             - delay:
                 minutes: 2
             - condition: not
