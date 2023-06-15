@@ -1,3 +1,11 @@
+- name: Den Fan Off
+  entities:
+    fan.den: 'off'
+
+- name: Den Fan On
+  entities:
+    fan.den: 'on'
+
 - name: Den Humidifier Off
   entities:
     switch.den_humidifier: 'off'

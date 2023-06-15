@@ -1,3 +1,49 @@
+- id: den_fan
+  alias: Den Fan
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.den_motion
+    - platform: state
+      entity_id: binary_sensor.den_occupancy
+    - platform: state
+      entity_id: sensor.den_temperature
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.den_temperature
+              below: input_number.den_temperature_desired
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.den_fan_off
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.den_occupancy
+              state: 'off'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.den_fan_off
+
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.outdoor_temperature
+              above: sensor.den_temperature
+            - condition: numeric_state
+              entity_id: sensor.den_temperature
+              above: input_number.den_temperature_desired
+            - condition: state
+              entity_id: binary_sensor.den_occupancy
+              state: 'on'
+            - condition: state
+              entity_id: binary_sensor.quite_time
+              state: 'off'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.den_fan_on
+
 - id: den_humidifier
   alias: '[Humidifier Automation]: Den'
   use_blueprint:
