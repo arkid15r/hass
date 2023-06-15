@@ -20,7 +20,7 @@
     - name: Office 1 Workspace
       unique_id: office_1_workspace
       state: >
-        {{ is_state('binary_sensor.office_1_pc', 'on') or
+        {{ is_state('binary_sensor.office_1_pc', 'on') and
             is_state('binary_sensor.office_1_monitor', 'on')
         }}
 
