@@ -4,21 +4,20 @@
     - platform: state
       entity_id: binary_sensor.office_2_motion
     - platform: state
-      entity_id: binary_sensor.office_2_motion_15m
+      entity_id: binary_sensor.office_2_occupancy
+    - platform: state
+      entity_id: sensor.office_2_temperature
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.office_2_temperature
-              below: input_number.office_2_temperature_desired
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_2_fan_off
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.office_2_motion_15m
-              state: 'off'
+            - condition: or
+              conditions:
+                - condition: numeric_state
+                  entity_id: sensor.office_2_temperature
+                  below: input_number.office_2_temperature_desired
+                - condition: state
+                  entity_id: binary_sensor.office_2_occupancy
+                  state: 'off'
           sequence:
             - service: scene.turn_on
               target:
@@ -26,17 +25,17 @@
 
         - conditions:
             - condition: numeric_state
-              entity_id: sensor.office_2_temperature
+              entity_id: sensor.outdoor_temperature
               above: input_number.office_2_temperature_desired
             - condition: numeric_state
-              entity_id: sensor.outdoor_temperature
-              above: sensor.office_2_temperature
+              entity_id: sensor.office_2_temperature
+              above: input_number.office_2_temperature_desired
             - condition: state
-              entity_id: binary_sensor.office_2_motion_15m
+              entity_id: binary_sensor.office_2_occupancy
               state: 'on'
-            - condition: state
-              entity_id: binary_sensor.quite_time
-              state: 'off'
+            - condition: time
+              after: input_datetime.quite_time_off
+              before: input_datetime.pre_quite_time_range_1
           sequence:
             - service: scene.turn_on
               target:
@@ -82,3 +81,17 @@
             - service: scene.turn_on
               target:
                 entity_id: scene.office_2_humidifier_on
+
+- id: turn_off_idle_office_2_fan
+  alias: '[Turn Off Idle Office 2 Fan]'
+  use_blueprint:
+    path: target_turn_off.yaml
+    input:
+      check_frequency_minutes: /5
+      run_if: binary_sensor.office_2_occupancy
+      run_if_state: 'off'
+      scene: scene.office_2_fan_off
+      target: fan.portable_1
+      target_active_time_seconds: 900
+      watcher: binary_sensor.office_2_motion
+      watcher_inactive_time_seconds: 300

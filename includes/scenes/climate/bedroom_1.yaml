@@ -13,8 +13,9 @@
 - name: Bedroom 1 Fan On
   entities:
     fan.portable_1:
+      angle: 90
       oscillating: true
-      percentage: 15
+      percentage: 25
       preset_mode: Nature
       state: 'on'
     number.portable_fan_1_oscillation_angle: '90'

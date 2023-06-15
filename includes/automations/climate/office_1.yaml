@@ -4,39 +4,38 @@
     - platform: state
       entity_id: binary_sensor.office_1_motion
     - platform: state
-      entity_id: binary_sensor.office_1_motion_15m
+      entity_id: binary_sensor.office_1_occupancy
+    - platform: state
+      entity_id: sensor.office_1_temperature
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.office_1_temperature
-              below: input_number.office_1_temperature_desired
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_1_fan_off
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.office_1_motion_15m
-              state: 'off'
+            - condition: or
+              conditions:
+                - condition: numeric_state
+                  entity_id: sensor.office_1_temperature
+                  below: input_number.office_1_temperature_desired
+                - condition: state
+                  entity_id: binary_sensor.office_1_occupancy
+                  state: 'off'
           sequence:
             - service: scene.turn_on
               target:
                 entity_id: scene.office_1_fan_off
 
         - conditions:
+            # - condition: numeric_state
+            #   entity_id: sensor.outdoor_temperature
+            #   above: input_number.office_1_temperature_desired
             - condition: numeric_state
               entity_id: sensor.office_1_temperature
               above: input_number.office_1_temperature_desired
-            - condition: numeric_state
-              entity_id: sensor.outdoor_temperature
-              above: sensor.office_1_temperature
             - condition: state
-              entity_id: binary_sensor.office_1_motion_15m
+              entity_id: binary_sensor.office_1_occupancy
               state: 'on'
-            - condition: state
-              entity_id: binary_sensor.quite_time
-              state: 'off'
+            - condition: time
+              after: input_datetime.quite_time_off
+              before: input_datetime.pre_quite_time_range_1
           sequence:
             - service: scene.turn_on
               target:
@@ -120,8 +119,10 @@
     path: target_turn_off.yaml
     input:
       check_frequency_minutes: /5
+      run_if: binary_sensor.office_1_occupancy
+      run_if_state: 'off'
       scene: scene.office_1_fan_off
-      target: switch.office_1_fan
+      target: fan.office_1
       target_active_time_seconds: 900
       watcher: binary_sensor.office_1_motion
       watcher_inactive_time_seconds: 300

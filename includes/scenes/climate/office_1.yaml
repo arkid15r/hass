@@ -5,6 +5,7 @@
 - name: Office 1 Fan On
   entities:
     fan.office_1:
+      angle: 90
       oscillating: true
       percentage: 50
       preset_mode: Nature
