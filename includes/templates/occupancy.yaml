@@ -1,4 +1,12 @@
 - binary_sensor:
+    - name: Den Occupancy
+      unique_id: den_occupancy
+      icon: mdi:home
+      state: >
+        {{ is_state('binary_sensor.den_light', 'on') or
+            is_state('binary_sensor.den_motion_15m', 'on')
+        }}
+
     - name: Office 1 Occupancy
       unique_id: office_1_occupancy
       icon: mdi:home
