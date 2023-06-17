@@ -141,9 +141,14 @@
     - choose:
         # Cool down if temperature is too high.
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_temperature
-              above: input_number.bedroom_1_temperature_high
+            - condition: or
+              conditions:
+                - condition: numeric_state
+                  entity_id: sensor.bedroom_1_temperature
+                  above: input_number.bedroom_1_temperature_high
+                - condition: numeric_state
+                  entity_id: sensor.den_temperature
+                  above: input_number.den_temperature_high
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
@@ -159,9 +164,14 @@
 
         # Heat up if temperature is too low.
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.bedroom_1_temperature
-              below: input_number.bedroom_1_temperature_low
+            - condition: or
+              conditions:
+                - condition: numeric_state
+                  entity_id: sensor.bedroom_1_temperature
+                  below: input_number.bedroom_1_temperature_low
+                - condition: numeric_state
+                  entity_id: sensor.den_temperature
+                  below: input_number.den_temperature_low
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
@@ -191,6 +201,9 @@
                   - condition: numeric_state
                     entity_id: sensor.bedroom_1_temperature
                     below: input_number.bedroom_1_temperature_desired
+                  - condition: numeric_state
+                    entity_id: sensor.den_temperature
+                    below: input_number.den_temperature_desired
               - condition: and
                 conditions:
                   - condition: template
@@ -199,6 +212,9 @@
                   - condition: numeric_state
                     entity_id: sensor.bedroom_1_temperature
                     above: input_number.bedroom_1_temperature_desired
+                  - condition: numeric_state
+                    entity_id: sensor.den_temperature
+                    above: input_number.den_temperature_desired
           sequence:
             - service: climate.set_hvac_mode
               data:

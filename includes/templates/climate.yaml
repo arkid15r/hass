@@ -30,25 +30,25 @@
            is_state('binary_sensor.hvac_is_heating', 'on')
         }}
 
-    - name: Indoor Temperature Higher
-      unique_id: indoor_temperature_higher
+    - name: Outdoor Temperature Higher
+      unique_id: outdoor_temperature_higher
       state: >
-        {{ states('sensor.indoor_temperature') | int >
-            states('sensor.outdoor_temperature') | int
+        {{ states('sensor.outdoor_temperature') | int >
+            states('sensor.indoor_temperature') | int
         }}
 
-    - name: Indoor Temperature 2 Degree Higher
-      unique_id: indoor_temperature_2_degree_higher
+    - name: Outdoor Temperature 1 Degree Lower
+      unique_id: outdoor_temperature_1_degree_lower
       state: >
-        {{ states('sensor.indoor_temperature') | int >
-            states('sensor.outdoor_temperature') | int + 2
+        {{ states('sensor.indoor_temperature') | int  -
+            states('sensor.outdoor_temperature') | int == 1
         }}
 
-    - name: Indoor Temperature 3 Degree Higher
-      unique_id: indoor_temperature_3_degree_higher
+    - name: Outdoor Temperature 3 Degrees Lower
+      unique_id: outdoor_temperature_3_degrees_lower
       state: >
-        {{ states('sensor.indoor_temperature') | int >
-            states('sensor.outdoor_temperature') | int + 3
+        {{ states('sensor.outdoor_temperature') | int  -
+            states('sensor.indoor_temperature') | int >= 3
         }}
 
   sensor:
