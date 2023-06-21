@@ -46,3 +46,30 @@
       check_time_end: input_datetime.post_quite_time_range_1
       run_if: binary_sensor.bedroom_1_window
       run_if_state: 'off'
+
+- id: bedroom_1_humidifier_on_window_state
+  alias: Bedroom1 1 Humidifier On Window State
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_1_window
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bedroom_1_window
+              state: 'on'
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_off
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.bedroom_1_window
+              state: 'off'
+            - condition: time
+              after: input_datetime.post_quite_time_range_3
+              before: input_datetime.pre_quite_time_range_3
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.bedroom_1_humidifier_on
