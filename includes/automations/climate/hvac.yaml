@@ -279,7 +279,7 @@
               state: 'off'
             - event: tts
               event_data:
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The climate control system is going to be turned off. Please close {{ state_attr('sensor.thermal_perimeter_breached', 'entities_summary') }} to turn it on again.
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>The climate control system is going to be turned off. Please close {{ state_attr('sensor.thermal_perimeter_breached', 'summary') }} to turn it on again.
 
 - id: hvac_special_mode_lock
   alias: HVAC Special Mode Lock

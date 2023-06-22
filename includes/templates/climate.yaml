@@ -47,11 +47,38 @@
     - name: Outdoor Temperature 3 Degrees Lower
       unique_id: outdoor_temperature_3_degrees_lower
       state: >
-        {{ states('sensor.outdoor_temperature') | int  -
-            states('sensor.indoor_temperature') | int >= 3
+        {{ states('sensor.indoor_temperature') | int  -
+            states('sensor.outdoor_temperature') | int >= 3
         }}
 
   sensor:
+    - name: Airing Ways
+      unique_id: airing_ways
+      state: >
+        {{ expand(
+              state_attr('binary_sensor.airing_floor_1', 'entity_id'),
+              state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
+            selectattr('state', 'eq', 'off') |
+            list |
+            count > 0
+        }}
+      attributes:
+        template: climate
+        closed: >
+          {% set entities = expand(
+                state_attr('binary_sensor.airing_floor_1', 'entity_id'),
+                state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
+              selectattr('state', 'eq', 'off') |
+              map(attribute='name') |
+              unique |
+              sort
+          %}
+          {{- entities[0] if entities | count <= 1 else
+              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
+          }}
+        open: >
+          {{ state_attr('sensor.thermal_perimeter_breached', 'summary')}}
+
     - name: HVAC Preset Mode
       unique_id: hvac_preset_mode
       state: >
@@ -83,29 +110,6 @@
         }}
       attributes:
         template: climate
-        areas: >
-          {{ expand(state_attr(
-              'binary_sensor.thermal_perimeter', 'entity_id')) |
-                  selectattr('state', 'eq', 'on') |
-                  map(attribute='entity_id') |
-                  map('area_name') |
-                  reject('eq', none) |
-                  unique |
-                  sort
-          }}
-        area_summary: >
-          {% set entities = expand(state_attr(
-              'binary_sensor.thermal_perimeter', 'entity_id')) |
-                  selectattr('state', 'eq', 'on') |
-                  map(attribute='entity_id') |
-                  map('area_name') |
-                  reject('eq', none) |
-                  unique |
-                  sort
-          %}
-          {{- entities[0] if entities | count <= 1 else
-              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
-          }}
         entities: >
           {{ expand(state_attr(
               'binary_sensor.thermal_perimeter', 'entity_id')) |
@@ -113,7 +117,7 @@
                   map(attribute='entity_id') |
                   sort
           }}
-        entities_summary: >
+        summary: >
           {% set entities = expand(
               state_attr('binary_sensor.thermal_perimeter', 'entity_id')) |
                   selectattr('state', 'eq', 'on') |

@@ -3,6 +3,7 @@
   platform: group
   unique_id: airing_floor_1
   entities:
+    - binary_sensor.den_window
     - binary_sensor.great_room_door
 
 - name: Airing Floor 2
