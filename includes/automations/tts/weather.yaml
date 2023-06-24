@@ -4,7 +4,7 @@
     - platform: time
       at:
         - '08:50:00'
-        - '13:50:00'
+        - '12:50:00'
   condition:
     - condition: state
       entity_id: binary_sensor.garden_season
@@ -19,18 +19,18 @@
               event_data:
                 areas_on:
                   - great_room
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the garden watering is starting in 10 minutes. Please make sure that all irrigation valves are in expected states. Thank you!
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the morning garden watering is starting soon. Please make sure that all irrigation valves are in an expected state. Thank you!
 
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.outdoor_temperature
-              above: input_number.weather_extreme_temperature
+            - condition: time
+              after: '12:00'
           sequence:
             - event: tts
               event_data:
                 areas_on:
                   - great_room
-                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the outdoor temperature is extremely high. I strongly recommend an additional watering of your garden. Thank you!
+                text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the afternoon garden watering is starting soon. Please make sure that all irrigation valves are in an expected state. Thank you!
+
 - id: tts_porch_cooling_station_reminder
   alias: 'TTS: Porch Cooling Station Reminder'
   trigger:
