@@ -9,7 +9,7 @@
         - arming
         - disarmed
       state_change_to: armed_away
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Away <break time="100ms"/>and armed.
+      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Away <break time="100ms"/>and armed. Security alarm turned on.
 
 - id: tts_state_alarm_armed_home
   alias: '[TTS State: Alarm Armed Home]'
@@ -18,12 +18,14 @@
     input:
       areas_on:
         - bedroom_1
+        - den
       state_change_entity: alarm_control_panel.home_alarm
       state_change_from:
         - armed_away
         - disarmed
       state_change_to: armed_home
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Home <break time="100ms"/>and armed.
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/> Home <break time="100ms"/> and armed. Security alarm turned on.
 
 - id: tts_state_alarm_disarmed
   alias: '[TTS State: Alarm Disarmed]'
@@ -32,9 +34,11 @@
     input:
       areas_on:
         - bedroom_1
+        - den
       state_change_entity: alarm_control_panel.home_alarm
       state_change_from:
         - armed_away
         - armed_home
       state_change_to: disarmed
-      text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Disarmed.
+      text: >
+        <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/> Disarmed. Security alarm turned off.
