@@ -42,9 +42,11 @@
         - condition: state
           entity_id: binary_sensor.airing_floor_1
           state: 'off'
+          for: 00:01:00
         - condition: state
           entity_id: binary_sensor.airing_floor_2
           state: 'off'
+          for: 00:01:00
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
       above: input_number.climate_desired_temperature_high
@@ -55,7 +57,7 @@
       entity_id: sensor.outdoor_temperature
       below: sensor.indoor_temperature
     - condition: state
-      entity_id: binary_sensor.outdoor_temperature_higher
+      entity_id: binary_sensor.outdoor_temperature_higher_or_equal
       state: 'off'
   action:
     - event: tts
@@ -85,6 +87,7 @@
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'on'
+      for: 00:01:00
     - condition: time
       after: '08:00:00'
       before: '15:00:00'
@@ -92,10 +95,10 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: binary_sensor.outdoor_temperature_higher
+              entity_id: binary_sensor.outdoor_temperature_higher_or_equal
               state: 'on'
           sequence:
             - event: tts
               event_data:
                 duration: 15
-                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside seems to be higher than inside. I suggest closing {{ state_attr('sensor.airing_ways', 'open') }} right now.
+                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the inside temperature seems to be lower than outside. I suggest closing {{ state_attr('sensor.airing_ways', 'open') }} right now.
