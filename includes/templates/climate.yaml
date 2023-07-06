@@ -1,4 +1,31 @@
 - binary_sensor:
+    - name: Airing Ways
+      unique_id: airing_ways
+      state: >
+        {{ expand(
+              state_attr('binary_sensor.airing_floor_1', 'entity_id'),
+              state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
+            selectattr('state', 'eq', 'on') |
+            list |
+            count > 0
+        }}
+      attributes:
+        template: climate
+        closed: >
+          {% set entities = expand(
+                state_attr('binary_sensor.airing_floor_1', 'entity_id'),
+                state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
+              selectattr('state', 'eq', 'off') |
+              map(attribute='name') |
+              unique |
+              sort
+          %}
+          {{- entities[0] if entities | count <= 1 else
+              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
+          }}
+        open: >
+          {{ state_attr('sensor.thermal_perimeter_breached', 'summary')}}
+
     - name: HVAC Is Cooling
       unique_id: hvac_is_cooling
       state: >
@@ -30,10 +57,10 @@
            is_state('binary_sensor.hvac_is_heating', 'on')
         }}
 
-    - name: Outdoor Temperature Higher
-      unique_id: outdoor_temperature_higher
+    - name: Outdoor Temperature Higher Or Equal
+      unique_id: outdoor_temperature_higher_or_equal
       state: >
-        {{ states('sensor.outdoor_temperature') | int >
+        {{ states('sensor.outdoor_temperature') | int >=
             states('sensor.indoor_temperature') | int
         }}
 
@@ -52,33 +79,6 @@
         }}
 
   sensor:
-    - name: Airing Ways
-      unique_id: airing_ways
-      state: >
-        {{ expand(
-              state_attr('binary_sensor.airing_floor_1', 'entity_id'),
-              state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
-            selectattr('state', 'eq', 'off') |
-            list |
-            count > 0
-        }}
-      attributes:
-        template: climate
-        closed: >
-          {% set entities = expand(
-                state_attr('binary_sensor.airing_floor_1', 'entity_id'),
-                state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
-              selectattr('state', 'eq', 'off') |
-              map(attribute='name') |
-              unique |
-              sort
-          %}
-          {{- entities[0] if entities | count <= 1 else
-              (entities[:-1] | join(', '), 'and', entities[-1]) | join(' ')
-          }}
-        open: >
-          {{ state_attr('sensor.thermal_perimeter_breached', 'summary')}}
-
     - name: HVAC Preset Mode
       unique_id: hvac_preset_mode
       state: >
