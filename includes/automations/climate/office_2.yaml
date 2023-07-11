@@ -51,36 +51,9 @@
       humidity_sensor: sensor.office_2_humidity
       humidifier_scene_on: scene.office_2_humidifier_on
       humidifier_scene_off: scene.office_2_humidifier_off
-      run_if: binary_sensor.office_2_window
-      run_if_state: 'off'
       check_time_start: input_datetime.post_quite_time_range_1
       check_time_end: input_datetime.pre_quite_time_range_3
-
-- id: office_2_humidifier_on_window_state
-  alias: Office 2 Humidifier On Window State
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.office_2_window
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.office_2_window
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_2_humidifier_off
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.office_2_window
-              state: 'off'
-              for:
-                seconds: 10
-          sequence:
-            - service: scene.turn_on
-              target:
-                entity_id: scene.office_2_humidifier_on
+      window: binary_sensor.office_2_window
 
 - id: turn_off_idle_office_2_fan
   alias: '[Turn Off Idle Office 2 Fan]'

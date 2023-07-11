@@ -13,6 +13,7 @@ blueprint:
       - **Area**: an area to control humidity in.
       - **Humidifier**: a humidifier device.
       - **Humidity sensor**: a humidity sensor.
+      - **Window sensor**: a window sensor.
       - **Humidifier Scene On**: a scene that activates the `Humidifier`.
       - **Humidifier Scene Off**: a scene that deactivates the `Humidifier`.
       - **Check Frequency** (*default*: /1, *unit*: minutes): how often to perform the check.
@@ -33,6 +34,15 @@ blueprint:
           entity:
             domain:
               - switch
+
+    window:
+      name: Window Sensor
+      description: Select the area window sensor
+      default:
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: window
 
     humidifier:
       name: Humidifier
@@ -109,13 +119,14 @@ variables:
   humidifier: !input humidifier
   humidity_sensor: !input humidity_sensor
   humidity: >
-    {{ states(humidity_sensor) }}
+    {{ states(humidity_sensor) | float }}
   humidity_high: >
     {{ states('input_number.' + area + '_humidity_high') | float }}
   humidity_low: >
     {{ states('input_number.' + area + '_humidity_low') | float }}
   run_if: !input run_if
   run_if_state: !input run_if_state
+  window: !input window
 
 trigger:
   - platform: state
@@ -123,52 +134,40 @@ trigger:
     to: 'unavailable'
     for:
       minutes: 5
+  - platform: state
+    entity_id: !input window
   - platform: time_pattern
     minutes: !input check_frequency_minutes
-
-condition:
-  - condition: or
-    conditions:
-      - '{{ run_if == none or run_if_state == none }}'
-      - '{{ states[run_if].state == run_if_state }}'
-      - '{{ states[run_if].state == "unknown" }}'
 
 action:
   - choose:
       - conditions:
-          - condition: state
-            entity_id: !input humidifier
-            state: 'on'
-          - condition: template
-            value_template: >
-              {%- macro is_in_range(value, time_from, time_to) %}
-                {%- if time_from < time_to and time_from <= value < time_to -%}
-                  on
-                {%- elif time_from >= time_to and
-                      (value >= time_from or value < time_to) -%}
-                  on
-                {%- else -%}
-                  off
-                {%- endif -%}
-              {%- endmacro -%}
-
-              {{ (check_time_start != none and
-                  check_time_end != none and
-                  is_in_range(
-                    now().strftime('%H:%M:%S'),
-                    states(check_time_start),
-                    states(check_time_end)) == 'off') or
-                 humidity == 'unavailable' or
-                 humidity >= humidity_high
-              }}
+          - condition: or
+            conditions:
+              - condition: state
+                entity_id: !input window
+                state: 'on'
+              - condition: state
+                entity_id: !input humidity_sensor
+                state: 'unavailable'
+              - condition: template
+                value_template: '{{ humidity >= humidity_high }}'
         sequence:
           - service: scene.turn_on
             target:
               entity_id: !input humidifier_scene_off
+
       - conditions:
           - condition: state
-            entity_id: !input humidifier
+            entity_id: !input window
             state: 'off'
+          - condition: or
+            conditions:
+              - '{{ run_if == none or run_if_state == none }}'
+              - '{{ states[run_if].state == run_if_state }}'
+              - '{{ states[run_if].state == "unknown" }}'
+          - condition: template
+            value_template: '{{ humidity < humidity_low }}'
           - condition: template
             value_template: >
               {%- macro is_in_range(value, time_from, time_to) %}
@@ -187,8 +186,7 @@ action:
                   is_in_range(
                     now().strftime('%H:%M:%S'),
                     states(check_time_start),
-                    states(check_time_end)) == 'on') and
-                 humidity < humidity_low
+                    states(check_time_end)) == 'on')
               }}
         sequence:
           - service: scene.turn_on
