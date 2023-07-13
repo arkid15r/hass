@@ -1,3 +1,11 @@
+- name: Bedroom 1 DND Mode On
+  entities:
+    switch.bedroom_1_echo_do_not_disturb: 'on'
+
+- name: Bedroom 1 DND Mode Off
+  entities:
+    switch.bedroom_1_echo_do_not_disturb: 'off'
+
 - name: Office 1 DND Mode On
   entities:
     switch.office_1_echo_do_not_disturb: 'on'
@@ -5,3 +13,11 @@
 - name: Office 1 DND Mode Off
   entities:
     switch.office_1_echo_do_not_disturb: 'off'
+
+- name: Office 2 DND Mode On
+  entities:
+    switch.office_2_echo_do_not_disturb: 'on'
+
+- name: Office 2 DND Mode Off
+  entities:
+    switch.office_2_echo_do_not_disturb: 'off'
