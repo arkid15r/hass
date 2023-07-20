@@ -20,11 +20,12 @@
   alias: 'TTS: Start Airing Reminder'
   trigger:
     - platform: state
-      entity_id: binary_sensor.thermal_perimeter
-      from: ['off', 'on']
-      to: ['off', 'on']
+      entity_id: binary_sensor.airing_ways
+      from: 'on'
+      to: 'off'
+      for: 00:01:00
     - platform: time_pattern
-      minutes: /10
+      minutes: /15
   condition:
     - condition: state
       entity_id: sensor.air_pollution_level
@@ -37,16 +38,6 @@
         - condition: time
           after: '18:00:00'
           before: '21:00:00'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.airing_floor_1
-          state: 'off'
-          for: 00:01:00
-        - condition: state
-          entity_id: binary_sensor.airing_floor_2
-          state: 'off'
-          for: 00:01:00
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
       above: input_number.climate_desired_temperature_high
@@ -57,23 +48,27 @@
       entity_id: sensor.outdoor_temperature
       below: sensor.indoor_temperature
     - condition: state
+      entity_id: binary_sensor.airing_ways
+      state: 'off'
+    - condition: state
       entity_id: binary_sensor.outdoor_temperature_higher_or_equal
       state: 'off'
   action:
     - event: tts
       event_data:
         duration: 10
-        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is lower at the moment. I suggest opening {{ state_attr('sensor.airing_ways', 'closed') }} right now.
+        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the outside temperature is lower at the moment. I suggest opening {{ state_attr('binary_sensor.airing_ways', 'closed') }} right now.
 
 - id: tts_stop_airing_reminder
   alias: 'TTS: Stop Airing Reminder'
   trigger:
     - platform: state
-      entity_id: binary_sensor.thermal_perimeter
-      from: ['off', 'on']
-      to: ['off', 'on']
+      entity_id: binary_sensor.airing_ways
+      from: 'off'
+      to: 'on'
+      for: 00:01:00
     - platform: time_pattern
-      minutes: /10
+      minutes: /15
   condition:
     - condition: numeric_state
       entity_id: sensor.indoor_temperature
@@ -85,9 +80,8 @@
       entity_id: sensor.temperature_forecast
       above: input_number.climate_desired_temperature_high
     - condition: state
-      entity_id: binary_sensor.thermal_perimeter
+      entity_id: binary_sensor.airing_ways
       state: 'on'
-      for: 00:01:00
     - condition: time
       after: '08:00:00'
       before: '15:00:00'
@@ -101,4 +95,4 @@
             - event: tts
               event_data:
                 duration: 15
-                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the inside temperature seems to be lower than outside. I suggest closing {{ state_attr('sensor.airing_ways', 'open') }} right now.
+                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the outside temperature seems to be equal to or higher than inside temperature. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} right now.
