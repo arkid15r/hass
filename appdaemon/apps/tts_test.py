@@ -420,73 +420,116 @@ class TestTargetConditionBase(TestBase):
       }
   }
 
-  def _test_not_played_normal_time(self, area, conditions):
+  def _test_not_played_normal_time(self, area, conditions=(), media_players=()):
     """Assert text was not played on the target during normal time. """
+
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        **{c: tts.AmazonEcho.STATE_ON for c in conditions},
+        **{mp: tts.AmazonEcho.STATE_PLAYING for mp in media_players}
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+
+    target = self.amazon_echo.get_target(area)
+    actual_targets = self.amazon_echo.tts(text=self.text, areas_off=[area])
     with mock.patch.dict(self.amazon_echo.env, self.env_patch):
       with mock.patch.dict(self.amazon_echo.rules, self.rules):
         for condition in conditions:
-          self.amazon_echo.get_state.side_effect = lambda sensor: {
-              condition: tts.AmazonEcho.STATE_ON
-          }.get(sensor, tts.AmazonEcho.STATE_OFF)
-
-          target = self.amazon_echo.get_target(area)
-          targets = self.amazon_echo.tts(text=self.text, areas_off=[area])
           self.assertNotIn(
               target,
-              targets,
+              actual_targets,
               f'Should not play in the {area} if silenced and '
               f'{conditions[condition]}.',
           )
-          self._assert_hass_called_with(self.text, targets)
+          self._assert_hass_not_called()
 
-  def _test_played_normal_time(self, area, conditions):
+        for media_player in media_players:
+          self.assertNotIn(
+              target,
+              actual_targets,
+              f'Should not play in the {area} if silenced and '
+              f'{media_players[media_player]}.',
+          )
+          self._assert_hass_not_called()
+
+  def _test_played_normal_time(self, area, conditions=(), media_players=()):
     """Assert text was played on the target during normal time."""
 
-    target = self.amazon_echo.get_target(area)
-    expected_targets = [target]
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        **{c: tts.AmazonEcho.STATE_ON for c in conditions},
+        **{mp: tts.AmazonEcho.STATE_PLAYING for mp in media_players}
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
 
+    target = self.amazon_echo.get_target(area)
     with mock.patch.dict(self.amazon_echo.rules,
                          {area: {
                              'conditions': conditions,
                              'target': target
                          }}):
       for condition in conditions:
-        self.amazon_echo.get_state.side_effect = lambda sensor: {
-            condition: tts.AmazonEcho.STATE_ON
-        }.get(sensor, tts.AmazonEcho.STATE_OFF)
-
-        targets = self.amazon_echo.tts(text=self.text)
-
-        self.assertEqual(
-            targets,
-            expected_targets,
+        actual_targets = self.amazon_echo.tts(text=self.text)
+        self.assertIn(
+            target,
+            actual_targets,
             f'Should play in the {area} if {conditions[condition]}.',
         )
-        self._assert_hass_called_with(self.text, expected_targets)
+        self._assert_hass_called_with(self.text, [target])
 
-  def _test_not_played_quite_time(self, area, conditions):
+      for media_player in media_players:
+        actual_targets = self.amazon_echo.tts(text=self.text)
+        self.assertIn(
+            target,
+            actual_targets,
+            f'Should play in the {area} if {media_players[media_player]}.',
+        )
+        self._assert_hass_called_with(self.text, [target])
+
+  def _test_not_played_quite_time(self, area, conditions=(), media_players=()):
     """Assert text was not played on the target during quite time."""
 
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        **{c: tts.AmazonEcho.STATE_ON for c in conditions},
+        **{mp: tts.AmazonEcho.STATE_PLAYING for mp in media_players}
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+
+    target = self.amazon_echo.get_target(area)
+    actual_targets = self.amazon_echo.tts(text=self.text, areas_off=[area])
     with mock.patch.dict(self.amazon_echo.env,
                          {'play_always': {
                              'quite_time': [area]
                          }}):
 
       for condition in conditions:
-        self.amazon_echo.get_state.side_effect = lambda sensor: {
-            condition: tts.AmazonEcho.STATE_ON,
-            self.quite_time: tts.AmazonEcho.STATE_ON
-        }.get(sensor, tts.AmazonEcho.STATE_OFF)
-
-        expected_targets = self.amazon_echo.tts(text=self.text,
-                                                areas_off=[area])
-
         self.assertNotIn(
-            self.amazon_echo.get_target(area),
-            expected_targets,
+            target,
+            actual_targets,
             f"Should not play in the {area} during quite time if silenced.",
         )
         self._assert_hass_not_called()
+
+      for media_player in media_players:
+        self.assertNotIn(
+            target, actual_targets,
+            f'Should not play in the {area} during quite time if silenced.')
+        self._assert_hass_not_called()
+
+  def _test_played_quite_time(self, area):
+    """Assert text was played on the target during quite time. """
+
+    self.amazon_echo.get_state.side_effect = lambda sensor: {
+        self.amazon_echo.quite_time: tts.AmazonEcho.STATE_ON
+    }.get(sensor, tts.AmazonEcho.STATE_OFF)
+
+    with mock.patch.dict(self.amazon_echo.env,
+                         {'play_always': {
+                             'quite_time': [area]
+                         }}):
+      expected_targets = self.amazon_echo.tts(text=self.text)
+
+      self.assertIn(
+          self.amazon_echo.get_target(area),
+          expected_targets,
+          f'Should play in the {area} during quite time.',
+      )
+      self._assert_hass_called_with(self.text, expected_targets)
 
   def _test_played_if_not(self, area, conditions, if_not):
     """
@@ -685,14 +728,18 @@ class TestGreatRoom(TestTargetConditionBase):
       TestBase.KITCHEN_MOTION: 'there was a recent motion in the kitchen',
   }
 
+  media_players = {TestBase.GREAT_ROOM_ECHO: 'the great room echo is playing'}
+
   def test_not_played_normal_time(self):
-    super()._test_not_played_normal_time(TestBase.GREAT_ROOM, self.conditions)
+    super()._test_not_played_normal_time(TestBase.GREAT_ROOM, self.conditions,
+                                         self.media_players)
 
   def test_not_played_quite_time(self):
     super()._test_not_played_quite_time(TestBase.GREAT_ROOM, self.conditions)
 
   def test_played_normal_time(self):
-    super()._test_played_normal_time(TestBase.GREAT_ROOM, self.conditions)
+    super()._test_played_normal_time(TestBase.GREAT_ROOM, self.conditions,
+                                     self.media_players)
 
   def test_played_quite_time(self):
     super()._test_played_quite_time(TestBase.GREAT_ROOM)

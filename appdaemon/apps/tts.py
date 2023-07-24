@@ -27,6 +27,7 @@ class AmazonEcho(hass.Hass):
   EVENT_NAME = 'tts'
   STATE_OFF = 'off'
   STATE_ON = 'on'
+  STATE_PLAYING = 'playing'
   THROTTLED_ENTITY_TIME_DEFAULT_SECONDS = 60
   TTS_DURATION_DEFAULT_SECONDS = 7
 
@@ -34,10 +35,10 @@ class AmazonEcho(hass.Hass):
     """Initialize event listener."""
 
     self.env = self.args['env']
-    self.play_always_normal_time = list()
-    self.play_always_quite_time = list()
-    self.play_default_normal_time = list()
-    self.play_default_quite_time = list()
+    self.play_always_normal_time = []
+    self.play_always_quite_time = []
+    self.play_default_normal_time = []
+    self.play_default_quite_time = []
     self.rules = self.args['rules']
     self.quite_time = self.args['quite_time']
     self.throttle = self.args['throttle']
@@ -158,6 +159,10 @@ class AmazonEcho(hass.Hass):
       """Return True if sensor's state is 'on' otherwise returns False."""
       return self.get_state(sensor) == self.STATE_ON
 
+    def is_playing(sensor):
+      """Return True if sensor's state is 'playing' otherwise returns False."""
+      return self.get_state(sensor) == self.STATE_PLAYING
+
     # tts()
     if not text:
       raise ValueError("Text field is required.")
@@ -167,22 +172,23 @@ class AmazonEcho(hass.Hass):
           "You can't use wildcard targets for both areas_off and areas_on at "
           "the same time.")
 
-    targets_all = [self.rules[rule]['target'] for rule in self.rules]
+    targets_all = {self.rules[rule]['target'] for rule in self.rules}
 
     self.set_environment()
+
     for targets in (self.play_always_normal_time, self.play_always_quite_time,
                     self.play_default_normal_time,
                     self.play_default_quite_time):
       if targets:
-        targets_all.extend(targets)
+        targets_all.update(targets)
 
     if areas_off == '*':
-      targets_off = set(targets_all)
+      targets_off = targets_all.copy()
     else:
       targets_off = {self.get_target(area) for area in areas_off or ()}
 
     if areas_on == '*':
-      targets_on = set(targets_all)
+      targets_on = targets_all.copy()
     else:
       targets_on = {self.get_target(area) for area in areas_on or ()}
 
@@ -214,8 +220,14 @@ class AmazonEcho(hass.Hass):
         if not conditions or any((is_on(c) for c in conditions)):
           targets.remove(rule_target)
 
+    # Add currently playing media players.
+    for target in targets_all:
+      if is_playing(target):
+        targets.add(target)
+
     # Update targets based on areas_off/areas_on values.
     targets = targets.difference(targets_off)
+
     # Override areas_off with areas_on.
     targets.update(targets_on)
 
