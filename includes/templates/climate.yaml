@@ -5,10 +5,16 @@
         {{ expand(
               state_attr('binary_sensor.airing_floor_1', 'entity_id'),
               state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
-            selectattr('state', 'eq', 'on') |
-            list |
-            count > 0
-        }}
+              selectattr('state', 'eq', 'on') |
+              list |
+              count
+            ==
+            expand(
+              state_attr('binary_sensor.airing_floor_1', 'entity_id'),
+              state_attr('binary_sensor.airing_floor_2', 'entity_id')) |
+              list |
+              count
+          }}
       attributes:
         template: climate
         closed: >
