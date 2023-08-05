@@ -24,15 +24,30 @@
         - conditions:
             - condition: or
               conditions:
-                - condition: numeric_state
-                  entity_id: sensor.den_temperature
-                  above: input_number.den_temperature_high
-                - condition: numeric_state
-                  entity_id: sensor.office_1_temperature
-                  above: input_number.office_1_temperature_high
-                - condition: numeric_state
-                  entity_id: sensor.office_2_temperature
-                  above: input_number.office_2_temperature_high
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.den_temperature.state != 'unavailable'
+                        and
+                      states.sensor.den_temperature.state | float >=
+                        states.input_number.den_temperature_high.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.office_1_temperature.state != 'unavailable'
+                        and
+                      states.sensor.office_1_temperature.state | float >=
+                        states.input_number.office_1_temperature_high.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.office_2_temperature.state != 'unavailable'
+                        and
+                      states.sensor.office_2_temperature.state | float >=
+                        states.input_number.office_2_temperature_high.state | float
+                    }}
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
@@ -50,15 +65,30 @@
         - conditions:
             - condition: or
               conditions:
-                - condition: numeric_state
-                  entity_id: sensor.den_temperature
-                  below: input_number.den_temperature_low
-                - condition: numeric_state
-                  entity_id: sensor.office_1_temperature
-                  below: input_number.office_1_temperature_low
-                - condition: numeric_state
-                  entity_id: sensor.office_2_temperature
-                  below: input_number.office_2_temperature_low
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.den_temperature.state != 'unavailable'
+                        and
+                      states.sensor.den_temperature.state | float <=
+                        states.input_number.den_temperature_low.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.office_1_temperature.state != 'unavailable'
+                        and
+                      states.sensor.office_1_temperature.state | float <=
+                        states.input_number.office_1_temperature_low.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.office_2_temperature.state != 'unavailable'
+                        and
+                      states.sensor.office_2_temperature.state | float <=
+                        states.input_number.office_2_temperature_low.state | float
+                    }}
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
@@ -85,30 +115,61 @@
                     - condition: template
                       value_template: >
                         {{ is_state('sensor.hvac_preset_mode', 'Down') }}
-                    - condition: numeric_state
-                      entity_id: sensor.den_temperature
-                      below: input_number.den_temperature_desired
-                    - condition: numeric_state
-                      entity_id: sensor.office_1_temperature
-                      below: input_number.office_1_temperature_desired
-                    - condition: numeric_state
-                      entity_id: sensor.office_2_temperature
-                      below: input_number.office_2_temperature_desired
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.den_temperature.state == 'unavailable'
+                            or
+                          states.sensor.den_temperature.state | float <=
+                            states.input_number.den_temperature_desired.state | float
+                        }}
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.office_1_temperature.state == 'unavailable'
+                            or
+                          states.sensor.office_1_temperature.state | float <=
+                            states.input_number.office_1_temperature_desired.state | float
+                        }}
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.office_2_temperature.state == 'unavailable'
+                            or
+                          states.sensor.office_2_temperature.state | float <=
+                            states.input_number.office_2_temperature_desired.state | float
+                        }}
 
                 - condition: and
                   conditions:
                     - condition: template
                       value_template: >
                         {{ is_state('sensor.hvac_preset_mode', 'Up') }}
-                    - condition: numeric_state
-                      entity_id: sensor.den_temperature
-                      above: input_number.den_temperature_desired
-                    - condition: numeric_state
-                      entity_id: sensor.office_1_temperature
-                      above: input_number.office_1_temperature_desired
-                    - condition: numeric_state
-                      entity_id: sensor.office_2_temperature
-                      above: input_number.office_2_temperature_desired
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.den_temperature.state == 'unavailable'
+                            or
+                          states.sensor.den_temperature.state | float >=
+                            states.input_number.den_temperature_desired.state | float
+                        }}
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.office_1_temperature.state == 'unavailable'
+                            or
+                          states.sensor.office_1_temperature.state | float >=
+                            states.input_number.office_1_temperature_desired.state | float
+                        }}
+                    - condition: template
+                      value_template: >
+                        {{
+                          states.sensor.office_2_temperature.state == 'unavailable'
+                            or
+                          states.sensor.office_2_temperature.state | float >=
+                            states.input_number.office_2_temperature_desired.state | float
+                        }}
+
           sequence:
             - service: climate.set_hvac_mode
               data:
@@ -143,12 +204,18 @@
         - conditions:
             - condition: or
               conditions:
-                - condition: numeric_state
-                  entity_id: sensor.bedroom_1_temperature
-                  above: input_number.bedroom_1_temperature_high
-                - condition: numeric_state
-                  entity_id: sensor.den_temperature
-                  above: input_number.den_temperature_high
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.bedroom_1_temperature.state | float >=
+                        states.input_number.bedroom_1_temperature_high.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.den_temperature.state | float >=
+                        states.input_number.den_temperature_high.state | float
+                    }}
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Down') }}
@@ -166,12 +233,17 @@
         - conditions:
             - condition: or
               conditions:
-                - condition: numeric_state
-                  entity_id: sensor.bedroom_1_temperature
-                  below: input_number.bedroom_1_temperature_low
-                - condition: numeric_state
-                  entity_id: sensor.den_temperature
-                  below: input_number.den_temperature_low
+                - condition: template
+                  value_template: >
+                    {{
+                      states.sensor.bedroom_1_temperature.state | float <=
+                        states.input_number.bedroom_1_temperature_low.state | float
+                    }}
+                - condition: template
+                  value_template: >
+                    {{ states.sensor.den_temperature.state | float <=
+                        states.input_number.den_temperature_low.state | float
+                    }}
             - condition: template
               value_template: >
                 {{ not is_state('sensor.hvac_preset_mode', 'Up') }}
@@ -198,23 +270,32 @@
                   - condition: template
                     value_template: >
                       {{ is_state('sensor.hvac_preset_mode', 'Down') }}
-                  - condition: numeric_state
-                    entity_id: sensor.bedroom_1_temperature
-                    below: input_number.bedroom_1_temperature_desired
-                  - condition: numeric_state
-                    entity_id: sensor.den_temperature
-                    below: input_number.den_temperature_desired
+                  - condition: template
+                    value_template: >
+                      {{
+                        states.sensor.bedroom_1_temperature.state | float <=
+                          states.input_number.bedroom_1_temperature_desired.state | float
+                      }}
+                  - condition: template
+                    value_template: >
+                      {{ states.sensor.den_temperature.state | float <=
+                          states.input_number.den_temperature_desired.state | float
+                      }}
               - condition: and
                 conditions:
                   - condition: template
                     value_template: >
                       {{ is_state('sensor.hvac_preset_mode', 'Up') }}
-                  - condition: numeric_state
-                    entity_id: sensor.bedroom_1_temperature
-                    above: input_number.bedroom_1_temperature_desired
-                  - condition: numeric_state
-                    entity_id: sensor.den_temperature
-                    above: input_number.den_temperature_desired
+                  - condition: template
+                    value_template: >
+                      {{ states.sensor.bedroom_1_temperature.state | float >=
+                          states.input_number.bedroom_1_temperature_desired.state | float
+                      }}
+                  - condition: template
+                    value_template: >
+                      {{ states.sensor.den_temperature.state | float >=
+                          states.input_number.den_temperature_desired.state | float
+                      }}
           sequence:
             - service: climate.set_hvac_mode
               data:
