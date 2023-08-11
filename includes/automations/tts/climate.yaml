@@ -24,6 +24,10 @@
       from: 'on'
       to: 'off'
       for: 00:01:00
+    - platform: state
+      entity_id: binary_sensor.outdoor_temperature_higher_or_equal
+      from: 'on'
+      to: 'off'
     - platform: time_pattern
       minutes: /30
   condition:
@@ -67,6 +71,10 @@
       from: 'off'
       to: 'on'
       for: 00:01:00
+    - platform: state
+      entity_id: binary_sensor.outdoor_temperature_higher_or_equal
+      from: 'off'
+      to: 'on'
     - platform: time_pattern
       minutes: /30
   condition:
