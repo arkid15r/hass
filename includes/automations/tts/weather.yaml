@@ -125,6 +125,18 @@
     - choose:
         - conditions:
             - condition: state
+              entity_id: sensor.weather_forecast_summary
+              state: unavailable
+          sequence:
+            - event: tts
+              event_data:
+                text: >
+                  <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>
+                  Just FYI: I was going to announce the weather forecast for tomorrow
+                  but it's unavailable at this moment. Please make sure to check it when
+                  you have a chance.
+        - conditions:
+            - condition: state
               entity_id: binary_sensor.garden_season
               state: 'off'
           sequence:
