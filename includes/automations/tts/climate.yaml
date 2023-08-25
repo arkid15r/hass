@@ -100,13 +100,34 @@
       after: '08:00:00'
       before: '16:00:00'
   action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.outdoor_temperature_higher_or_equal
-              state: 'on'
-          sequence:
-            - event: tts
-              event_data:
-                duration: 15
-                text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is no longer lower than inside. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} when you have a chance.
+    - event: tts
+      event_data:
+        duration: 15
+        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is no longer lower than inside. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} when you have a chance.
+
+
+- id: tts_air_pollution_level_high
+  alias: 'TTS: Air Pollution Level High'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.thermal_perimeter
+      from: 'off'
+      to: 'on'
+      for: 00:01:00
+    - platform: state
+      entity_id: sensor.air_pollution_level
+      to: ['unhealthy', 'very unhealthy', 'hazardous']
+    - platform: time_pattern
+      minutes: /30
+  condition:
+    - condition: state
+      entity_id: binary_sensor.thermal_perimeter
+      state: 'on'
+    - condition: state
+      entity_id: sensor.air_pollution_level
+      state: ['unhealthy', 'very unhealthy', 'hazardous']
+  action:
+    - event: tts
+      event_data:
+        duration: 10
+        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the air pollution level is {{ states('sensor.air_pollution_level') }}. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} as soon as possible.
