@@ -13,7 +13,6 @@
         areas_on:
           - bedroom_1
           - den
-        duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>This is just a nightly reminder to check your humidifier's water amount and refill it if needed.
 
 - id: tts_start_airing_reminder
@@ -60,7 +59,6 @@
   action:
     - event: tts
       event_data:
-        duration: 10
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the outside temperature is lower at the moment. I suggest opening {{ state_attr('binary_sensor.airing_ways', 'closed') }} when you have a chance.
 
 - id: tts_stop_airing_reminder
@@ -102,7 +100,6 @@
   action:
     - event: tts
       event_data:
-        duration: 15
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is no longer lower than inside. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} when you have a chance.
 
 
@@ -129,5 +126,4 @@
   action:
     - event: tts
       event_data:
-        duration: 10
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the air pollution level is {{ states('sensor.air_pollution_level') }}. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} as soon as possible.
