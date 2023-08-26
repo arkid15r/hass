@@ -46,7 +46,6 @@
   action:
     - event: tts
       event_data:
-        duration: 15
         text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Just FYI, the forecasted temperature is extremely high. A porch cooling station would be very appreciated by postal workers. Thank you!
 
 - id: tts_state_air_quality_changed
@@ -142,7 +141,6 @@
           sequence:
             - event: tts
               event_data:
-                duration: 15
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Here is your weather forecast for tomorrow. {{ states('sensor.weather_forecast_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
         - conditions:
             - condition: not
@@ -153,7 +151,6 @@
           sequence:
             - event: tts
               event_data:
-                duration: 15
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. {{ states('sensor.weather_forecast_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_weather_morning_summary
@@ -177,6 +174,5 @@
         areas_off: '*'
         areas_on:
           - bedroom_1
-        duration: 15
         text: >
           <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Good morning! {{ states('sensor.weather_state_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
