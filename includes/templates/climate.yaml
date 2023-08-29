@@ -70,11 +70,11 @@
             states('sensor.indoor_temperature') | int
         }}
 
-    - name: Outdoor Temperature 1 Degree Lower
-      unique_id: outdoor_temperature_1_degree_lower
+    - name: Outdoor Temperature 2 Degrees Higher
+      unique_id: outdoor_temperature_2_degrees_higher
       state: >
-        {{ states('sensor.indoor_temperature') | int  -
-            states('sensor.outdoor_temperature') | int == 1
+        {{ states('sensor.outdoor_temperature') | int  -
+            states('sensor.indoor_temperature') | int >= 2
         }}
 
     - name: Outdoor Temperature 3 Degrees Lower

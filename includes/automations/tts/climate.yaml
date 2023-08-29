@@ -41,9 +41,11 @@
         - condition: time
           after: '18:00:00'
           before: '21:00:00'
-    - condition: numeric_state
-      entity_id: sensor.indoor_temperature
-      above: input_number.climate_desired_temperature_high
+    - condition: template
+      value_template: >
+        {{ states.sensor.indoor_temperature.state | float >=
+            states.input_number.climate_desired_temperature_high.state | float
+        }}
     - condition: state
       entity_id: binary_sensor.hvac_is_cooling
       state: 'off'
@@ -70,7 +72,7 @@
       to: 'on'
       for: 00:01:00
     - platform: state
-      entity_id: binary_sensor.outdoor_temperature_higher_or_equal
+      entity_id: binary_sensor.outdoor_temperature_2_degrees_higher
       from: 'off'
       to: 'on'
     - platform: time_pattern
@@ -91,6 +93,9 @@
         {{ states.sensor.temperature_forecast.state | float >=
             states.input_number.climate_desired_temperature_high.state | float
         }}
+    - condition: state
+      entity_id: binary_sensor.outdoor_temperature_2_degrees_higher
+      state: 'on'
     - condition: state
       entity_id: binary_sensor.thermal_perimeter
       state: 'on'
