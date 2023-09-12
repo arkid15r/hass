@@ -21,7 +21,7 @@
       scene_1: scene.hallway_lights
       scene_1_time_on: input_datetime.morning_lights_time_off
       scene_1_time_off: input_datetime.night_lights_time_on
-      watcher: binary_sensor.front_door
+      watcher: binary_sensor.front_door_closed
       watcher_inactive_time_seconds: 30
 
 - id: turn_off_idle_hallway_lights
