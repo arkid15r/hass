@@ -151,6 +151,7 @@
           sequence:
             - event: tts
               event_data:
+                duration: 30
                 text: <audio src="soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05"/>Hey gardeners, the weather forecast looks {{ states('sensor.weather_forecast_summary') }}. {{ states('sensor.weather_forecast_details') }}. Sincerely yours, <phoneme alphabet='ipa' ph="ɹus'lanə 'pɪ:sə:nka">Ruslana Pysanka</phoneme>.
 
 - id: tts_weather_morning_summary
