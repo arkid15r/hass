@@ -5,13 +5,14 @@ and a set of default and last resort targets.
 
 """
 
-__author__ = 'Ark (ark@cho.red)'
+__author__ = 'Arkadii Yakovets (ark@cho.red)'
 
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=import-error
 # pylint: disable=too-many-instance-attributes
 
 import hashlib
+import re
 import sys
 import time
 from collections import defaultdict
@@ -29,7 +30,7 @@ class AmazonEcho(hass.Hass):
   STATE_ON = 'on'
   STATE_PLAYING = 'playing'
   THROTTLED_ENTITY_TIME_DEFAULT_SECONDS = 60
-  TTS_DURATION_DEFAULT_SECONDS = 15
+  TTS_CHARACTERS_PER_SECOND = 5
 
   def initialize(self):
     """Initialize event listener."""
@@ -44,7 +45,7 @@ class AmazonEcho(hass.Hass):
     self.throttle = self.args['throttle']
     self.throttled_entity_time_mapping = defaultdict(
         lambda: self.THROTTLED_ENTITY_TIME_DEFAULT_SECONDS)
-    self.throttled_events = dict()
+    self.throttled_events = {}
 
     self.configure_throttling()
 
@@ -56,9 +57,18 @@ class AmazonEcho(hass.Hass):
     self.listen_event(self.handle_event, self.EVENT_NAME)
 
   @staticmethod
+  def calculate_duration(text):
+    clean_text = re.sub(r'<.*?>', '', text)
+    duration = round(len(clean_text) / AmazonEcho.TTS_CHARACTERS_PER_SECOND)
+
+    if 'beeps_and_bloops/tone_05' in text:
+      duration += 2
+
+    return duration
+
+  @staticmethod
   def get_target(area):
     """Return media player target ID for an area."""
-
     return f'media_player.{area}_echo'
 
   def configure_throttling(self):
@@ -78,7 +88,6 @@ class AmazonEcho(hass.Hass):
       self.messages.put({
           'areas_off': data.get('areas_off'),
           'areas_on': data.get('areas_on'),
-          'duration': data.get('duration', self.TTS_DURATION_DEFAULT_SECONDS),
           'text': text,
       })
 
@@ -260,17 +269,13 @@ class AmazonEcho(hass.Hass):
     while True:
       try:
         data = self.messages.get()
-
         areas_off = data['areas_off']
         areas_on = data['areas_on']
-        duration = data['duration']
         text = data['text']
 
-        targets = self.tts(
-            areas_off=areas_off,
-            areas_on=areas_on,
-            text=text,
-        )
+        targets = self.tts(areas_off=areas_off, areas_on=areas_on, text=text)
+        duration = self.calculate_duration(text)
+
         self.log(f"{text} on {', '.join(targets)} ({duration}s)")
         time.sleep(duration)
       except Exception:  # pylint: disable=broad-except
