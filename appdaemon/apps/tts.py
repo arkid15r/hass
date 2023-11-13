@@ -30,7 +30,7 @@ class AmazonEcho(hass.Hass):
   STATE_ON = 'on'
   STATE_PLAYING = 'playing'
   THROTTLED_ENTITY_TIME_DEFAULT_SECONDS = 60
-  TTS_CHARACTERS_PER_SECOND = 5
+  TTS_CHARACTERS_PER_SECOND = 10
 
   def initialize(self):
     """Initialize event listener."""
@@ -62,7 +62,7 @@ class AmazonEcho(hass.Hass):
     duration = round(len(clean_text) / AmazonEcho.TTS_CHARACTERS_PER_SECOND)
 
     if 'beeps_and_bloops/tone_05' in text:
-      duration += 2
+      duration += 1
 
     return duration
 
