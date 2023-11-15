@@ -17,7 +17,7 @@
       scene_3_time_off: input_datetime.post_quite_time_range_1
       scene_3: scene.bathroom_2_night_lights
       watcher: group.bathroom_2_motion
-      watcher_inactive_time_seconds: 600
+      watcher_inactive_time_seconds: 300
 
 - id: turn_off_idle_bathroom_2_lights
   alias: '[Turn Off Idle Bathroom 2 Lights]'
@@ -28,4 +28,4 @@
       scene: scene.bathroom_2_no_lights
       target: binary_sensor.bathroom_2_lights
       watcher: group.bathroom_2_motion
-      watcher_inactive_time_seconds: 1800
+      watcher_inactive_time_seconds: 900

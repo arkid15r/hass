@@ -29,7 +29,7 @@
       scene: scene.bathroom_1_no_lights
       target: binary_sensor.bathroom_1_lights
       watcher: group.bathroom_1_motion
-      watcher_inactive_time_seconds: 1800
+      watcher_inactive_time_seconds: 900
 
 - id: bathroom_1a_lights
   alias: '[Bathroom 1a Lights]'
