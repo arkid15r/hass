@@ -30,7 +30,7 @@ class AmazonEcho(hass.Hass):
   STATE_ON = 'on'
   STATE_PLAYING = 'playing'
   THROTTLED_ENTITY_TIME_DEFAULT_SECONDS = 60
-  TTS_CHARACTERS_PER_SECOND = 10
+  TTS_CHARACTERS_PER_SECOND = 8
 
   def initialize(self):
     """Initialize event listener."""
