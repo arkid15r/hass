@@ -192,9 +192,11 @@
     - platform: time_pattern
       minutes: /1
   condition:
-    - condition: state
-      entity_id: binary_sensor.thermal_perimeter
-      state: 'off'
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.thermal_perimeter
+          state: 'on'
     - condition: time
       after: input_datetime.pre_quite_time_range_3
       before: input_datetime.quite_time_off

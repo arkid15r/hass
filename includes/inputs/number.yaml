@@ -20,27 +20,27 @@ bedroom_1_humidity_low:
 
 bedroom_1_temperature_desired:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 bedroom_1_temperature_high:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 bedroom_1_temperature_low:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 climate_desired_temperature_high:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 climate_desired_temperature_low:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 den_humidity_high:
@@ -55,17 +55,17 @@ den_humidity_low:
 
 den_temperature_desired:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 den_temperature_high:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 den_temperature_low:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 indoor_garden_humidity_high:
@@ -90,17 +90,17 @@ office_1_humidity_low:
 
 office_1_temperature_high:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 office_1_temperature_low:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 office_1_temperature_desired:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 office_2_humidity_high:
@@ -115,7 +115,7 @@ office_2_humidity_low:
 
 office_2_temperature_high:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 office_2_temperature_low:
@@ -125,7 +125,7 @@ office_2_temperature_low:
 
 office_2_temperature_desired:
   max: 90
-  min: 60
+  min: 50
   mode: box
 
 scene_reload_delay:
@@ -135,5 +135,5 @@ scene_reload_delay:
 
 weather_extreme_temperature:
   max: 120
-  min: 60
+  min: 50
   mode: box
