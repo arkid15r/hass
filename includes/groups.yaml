@@ -108,6 +108,13 @@ indoor_temperature:
     - sensor.office_2_temperature
     - sensor.stairway_temperature
 
+weather_forecast_services:
+  name: Weather Forecast Services
+  entities:
+    - sensor.weather_forecast_aw
+    - sensor.weather_forecast_owm
+    - sensor.weather_forecast_thermostat
+
 weather_services:
   name: Weather Services
   entities:

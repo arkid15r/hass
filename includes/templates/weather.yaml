@@ -45,72 +45,6 @@
             round
         }}
 
-    - name: Temperature Forecast
-      unique_id: temperature_forecast
-      unit_of_measurement: °F
-      state: >
-        {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast') |
-            reject('eq', 'undefined') |
-            map(attribute='0.temperature') |
-            map('float') |
-            list |
-            average |
-            round
-        }}
-
-    - name: Temperature Low Forecast
-      unique_id: temperature_low_forecast
-      unit_of_measurement: °F
-      state: >
-        {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast') |
-            reject('eq', 'undefined') |
-            map(attribute='0.templow') |
-            map('float') |
-            list |
-            average |
-            round
-        }}
-
-    - name: Weather Forecast Details
-      unique_id: weather_forecast_details
-      state: >
-        {%- macro pluralize(count, name, plural) -%}
-          {{- name -}}
-          {%- if count | int != 1 -%}
-            {{- plural -}}
-          {%- endif -%}
-        {%- endmacro -%}
-
-        {% set temperature_high = states('sensor.temperature_forecast') -%}
-        {% set temperature_low = states('sensor.temperature_low_forecast') -%}
-        {% set wind_speed = states('sensor.wind_speed_forecast') -%}
-
-        The lowest forecasted temperature is around {{ temperature_low }} {{ pluralize(temperature_low, 'degree', 's') }}. The highest forecasted wind speed is {{ wind_speed }} {{ pluralize(wind_speed, 'mile', 's') }} per hour. Up to {{ temperature_high }} {{ pluralize(temperature_high, 'degree', 's') }} is expected during the day
-
-    - name: Weather Forecast Summary
-      unique_id: weather_forecast_summary
-      state: >
-        {% if states('sensor.temperature_low_forecast') | int < 45 or
-            states('sensor.temperature_low_forecast') | int > 95 or
-            states('sensor.wind_speed_forecast') | int > 15
-        %}
-          extremely concerning
-        {% elif states('sensor.temperature_low_forecast') | int < 50 or
-            states('sensor.temperature_low_forecast') | int > 90 or
-            states('sensor.wind_speed_forecast') | int > 10
-        %}
-          very concerning
-        {% elif states('sensor.temperature_low_forecast') | int < 55 or
-            states('sensor.temperature_low_forecast') | int > 85 or
-            states('sensor.wind_speed_forecast') | int > 5
-        %}
-          a bit concerning
-        {% else %}
-          fine
-        {% endif %}
-
     - name: Weather State
       unique_id: weather_state
       state: >
@@ -147,19 +81,5 @@
             map('float') |
             list |
             average |
-            round
-        }}
-
-    - name: Wind Speed Forecast
-      unique_id: wind_speed_forecast
-      unit_of_measurement: mph
-      state: >
-        {{ expand('group.weather_services') |
-            map(attribute='attributes.forecast') |
-            reject('eq', 'undefined') |
-            map(attribute='0.wind_speed') |
-            map('float') |
-            list |
-            max |
             round
         }}
