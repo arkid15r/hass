@@ -178,7 +178,7 @@
             - service: climate.set_preset_mode
               data:
                 entity_id: climate.thermostat
-                preset_mode: Home
+                preset_mode: home
 
 - id: hvac_night_temperature
   alias: HVAC Night Temperature
@@ -306,7 +306,7 @@
             - service: climate.set_preset_mode
               data:
                 entity_id: climate.thermostat
-                preset_mode: Sleep
+                preset_mode: sleep
 
 - id: hvac_on_thermal_perimeter_state
   alias: HVAC On Thermal Perimeter State
@@ -338,7 +338,7 @@
             - service: climate.set_preset_mode
               data:
                 entity_id: climate.thermostat
-                preset_mode: Home
+                preset_mode: home
 
         - conditions:
             - condition: state
