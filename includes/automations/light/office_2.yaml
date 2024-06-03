@@ -9,9 +9,9 @@
       run_if_state: 'off'
       scene_1: scene.office_2_lights
       scene_1_time_on: input_datetime.night_lights_time_on
-      scene_1_time_off: input_datetime.pre_quite_time_range_3
+      scene_1_time_off: input_datetime.pre_quite_time_range_2
       scene_2: scene.office_2_max_lights
-      scene_2_time_on: input_datetime.pre_quite_time_range_3
+      scene_2_time_on: input_datetime.pre_quite_time_range_2
       scene_2_time_off: input_datetime.quite_time_on
       scene_3: scene.office_2_night_lights
       scene_3_time_on: input_datetime.quite_time_on
