@@ -4,7 +4,6 @@
     - platform: time
       at:
         - '08:50:00'
-        - '12:50:00'
   condition:
     - condition: state
       entity_id: binary_sensor.garden_season
