@@ -58,6 +58,9 @@
       entity_id: binary_sensor.quite_time
       state: 'off'
     - condition: state
+      entity_id: binary_sensor.thermal_perimeter
+      state: 'off'
+    - condition: state
       entity_id: input_boolean.mode_nap
       state: 'off'
     - condition: state
