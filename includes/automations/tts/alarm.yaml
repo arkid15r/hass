@@ -35,6 +35,8 @@
       areas_on:
         - bedroom_1
         - den
+      run_if: binary_sensor.workday
+      run_if_state: 'on'
       state_change_entity: alarm_control_panel.home_alarm
       state_change_from:
         - armed_away
