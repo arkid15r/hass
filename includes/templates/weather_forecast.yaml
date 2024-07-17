@@ -105,17 +105,17 @@
       unique_id: weather_forecast_summary
       state: >
         {% if states('sensor.temperature_low_forecast') | int < 45 or
-            states('sensor.temperature_low_forecast') | int > 95 or
+            states('sensor.temperature_forecast') | int > 90 or
             states('sensor.wind_speed_forecast') | int > 15
         %}
             extremely concerning
         {% elif states('sensor.temperature_low_forecast') | int < 50 or
-            states('sensor.temperature_low_forecast') | int > 90 or
+            states('sensor.temperature_forecast') | int > 85 or
             states('sensor.wind_speed_forecast') | int > 10
         %}
             very concerning
         {% elif states('sensor.temperature_low_forecast') | int < 55 or
-            states('sensor.temperature_low_forecast') | int > 85 or
+            states('sensor.temperature_forecast') | int > 80 or
             states('sensor.wind_speed_forecast') | int > 5
         %}
             a bit concerning
