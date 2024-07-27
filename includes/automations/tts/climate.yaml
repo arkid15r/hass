@@ -32,7 +32,7 @@
   condition:
     - condition: state
       entity_id: sensor.air_pollution_level
-      state: ['good', 'moderate']
+      state: ['good']
     - condition: or
       conditions:
         - condition: time
