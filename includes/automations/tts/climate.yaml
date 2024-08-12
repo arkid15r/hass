@@ -1,3 +1,44 @@
+- id: tts_hvac_is_cooling_state
+  alias: 'TTS: HVAC Is Cooling State'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hvac_is_cooling
+      from: ['off', 'on']
+      to: ['off', 'on']
+  action:
+    - event: tts
+      event_data:
+        areas_off: '*'
+        areas_on:
+          - den
+        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the AC is {{ trigger.to_state.state }}.
+
+- id: tts_hvac_is_cooling_reminder
+  alias: 'TTS: HVAC Is Cooling Reminder'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hvac_is_cooling
+      from: 'off'
+      to: 'on'
+      for: 00:20:00
+    - platform: time_pattern
+      minutes: /20
+  condition:
+    - condition: state
+      entity_id: binary_sensor.hvac_is_cooling
+      state: 'on'
+      for: 00:20:00
+    - condition: time
+      after: input_datetime.post_quite_time_range_3
+      before: input_datetime.pre_quite_time_range_3
+  action:
+    - event: tts
+      event_data:
+        areas_off: '*'
+        areas_on:
+          - den
+        text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the AC is still {{ states('binary_sensor.hvac_is_cooling') }}.
+
 - id: tts_humidifier_refill_reminder
   alias: 'TTS: Humidifier Refill Reminder'
   trigger:
@@ -107,7 +148,6 @@
     - event: tts
       event_data:
         text: <audio src='soundbank://soundlibrary/alarms/beeps_and_bloops/tone_05'/>Just FYI, the temperature outside is no longer lower than inside. I suggest closing {{ state_attr('binary_sensor.airing_ways', 'open') }} when you have a chance.
-
 
 - id: tts_air_pollution_level_high
   alias: 'TTS: Air Pollution Level High'
