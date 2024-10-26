@@ -24,8 +24,8 @@
       unit_of_measurement: '%'
       state: >
         {{ expand('group.weather_services') |
+            selectattr('attributes.humidity', 'defined') |
             map(attribute='attributes.humidity') |
-            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
@@ -37,13 +37,14 @@
       unit_of_measurement: °F
       state: >
         {{ expand('group.weather_services') |
+            selectattr('attributes.temperature', 'defined') |
             map(attribute='attributes.temperature') |
-            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
             round
         }}
+
 
     - name: Weather State
       unique_id: weather_state
@@ -76,8 +77,8 @@
       unit_of_measurement: mph
       state: >
         {{ expand('group.weather_services') |
+            selectattr('attributes.wind_speed', 'defined') |
             map(attribute='attributes.wind_speed') |
-            reject('eq', 'undefined') |
             map('float') |
             list |
             average |
