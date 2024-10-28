@@ -14,13 +14,6 @@
       data:
         type: daily
       target:
-        entity_id: weather.owm
-      response_variable: forecast_owm
-
-    - service: weather.get_forecasts
-      data:
-        type: daily
-      target:
         entity_id: weather.thermostat
       response_variable: forecast_thermostat
 
@@ -31,11 +24,6 @@
       attributes:
         forecast: "{{ forecast_aw['weather.aw'].forecast }}"
 
-    - name: Weather Forecast OWM
-      unique_id: weather_forecast_owm
-      state: '{{ now().isoformat() }}'
-      attributes:
-        forecast: "{{ forecast_owm['weather.owm'].forecast }}"
 
     - name: Weather Forecast Thermostat
       unique_id: weather_forecast_thermostat
